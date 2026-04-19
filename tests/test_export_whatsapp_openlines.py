@@ -134,6 +134,8 @@ def test_build_conversation_reads_deal_openline_history(tmp_path):
         "51044",
         dirs.paths_for("51044"),
         include_system_messages=True,
+        date_from=None,
+        date_to=None,
     )
 
     assert conversation.timeline_source == "deal"
@@ -215,6 +217,8 @@ def test_build_conversation_falls_back_to_contact_openline_history(tmp_path):
         "51044",
         dirs.paths_for("51044"),
         include_system_messages=True,
+        date_from=None,
+        date_to=None,
     )
 
     assert conversation.timeline_source == "contact"
@@ -289,6 +293,8 @@ def test_outgoing_connector_message_is_classified_as_manager(tmp_path):
         "51054",
         dirs.paths_for("51054"),
         include_system_messages=True,
+        date_from=None,
+        date_to=None,
     )
 
     assert conversation.messages[0].sender_role == "manager"
@@ -362,6 +368,8 @@ def test_lowercase_file_urls_are_exported_as_attachments(tmp_path):
         "51054",
         dirs.paths_for("51054"),
         include_system_messages=True,
+        date_from=None,
+        date_to=None,
     )
 
     assert conversation.messages[0].text == ""

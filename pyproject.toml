@@ -15,12 +15,17 @@ dev = [
     "pytest>=8",
     "pytest-mock>=3",
 ]
+api = [
+    "fastapi>=0.100",
+    "uvicorn[standard]>=0.20",
+]
 
 [project.scripts]
 bitrix-export-crm            = "bitrix_ingest.cli.export_crm:main"
 bitrix-scan-call-records     = "bitrix_ingest.cli.scan_call_records:main"
 bitrix-export-whatsapp       = "bitrix_ingest.cli.export_whatsapp:main"
 bitrix-download-recordings   = "bitrix_ingest.cli.download_recordings:main"
+bitrix-serve                 = "bitrix_ingest.cli.serve:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

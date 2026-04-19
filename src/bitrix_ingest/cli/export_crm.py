@@ -17,7 +17,19 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("--webhook-base-url", required=True, help="Bitrix24 webhook base URL")
     parser.add_argument("--output-dir", default="export", help="Output directory (default: export)")
-    parser.add_argument("--modified-from", default=None, help="ISO date filter, e.g. 2024-01-01")
+    parser.add_argument(
+        "--date-from",
+        "--modified-from",
+        dest="date_from",
+        default=None,
+        help="Inclusive start date/datetime filter, e.g. 2024-01-01",
+    )
+    parser.add_argument(
+        "--date-to",
+        dest="date_to",
+        default=None,
+        help="Inclusive end date/datetime filter, e.g. 2024-01-31",
+    )
     parser.add_argument("--skip-users", action="store_true", help="Skip user.get export")
     parser.add_argument("--skip-activities", action="store_true", help="Skip crm.activity.list export")
     parser.add_argument("--limit", type=int, default=None, help="Max rows per entity (client-side, default: no limit)")
@@ -27,7 +39,8 @@ def build_parser() -> argparse.ArgumentParser:
 def run(
     webhook_base_url: str,
     output_dir: str = "export",
-    modified_from: str | None = None,
+    date_from: str | None = None,
+    date_to: str | None = None,
     skip_users: bool = False,
     skip_activities: bool = False,
     limit: int | None = None,
@@ -39,7 +52,8 @@ def run(
     service.execute(
         CrmExportRequest(
             output_dir=Path(output_dir),
-            modified_from=modified_from,
+            date_from=date_from,
+            date_to=date_to,
             skip_users=skip_users,
             skip_activities=skip_activities,
             limit=limit,
@@ -53,7 +67,8 @@ def main(argv: Sequence[str] | None = None) -> None:
     run(
         webhook_base_url=args.webhook_base_url,
         output_dir=args.output_dir,
-        modified_from=args.modified_from,
+        date_from=args.date_from,
+        date_to=args.date_to,
         skip_users=args.skip_users,
         skip_activities=args.skip_activities,
         limit=args.limit,

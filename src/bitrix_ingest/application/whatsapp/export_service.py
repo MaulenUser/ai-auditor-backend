@@ -17,6 +17,7 @@ from ...domain.whatsapp import (
     WhatsAppConversation,
     WhatsAppMessage,
 )
+from ..date_range import build_closed_filter, within_datetime_range
 from ..ports import BitrixGateway, JsonSink
 from .bbcode import BBCodeStripper
 from .deal_filter import WhatsAppDealFilter
@@ -57,7 +58,8 @@ class WhatsAppExportRequest:
 
     output_dir: Path
     limit: int = 100
-    modified_from: str | None = None
+    date_from: str | None = None
+    date_to: str | None = None
     deal_ids: list[str] | None = None
     skip_existing: bool = False
     include_system_messages: bool = True
@@ -205,9 +207,11 @@ class WhatsAppExportService:
         request: WhatsAppExportRequest,
         output_dir: Path,
     ) -> list[dict[str, Any]]:
-        deal_filter: dict[str, Any] = {}
-        if request.modified_from:
-            deal_filter[">=DATE_MODIFY"] = request.modified_from
+        deal_filter = build_closed_filter(
+            "DATE_MODIFY",
+            date_from=request.date_from,
+            date_to=request.date_to,
+        )
 
         whatsapp, raw_deals_scanned, whatsapp_matches = self._scan_whatsapp_deals(
             request=request,
@@ -279,6 +283,9 @@ class WhatsAppExportService:
                 len(selected),
             )
 
+            if request.deal_ids and len(selected) >= len(request.deal_ids):
+                return selected, raw_deals_scanned, whatsapp_matches
+
             if request.limit > 0 and len(selected) >= request.limit:
                 return selected, raw_deals_scanned, whatsapp_matches
 
@@ -312,6 +319,8 @@ class WhatsAppExportService:
                 deal_id,
                 paths,
                 include_system_messages=request.include_system_messages,
+                date_from=request.date_from,
+                date_to=request.date_to,
             )
             self._sink.write(paths.conversation, conversation.to_dict())
             accumulator.record_conversation(deal, conversation, paths.conversation)
@@ -332,6 +341,8 @@ class WhatsAppExportService:
         paths: "_DealPaths",
         *,
         include_system_messages: bool,
+        date_from: str | None,
+        date_to: str | None,
     ) -> WhatsAppConversation:
         deal_conversation = self._fetch_openline_conversation(
             deal=deal,
@@ -339,6 +350,8 @@ class WhatsAppExportService:
             entity_id=deal_id,
             raw_destination=paths.deal_openline_raw,
             include_system_messages=include_system_messages,
+            date_from=date_from,
+            date_to=date_to,
         )
         if deal_conversation is not None:
             return deal_conversation
@@ -363,6 +376,8 @@ class WhatsAppExportService:
             entity_id=contact_id,
             raw_destination=paths.contact_openline_raw,
             include_system_messages=include_system_messages,
+            date_from=date_from,
+            date_to=date_to,
         )
         if contact_conversation is not None:
             logger.info(
@@ -387,6 +402,8 @@ class WhatsAppExportService:
         entity_id: str,
         raw_destination: Path,
         include_system_messages: bool,
+        date_from: str | None,
+        date_to: str | None,
     ) -> WhatsAppConversation | None:
         binding = self._find_chat_binding(entity_type=entity_type, entity_id=entity_id)
         raw_payload: dict[str, Any] = {
@@ -413,6 +430,8 @@ class WhatsAppExportService:
             dialog=dialog,
             history=history,
             include_system_messages=include_system_messages,
+            date_from=date_from,
+            date_to=date_to,
         )
 
     def _find_chat_binding(
@@ -478,6 +497,8 @@ class WhatsAppExportService:
         dialog: dict[str, Any],
         history: dict[str, Any],
         include_system_messages: bool,
+        date_from: str | None,
+        date_to: str | None,
     ) -> WhatsAppConversation:
         users = history.get("users") or {}
         files_index = self._index_files(history.get("files"))
@@ -489,6 +510,15 @@ class WhatsAppExportService:
                 deal=deal,
             )
             for message in self._ordered_history_messages(history)
+        ]
+        messages = [
+            message
+            for message in messages
+            if within_datetime_range(
+                message.created_at,
+                date_from=date_from,
+                date_to=date_to,
+            )
         ]
         if not include_system_messages:
             messages = [message for message in messages if not message.is_system_message]

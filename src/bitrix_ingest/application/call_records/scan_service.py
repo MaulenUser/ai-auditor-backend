@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Any
 
 from ...domain.call_records import CallScanError, CallScanRow
+from ..date_range import build_closed_filter
 from ..ports import BitrixGateway, JsonSink
 from .coercion import coerce_int, coerce_str
 
@@ -29,6 +30,8 @@ _ACTIVITY_SELECT: list[str] = [
 class CallRecordsScanRequest:
     output_dir: Path
     limit: int = 20
+    date_from: str | None = None
+    date_to: str | None = None
 
 
 @dataclass
@@ -59,7 +62,11 @@ class CallRecordsScanService:
         output_dir = request.output_dir
         output_dir.mkdir(parents=True, exist_ok=True)
 
-        activities = self._fetch_activities(limit=request.limit)
+        activities = self._fetch_activities(
+            limit=request.limit,
+            date_from=request.date_from,
+            date_to=request.date_to,
+        )
         self._sink.write(output_dir / "activities.source.json", activities)
 
         result = _ScanResult.empty()
@@ -73,11 +80,25 @@ class CallRecordsScanService:
     # Fetching / enrichment
     # ------------------------------------------------------------------
 
-    def _fetch_activities(self, limit: int) -> list[dict[str, Any]]:
+    def _fetch_activities(
+        self,
+        *,
+        limit: int,
+        date_from: str | None,
+        date_to: str | None,
+    ) -> list[dict[str, Any]]:
+        filter_ = dict(_ACTIVITY_FILTER)
+        filter_.update(
+            build_closed_filter(
+                "START_TIME",
+                date_from=date_from,
+                date_to=date_to,
+            )
+        )
         response = self._gateway.call(
             "crm.activity.list",
             body={
-                "filter": _ACTIVITY_FILTER,
+                "filter": filter_,
                 "order": {"START_TIME": "DESC"},
                 "select": _ACTIVITY_SELECT,
                 "start": 0,

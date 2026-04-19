@@ -27,6 +27,16 @@ def build_parser() -> argparse.ArgumentParser:
         default=20,
         help="Max activities to process from the first page (default: 20)",
     )
+    parser.add_argument(
+        "--date-from",
+        default=None,
+        help="Inclusive start date/datetime filter on START_TIME",
+    )
+    parser.add_argument(
+        "--date-to",
+        default=None,
+        help="Inclusive end date/datetime filter on START_TIME",
+    )
     return parser
 
 
@@ -34,6 +44,8 @@ def run(
     webhook_base_url: str,
     output_dir: str = "export/call-records-scan",
     limit: int = 20,
+    date_from: str | None = None,
+    date_to: str | None = None,
 ) -> None:
     service = CallRecordsScanService(
         gateway=BitrixClient(webhook_base_url),
@@ -43,6 +55,8 @@ def run(
         CallRecordsScanRequest(
             output_dir=Path(output_dir),
             limit=limit,
+            date_from=date_from,
+            date_to=date_to,
         )
     )
 
@@ -54,6 +68,8 @@ def main(argv: Sequence[str] | None = None) -> None:
         webhook_base_url=args.webhook_base_url,
         output_dir=args.output_dir,
         limit=args.limit,
+        date_from=args.date_from,
+        date_to=args.date_to,
     )
 
 

@@ -30,7 +30,19 @@ def build_parser() -> argparse.ArgumentParser:
         default=100,
         help="Max WhatsApp deals to process after filtering and sort (default: 100; 0=no limit)",
     )
-    parser.add_argument("--modified-from", default=None, help="ISO date filter on DATE_MODIFY")
+    parser.add_argument(
+        "--date-from",
+        "--modified-from",
+        dest="date_from",
+        default=None,
+        help="Inclusive start date/datetime filter on deal DATE_MODIFY and message timestamps",
+    )
+    parser.add_argument(
+        "--date-to",
+        dest="date_to",
+        default=None,
+        help="Inclusive end date/datetime filter on deal DATE_MODIFY and message timestamps",
+    )
     parser.add_argument(
         "--deal-ids",
         nargs="*",
@@ -60,7 +72,8 @@ def run(
     webhook_base_url: str,
     output_dir: str = "export/whatsapp-timeline",
     limit: int = 100,
-    modified_from: str | None = None,
+    date_from: str | None = None,
+    date_to: str | None = None,
     deal_ids: list[str] | None = None,
     skip_existing: bool = False,
     exclude_system_messages: bool = False,
@@ -74,7 +87,8 @@ def run(
         WhatsAppExportRequest(
             output_dir=Path(output_dir),
             limit=limit,
-            modified_from=modified_from,
+            date_from=date_from,
+            date_to=date_to,
             deal_ids=deal_ids,
             skip_existing=skip_existing,
             include_system_messages=not exclude_system_messages,
@@ -89,7 +103,8 @@ def main(argv: Sequence[str] | None = None) -> None:
         webhook_base_url=args.webhook_base_url,
         output_dir=args.output_dir,
         limit=args.limit,
-        modified_from=args.modified_from,
+        date_from=args.date_from,
+        date_to=args.date_to,
         deal_ids=args.deal_ids,
         skip_existing=args.skip_existing,
         exclude_system_messages=args.exclude_system_messages,

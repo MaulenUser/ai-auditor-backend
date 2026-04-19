@@ -5,6 +5,7 @@ import logging
 from dataclasses import dataclass
 from pathlib import Path
 
+from ..date_range import build_closed_filter
 from ..ports import BitrixGateway, JsonSink
 from .specs import ACTIVITY_SPEC, CRM_ENTITY_SPECS, EntityExportSpec
 
@@ -21,7 +22,8 @@ class CrmExportRequest:
     """
 
     output_dir: Path
-    modified_from: str | None = None
+    date_from: str | None = None
+    date_to: str | None = None
     skip_users: bool = False
     skip_activities: bool = False
     limit: int | None = None
@@ -47,13 +49,19 @@ class CrmExportService:
         if not request.skip_users:
             self._export_users(output_dir)
 
-        date_filter = self._build_filter(request.modified_from, field="DATE_MODIFY")
+        date_filter = build_closed_filter(
+            "DATE_MODIFY",
+            date_from=request.date_from,
+            date_to=request.date_to,
+        )
         for spec in CRM_ENTITY_SPECS:
             self._export_entity(spec, output_dir, date_filter, request.limit)
 
         if not request.skip_activities:
-            activity_filter = self._build_filter(
-                request.modified_from, field=ACTIVITY_SPEC.modified_field
+            activity_filter = build_closed_filter(
+                ACTIVITY_SPEC.modified_field,
+                date_from=request.date_from,
+                date_to=request.date_to,
             )
             self._export_entity(ACTIVITY_SPEC, output_dir, activity_filter, request.limit)
 
@@ -98,9 +106,3 @@ class CrmExportService:
             rows = rows[:limit]
         self._sink.write(output_dir / spec.output_file, rows)
         logger.info("%s exported: %d", spec.name, len(rows))
-
-    @staticmethod
-    def _build_filter(modified_from: str | None, field: str | None) -> dict[str, str]:
-        if modified_from and field:
-            return {f">={field}": modified_from}
-        return {}
