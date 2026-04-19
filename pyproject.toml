@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=42"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bitrix-ingest"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "requests>=2.31",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8",
+    "pytest-mock>=3",
+]
+
+[project.scripts]
+bitrix-export-crm            = "bitrix_ingest.cli.export_crm:main"
+bitrix-scan-call-records     = "bitrix_ingest.cli.scan_call_records:main"
+bitrix-export-whatsapp       = "bitrix_ingest.cli.export_whatsapp:main"
+bitrix-download-recordings   = "bitrix_ingest.cli.download_recordings:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
