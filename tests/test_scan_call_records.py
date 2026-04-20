@@ -137,3 +137,11 @@ class TestFilteringLogic:
         assert len(activities) == 10
         assert activities[0]["ID"] == "0"
         assert activities[-1]["ID"] == "9"
+
+    def test_limit_zero_keeps_full_first_page(self):
+        raw_activities = [{"ID": str(i)} for i in range(50)]
+        limit = 0
+        activities = raw_activities[:limit] if limit > 0 else raw_activities
+        assert len(activities) == 50
+        assert activities[0]["ID"] == "0"
+        assert activities[-1]["ID"] == "49"

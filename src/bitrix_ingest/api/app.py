@@ -178,7 +178,7 @@ def preview_audit(
     funnel_id: Optional[List[str]] = Query(None, description="ID воронок (можно несколько: ?funnel_id=2&funnel_id=4)"),
     date_from: Optional[str] = Query(None, description="Дата начала (ISO 8601)"),
     date_to: Optional[str] = Query(None, description="Дата конца (ISO 8601)"),
-    responsible_id: Optional[str] = Query(None, description="ID менеджера (пусто = весь отдел)"),
+    responsible_id: Optional[str] = Query(None, description="ID ответственного по сделке (ASSIGNED_BY_ID; пусто = весь отдел)"),
     webhook_url: str | None = Security(_whatsapp_webhook_header),
 ) -> dict[str, Any]:
     """Считает сколько обращений, сотрудников и сделок попадёт в аудит **без** запуска экспорта.
@@ -220,13 +220,14 @@ def run_audit(
     funnel_id: Optional[List[str]] = Form(None, description="ID воронок (можно несколько полей с одним именем)"),
     date_from: Optional[str] = Form(None, description="Дата начала анализа (ISO 8601)"),
     date_to: Optional[str] = Form(None, description="Дата конца анализа (ISO 8601)"),
-    responsible_id: Optional[str] = Form(None, description="ID менеджера (пусто = весь отдел)"),
+    responsible_id: Optional[str] = Form(None, description="ID ответственного по сделке (ASSIGNED_BY_ID; пусто = весь отдел)"),
     limit: int = Form(0, description="Лимит сделок (0 = все)"),
     model: str = Form("gpt-4o-mini", description="OpenAI модель для извлечения фич"),
     recommendations_model: str = Form("gpt-4o", description="OpenAI модель для рекомендаций"),
     source_label: Optional[str] = Form(None, description="Метка источника в отчёте"),
     output_dir: str = Form("export/audit", description="Базовая папка вывода"),
-    webhook_url: str | None = Security(_whatsapp_webhook_header),
+    crm_webhook_url: str | None = Security(_webhook_header),
+    whatsapp_webhook_url: str | None = Security(_whatsapp_webhook_header),
     openai_key: str | None = Security(_openai_key_header),
 ) -> dict[str, Any]:
     """Полный AI-аудит: WhatsApp-переписки → фичи → агрегат → рекомендации.
@@ -242,7 +243,7 @@ def run_audit(
     Результаты сохраняются в ``output_dir/whatsapp-timeline/``, ``output_dir/whatsapp-features/``,
     ``output_dir/analytics/``.
     """
-    bitrix_url = _require_webhook(webhook_url)
+    bitrix_url = _require_webhook(whatsapp_webhook_url)
     key = _require_openai_key(openai_key)
 
     clean_funnels = [f for f in (funnel_id or []) if _none(f)] or None
@@ -257,6 +258,9 @@ def run_audit(
             bitrix_gateway=BitrixClient(bitrix_url),
             responses_gateway=OpenAiResponsesClient(key),
             sink=sink,
+            call_gateway=BitrixClient(crm_webhook_url) if crm_webhook_url else None,
+            transcription_gateway=OpenAiTranscriptionClient(key) if crm_webhook_url else None,
+            file_downloader=RequestsFileDownloader() if crm_webhook_url else None,
         ).execute(
             RunAuditRequest(
                 output_dir=resolved_output,

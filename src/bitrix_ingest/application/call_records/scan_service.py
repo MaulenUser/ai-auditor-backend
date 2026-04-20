@@ -111,7 +111,7 @@ class CallRecordsScanService:
             label="crm.activity.list page 1 (start=0)",
         )
         raw_result: list[dict[str, Any]] = response.get("result") or []
-        activities = raw_result[:limit]
+        activities = raw_result[:limit] if limit > 0 else raw_result
         logger.info(
             "Loaded call activities: %d (page returned %d, limit=%d)",
             len(activities),

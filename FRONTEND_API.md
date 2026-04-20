@@ -251,9 +251,10 @@ body.set("date_to", "2024-04-30");
 body.set("responsible_id", ""); // пусто = весь отдел
 body.set("source_label", "Q1 2024 — Шымкент");
 
-const res = await fetch("http://localhost:8000/audit/run", {
+  const res = await fetch("http://localhost:8000/audit/run", {
   method: "POST",
   headers: {
+    "X-Webhook-Url": WEBHOOK_URL,
     "X-Whatsapp-Webhook-Url": WA_WEBHOOK_URL,
     "X-OpenAI-Api-Key": OPENAI_KEY,
     "Content-Type": "application/x-www-form-urlencoded",
@@ -562,3 +563,12 @@ Bitrix возвращает даты в формате:
 const date = new Date("2024-04-19T17:44:00+06:00");
 date.toLocaleDateString("ru-KZ"); // "19.04.2024"
 ```
+
+---
+
+## 10. Audit Preview Notes
+
+- `responsible_id` в `/audit/preview` и `/audit/run` — это ID ответственного по сделке (`ASSIGNED_BY_ID`), а не автор сообщения и не оператор OpenLines.
+- Для каскадного селекта на фронте используйте `scope_managers` из `/audit/preview`: это список ответственных, доступных в текущем `funnel_id + date_from/date_to` scope до применения `responsible_id`.
+- Если выбранный `responsible_id` не входит в текущую выборку, API вернёт `deal_count=0` и `warnings` с кодом `responsible_not_in_scope`.
+- Если у выбранного ответственного есть сделки, но среди них нет WhatsApp-сделок, API вернёт `warnings` с кодом `responsible_has_no_whatsapp_deals`.
