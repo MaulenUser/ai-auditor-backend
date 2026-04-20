@@ -1,7 +1,7 @@
 """RunAuditService — full AI audit pipeline in one call.
 
 Pipeline:
-  1. WhatsApp timeline export  (Bitrix API, filtered by funnel/period/manager)
+  1. WhatsApp Open Lines export  (Bitrix API, filtered by funnel/period/manager)
   2. WhatsApp feature extraction  (OpenAI)
   3. Feature aggregation  (local computation)
   4. Recommendation generation  (OpenAI)
@@ -71,7 +71,7 @@ class RunAuditRequest:
 
 
 class RunAuditService:
-    """Chains WhatsApp timeline → features → aggregate → recommendations."""
+    """Chains WhatsApp Open Lines → features → aggregate → recommendations."""
 
     def __init__(
         self,
@@ -142,29 +142,7 @@ class RunAuditService:
         request: RunAuditRequest,
         timeline_dir: Path,
     ) -> None:
-        logger.info("=== AUDIT STEP 1/4: WhatsApp timeline export ===")
-        WhatsAppTimelineExportService(
-            gateway=self._bitrix, sink=self._sink,
-        ).execute(
-            WhatsAppTimelineExportRequest(
-                output_dir=timeline_dir,
-                limit=request.limit,
-                date_from=request.date_from,
-                date_to=request.date_to,
-                category_ids=request.funnel_ids,
-                responsible_id=request.responsible_id,
-            )
-        )
-
-        timeline_summary = self._timeline_summary(timeline_dir)
-        if timeline_summary["rows_with_messages"] > 0:
-            return
-
-        logger.info(
-            "Timeline export returned %d deals but 0 message-bearing conversations. "
-            "Falling back to Open Lines export.",
-            timeline_summary["row_count"],
-        )
+        logger.info("=== AUDIT STEP 1/4: WhatsApp Open Lines export ===")
         WhatsAppExportService(
             gateway=self._bitrix, sink=self._sink,
         ).execute(
@@ -178,10 +156,32 @@ class RunAuditService:
                 responsible_id=request.responsible_id,
             )
         )
-        self._ensure_timeline_has_messages(timeline_dir)
 
-    def _ensure_timeline_has_messages(self, timeline_dir: Path) -> None:
-        summary = self._timeline_summary(timeline_dir)
+        conversation_summary = self._conversation_summary(timeline_dir)
+        if conversation_summary["rows_with_messages"] > 0:
+            return
+
+        logger.info(
+            "Open Lines export returned %d deals but 0 message-bearing conversations. "
+            "Falling back to timeline export.",
+            conversation_summary["row_count"],
+        )
+        WhatsAppTimelineExportService(
+            gateway=self._bitrix, sink=self._sink,
+        ).execute(
+            WhatsAppTimelineExportRequest(
+                output_dir=timeline_dir,
+                limit=request.limit,
+                date_from=request.date_from,
+                date_to=request.date_to,
+                category_ids=request.funnel_ids,
+                responsible_id=request.responsible_id,
+            )
+        )
+        self._ensure_conversations_have_messages(timeline_dir)
+
+    def _ensure_conversations_have_messages(self, timeline_dir: Path) -> None:
+        summary = self._conversation_summary(timeline_dir)
         if summary["row_count"] == 0:
             raise ValueError(
                 "No WhatsApp deals were exported for the selected filters."
@@ -194,11 +194,11 @@ class RunAuditService:
             "(0 messages). Audit cannot continue for the selected filters."
         )
 
-    def _timeline_summary(self, timeline_dir: Path) -> dict[str, int]:
+    def _conversation_summary(self, timeline_dir: Path) -> dict[str, int]:
         report_path = timeline_dir / "report.json"
         if not report_path.exists():
             raise ValueError(
-                f"WhatsApp timeline report was not created: {report_path}"
+                f"WhatsApp report was not created: {report_path}"
             )
 
         report = json.loads(report_path.read_text(encoding="utf-8"))

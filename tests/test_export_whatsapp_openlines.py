@@ -382,6 +382,75 @@ def test_lowercase_file_urls_are_exported_as_attachments(tmp_path):
     ]
 
 
+def test_build_conversation_uses_chat_id_when_dialog_session_id_is_zero(tmp_path):
+    gateway = _Gateway(
+        {
+            "imopenlines.crm.chat.get": [
+                {
+                    "result": [
+                        {
+                            "CHAT_ID": "41080",
+                            "CONNECTOR_ID": "wz_whatsapp_connector",
+                            "CONNECTOR_TITLE": "WAZZUP: WhatsApp",
+                        }
+                    ]
+                }
+            ],
+            "imopenlines.dialog.get": [
+                {
+                    "result": {
+                        "id": 41080,
+                        "name": ". - WhatsApp",
+                        "dialog_id": "chat41080",
+                        "entity_data_1": "Y|DEAL|28736|N|N|0|1776605548|0|0|0",
+                    }
+                }
+            ],
+            "imopenlines.session.history.get": [
+                {
+                    "result": {
+                        "sessionId": 0,
+                        "message": {
+                            "1": {
+                                "id": "1",
+                                "senderid": "21408",
+                                "date": "2026-04-19T16:32:30+03:00",
+                                "text": "Hello from client",
+                                "params": {},
+                            },
+                        },
+                        "users": {
+                            "21408": {
+                                "id": "21408",
+                                "name": "Client",
+                                "connector": True,
+                                "externalAuthId": "imconnector",
+                            }
+                        },
+                        "files": [],
+                    }
+                }
+            ],
+        }
+    )
+    service = WhatsAppExportService(gateway=gateway, sink=_Sink())
+    dirs = _OutputDirectories.prepare(tmp_path)
+
+    conversation = service._build_conversation_with_fallback(
+        _deal("28736"),
+        "28736",
+        dirs.paths_for("28736"),
+        include_system_messages=True,
+        date_from=None,
+        date_to=None,
+    )
+
+    assert conversation.chat_id == "41080"
+    assert conversation.session_id == ""
+    assert conversation.stats.total_messages == 1
+    assert gateway.calls[2]["body"] == {"CHAT_ID": 41080}
+
+
 def test_execute_can_exclude_system_messages_from_output(tmp_path):
     gateway = _Gateway(
         {

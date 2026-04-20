@@ -4,15 +4,16 @@ from __future__ import annotations
 import logging
 from typing import Any
 
-from ..date_range import build_closed_filter
+from ..date_range import build_closed_filter, within_datetime_range
 from ..ports import BitrixGateway
 from ..whatsapp.deal_filter import WhatsAppDealFilter
 
 logger = logging.getLogger(__name__)
 
-_DEAL_PREVIEW_SELECT = [
-    "ID", "TITLE", "SOURCE_ID", "ASSIGNED_BY_ID", "CATEGORY_ID", "DATE_MODIFY",
+_ITEM_DEAL_PREVIEW_SELECT = [
+    "id", "title", "sourceId", "assignedById", "categoryId", "createdTime", "updatedTime",
 ]
+_ITEM_DEAL_PREVIEW_ORDER = {"updatedTime": "DESC", "id": "DESC"}
 
 
 class GetCatalogService:
@@ -24,17 +25,29 @@ class GetCatalogService:
     # ------------------------------------------------------------------
 
     def get_funnels(self) -> list[dict[str, Any]]:
-        response = self._gateway.call("crm.dealcategory.list")
-        items = response.get("result") or []
+        response = self._gateway.call(
+            "crm.category.list",
+            body={"entityTypeId": 2},
+        )
+        items = (response.get("result") or {}).get("categories") or []
         rows = items if isinstance(items, list) else [items]
         funnels = []
         for row in rows:
             if not isinstance(row, dict):
                 continue
+            funnel_id = row.get("id")
+            if funnel_id is None:
+                funnel_id = row.get("ID")
+            name = row.get("name")
+            if name is None:
+                name = row.get("NAME")
+            sort = row.get("sort")
+            if sort is None:
+                sort = row.get("SORT")
             funnels.append({
-                "id": str(row.get("ID") or ""),
-                "name": str(row.get("NAME") or ""),
-                "sort": int(row.get("SORT") or 0),
+                "id": str(funnel_id or "") if funnel_id != 0 else "0",
+                "name": str(name or ""),
+                "sort": int(sort or 0),
             })
         logger.info("Funnels loaded: %d", len(funnels))
         return funnels
@@ -73,34 +86,31 @@ class GetCatalogService:
         responsible_id: str | None = None,
     ) -> dict[str, Any]:
         """Return deal/manager counts for the given filter without exporting data."""
-        scope_filter = build_closed_filter(
-            "DATE_MODIFY", date_from=date_from, date_to=date_to
-        )
-        clean_funnels = [f for f in (funnel_ids or []) if f]
-        if clean_funnels:
-            scope_filter["CATEGORY_ID"] = clean_funnels if len(clean_funnels) > 1 else clean_funnels[0]
-
-        scoped_deals = self._gateway.list_all(
-            "crm.deal.list",
-            select=_DEAL_PREVIEW_SELECT,
-            filter=scope_filter,
-            order={"DATE_MODIFY": "DESC"},
-            context="audit preview",
+        clean_funnels = list(dict.fromkeys(f for f in (funnel_ids or []) if f))
+        scoped_deals = self._load_preview_deals(
+            category_ids=clean_funnels or None,
+            date_from=date_from,
+            date_to=date_to,
         )
 
         wa_filter = WhatsAppDealFilter()
         scope_wa_deals = wa_filter.select_whatsapp_deals(scoped_deals)
-        filtered_deals = self._filter_by_responsible(scoped_deals, responsible_id)
+        filtered_deals = self._load_preview_deals(
+            category_ids=clean_funnels or None,
+            date_from=date_from,
+            date_to=date_to,
+            responsible_id=responsible_id,
+        ) if responsible_id else scoped_deals
         wa_deals = wa_filter.select_whatsapp_deals(filtered_deals)
 
         manager_index = self._build_manager_index()
         scope_manager_ids = self._collect_manager_ids(scope_wa_deals)
         manager_ids = self._collect_manager_ids(wa_deals)
-        dates: list[str] = []
-        for deal in wa_deals:
-            dm = str(deal.get("DATE_MODIFY") or "").strip()
-            if dm:
-                dates.append(dm)
+        dates = self._collect_scope_dates(
+            wa_deals,
+            date_from=date_from,
+            date_to=date_to,
+        )
 
         actual_from = min(dates) if dates else None
         actual_to = max(dates) if dates else None
@@ -156,21 +166,186 @@ class GetCatalogService:
             "warnings": warnings,
         }
 
+    def _load_preview_deals(
+        self,
+        *,
+        category_ids: list[str] | None,
+        date_from: str | None,
+        date_to: str | None,
+        responsible_id: str | None = None,
+    ) -> list[dict[str, Any]]:
+        if not category_ids:
+            return self._list_item_deals(
+                category_id=None,
+                date_from=date_from,
+                date_to=date_to,
+                responsible_id=responsible_id,
+                context="audit preview all funnels",
+            )
+
+        deals: list[dict[str, Any]] = []
+        for category_id in category_ids:
+            deals.extend(
+                self._list_item_deals(
+                    category_id=category_id,
+                    date_from=date_from,
+                    date_to=date_to,
+                    responsible_id=responsible_id,
+                    context=f"audit preview funnel {category_id}",
+                )
+            )
+        return deals
+
+    def _list_item_deals(
+        self,
+        *,
+        category_id: str | None,
+        date_from: str | None,
+        date_to: str | None,
+        responsible_id: str | None,
+        context: str,
+    ) -> list[dict[str, Any]]:
+        filter_ = self._build_item_filter(
+            category_id=category_id,
+            responsible_id=responsible_id,
+            date_from=date_from,
+            date_to=date_to,
+        )
+        deals: list[dict[str, Any]] = []
+        start = 0
+        page_num = 1
+
+        while True:
+            label = f"crm.item.list {context} page {page_num} (start={start})"
+            response = self._gateway.call(
+                "crm.item.list",
+                body={
+                    "entityTypeId": 2,
+                    "select": _ITEM_DEAL_PREVIEW_SELECT,
+                    "filter": filter_,
+                    "order": _ITEM_DEAL_PREVIEW_ORDER,
+                    "start": start,
+                },
+                label=label,
+            )
+
+            result = response.get("result") or {}
+            rows = (result.get("items") or []) if isinstance(result, dict) else []
+            if not isinstance(rows, list):
+                rows = [rows]
+
+            deals.extend(self._normalize_item_deal(row) for row in rows if isinstance(row, dict))
+            logger.info(
+                "%s: loaded %d rows, total %d",
+                label,
+                len(rows),
+                len(deals),
+            )
+
+            next_start = response.get("next")
+            if next_start is None:
+                logger.info(
+                    "crm.item.list %s pagination completed on page %d. Total rows: %d",
+                    context,
+                    page_num,
+                    len(deals),
+                )
+                return deals
+
+            start = int(next_start)
+            page_num += 1
+
+    @staticmethod
+    def _build_item_filter(
+        *,
+        category_id: str | None,
+        responsible_id: str | None,
+        date_from: str | None,
+        date_to: str | None,
+    ) -> dict[str, Any]:
+        filter_: dict[str, Any] = {}
+        if category_id is not None:
+            filter_["categoryId"] = GetCatalogService._coerce_numeric_id(category_id)
+        if responsible_id:
+            filter_["assignedById"] = GetCatalogService._coerce_numeric_id(responsible_id)
+
+        created_filter = build_closed_filter(
+            "createdTime",
+            date_from=date_from,
+            date_to=date_to,
+        )
+        updated_filter = build_closed_filter(
+            "updatedTime",
+            date_from=date_from,
+            date_to=date_to,
+        )
+        if created_filter and updated_filter:
+            filter_[0] = {
+                "logic": "OR",
+                0: created_filter,
+                1: updated_filter,
+            }
+        elif created_filter:
+            filter_.update(created_filter)
+        elif updated_filter:
+            filter_.update(updated_filter)
+        return filter_
+
+    @staticmethod
+    def _normalize_item_deal(row: dict[str, Any]) -> dict[str, Any]:
+        return {
+            "ID": GetCatalogService._stringify_value(row.get("id")),
+            "TITLE": str(row.get("title") or ""),
+            "SOURCE_ID": str(row.get("sourceId") or ""),
+            "ASSIGNED_BY_ID": GetCatalogService._stringify_value(row.get("assignedById")),
+            "CATEGORY_ID": GetCatalogService._stringify_value(row.get("categoryId")),
+            "DATE_CREATE": str(row.get("createdTime") or ""),
+            "DATE_MODIFY": str(row.get("updatedTime") or ""),
+        }
+
+    @staticmethod
+    def _coerce_numeric_id(value: str) -> int | str:
+        text = value.strip()
+        if text.isdigit():
+            return int(text)
+        return text
+
+    @staticmethod
+    def _stringify_value(value: Any) -> str:
+        if value is None:
+            return ""
+        return str(value)
+
+    @staticmethod
+    def _collect_scope_dates(
+        deals: list[dict[str, Any]],
+        *,
+        date_from: str | None,
+        date_to: str | None,
+    ) -> list[str]:
+        dates: list[str] = []
+        has_bounds = bool(date_from or date_to)
+        for deal in deals:
+            if has_bounds:
+                for field in ("DATE_CREATE", "DATE_MODIFY"):
+                    raw = str(deal.get(field) or "").strip()
+                    if raw and within_datetime_range(raw, date_from=date_from, date_to=date_to):
+                        dates.append(raw)
+                continue
+
+            dm = str(deal.get("DATE_MODIFY") or "").strip()
+            if dm:
+                dates.append(dm)
+                continue
+
+            dc = str(deal.get("DATE_CREATE") or "").strip()
+            if dc:
+                dates.append(dc)
+        return dates
+
     def _build_manager_index(self) -> dict[str, dict[str, str]]:
         managers = self.get_managers()
         return {m["id"]: m for m in managers}
-
-    @staticmethod
-    def _filter_by_responsible(
-        deals: list[dict[str, Any]],
-        responsible_id: str | None,
-    ) -> list[dict[str, Any]]:
-        if not responsible_id:
-            return deals
-        return [
-            deal for deal in deals
-            if str(deal.get("ASSIGNED_BY_ID") or "").strip() == responsible_id
-        ]
 
     @staticmethod
     def _collect_manager_ids(deals: list[dict[str, Any]]) -> set[str]:

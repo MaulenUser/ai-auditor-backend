@@ -70,7 +70,7 @@ def _write_report(output_dir: Path, *, total_messages: int, deal_id: str = "4933
     )
 
 
-def test_run_audit_falls_back_to_openlines_when_timeline_is_empty(tmp_path, monkeypatch):
+def test_run_audit_falls_back_to_timeline_when_openlines_is_empty(tmp_path, monkeypatch):
     import bitrix_ingest.application.audit.audit_service as audit_module
 
     timeline_calls: list[str] = []
@@ -78,11 +78,11 @@ def test_run_audit_falls_back_to_openlines_when_timeline_is_empty(tmp_path, monk
 
     def fake_timeline_execute(self, request):
         timeline_calls.append("timeline")
-        _write_report(Path(request.output_dir), total_messages=0)
+        _write_report(Path(request.output_dir), total_messages=3)
 
     def fake_openlines_execute(self, request):
         openlines_calls.append("openlines")
-        _write_report(Path(request.output_dir), total_messages=3)
+        _write_report(Path(request.output_dir), total_messages=0)
 
     def fake_features_execute(self, request):
         feature_dir = Path(request.output_dir)
@@ -122,21 +122,21 @@ def test_run_audit_falls_back_to_openlines_when_timeline_is_empty(tmp_path, monk
         )
     )
 
-    assert timeline_calls == ["timeline"]
     assert openlines_calls == ["openlines"]
+    assert timeline_calls == ["timeline"]
 
 
-def test_run_audit_raises_clear_error_when_timeline_and_openlines_are_empty(tmp_path, monkeypatch):
+def test_run_audit_raises_clear_error_when_openlines_and_timeline_are_empty(tmp_path, monkeypatch):
     import bitrix_ingest.application.audit.audit_service as audit_module
-
-    def fake_timeline_execute(self, request):
-        _write_report(Path(request.output_dir), total_messages=0)
 
     def fake_openlines_execute(self, request):
         _write_report(Path(request.output_dir), total_messages=0)
 
-    monkeypatch.setattr(audit_module.WhatsAppTimelineExportService, "execute", fake_timeline_execute)
+    def fake_timeline_execute(self, request):
+        _write_report(Path(request.output_dir), total_messages=0)
+
     monkeypatch.setattr(audit_module.WhatsAppExportService, "execute", fake_openlines_execute)
+    monkeypatch.setattr(audit_module.WhatsAppTimelineExportService, "execute", fake_timeline_execute)
 
     service = RunAuditService(
         bitrix_gateway=DummyGateway(),
@@ -160,8 +160,11 @@ def test_run_audit_executes_call_pipeline_when_crm_dependencies_are_present(tmp_
 
     call_steps: list[str] = []
 
-    def fake_timeline_execute(self, request):
+    def fake_openlines_execute(self, request):
         _write_report(Path(request.output_dir), total_messages=3)
+
+    def fail_if_timeline_called(self, request):  # pragma: no cover - assertion helper
+        raise AssertionError("Timeline export should not run when Open Lines already has messages")
 
     def fake_features_execute(self, request):
         feature_dir = Path(request.output_dir)
@@ -244,7 +247,8 @@ def test_run_audit_executes_call_pipeline_when_crm_dependencies_are_present(tmp_
         (feature_dir / "features" / "activity_101.json").write_text("{}", encoding="utf-8")
         (feature_dir / "errors.json").write_text("[]", encoding="utf-8")
 
-    monkeypatch.setattr(audit_module.WhatsAppTimelineExportService, "execute", fake_timeline_execute)
+    monkeypatch.setattr(audit_module.WhatsAppExportService, "execute", fake_openlines_execute)
+    monkeypatch.setattr(audit_module.WhatsAppTimelineExportService, "execute", fail_if_timeline_called)
     monkeypatch.setattr(audit_module.ExtractWhatsAppFeaturesService, "execute", fake_features_execute)
     monkeypatch.setattr(audit_module.AggregateFeatureService, "execute", fake_aggregate_execute)
     monkeypatch.setattr(audit_module.GenerateRecommendationsService, "execute", fake_recommendations_execute)
@@ -277,8 +281,11 @@ def test_run_audit_executes_call_pipeline_when_crm_dependencies_are_present(tmp_
 def test_run_audit_skips_call_pipeline_without_crm_webhook(tmp_path, monkeypatch):
     import bitrix_ingest.application.audit.audit_service as audit_module
 
-    def fake_timeline_execute(self, request):
+    def fake_openlines_execute(self, request):
         _write_report(Path(request.output_dir), total_messages=3)
+
+    def fail_if_timeline_called(self, request):  # pragma: no cover - assertion helper
+        raise AssertionError("Timeline export should not run when Open Lines already has messages")
 
     def fake_features_execute(self, request):
         feature_dir = Path(request.output_dir)
@@ -300,7 +307,8 @@ def test_run_audit_skips_call_pipeline_without_crm_webhook(tmp_path, monkeypatch
     def fail_if_called(self, request):  # pragma: no cover - assertion helper
         raise AssertionError("Call pipeline should be skipped when CRM webhook is absent")
 
-    monkeypatch.setattr(audit_module.WhatsAppTimelineExportService, "execute", fake_timeline_execute)
+    monkeypatch.setattr(audit_module.WhatsAppExportService, "execute", fake_openlines_execute)
+    monkeypatch.setattr(audit_module.WhatsAppTimelineExportService, "execute", fail_if_timeline_called)
     monkeypatch.setattr(audit_module.ExtractWhatsAppFeaturesService, "execute", fake_features_execute)
     monkeypatch.setattr(audit_module.AggregateFeatureService, "execute", fake_aggregate_execute)
     monkeypatch.setattr(audit_module.GenerateRecommendationsService, "execute", fake_recommendations_execute)

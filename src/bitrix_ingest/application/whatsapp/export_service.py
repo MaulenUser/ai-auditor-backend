@@ -17,7 +17,7 @@ from ...domain.whatsapp import (
     WhatsAppConversation,
     WhatsAppMessage,
 )
-from ..date_range import build_closed_filter, within_datetime_range
+from ..date_range import within_any_record_datetime_range, within_datetime_range
 from ..ports import BitrixGateway, JsonSink
 from .bbcode import BBCodeStripper
 from .deal_filter import WhatsAppDealFilter
@@ -209,11 +209,7 @@ class WhatsAppExportService:
         request: WhatsAppExportRequest,
         output_dir: Path,
     ) -> list[dict[str, Any]]:
-        deal_filter = build_closed_filter(
-            "DATE_MODIFY",
-            date_from=request.date_from,
-            date_to=request.date_to,
-        )
+        deal_filter: dict[str, Any] = {}
         clean = [f for f in (request.category_ids or []) if f]
         if clean:
             deal_filter["CATEGORY_ID"] = clean if len(clean) > 1 else clean[0]
@@ -273,6 +269,15 @@ class WhatsAppExportService:
             raw_deals_scanned += len(rows)
 
             page_whatsapp = self._deal_filter.select_whatsapp_deals(rows)
+            page_whatsapp = [
+                deal for deal in page_whatsapp
+                if within_any_record_datetime_range(
+                    deal,
+                    fields=("DATE_CREATE", "DATE_MODIFY"),
+                    date_from=request.date_from,
+                    date_to=request.date_to,
+                )
+            ]
             whatsapp_matches += len(page_whatsapp)
 
             if request.deal_ids:
@@ -483,9 +488,10 @@ class WhatsAppExportService:
         return result if isinstance(result, dict) else {}
 
     def _fetch_history(self, *, chat_id: str, session_id: str) -> dict[str, Any]:
+        normalized_session_id = session_id.strip()
         body = (
-            {"SESSION_ID": self._coerce_bitrix_id(session_id)}
-            if session_id
+            {"SESSION_ID": self._coerce_bitrix_id(normalized_session_id)}
+            if normalized_session_id and normalized_session_id != "0"
             else {"CHAT_ID": self._coerce_bitrix_id(chat_id)}
         )
         response = self._gateway.call(
@@ -871,7 +877,7 @@ class WhatsAppExportService:
     def _extract_session_id(dialog: dict[str, Any]) -> str:
         raw = str(dialog.get("entity_data_1") or dialog.get("entityData1") or "")
         parts = raw.split("|")
-        if len(parts) > 5 and parts[5]:
+        if len(parts) > 5 and parts[5] and parts[5] != "0":
             return parts[5]
         return ""
 

@@ -12,7 +12,7 @@ from pathlib import Path
 from typing import Any
 
 from ...domain.whatsapp import TimelineSource
-from ..date_range import build_closed_filter
+from ..date_range import within_any_record_datetime_range
 from ..ports import BitrixGateway, JsonSink
 from ..whatsapp.conversation_assembler import ConversationAssembler
 from ..whatsapp.deal_filter import WhatsAppDealFilter
@@ -151,9 +151,7 @@ class WhatsAppTimelineExportService:
     def _load_whatsapp_deals(
         self, request: WhatsAppTimelineExportRequest
     ) -> list[dict[str, Any]]:
-        deal_filter = build_closed_filter(
-            "DATE_MODIFY", date_from=request.date_from, date_to=request.date_to
-        )
+        deal_filter: dict[str, Any] = {}
         clean = [f for f in (request.category_ids or []) if f]
         if clean:
             deal_filter["CATEGORY_ID"] = clean if len(clean) > 1 else clean[0]
@@ -166,6 +164,15 @@ class WhatsAppTimelineExportService:
             order={"DATE_MODIFY": "DESC"},
             context="deals source",
         )
+        all_deals = [
+            deal for deal in all_deals
+            if within_any_record_datetime_range(
+                deal,
+                fields=("DATE_CREATE", "DATE_MODIFY"),
+                date_from=request.date_from,
+                date_to=request.date_to,
+            )
+        ]
         whatsapp = self._deal_filter.select_whatsapp_deals(all_deals)
         if request.deal_ids:
             whatsapp = self._deal_filter.restrict_to_allowlist(whatsapp, request.deal_ids)

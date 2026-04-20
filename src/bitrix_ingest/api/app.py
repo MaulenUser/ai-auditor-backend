@@ -95,7 +95,7 @@ def _none(value: str | None) -> str | None:
 
 def _require_webhook(header_url: str | None) -> str:
     if not header_url:
-        raise HTTPException(status_code=422, detail="Укажите X-Webhook-Url в Authorize.")
+        raise HTTPException(status_code=422, detail="Укажите X-Webhook-Url или X-Whatsapp-Webhook-Url в Authorize.")
     return header_url
 
 

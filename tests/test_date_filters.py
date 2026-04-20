@@ -5,9 +5,17 @@ from unittest.mock import MagicMock
 
 from bitrix_ingest.application.call_records import CallRecordsScanRequest, CallRecordsScanService
 from bitrix_ingest.application.crm import CrmExportRequest, CrmExportService
-from bitrix_ingest.application.date_range import build_closed_filter, within_datetime_range
+from bitrix_ingest.application.date_range import (
+    build_closed_filter,
+    within_any_record_datetime_range,
+    within_datetime_range,
+)
 from bitrix_ingest.application.whatsapp import WhatsAppExportRequest, WhatsAppExportService
 from bitrix_ingest.application.whatsapp.export_service import _OutputDirectories
+from bitrix_ingest.application.whatsapp_timeline import (
+    WhatsAppTimelineExportRequest,
+    WhatsAppTimelineExportService,
+)
 
 
 def test_build_closed_filter_includes_both_bounds():
@@ -29,6 +37,27 @@ def test_within_datetime_range_is_inclusive():
     )
     assert not within_datetime_range(
         "2026-05-01T00:00:00+03:00",
+        date_from="2026-04-01",
+        date_to="2026-04-30",
+    )
+
+
+def test_within_any_record_datetime_range_accepts_create_or_modify():
+    assert within_any_record_datetime_range(
+        {
+            "DATE_CREATE": "2026-04-10T12:00:00+03:00",
+            "DATE_MODIFY": "2025-12-01T12:00:00+03:00",
+        },
+        fields=("DATE_CREATE", "DATE_MODIFY"),
+        date_from="2026-04-01",
+        date_to="2026-04-30",
+    )
+    assert not within_any_record_datetime_range(
+        {
+            "DATE_CREATE": "2025-12-01T12:00:00+03:00",
+            "DATE_MODIFY": "2025-12-02T12:00:00+03:00",
+        },
+        fields=("DATE_CREATE", "DATE_MODIFY"),
         date_from="2026-04-01",
         date_to="2026-04-30",
     )
@@ -140,14 +169,39 @@ def test_whatsapp_deal_scan_applies_date_range_to_deals(tmp_path):
     gateway = _DealGateway(
         {
             0: {
-                "result": [],
+                "result": [
+                    {
+                        "ID": "51044",
+                        "TITLE": "WhatsApp lead",
+                        "CONTACT_ID": "64050",
+                        "SOURCE_ID": "WZ-1",
+                        "ASSIGNED_BY_ID": "5",
+                        "STAGE_ID": "NEW",
+                        "CATEGORY_ID": "0",
+                        "DATE_CREATE": "2026-04-10T12:00:00+03:00",
+                        "DATE_MODIFY": "2025-12-01T12:00:00+03:00",
+                        "LAST_COMMUNICATION_TIME": "2026-04-10T12:00:00+03:00",
+                    },
+                    {
+                        "ID": "51045",
+                        "TITLE": "WhatsApp lead old",
+                        "CONTACT_ID": "64051",
+                        "SOURCE_ID": "WZ-2",
+                        "ASSIGNED_BY_ID": "5",
+                        "STAGE_ID": "NEW",
+                        "CATEGORY_ID": "0",
+                        "DATE_CREATE": "2025-11-10T12:00:00+03:00",
+                        "DATE_MODIFY": "2025-12-01T12:00:00+03:00",
+                        "LAST_COMMUNICATION_TIME": "2025-12-01T12:00:00+03:00",
+                    },
+                ],
             }
         }
     )
     sink = MagicMock()
     service = WhatsAppExportService(gateway=gateway, sink=sink)
 
-    service._load_whatsapp_deals(
+    deals = service._load_whatsapp_deals(
         WhatsAppExportRequest(
             output_dir=tmp_path,
             limit=10,
@@ -157,10 +211,80 @@ def test_whatsapp_deal_scan_applies_date_range_to_deals(tmp_path):
         tmp_path,
     )
 
-    assert gateway.calls[0]["body"]["filter"] == {
-        ">=DATE_MODIFY": "2026-04-01T00:00:00",
-        "<=DATE_MODIFY": "2026-04-30T23:59:59",
-    }
+    assert [deal["ID"] for deal in deals] == ["51044"]
+    assert gateway.calls[0]["body"]["filter"] == {}
+
+
+class _TimelineGateway:
+    def __init__(self, deals: list[dict]) -> None:
+        self.deals = deals
+        self.list_calls: list[dict] = []
+
+    def list_all(
+        self,
+        method: str,
+        select: list[str],
+        filter: dict | None = None,
+        order: dict | None = None,
+        context: str = "",
+        limit: int | None = None,
+    ) -> list[dict]:
+        self.list_calls.append(
+            {
+                "method": method,
+                "select": select,
+                "filter": filter,
+                "order": order,
+                "context": context,
+                "limit": limit,
+            }
+        )
+        return list(self.deals)
+
+
+def test_timeline_export_selects_deals_by_create_or_modify_date(tmp_path):
+    gateway = _TimelineGateway(
+        [
+            {
+                "ID": "70001",
+                "TITLE": "WhatsApp lead",
+                "CONTACT_ID": "64050",
+                "SOURCE_ID": "WZ-1",
+                "ASSIGNED_BY_ID": "5",
+                "STAGE_ID": "NEW",
+                "CATEGORY_ID": "2",
+                "DATE_CREATE": "2026-04-10T12:00:00+03:00",
+                "DATE_MODIFY": "2025-12-01T12:00:00+03:00",
+                "LAST_COMMUNICATION_TIME": "2026-04-10T12:00:00+03:00",
+            },
+            {
+                "ID": "70002",
+                "TITLE": "WhatsApp old lead",
+                "CONTACT_ID": "64051",
+                "SOURCE_ID": "WZ-2",
+                "ASSIGNED_BY_ID": "5",
+                "STAGE_ID": "NEW",
+                "CATEGORY_ID": "2",
+                "DATE_CREATE": "2025-11-10T12:00:00+03:00",
+                "DATE_MODIFY": "2025-12-01T12:00:00+03:00",
+                "LAST_COMMUNICATION_TIME": "2025-12-01T12:00:00+03:00",
+            },
+        ]
+    )
+    sink = MagicMock()
+    service = WhatsAppTimelineExportService(gateway=gateway, sink=sink)
+
+    deals = service._load_whatsapp_deals(
+        WhatsAppTimelineExportRequest(
+            output_dir=tmp_path,
+            limit=10,
+            date_from="2026-04-01",
+            date_to="2026-04-30",
+        )
+    )
+
+    assert [deal["ID"] for deal in deals] == ["70001"]
+    assert gateway.list_calls[0]["filter"] == {}
 
 
 class _OpenlineGateway:

@@ -2,7 +2,9 @@
 from __future__ import annotations
 
 import re
+from collections.abc import Iterable, Mapping
 from datetime import datetime, timezone
+from typing import Any
 
 _PLAIN_DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 
@@ -61,6 +63,30 @@ def within_datetime_range(
     if upper is not None and parsed > upper:
         return False
     return True
+
+
+def within_any_record_datetime_range(
+    record: Mapping[str, Any],
+    *,
+    fields: Iterable[str],
+    date_from: str | None,
+    date_to: str | None,
+) -> bool:
+    lower = normalize_range_bound(date_from, end_of_day=False)
+    upper = normalize_range_bound(date_to, end_of_day=True)
+    if lower is None and upper is None:
+        return True
+
+    for field in fields:
+        raw = record.get(field)
+        if raw is None:
+            continue
+        text = str(raw).strip()
+        if not text:
+            continue
+        if within_datetime_range(text, date_from=date_from, date_to=date_to):
+            return True
+    return False
 
 
 def _parse_datetime(

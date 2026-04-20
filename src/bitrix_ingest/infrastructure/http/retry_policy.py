@@ -18,6 +18,9 @@ DEFAULT_TRANSIENT_KEYWORDS: tuple[str, ...] = (
     "timeout",
     "temporarily unavailable",
     "connection reset",
+    "connection aborted",
+    "remote end closed connection without response",
+    "remotedisconnected",
     "the remote server returned an error",
 )
 

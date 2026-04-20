@@ -156,6 +156,30 @@ class TestRetries:
         assert result == {"result": "ok"}
         assert session.post.call_count == 2
 
+    @pytest.mark.parametrize(
+        "message",
+        [
+            "('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))",
+            "Remote end closed connection without response",
+        ],
+    )
+    def test_retries_on_remote_disconnect_connection_errors(self, message: str):
+        session = MagicMock()
+
+        def raise_first_then_ok(*args, **kwargs):
+            if session.post.call_count == 1:
+                raise requests.ConnectionError(message)
+            return _make_ok_response({"result": "ok"})
+
+        session.post.side_effect = raise_first_then_ok
+        client = _client_with_session(session)
+
+        with patch("time.sleep"):
+            result = client.call("some.method")
+
+        assert result == {"result": "ok"}
+        assert session.post.call_count == 2
+
     def test_non_transient_connection_error_raises_immediately(self):
         session = MagicMock()
         session.post.side_effect = requests.ConnectionError("SSL certificate verify failed")
