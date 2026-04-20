@@ -63,6 +63,8 @@ class WhatsAppExportRequest:
     deal_ids: list[str] | None = None
     skip_existing: bool = False
     include_system_messages: bool = True
+    category_ids: list[str] | None = None  # None = all; list = OR across funnels
+    responsible_id: str | None = None
 
 
 @dataclass
@@ -212,6 +214,11 @@ class WhatsAppExportService:
             date_from=request.date_from,
             date_to=request.date_to,
         )
+        clean = [f for f in (request.category_ids or []) if f]
+        if clean:
+            deal_filter["CATEGORY_ID"] = clean if len(clean) > 1 else clean[0]
+        if request.responsible_id:
+            deal_filter["ASSIGNED_BY_ID"] = request.responsible_id
 
         whatsapp, raw_deals_scanned, whatsapp_matches = self._scan_whatsapp_deals(
             request=request,

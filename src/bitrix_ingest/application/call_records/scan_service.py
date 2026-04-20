@@ -32,6 +32,7 @@ class CallRecordsScanRequest:
     limit: int = 20
     date_from: str | None = None
     date_to: str | None = None
+    responsible_id: str | None = None
 
 
 @dataclass
@@ -66,6 +67,7 @@ class CallRecordsScanService:
             limit=request.limit,
             date_from=request.date_from,
             date_to=request.date_to,
+            responsible_id=request.responsible_id,
         )
         self._sink.write(output_dir / "activities.source.json", activities)
 
@@ -86,6 +88,7 @@ class CallRecordsScanService:
         limit: int,
         date_from: str | None,
         date_to: str | None,
+        responsible_id: str | None = None,
     ) -> list[dict[str, Any]]:
         filter_ = dict(_ACTIVITY_FILTER)
         filter_.update(
@@ -95,6 +98,8 @@ class CallRecordsScanService:
                 date_to=date_to,
             )
         )
+        if responsible_id:
+            filter_["RESPONSIBLE_ID"] = responsible_id
         response = self._gateway.call(
             "crm.activity.list",
             body={

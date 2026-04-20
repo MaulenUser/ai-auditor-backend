@@ -24,8 +24,14 @@ api = [
 bitrix-export-crm            = "bitrix_ingest.cli.export_crm:main"
 bitrix-scan-call-records     = "bitrix_ingest.cli.scan_call_records:main"
 bitrix-export-whatsapp       = "bitrix_ingest.cli.export_whatsapp:main"
-bitrix-download-recordings   = "bitrix_ingest.cli.download_recordings:main"
-bitrix-serve                 = "bitrix_ingest.cli.serve:main"
+bitrix-download-recordings       = "bitrix_ingest.cli.download_recordings:main"
+bitrix-export-whatsapp-timeline  = "bitrix_ingest.cli.export_whatsapp_timeline:main"
+bitrix-transcribe-recordings     = "bitrix_ingest.cli.transcribe_recordings:main"
+bitrix-extract-call-features     = "bitrix_ingest.cli.extract_call_features:main"
+bitrix-extract-whatsapp-features = "bitrix_ingest.cli.extract_whatsapp_features:main"
+bitrix-aggregate-features        = "bitrix_ingest.cli.aggregate_features:main"
+bitrix-generate-recommendations  = "bitrix_ingest.cli.generate_recommendations:main"
+bitrix-serve                     = "bitrix_ingest.cli.serve:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
