@@ -1,0 +1,189 @@
+{
+  "channel": "whatsapp",
+  "integration": "wazzup",
+  "deal_id": "50892",
+  "contact_id": "31142",
+  "company_id": "",
+  "deal_title": "Мадияр Мусаев - WhatsApp",
+  "source_id": "2|WZ_WHATSAPP_CB0C9F5C07DE8985B74A894B883C619C0",
+  "assigned_by_id": "28",
+  "stage_id": "LOSE",
+  "stage_semantic_id": "F",
+  "category_id": "0",
+  "date_create": "2026-04-17T11:48:37+03:00",
+  "date_modify": "2026-04-17T14:24:01+03:00",
+  "closedate": "2026-04-17T03:00:00+03:00",
+  "closed": "Y",
+  "last_communication_time": "2026-04-17T15:00:51",
+  "opportunity": "0.00000000",
+  "currency_id": "KZT",
+  "loss_reason_id": "",
+  "loss_comment": "",
+  "utm_source": "",
+  "utm_medium": "",
+  "utm_campaign": "",
+  "timeline_source": "deal",
+  "timeline_entity_type": "deal",
+  "timeline_entity_id": "50892",
+  "chat_id": "22040",
+  "session_id": "26196",
+  "dialog_id": "chat22040",
+  "connector_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0",
+  "connector_title": "WAZZUP: WhatsApp",
+  "chat_name": "Мадияр Мусаев - WhatsApp",
+  "stats": {
+    "total_messages": 10,
+    "effective_messages": 3,
+    "manager_messages": 1,
+    "client_messages": 2,
+    "system_messages": 7,
+    "messages_with_files": 5,
+    "first_message_at": "2026-04-17T11:48:37+03:00",
+    "last_message_at": "2026-04-17T22:42:51+03:00",
+    "first_manager_response_time_sec": 48.0,
+    "avg_response_latency_sec": 46.0,
+    "conversation_duration_hours": 10.903888888888888
+  },
+  "messages": [
+    {
+      "timeline_comment_id": "1069400",
+      "created_at": "2026-04-17T11:48:37+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Начат новый диалог №26196",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "50892"
+    },
+    {
+      "timeline_comment_id": "1069404",
+      "created_at": "2026-04-17T11:48:37+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Создана новая сделка",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "Мадияр Мусаев - WhatsApp",
+          "url": "/crm/deal/details/50892/"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "50892"
+    },
+    {
+      "timeline_comment_id": "1069406",
+      "created_at": "2026-04-17T11:48:37+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Контактная информация сохранена в контакт",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "Мадияр Мусаев Мусаев",
+          "url": "/crm/contact/details/31142/"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "50892"
+    },
+    {
+      "timeline_comment_id": "1069408",
+      "created_at": "2026-04-17T11:48:37+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Переданы дополнительные данные:\nСсылка на исходный пост: https://app.wazzup24.com/1826-6940/chat/whatsapp/77086709410/fc3e1d61-cd1c-4955-9345-b0f22b543020",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "Wazzup App",
+          "url": "https://app.wazzup24.com/1826-6940/chat/whatsapp/77086709410/fc3e1d61-cd1c-4955-9345-b0f22b543020"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "50892"
+    },
+    {
+      "timeline_comment_id": "1069410",
+      "created_at": "2026-04-17T11:48:38+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Обращение направлено на всех участников очереди",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "50892"
+    },
+    {
+      "timeline_comment_id": "1069412",
+      "created_at": "2026-04-17T11:48:38+03:00",
+      "author_id": "6360",
+      "sender_role": "client",
+      "sender_label": "Мадияр Мусаев Мусаев",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "0ede0959-fc8d-4cbc-adcf-57224f035c55.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231348&exact=N&fileName=0ede0959-fc8d-4cbc-adcf-57224f035c55.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50892"
+    },
+    {
+      "timeline_comment_id": "1069414",
+      "created_at": "2026-04-17T11:48:40+03:00",
+      "author_id": "6360",
+      "sender_role": "client",
+      "sender_label": "Мадияр Мусаев Мусаев",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "59a6c2ab-9980-4863-9c8b-f4bfc55ba4d8.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231350&exact=N&fileName=59a6c2ab-9980-4863-9c8b-f4bfc55ba4d8.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50892"
+    },
+    {
+      "timeline_comment_id": "1069416",
+      "created_at": "2026-04-17T11:49:26+03:00",
+      "author_id": "6360",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Сәлеметсіз бе! Сізге “SAPA PLAST” компаниясы жазып отыр. Терезе керек пе?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50892"
+    },
+    {
+      "timeline_comment_id": "1069514",
+      "created_at": "2026-04-17T12:51:49+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Обращение направлено на всех участников очереди",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "50892"
+    },
+    {
+      "timeline_comment_id": "1070146",
+      "created_at": "2026-04-17T22:42:51+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Обращение также направлено sapa.plast.bitrix@mail.ru",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "50892"
+    }
+  ]
+}

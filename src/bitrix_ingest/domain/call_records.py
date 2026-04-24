@@ -13,6 +13,8 @@ class CallScanRow:
     subject: str
     start_time: str
     responsible_id: str
+    owner_id: str
+    owner_type_id: str
     phone_number: str
     call_id: str
     call_duration: int
@@ -35,6 +37,8 @@ class CallScanRow:
             "SUBJECT": self.subject,
             "START_TIME": self.start_time,
             "RESPONSIBLE_ID": self.responsible_id,
+            "OWNER_ID": self.owner_id,
+            "OWNER_TYPE_ID": self.owner_type_id,
             "PHONE_NUMBER": self.phone_number,
             "CALL_ID": self.call_id,
             "CALL_DURATION": self.call_duration,

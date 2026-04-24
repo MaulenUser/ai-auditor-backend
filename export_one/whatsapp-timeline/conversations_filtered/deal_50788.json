@@ -1,0 +1,99 @@
+{
+  "channel": "whatsapp",
+  "integration": "wazzup",
+  "deal_id": "50788",
+  "contact_id": "63806",
+  "company_id": "",
+  "deal_title": "Didara - WhatsApp",
+  "source_id": "2|WZ_WHATSAPP_CB0C9F5C07DE8985B74A894B883C619C0",
+  "assigned_by_id": "9940",
+  "stage_id": "LOSE",
+  "stage_semantic_id": "F",
+  "category_id": "0",
+  "date_create": "2026-04-16T12:08:13+03:00",
+  "date_modify": "2026-04-16T12:10:41+03:00",
+  "closedate": "2026-04-16T03:00:00+03:00",
+  "closed": "Y",
+  "last_communication_time": "2026-04-16T14:08:51",
+  "opportunity": "0.00000000",
+  "currency_id": "KZT",
+  "loss_reason_id": "",
+  "loss_comment": "",
+  "utm_source": "",
+  "utm_medium": "",
+  "utm_campaign": "",
+  "timeline_source": "deal",
+  "timeline_entity_type": "deal",
+  "timeline_entity_id": "50788",
+  "chat_id": "64660",
+  "session_id": "26160",
+  "dialog_id": "chat64660",
+  "connector_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0",
+  "connector_title": "WAZZUP: WhatsApp",
+  "chat_name": "Didara - WhatsApp",
+  "stats": {
+    "total_messages": 10,
+    "effective_messages": 4,
+    "manager_messages": 2,
+    "client_messages": 2,
+    "system_messages": 6,
+    "messages_with_files": 4,
+    "first_message_at": "2026-04-16T12:08:11+03:00",
+    "last_message_at": "2026-04-17T22:42:50+03:00",
+    "first_manager_response_time_sec": 45.0,
+    "avg_response_latency_sec": 46.5,
+    "conversation_duration_hours": 34.5775
+  },
+  "messages": [
+    {
+      "timeline_comment_id": "1068118",
+      "created_at": "2026-04-16T12:08:14+03:00",
+      "author_id": "21324",
+      "sender_role": "client",
+      "sender_label": "Didara",
+      "text": "Саламатсызба, компания Алматыдама?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50788"
+    },
+    {
+      "timeline_comment_id": "1068120",
+      "created_at": "2026-04-16T12:08:59+03:00",
+      "author_id": "21324",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Сәлеметсіз бе! Сізге компания “SAPA PLAST” жазып отыр. Терезелер керек пе?\nИә, Алматыда филиалымыз бар: Немировича-Данченко 18е.\nЕсіміңіз кім болады?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50788"
+    },
+    {
+      "timeline_comment_id": "1068122",
+      "created_at": "2026-04-16T12:09:18+03:00",
+      "author_id": "21324",
+      "sender_role": "client",
+      "sender_label": "Didara",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "37a09590-f011-40fa-bdb6-ace0e0ea1b1a.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231166&exact=N&fileName=37a09590-f011-40fa-bdb6-ace0e0ea1b1a.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50788"
+    },
+    {
+      "timeline_comment_id": "1068124",
+      "created_at": "2026-04-16T12:10:06+03:00",
+      "author_id": "21324",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Түсіндім, ештеңе емес 🙂\nЕсіміңіз кім болады?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50788"
+    }
+  ]
+}

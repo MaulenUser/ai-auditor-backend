@@ -1,0 +1,144 @@
+{
+  "channel": "whatsapp",
+  "integration": "wazzup",
+  "deal_id": "51154",
+  "contact_id": "64152",
+  "company_id": "",
+  "deal_title": "Гость - WhatsApp",
+  "source_id": "2|WZ_WHATSAPP_CB0C9F5C07DE8985B74A894B883C619C0",
+  "assigned_by_id": "9940",
+  "stage_id": "NEW",
+  "stage_semantic_id": "P",
+  "category_id": "0",
+  "date_create": "2026-04-21T18:54:03+03:00",
+  "date_modify": "2026-04-21T18:54:11+03:00",
+  "closedate": "2026-04-28T03:00:00+03:00",
+  "closed": "N",
+  "last_communication_time": "2026-04-21T20:54:04",
+  "opportunity": "0.00000000",
+  "currency_id": "KZT",
+  "loss_reason_id": "",
+  "loss_comment": "",
+  "utm_source": "",
+  "utm_medium": "",
+  "utm_campaign": "",
+  "timeline_source": "deal",
+  "timeline_entity_type": "deal",
+  "timeline_entity_id": "51154",
+  "chat_id": "65222",
+  "session_id": "26328",
+  "dialog_id": "chat65222",
+  "connector_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0",
+  "connector_title": "WAZZUP: WhatsApp",
+  "chat_name": "Гость - WhatsApp",
+  "stats": {
+    "total_messages": 7,
+    "effective_messages": 2,
+    "manager_messages": 1,
+    "client_messages": 1,
+    "system_messages": 5,
+    "messages_with_files": 3,
+    "first_message_at": "2026-04-21T18:54:02+03:00",
+    "last_message_at": "2026-04-21T18:54:18+03:00",
+    "first_manager_response_time_sec": 13.0,
+    "avg_response_latency_sec": 13.0,
+    "conversation_duration_hours": 0.0044444444444444444
+  },
+  "messages": [
+    {
+      "timeline_comment_id": "1074104",
+      "created_at": "2026-04-21T18:54:02+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Начат новый диалог №26328",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "51154"
+    },
+    {
+      "timeline_comment_id": "1074108",
+      "created_at": "2026-04-21T18:54:04+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Создан новый контакт",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "Гость",
+          "url": "/crm/contact/details/64152/"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "51154"
+    },
+    {
+      "timeline_comment_id": "1074110",
+      "created_at": "2026-04-21T18:54:04+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Создана новая сделка",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "Гость - WhatsApp",
+          "url": "/crm/deal/details/51154/"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "51154"
+    },
+    {
+      "timeline_comment_id": "1074112",
+      "created_at": "2026-04-21T18:54:04+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Переданы дополнительные данные:\nСсылка на исходный пост: https://app.wazzup24.com/1826-6940/chat/whatsapp/77023795450/fc3e1d61-cd1c-4955-9345-b0f22b543020",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "Wazzup App",
+          "url": "https://app.wazzup24.com/1826-6940/chat/whatsapp/77023795450/fc3e1d61-cd1c-4955-9345-b0f22b543020"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "51154"
+    },
+    {
+      "timeline_comment_id": "1074114",
+      "created_at": "2026-04-21T18:54:05+03:00",
+      "author_id": "21474",
+      "sender_role": "client",
+      "sender_label": "Гость",
+      "text": "Сәлеметсіз бе, мен Тараздағы терезелердің құнын есептегім келеді\nhttps://www.instagram.com/p/DXY7zcOjAk1/",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "51154"
+    },
+    {
+      "timeline_comment_id": "1074116",
+      "created_at": "2026-04-21T18:54:10+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Обращение также направлено sapa.plast.bitrix@mail.ru",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "51154"
+    },
+    {
+      "timeline_comment_id": "1074118",
+      "created_at": "2026-04-21T18:54:18+03:00",
+      "author_id": "21474",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Сізге тез арада менеджер жауап береді",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "51154"
+    }
+  ]
+}

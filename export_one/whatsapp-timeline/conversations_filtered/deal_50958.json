@@ -1,0 +1,238 @@
+{
+  "channel": "whatsapp",
+  "integration": "wazzup",
+  "deal_id": "50958",
+  "contact_id": "63966",
+  "company_id": "",
+  "deal_title": "Алла жар болсын - WhatsApp",
+  "source_id": "2|WZ_WHATSAPP_CB0C9F5C07DE8985B74A894B883C619C0",
+  "assigned_by_id": "9940",
+  "stage_id": "LOSE",
+  "stage_semantic_id": "F",
+  "category_id": "0",
+  "date_create": "2026-04-18T08:02:42+03:00",
+  "date_modify": "2026-04-18T09:21:13+03:00",
+  "closedate": "2026-04-18T03:00:00+03:00",
+  "closed": "Y",
+  "last_communication_time": "2026-04-18T10:02:42",
+  "opportunity": "0.00000000",
+  "currency_id": "KZT",
+  "loss_reason_id": "",
+  "loss_comment": "",
+  "utm_source": "",
+  "utm_medium": "",
+  "utm_campaign": "",
+  "timeline_source": "deal",
+  "timeline_entity_type": "deal",
+  "timeline_entity_id": "50958",
+  "chat_id": "64860",
+  "session_id": "26220",
+  "dialog_id": "chat64860",
+  "connector_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0",
+  "connector_title": "WAZZUP: WhatsApp",
+  "chat_name": "Алла жар болсын - WhatsApp",
+  "stats": {
+    "total_messages": 22,
+    "effective_messages": 15,
+    "manager_messages": 8,
+    "client_messages": 7,
+    "system_messages": 7,
+    "messages_with_files": 7,
+    "first_message_at": "2026-04-18T08:02:41+03:00",
+    "last_message_at": "2026-04-18T13:25:50+03:00",
+    "first_manager_response_time_sec": 34.0,
+    "avg_response_latency_sec": 33.8,
+    "conversation_duration_hours": 5.385833333333333
+  },
+  "messages": [
+    {
+      "timeline_comment_id": "1070452",
+      "created_at": "2026-04-18T08:02:43+03:00",
+      "author_id": "21380",
+      "sender_role": "client",
+      "sender_label": "Алла жар болсын",
+      "text": "Сәлеметсіз бе, мен Түркістан қаласында терезелердің құнын есептегім келеді\nhttps://www.instagram.com/p/DW18Q6WgNzm/",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50958"
+    },
+    {
+      "timeline_comment_id": "1070454",
+      "created_at": "2026-04-18T08:03:17+03:00",
+      "author_id": "21380",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Сәлеметсіз бе! Сізге “SAPA PLAST” компаниясы жазып отыр. Айтыңызшы, сізге терезелер керек пе?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50958"
+    },
+    {
+      "timeline_comment_id": "1070456",
+      "created_at": "2026-04-18T08:04:02+03:00",
+      "author_id": "21380",
+      "sender_role": "client",
+      "sender_label": "Алла жар болсын",
+      "text": "Есептеп бересыздерма",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50958"
+    },
+    {
+      "timeline_comment_id": "1070458",
+      "created_at": "2026-04-18T08:04:47+03:00",
+      "author_id": "21380",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Әрине, есептейміз 🙂 Есіміңіз кім болады?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50958"
+    },
+    {
+      "timeline_comment_id": "1070462",
+      "created_at": "2026-04-18T08:05:02+03:00",
+      "author_id": "21380",
+      "sender_role": "client",
+      "sender_label": "Алла жар болсын",
+      "text": "Нурсултан",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50958"
+    },
+    {
+      "timeline_comment_id": "1070464",
+      "created_at": "2026-04-18T08:05:34+03:00",
+      "author_id": "21380",
+      "sender_role": "client",
+      "sender_label": "Алла жар болсын",
+      "text": "",
+      "attachments": [
+        {
+          "type": "image",
+          "label": "2d06bf24-e335-476e-8597-9bbc55e11c9a.jpeg",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231456&exact=N&_esd=xkSqvGxjK88FkTG17WirEifZ8hayYg6PNhZYuGhjyV8jv_D6Y1fDI4jSScIlHZRidDWsLPGhaeZAyUCluSKFoZo4ChmKwfnqAmVUUk0lLjvlPY-z3l_YG5kVj_dAD1ow2WcrBuXR3KVoXHuh3Nqdtldnl-XaAXovZlfx46zV7Yqr7NozyMZYf6el9hc%3D&fileName=2d06bf24-e335-476e-8597-9bbc55e11c9a.jpeg"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50958"
+    },
+    {
+      "timeline_comment_id": "1070466",
+      "created_at": "2026-04-18T08:05:34+03:00",
+      "author_id": "21380",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Нурсултан, қай қаладансыз?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50958"
+    },
+    {
+      "timeline_comment_id": "1070468",
+      "created_at": "2026-04-18T08:05:54+03:00",
+      "author_id": "21380",
+      "sender_role": "client",
+      "sender_label": "Алла жар болсын",
+      "text": "Туркестан",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50958"
+    },
+    {
+      "timeline_comment_id": "1070470",
+      "created_at": "2026-04-18T08:06:40+03:00",
+      "author_id": "21380",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Нурсултан, Түркістан қаласы дұрыс па?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50958"
+    },
+    {
+      "timeline_comment_id": "1070472",
+      "created_at": "2026-04-18T08:06:54+03:00",
+      "author_id": "21380",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Рахмет, Түркістан 🙂\nШамамен қанша терезе қажет?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50958"
+    },
+    {
+      "timeline_comment_id": "1070474",
+      "created_at": "2026-04-18T08:07:40+03:00",
+      "author_id": "21380",
+      "sender_role": "client",
+      "sender_label": "Алла жар болсын",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "acf4673a-4c9e-413f-8ae2-54c7d3ead7e4.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231458&exact=N&fileName=acf4673a-4c9e-413f-8ae2-54c7d3ead7e4.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50958"
+    },
+    {
+      "timeline_comment_id": "1070476",
+      "created_at": "2026-04-18T08:08:24+03:00",
+      "author_id": "21380",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Жақсы, 5 терезе екен.\nӘр терезенің шамамен өлшемін жаза аласыз ба: ені × биіктігі (см)?\nМысалы: 150 × 140 см.\nСонда м²-ін есептеп, бағаны аралығы бойынша шығарып берем.",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50958"
+    },
+    {
+      "timeline_comment_id": "1070916",
+      "created_at": "2026-04-18T13:15:00+03:00",
+      "author_id": "21380",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Саламатсыз ба",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50958"
+    },
+    {
+      "timeline_comment_id": "1070978",
+      "created_at": "2026-04-18T13:19:55+03:00",
+      "author_id": "21380",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "2b7b9240-8087-4a6d-af15-ef1c50f638c6.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231514&exact=N&fileName=2b7b9240-8087-4a6d-af15-ef1c50f638c6.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50958"
+    },
+    {
+      "timeline_comment_id": "1071014",
+      "created_at": "2026-04-18T13:25:50+03:00",
+      "author_id": "21380",
+      "sender_role": "client",
+      "sender_label": "Алла жар болсын",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "cae09695-048c-4dfd-a5d2-fcd02a905fd1.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231520&exact=N&fileName=cae09695-048c-4dfd-a5d2-fcd02a905fd1.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50958"
+    }
+  ]
+}

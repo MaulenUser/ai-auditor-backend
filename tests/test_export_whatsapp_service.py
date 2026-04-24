@@ -21,6 +21,7 @@ def _deal(
         "SOURCE_ID": source_id,
         "ASSIGNED_BY_ID": "1",
         "STAGE_ID": "NEW",
+        "STAGE_SEMANTIC_ID": "P",
         "CATEGORY_ID": "0",
         "DATE_CREATE": date_modify,
         "DATE_MODIFY": date_modify,

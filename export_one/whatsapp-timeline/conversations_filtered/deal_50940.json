@@ -1,0 +1,261 @@
+{
+  "channel": "whatsapp",
+  "integration": "wazzup",
+  "deal_id": "50940",
+  "contact_id": "56274",
+  "company_id": "",
+  "deal_title": "Курманбек Орынбасарович - WhatsApp",
+  "source_id": "2|WZ_WHATSAPP_CB0C9F5C07DE8985B74A894B883C619C0",
+  "assigned_by_id": "32",
+  "stage_id": "UC_4933UP",
+  "stage_semantic_id": "P",
+  "category_id": "0",
+  "date_create": "2026-04-17T22:03:30+03:00",
+  "date_modify": "2026-04-20T14:09:07+03:00",
+  "closedate": "2026-04-18T03:00:00+03:00",
+  "closed": "N",
+  "last_communication_time": "2026-04-18T11:24:02",
+  "opportunity": "0.00000000",
+  "currency_id": "KZT",
+  "loss_reason_id": "",
+  "loss_comment": "",
+  "utm_source": "",
+  "utm_medium": "",
+  "utm_campaign": "",
+  "timeline_source": "deal",
+  "timeline_entity_type": "deal",
+  "timeline_entity_id": "50940",
+  "chat_id": "64838",
+  "session_id": "26214",
+  "dialog_id": "chat64838",
+  "connector_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0",
+  "connector_title": "WAZZUP: WhatsApp",
+  "chat_name": "Курманбек Орынбасарович - WhatsApp",
+  "stats": {
+    "total_messages": 24,
+    "effective_messages": 16,
+    "manager_messages": 8,
+    "client_messages": 8,
+    "system_messages": 8,
+    "messages_with_files": 9,
+    "first_message_at": "2026-04-17T22:03:28+03:00",
+    "last_message_at": "2026-04-20T14:05:46+03:00",
+    "first_manager_response_time_sec": 38.0,
+    "avg_response_latency_sec": 42.666666666666664,
+    "conversation_duration_hours": 64.03833333333333
+  },
+  "messages": [
+    {
+      "timeline_comment_id": "1070012",
+      "created_at": "2026-04-17T22:03:32+03:00",
+      "author_id": "21374",
+      "sender_role": "client",
+      "sender_label": "Курманбек Орынбасарович Орынбасарович",
+      "text": "Кай кала\nhttps://fb.me/8RbUVewfQ",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50940"
+    },
+    {
+      "timeline_comment_id": "1070014",
+      "created_at": "2026-04-17T22:04:10+03:00",
+      "author_id": "21374",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Сәлеметсіз бе! Сізге “SAPA PLAST” компаниясы жазып отыр. Айтыңызшы, сізге терезелер керек пе?\n\nБізде екі қалада филиал бар: Шымкент — Бозарық 261/1, Алматы — Немировича-Данченко 18е.\n\nЕсіміңіз кім болады?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50940"
+    },
+    {
+      "timeline_comment_id": "1071507",
+      "created_at": "2026-04-19T11:49:58+03:00",
+      "author_id": "21374",
+      "sender_role": "client",
+      "sender_label": "Курманбек Орынбасарович Орынбасарович",
+      "text": "https://fb.me/4uIWXCJ2h",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "519468a3-0384-4f10-93dd-e0117164e6b4.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231571&exact=N&fileName=519468a3-0384-4f10-93dd-e0117164e6b4.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50940"
+    },
+    {
+      "timeline_comment_id": "1071509",
+      "created_at": "2026-04-19T11:50:23+03:00",
+      "author_id": "21374",
+      "sender_role": "client",
+      "sender_label": "Курманбек Орынбасарович Орынбасарович",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "304ee2f0-ca32-4010-bcbf-c5eed5261eba.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231573&exact=N&fileName=304ee2f0-ca32-4010-bcbf-c5eed5261eba.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50940"
+    },
+    {
+      "timeline_comment_id": "1071511",
+      "created_at": "2026-04-19T11:50:48+03:00",
+      "author_id": "21374",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Түсіндім. Біздің Шымкенттегі филиал: Бозарық 261/1. Алматыдағы филиал: Немировича-Данченко 18е.\n\nЕсіміңіз кім болады?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50940"
+    },
+    {
+      "timeline_comment_id": "1071513",
+      "created_at": "2026-04-19T11:51:19+03:00",
+      "author_id": "21374",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Қазір нақтылап, сізге қайта жазамын 🙂\n\nЕсіміңіз кім болады?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50940"
+    },
+    {
+      "timeline_comment_id": "1071515",
+      "created_at": "2026-04-19T11:51:28+03:00",
+      "author_id": "21374",
+      "sender_role": "client",
+      "sender_label": "Курманбек Орынбасарович Орынбасарович",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "9154417c-588d-45af-b3d1-cc5de65b2cd8.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231575&exact=N&fileName=9154417c-588d-45af-b3d1-cc5de65b2cd8.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50940"
+    },
+    {
+      "timeline_comment_id": "1071517",
+      "created_at": "2026-04-19T11:51:41+03:00",
+      "author_id": "21374",
+      "sender_role": "client",
+      "sender_label": "Курманбек Орынбасарович Орынбасарович",
+      "text": "Курманбек",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50940"
+    },
+    {
+      "timeline_comment_id": "1071521",
+      "created_at": "2026-04-19T11:52:41+03:00",
+      "author_id": "21374",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Сергей, түсіндім. Замер бойынша қазір нақтылап, сізге қайта жазамын 🙂\n\nҚай қаладансыз?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50940"
+    },
+    {
+      "timeline_comment_id": "1071527",
+      "created_at": "2026-04-19T11:56:20+03:00",
+      "author_id": "21374",
+      "sender_role": "client",
+      "sender_label": "Курманбек Орынбасарович Орынбасарович",
+      "text": "Жанакорган",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50940"
+    },
+    {
+      "timeline_comment_id": "1071529",
+      "created_at": "2026-04-19T11:57:11+03:00",
+      "author_id": "21374",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Рахмет, Жаңақорған екенсіз.\n\nШамамен қанша терезе керек?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50940"
+    },
+    {
+      "timeline_comment_id": "1071531",
+      "created_at": "2026-04-19T11:57:34+03:00",
+      "author_id": "21374",
+      "sender_role": "client",
+      "sender_label": "Курманбек Орынбасарович Орынбасарович",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "ba740c3b-9fa1-4657-b231-c21ea5a354fe.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231577&exact=N&fileName=ba740c3b-9fa1-4657-b231-c21ea5a354fe.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50940"
+    },
+    {
+      "timeline_comment_id": "1071533",
+      "created_at": "2026-04-19T11:58:10+03:00",
+      "author_id": "21374",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Сергей, түсіндім. Шамамен неше терезе керек? 🙂",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50940"
+    },
+    {
+      "timeline_comment_id": "1072880",
+      "created_at": "2026-04-20T12:45:54+03:00",
+      "author_id": "21374",
+      "sender_role": "client",
+      "sender_label": "Курманбек Орынбасарович Орынбасарович",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "cdf1dcb2-e3c6-4071-95b3-768c251604d8.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231800&exact=N&fileName=cdf1dcb2-e3c6-4071-95b3-768c251604d8.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50940"
+    },
+    {
+      "timeline_comment_id": "1072882",
+      "created_at": "2026-04-20T12:46:40+03:00",
+      "author_id": "21374",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Сейчас уточню и вернусь к вам 🙂\n\nОсы арада, шамамен неше терезе керек?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50940"
+    },
+    {
+      "timeline_comment_id": "1072918",
+      "created_at": "2026-04-20T14:05:46+03:00",
+      "author_id": "21374",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "fc4f917d-9aad-4d4a-806b-ba5face706e2.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231802&exact=N&fileName=fc4f917d-9aad-4d4a-806b-ba5face706e2.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50940"
+    }
+  ]
+}

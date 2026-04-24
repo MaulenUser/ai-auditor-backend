@@ -1,0 +1,288 @@
+{
+  "channel": "whatsapp",
+  "integration": "wazzup",
+  "deal_id": "43868",
+  "contact_id": "57492",
+  "company_id": "",
+  "deal_title": "~ЛП 170 - WhatsApp",
+  "source_id": "2|WZ_WHATSAPP_CB0C9F5C07DE8985B74A894B883C619C0",
+  "assigned_by_id": "32",
+  "stage_id": "LOSE",
+  "stage_semantic_id": "F",
+  "category_id": "0",
+  "date_create": "2025-12-16T23:00:57+03:00",
+  "date_modify": "2026-04-21T09:54:49+03:00",
+  "closedate": "2026-04-21T03:00:00+03:00",
+  "closed": "Y",
+  "last_communication_time": "2025-12-17T01:00:58",
+  "opportunity": "0.00000000",
+  "currency_id": "KZT",
+  "loss_reason_id": "",
+  "loss_comment": "",
+  "utm_source": "",
+  "utm_medium": "",
+  "utm_campaign": "",
+  "timeline_source": "deal",
+  "timeline_entity_type": "deal",
+  "timeline_entity_id": "43868",
+  "chat_id": "55928",
+  "session_id": "23032",
+  "dialog_id": "chat55928",
+  "connector_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0",
+  "connector_title": "WAZZUP: WhatsApp",
+  "chat_name": "~ЛП 170 - WhatsApp",
+  "stats": {
+    "total_messages": 19,
+    "effective_messages": 10,
+    "manager_messages": 4,
+    "client_messages": 6,
+    "system_messages": 9,
+    "messages_with_files": 5,
+    "first_message_at": "2025-12-16T23:00:56+03:00",
+    "last_message_at": "2026-01-17T16:52:53+03:00",
+    "first_manager_response_time_sec": 6.0,
+    "avg_response_latency_sec": 18617.333333333332,
+    "conversation_duration_hours": 761.8658333333333
+  },
+  "messages": [
+    {
+      "timeline_comment_id": "953770",
+      "created_at": "2025-12-16T23:00:56+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Начат новый диалог №23032",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "43868"
+    },
+    {
+      "timeline_comment_id": "953774",
+      "created_at": "2025-12-16T23:00:58+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Создан новый контакт",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "~ЛП 170",
+          "url": "/crm/contact/details/57492/"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "43868"
+    },
+    {
+      "timeline_comment_id": "953776",
+      "created_at": "2025-12-16T23:00:58+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Создана новая сделка",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "~ЛП 170 - WhatsApp",
+          "url": "/crm/deal/details/43868/"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "43868"
+    },
+    {
+      "timeline_comment_id": "953778",
+      "created_at": "2025-12-16T23:00:58+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Переданы дополнительные данные:\nСсылка на исходный пост: https://app.wazzup24.com/1826-6940/chat/whatsapp/77089431084/fc3e1d61-cd1c-4955-9345-b0f22b543020",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "Wazzup App",
+          "url": "https://app.wazzup24.com/1826-6940/chat/whatsapp/77089431084/fc3e1d61-cd1c-4955-9345-b0f22b543020"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "43868"
+    },
+    {
+      "timeline_comment_id": "953780",
+      "created_at": "2025-12-16T23:00:58+03:00",
+      "author_id": "18740",
+      "sender_role": "client",
+      "sender_label": "~ЛП 170",
+      "text": "Здравствуйте, я хочу рассчитать стоимость окон в Алматы\nhttps://www.instagram.com/p/DSPhQHfjC0S/",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "43868"
+    },
+    {
+      "timeline_comment_id": "953782",
+      "created_at": "2025-12-16T23:01:04+03:00",
+      "author_id": "18740",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Сапа пласт компаниясына хабарласқаныңыз үшін рақмет!\nБізден үйіңіздің сәнін келтіретін сапалы терезелер мен есіктер тапсырыс бере аласыз. Сізбен біздің менеджер хабарласады.\n\nСпасибо за обращение в Компания Sapaplast Окна и Двери! У нас можете заказать качественные окна для вашего дома. С вами скоро свяжется менеджер, пока можете ознакомиться с нашим инстаграмом:\nhttps://www.instagram.com/sapaplast.kz",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "43868"
+    },
+    {
+      "timeline_comment_id": "953784",
+      "created_at": "2025-12-16T23:01:10+03:00",
+      "author_id": "18740",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Здравствуйте, отправьте примерные размеры или общую квадратуру окон.",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "43868"
+    },
+    {
+      "timeline_comment_id": "953802",
+      "created_at": "2025-12-16T23:04:26+03:00",
+      "author_id": "18740",
+      "sender_role": "client",
+      "sender_label": "~ЛП 170",
+      "text": "150 на 150 2окна 150 на 130 3окна 150 на 100 2 окна примерно 150 на 60 3 окна",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "43868"
+    },
+    {
+      "timeline_comment_id": "953836",
+      "created_at": "2025-12-17T07:35:07+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Обращение направлено на Эсмиральда Шымкент менеджер SP",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "43868"
+    },
+    {
+      "timeline_comment_id": "954048",
+      "created_at": "2025-12-17T09:36:49+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Обращение направлено на всех участников очереди",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "43868"
+    },
+    {
+      "timeline_comment_id": "954084",
+      "created_at": "2025-12-17T09:54:45+03:00",
+      "author_id": "18740",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Эсмиральда Шымкент менеджер SP)",
+      "text": "Здравствуйте!Какой цвет хотите,",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "43868"
+    },
+    {
+      "timeline_comment_id": "954094",
+      "created_at": "2025-12-17T09:55:15+03:00",
+      "author_id": "18740",
+      "sender_role": "client",
+      "sender_label": "~ЛП 170",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "6a235784-eb28-479d-b6ff-01843d117739.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=209214&exact=N&fileName=6a235784-eb28-479d-b6ff-01843d117739.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "43868"
+    },
+    {
+      "timeline_comment_id": "954096",
+      "created_at": "2025-12-17T09:55:33+03:00",
+      "author_id": "18740",
+      "sender_role": "client",
+      "sender_label": "~ЛП 170",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "c1b7a3dc-684d-42a9-90c8-d06fce62ba7a.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=209216&exact=N&fileName=c1b7a3dc-684d-42a9-90c8-d06fce62ba7a.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "43868"
+    },
+    {
+      "timeline_comment_id": "954098",
+      "created_at": "2025-12-17T09:56:01+03:00",
+      "author_id": "18740",
+      "sender_role": "client",
+      "sender_label": "~ЛП 170",
+      "text": "Здравствуйте",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "43868"
+    },
+    {
+      "timeline_comment_id": "954398",
+      "created_at": "2025-12-17T14:36:28+03:00",
+      "author_id": "18740",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Эсмиральда Шымкент менеджер SP)",
+      "text": "да есть",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "43868"
+    },
+    {
+      "timeline_comment_id": "954586",
+      "created_at": "2025-12-17T16:51:11+03:00",
+      "author_id": "18740",
+      "sender_role": "client",
+      "sender_label": "~ЛП 170",
+      "text": "Вот такие надо по цена столько будет",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "43868"
+    },
+    {
+      "timeline_comment_id": "963160",
+      "created_at": "2025-12-25T19:18:04+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "У Жандос Менеджер Алматы начался рабочий день. Теперь этот оператор тоже может видеть обращение",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "43868"
+    },
+    {
+      "timeline_comment_id": "966488",
+      "created_at": "2026-01-10T07:39:13+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "У Әсет Шымкент менеджер SP начался рабочий день. Теперь этот оператор тоже может видеть обращение",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "43868"
+    },
+    {
+      "timeline_comment_id": "977146",
+      "created_at": "2026-01-17T16:52:53+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Автоматическое завершение диалога",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "43868"
+    }
+  ]
+}

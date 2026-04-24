@@ -52,6 +52,8 @@ class TestCallScanRowToDict:
             subject="Call subject",
             start_time="2024-01-01T10:00:00",
             responsible_id="5",
+            owner_id="51044",
+            owner_type_id="2",
             phone_number="+7000000000",
             call_id="CALL-001",
             call_duration=60,
@@ -70,6 +72,7 @@ class TestCallScanRowToDict:
         d = self._row().to_dict()
         expected_keys = {
             "CRM_ACTIVITY_ID", "SUBJECT", "START_TIME", "RESPONSIBLE_ID",
+            "OWNER_ID", "OWNER_TYPE_ID",
             "PHONE_NUMBER", "CALL_ID", "CALL_DURATION", "RECORD_DURATION",
             "CALL_RECORD_URL", "RECORD_FILE_ID", "TRANSCRIPT_ID",
             "CALL_FAILED_CODE", "CALL_FAILED_REASON", "HAS_RECORDING",
@@ -101,6 +104,7 @@ class TestFilteringLogic:
         def row(**kw) -> CallScanRow:
             defaults = dict(
                 crm_activity_id="1", subject="", start_time="", responsible_id="",
+                owner_id="", owner_type_id="",
                 phone_number="", call_id="", call_duration=0, record_duration=0,
                 call_record_url="", record_file_id="", transcript_id="",
                 call_failed_code="", call_failed_reason="", has_recording=False,

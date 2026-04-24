@@ -1,0 +1,1558 @@
+{
+  "binding": {
+    "timeline_source": "deal",
+    "timeline_entity_type": "deal",
+    "timeline_entity_id": "50910",
+    "chat_id": "64816",
+    "connector_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0",
+    "connector_title": "WAZZUP: WhatsApp"
+  },
+  "dialog": {
+    "id": 64816,
+    "parent_chat_id": 0,
+    "parent_message_id": 0,
+    "name": "G - WhatsApp",
+    "description": "Ссылка на исходный пост: https://app.wazzup24.com/1826-6940/chat/whatsapp/77787885597/fc3e1d61-cd1c-4955-9345-b0f22b543020",
+    "owner": 0,
+    "extranet": false,
+    "avatar": "",
+    "color": "#ab7761",
+    "type": "lines",
+    "counter": 0,
+    "user_counter": 1,
+    "message_count": 56,
+    "unread_id": 0,
+    "restrictions": {
+      "avatar": true,
+      "rename": true,
+      "extend": true,
+      "call": true,
+      "mute": true,
+      "leave": true,
+      "leave_owner": true,
+      "send": true,
+      "user_list": true
+    },
+    "last_message_id": 1070480,
+    "last_id": 0,
+    "marked_id": 0,
+    "disk_folder_id": 231382,
+    "entity_type": "LINES",
+    "entity_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|dd1203f2-a784-4b52-aa54-cab1fda953c4|21360",
+    "entity_data_1": "Y|DEAL|50910|N|N|26200|1776426304|0|0|0",
+    "entity_data_2": "LEAD|0|COMPANY|0|CONTACT|63924|DEAL|50910",
+    "entity_data_3": "",
+    "mute_list": [],
+    "date_create": "2026-04-17T14:45:04+03:00",
+    "message_type": "L",
+    "public": "",
+    "role": "guest",
+    "entity_link": {
+      "type": "LINES",
+      "url": "",
+      "id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|dd1203f2-a784-4b52-aa54-cab1fda953c4|21360"
+    },
+    "text_field_enabled": true,
+    "background_id": null,
+    "permissions": {
+      "manage_users_add": "member",
+      "manage_users_delete": "manager",
+      "manage_ui": "member",
+      "manage_settings": "owner",
+      "manage_messages": "member",
+      "can_post": "member"
+    },
+    "is_new": false,
+    "readed_list": [
+      {
+        "user_id": 21360,
+        "user_name": "G",
+        "message_id": 1069674,
+        "date": null
+      }
+    ],
+    "manager_list": [],
+    "last_message_views": {
+      "message_id": 1070480,
+      "first_viewers": [],
+      "count_of_viewers": 0
+    },
+    "dialog_id": "chat64816"
+  },
+  "history": {
+    "chatId": 64816,
+    "canJoin": "Y",
+    "canVoteHead": "Y",
+    "sessionId": 26200,
+    "sessionVoteHead": 0,
+    "sessionCommentHead": null,
+    "userId": "chat64816",
+    "message": {
+      "1070480": {
+        "id": "1070480",
+        "chatid": "64816",
+        "senderid": "0",
+        "recipientid": "chat64816",
+        "date": "2026-04-18T08:13:02+03:00",
+        "text": "Обращение также направлено [USER=36 REPLACE]Аружан Шымкент менеджер SP[/USER]",
+        "textlegacy": "Обращение также направлено [USER=36 REPLACE]Аружан Шымкент менеджер SP[/USER]",
+        "params": {
+          "notify": "N"
+        }
+      },
+      "1070150": {
+        "id": "1070150",
+        "chatid": "64816",
+        "senderid": "0",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T22:42:52+03:00",
+        "text": "Обращение также направлено [USER=1 REPLACE]sapa.plast.bitrix@mail.ru[/USER]",
+        "textlegacy": "Обращение также направлено [USER=1 REPLACE]sapa.plast.bitrix@mail.ru[/USER]",
+        "params": {
+          "notify": "N"
+        }
+      },
+      "1069804": {
+        "id": "1069804",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T15:15:58+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nЖарайды, алдын ала есеп осылай болады. 25 терезені орташа 2 м² деп алсақ → жалпы 50 м².\n\nЭконом серия (Артек профиль, орех түсі):\n- 2-камерліге жақын төменгі шек: 50 м² × 40 000 = ≈ 2 000 000 тг\n- 3-камерліге жақын жоғарғы шек: 50 м² × 60 000 = ≈ 3 000 000 тг\n\nНақтысы өлшемге қарай шығады. Шоурумда тез нақтылап берем: Алматы, Немировича-Данченко 18е. Қай күн ыңғайлы — бүгін кешке әлде ертең?",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Жарайды, алдын ала есеп осылай болады. 25 терезені орташа 2 м² деп алсақ → жалпы 50 м².<br /><br />Эконом серия (Артек профиль, орех түсі):<br />- 2-камерліге жақын төменгі шек: 50 м² × 40 000 = ≈ 2 000 000 тг<br />- 3-камерліге жақын жоғарғы шек: 50 м² × 60 000 = ≈ 3 000 000 тг<br /><br />Нақтысы өлшемге қарай шығады. Шоурумда тез нақтылап берем: Алматы, Немировича-Данченко 18е. Қай күн ыңғайлы — бүгін кешке әлде ертең?",
+        "params": {
+          "connectorMid": [
+            "82b33bbd-8338-414a-9b4f-73f1792e3305"
+          ]
+        }
+      },
+      "1069802": {
+        "id": "1069802",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T15:15:08+03:00",
+        "text": "Предварительно",
+        "textlegacy": "Предварительно",
+        "params": {
+          "connectorMid": [
+            "55533de9-19fc-47e7-b502-88b417b8d971"
+          ]
+        }
+      },
+      "1069800": {
+        "id": "1069800",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T15:15:07+03:00",
+        "text": "Осымен есептеп жиберикши",
+        "textlegacy": "Осымен есептеп жиберикши",
+        "params": {
+          "connectorMid": [
+            "a9959ba6-62c7-4e75-99cd-2d3c0c5a3611"
+          ]
+        }
+      },
+      "1069796": {
+        "id": "1069796",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T15:14:16+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nДаурен, эконом серия бойынша:\n- 2 не 3 камера — 40 000–60 000 тг/м² (3 камера әдетте жоғарғы шекке жақын). Орех түсі бар.  \nМысал үшін: орташа 1 терезе 2 м² деп алсақ → 1 терезе 80–120 мың, 25 терезе ≈ 2 000 000–3 000 000 тг. Нақтысы өлшемге қарай шығады.\n\nАлматылық шоурумда эскизбен бірге нақтылап есептеп берейік. Қай күн ыңғайлы: бүгін кешке не ертең?",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Даурен, эконом серия бойынша:<br />- 2 не 3 камера — 40 000–60 000 тг/м² (3 камера әдетте жоғарғы шекке жақын). Орех түсі бар. &nbsp;<br />Мысал үшін: орташа 1 терезе 2 м² деп алсақ → 1 терезе 80–120 мың, 25 терезе ≈ 2 000 000–3 000 000 тг. Нақтысы өлшемге қарай шығады.<br /><br />Алматылық шоурумда эскизбен бірге нақтылап есептеп берейік. Қай күн ыңғайлы: бүгін кешке не ертең?",
+        "params": {
+          "connectorMid": [
+            "913dffaa-7282-46df-b52f-03ad570578f3"
+          ]
+        }
+      },
+      "1069794": {
+        "id": "1069794",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T15:13:17+03:00",
+        "text": "Корик есептеп",
+        "textlegacy": "Корик есептеп",
+        "params": {
+          "connectorMid": [
+            "012733cf-9d76-41cc-87a4-1fad471c07f4"
+          ]
+        }
+      },
+      "1069792": {
+        "id": "1069792",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T15:13:16+03:00",
+        "text": "2 канша болад 3 канша болад",
+        "textlegacy": "2 канша болад 3 канша болад",
+        "params": {
+          "connectorMid": [
+            "4db4d231-e325-4621-b658-54ae563be42b"
+          ]
+        }
+      },
+      "1069790": {
+        "id": "1069790",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T15:11:51+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nТүсіндім. Эконом серия: 40 000–60 000 тг/м². Профиль — тек Артек (неміс сапасы). Орех түсі болады.\n\nСтеклопакет екікамерлі ме, әлде үшкамерлі ме?",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Түсіндім. Эконом серия: 40 000–60 000 тг/м². Профиль — тек Артек (неміс сапасы). Орех түсі болады.<br /><br />Стеклопакет екікамерлі ме, әлде үшкамерлі ме?",
+        "params": {
+          "connectorMid": [
+            "c826f87b-6bc3-4520-846b-aa8aa9cca088"
+          ]
+        }
+      },
+      "1069788": {
+        "id": "1069788",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T15:10:44+03:00",
+        "text": "Цвет орех",
+        "textlegacy": "Цвет орех",
+        "params": {
+          "connectorMid": [
+            "12623a3e-1208-4f35-a416-ed7e5347b7ef"
+          ]
+        }
+      },
+      "1069786": {
+        "id": "1069786",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T15:10:43+03:00",
+        "text": "Канша слойный",
+        "textlegacy": "Канша слойный",
+        "params": {
+          "connectorMid": [
+            "59d73509-6806-4767-989f-8813d3d9ead0"
+          ]
+        }
+      },
+      "1069784": {
+        "id": "1069784",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T15:10:34+03:00",
+        "text": "Канша камерный",
+        "textlegacy": "Канша камерный",
+        "params": {
+          "connectorMid": [
+            "9ff93101-9fa2-425e-a213-765d578b15f7"
+          ]
+        }
+      },
+      "1069782": {
+        "id": "1069782",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T15:10:26+03:00",
+        "text": "Эконом",
+        "textlegacy": "Эконом",
+        "params": {
+          "connectorMid": [
+            "3f681f33-c697-45e2-88ba-50cb74f6a931"
+          ]
+        }
+      },
+      "1069778": {
+        "id": "1069778",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T15:09:52+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nТүсінемін. Бізде баға м² бойынша:\n- Эконом: 40 000–60 000 тг/м²\n- Премиум (неміс профилі): 70 000–95 000 тг/м²\nКачество полностью соответствует цене 🤍\n\nҚай серияны қарайсыз: эконом ба, әлде премиум ба?",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Түсінемін. Бізде баға м² бойынша:<br />- Эконом: 40 000–60 000 тг/м²<br />- Премиум (неміс профилі): 70 000–95 000 тг/м²<br />Качество полностью соответствует цене 🤍<br /><br />Қай серияны қарайсыз: эконом ба, әлде премиум ба?",
+        "params": {
+          "connectorMid": [
+            "66a8f84d-f8b6-468a-a0f7-61abb2f4e9e7"
+          ]
+        }
+      },
+      "1069776": {
+        "id": "1069776",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T15:09:01+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nТүсіндім, Даурен. Дәл смета үшін өлшем керек. Ең оңайы — бір терезенің енін және биіктігін шамамен өлшеп (мысалы, 160×210 см) жібере салыңыз, соның негізінде 25 терезеге алдын ала есеп шығарып берем.\n\nҚай түсті қарайсыз: ақ, комбинирленген әлде түсті?",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Түсіндім, Даурен. Дәл смета үшін өлшем керек. Ең оңайы — бір терезенің енін және биіктігін шамамен өлшеп (мысалы, 160×210 см) жібере салыңыз, соның негізінде 25 терезеге алдын ала есеп шығарып берем.<br /><br />Қай түсті қарайсыз: ақ, комбинирленген әлде түсті?",
+        "params": {
+          "connectorMid": [
+            "e157f695-8b02-4950-864d-99001d1d6db0"
+          ]
+        }
+      },
+      "1069774": {
+        "id": "1069774",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T15:08:28+03:00",
+        "text": "Просто аркайссыныки артурли бага",
+        "textlegacy": "Просто аркайссыныки артурли бага",
+        "params": {
+          "connectorMid": [
+            "adcf6804-f55f-49e6-a645-a1d08bb26513"
+          ]
+        }
+      },
+      "1069772": {
+        "id": "1069772",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T15:08:19+03:00",
+        "text": "Осы аркылы баска компаниялар есептеп берген уже",
+        "textlegacy": "Осы аркылы баска компаниялар есептеп берген уже",
+        "params": {
+          "connectorMid": [
+            "4d798a53-67cb-4eef-8dbe-044c8b9d1b23"
+          ]
+        }
+      },
+      "1069770": {
+        "id": "1069770",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T15:08:03+03:00",
+        "text": "Осылар гана маган жибергени",
+        "textlegacy": "Осылар гана маган жибергени",
+        "params": {
+          "connectorMid": [
+            "12506aea-20d6-4c89-b47a-2f57a7302ba6"
+          ]
+        }
+      },
+      "1069768": {
+        "id": "1069768",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T15:07:13+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nЕштеңе етпейді, Даурен. Есепті өзім шығарайын.  \nӨлшемдер анық көрінетін жобаның PDF-ын (немесе ең қажетті 2–3 бетін жоғары сапада) жібере аласыз ба? Соның негізінде м²-мен алдын ала смета дайындап берем.",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Ештеңе етпейді, Даурен. Есепті өзім шығарайын. &nbsp;<br />Өлшемдер анық көрінетін жобаның PDF-ын (немесе ең қажетті 2–3 бетін жоғары сапада) жібере аласыз ба? Соның негізінде м²-мен алдын ала смета дайындап берем.",
+        "params": {
+          "connectorMid": [
+            "50c2b3dd-13c7-457c-aa52-6cf16f72b7f0"
+          ]
+        }
+      },
+      "1069766": {
+        "id": "1069766",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T15:06:15+03:00",
+        "text": "Математика 0 менде",
+        "textlegacy": "Математика 0 менде",
+        "params": {
+          "connectorMid": [
+            "a9119b19-e401-4220-a11d-43bc84b66605"
+          ]
+        }
+      },
+      "1069764": {
+        "id": "1069764",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T15:06:14+03:00",
+        "text": "Олай есептей алмаймын",
+        "textlegacy": "Олай есептей алмаймын",
+        "params": {
+          "connectorMid": [
+            "d4908aa9-dc2a-432f-a548-120a99941184"
+          ]
+        }
+      },
+      "1069762": {
+        "id": "1069762",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T15:04:58+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nКөрдім, рахмет. Дәл есеп шығару үшін нақты өлшем керек. Әр терезенің ені×биіктігін және неше дана екенін қысқаша тізіммен жібере аласыз ба?  \nМысалы: 1,6×2,0 м — 12 дана; 1,3×2,2 м — 8 дана; 0,9×2,1 м — 5 дана.",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Көрдім, рахмет. Дәл есеп шығару үшін нақты өлшем керек. Әр терезенің ені×биіктігін және неше дана екенін қысқаша тізіммен жібере аласыз ба? &nbsp;<br />Мысалы: 1,6×2,0 м — 12 дана; 1,3×2,2 м — 8 дана; 0,9×2,1 м — 5 дана.",
+        "params": {
+          "connectorMid": [
+            "fb9f8859-a94e-41b2-bdb5-b92a486b60a2"
+          ]
+        }
+      },
+      "1069760": {
+        "id": "1069760",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T15:03:59+03:00",
+        "text": "Мине жибердим гой",
+        "textlegacy": "Мине жибердим гой",
+        "params": {
+          "connectorMid": [
+            "e721070b-55c7-45ad-a5cb-454e20feaffa"
+          ]
+        }
+      },
+      "1069748": {
+        "id": "1069748",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T14:57:35+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nЖақсы, 25 терезе. Өлшемдерін жібересіз бе: ені × биіктігі және әр өлшемге неше дана?  \nМысалы: 1,6×1,5 м — 8 дана; 1,3×2,1 м — 6 дана.  \nСол бойынша м²-мен нақтылап есептеп берем.",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Жақсы, 25 терезе. Өлшемдерін жібересіз бе: ені × биіктігі және әр өлшемге неше дана? &nbsp;<br />Мысалы: 1,6×1,5 м — 8 дана; 1,3×2,1 м — 6 дана. &nbsp;<br />Сол бойынша м²-мен нақтылап есептеп берем.",
+        "params": {
+          "connectorMid": [
+            "2577aa49-8c0a-43da-a66d-7fa428cda5fb"
+          ]
+        }
+      },
+      "1069746": {
+        "id": "1069746",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T14:56:55+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nАлдын ала баға м² бойынша есептеледі:\n- Эконом-серия: 40 000–60 000 тг/м²\n- Премиум (неміс профилі): 70 000–95 000 тг/м²\n\nӨлшемдерін жібере аласыз ба? Әр терезенің ені×биіктігі және неше дана (мысалы: 1,6×1,5 м — 8 дана). Соған қарай шамамен есептеп берем.",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Алдын ала баға м² бойынша есептеледі:<br />- Эконом-серия: 40 000–60 000 тг/м²<br />- Премиум (неміс профилі): 70 000–95 000 тг/м²<br /><br />Өлшемдерін жібере аласыз ба? Әр терезенің ені×биіктігі және неше дана (мысалы: 1,6×1,5 м — 8 дана). Соған қарай шамамен есептеп берем.",
+        "params": {
+          "connectorMid": [
+            "2a520505-5b55-4813-8530-b681d19256ef"
+          ]
+        }
+      },
+      "1069744": {
+        "id": "1069744",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T14:56:53+03:00",
+        "text": "25",
+        "textlegacy": "25",
+        "params": {
+          "connectorMid": [
+            "dfe12777-9222-445f-8d69-84cebc74b4ee"
+          ]
+        }
+      },
+      "1069742": {
+        "id": "1069742",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T14:56:28+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nТүсіндім. Шамамен неше терезе керек болады?",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Түсіндім. Шамамен неше терезе керек болады?",
+        "params": {
+          "connectorMid": [
+            "6bf071b6-6df2-41df-a61f-f57c8508e566"
+          ]
+        }
+      },
+      "1069740": {
+        "id": "1069740",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T14:55:55+03:00",
+        "text": "Есептеп берсениз",
+        "textlegacy": "Есептеп берсениз",
+        "params": {
+          "connectorMid": [
+            "dec6a57d-d8f3-4e64-9106-32e20a05aa74"
+          ]
+        }
+      },
+      "1069738": {
+        "id": "1069738",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T14:55:53+03:00",
+        "text": "Канша болад",
+        "textlegacy": "Канша болад",
+        "params": {
+          "connectorMid": [
+            "2a6eb8d2-c751-4256-b20a-e15da67c6fb8"
+          ]
+        }
+      },
+      "1069732": {
+        "id": "1069732",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T14:54:23+03:00",
+        "text": "Мына жерлери ашылмайды",
+        "textlegacy": "Мына жерлери ашылмайды",
+        "params": {
+          "connectorMid": [
+            "19bb91ac-da71-40e5-aad3-75e6bfefd6f7"
+          ],
+          "fileId": [
+            231404
+          ]
+        }
+      },
+      "1069730": {
+        "id": "1069730",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T14:53:56+03:00",
+        "text": "Мине",
+        "textlegacy": "Мине",
+        "params": {
+          "connectorMid": [
+            "5080af18-e890-44d4-a583-107c88cbd040"
+          ]
+        }
+      },
+      "1069728": {
+        "id": "1069728",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T14:53:54+03:00",
+        "text": "Жибердим гой",
+        "textlegacy": "Жибердим гой",
+        "params": {
+          "connectorMid": [
+            "b2d3847a-7538-40c5-8db9-62771c2be790"
+          ]
+        }
+      },
+      "1069726": {
+        "id": "1069726",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T14:53:29+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nТүсіндім, Даурен. Шамамен қанша терезе керек болады?",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Түсіндім, Даурен. Шамамен қанша терезе керек болады?",
+        "params": {
+          "connectorMid": [
+            "7bccbf09-594c-4a83-a31a-00f8e8e0cb37"
+          ]
+        }
+      },
+      "1069724": {
+        "id": "1069724",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T14:52:47+03:00",
+        "text": "Алматы",
+        "textlegacy": "Алматы",
+        "params": {
+          "connectorMid": [
+            "f6c25ae7-3975-4a57-95ed-44eb5a8d2d54"
+          ]
+        }
+      },
+      "1069722": {
+        "id": "1069722",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T14:50:22+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nДаурен, қуаныштымын 🙂 Қай қаладансыз? Бізде Шымкент (Бозарық 261/1) және Алматы (Немировича-Данченко 18е) филиалдар бар.",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Даурен, қуаныштымын 🙂 Қай қаладансыз? Бізде Шымкент (Бозарық 261/1) және Алматы (Немировича-Данченко 18е) филиалдар бар.",
+        "params": {
+          "connectorMid": [
+            "db4aef73-0ac1-402b-a445-fd27141a61e3"
+          ]
+        }
+      },
+      "1069720": {
+        "id": "1069720",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T14:50:05+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nРахмет, жобаларыңызды көрдім. Қалай атайын? Есіміңіз кім болады?",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Рахмет, жобаларыңызды көрдім. Қалай атайын? Есіміңіз кім болады?",
+        "params": {
+          "connectorMid": [
+            "e7296736-7348-4149-8a7c-e8cae683da53"
+          ]
+        }
+      },
+      "1069718": {
+        "id": "1069718",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T14:49:48+03:00",
+        "text": "Даурен",
+        "textlegacy": "Даурен",
+        "params": {
+          "connectorMid": [
+            "5298a4b0-e9a9-4e4e-bde9-665cd5b878de"
+          ]
+        }
+      },
+      "1069716": {
+        "id": "1069716",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T14:49:32+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nҚалай сізге жүгінсем болады? Есіміңіз қалай?",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Қалай сізге жүгінсем болады? Есіміңіз қалай?",
+        "params": {
+          "connectorMid": [
+            "597ede7e-34d3-4dcb-8f90-f27044562979"
+          ]
+        }
+      },
+      "1069714": {
+        "id": "1069714",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T14:49:31+03:00",
+        "text": "",
+        "textlegacy": "",
+        "params": {
+          "connectorMid": [
+            "2f6a9b63-cdad-4afa-9c6d-af02fb558ac6"
+          ],
+          "fileId": [
+            231402
+          ]
+        }
+      },
+      "1069712": {
+        "id": "1069712",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T14:49:29+03:00",
+        "text": "",
+        "textlegacy": "",
+        "params": {
+          "connectorMid": [
+            "0123437e-4892-48a7-adfc-b6acff802dcc"
+          ],
+          "fileId": [
+            231400
+          ]
+        }
+      },
+      "1069710": {
+        "id": "1069710",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T14:49:28+03:00",
+        "text": "",
+        "textlegacy": "",
+        "params": {
+          "connectorMid": [
+            "ade36ef3-f134-4848-8bff-e2dac59a4b49"
+          ],
+          "fileId": [
+            231398
+          ]
+        }
+      },
+      "1069708": {
+        "id": "1069708",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T14:49:25+03:00",
+        "text": "",
+        "textlegacy": "",
+        "params": {
+          "connectorMid": [
+            "462d1b0d-ff6f-410a-bf10-b4bfaed7c626"
+          ],
+          "fileId": [
+            231396
+          ]
+        }
+      },
+      "1069706": {
+        "id": "1069706",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T14:49:24+03:00",
+        "text": "",
+        "textlegacy": "",
+        "params": {
+          "connectorMid": [
+            "51c59426-97d2-45af-967c-45d4bb97751f"
+          ],
+          "fileId": [
+            231394
+          ]
+        }
+      },
+      "1069704": {
+        "id": "1069704",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T14:49:22+03:00",
+        "text": "",
+        "textlegacy": "",
+        "params": {
+          "connectorMid": [
+            "c1e0ba6c-bf01-4b46-8558-b4bc97bd4813"
+          ],
+          "fileId": [
+            231392
+          ]
+        }
+      },
+      "1069702": {
+        "id": "1069702",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T14:49:20+03:00",
+        "text": "",
+        "textlegacy": "",
+        "params": {
+          "connectorMid": [
+            "e77412c4-c4f9-4697-9653-c313b7768d8f"
+          ],
+          "fileId": [
+            231390
+          ]
+        }
+      },
+      "1069700": {
+        "id": "1069700",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T14:49:17+03:00",
+        "text": "",
+        "textlegacy": "",
+        "params": {
+          "connectorMid": [
+            "0b25838d-d83d-478a-bc5c-ab0743e460a9"
+          ],
+          "fileId": [
+            231388
+          ]
+        }
+      },
+      "1069698": {
+        "id": "1069698",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T14:49:15+03:00",
+        "text": "",
+        "textlegacy": "",
+        "params": {
+          "connectorMid": [
+            "c5ccd45a-b52d-4b33-bc86-90d3d874872b"
+          ],
+          "fileId": [
+            231386
+          ]
+        }
+      },
+      "1069696": {
+        "id": "1069696",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T14:48:49+03:00",
+        "text": "Аха",
+        "textlegacy": "Аха",
+        "params": {
+          "connectorMid": [
+            "0338d49f-4641-4cb3-865c-f0b302c11cfe"
+          ]
+        }
+      },
+      "1069692": {
+        "id": "1069692",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T14:45:41+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nСәлеметсіз бе! Сізге компания “SAPA PLAST” жазып отыр. Айтыңызшы, сізге терезелер керек пе?",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Сәлеметсіз бе! Сізге компания “SAPA PLAST” жазып отыр. Айтыңызшы, сізге терезелер керек пе?",
+        "params": {
+          "connectorMid": [
+            "3ceafc7f-6378-4f5e-b08e-0774bbf6a8e7"
+          ]
+        }
+      },
+      "1069678": {
+        "id": "1069678",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T14:45:11+03:00",
+        "text": "Терезе салу керек еди",
+        "textlegacy": "Терезе салу керек еди",
+        "params": {
+          "connectorMid": [
+            "03fd600e-67a5-4450-a546-fc10b35c26ed"
+          ]
+        }
+      },
+      "1069674": {
+        "id": "1069674",
+        "chatid": "64816",
+        "senderid": "21360",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T14:45:06+03:00",
+        "text": "",
+        "textlegacy": "",
+        "params": {
+          "connectorMid": [
+            "5a9e6677-18a1-4915-9ff6-6534c79e1b34"
+          ],
+          "fileId": [
+            231384
+          ]
+        }
+      },
+      "1069672": {
+        "id": "1069672",
+        "chatid": "64816",
+        "senderid": "0",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T14:45:06+03:00",
+        "text": "Обращение направлено на всех участников очереди",
+        "textlegacy": "Обращение направлено на всех участников очереди",
+        "params": []
+      },
+      "1069670": {
+        "id": "1069670",
+        "chatid": "64816",
+        "senderid": "0",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T14:45:05+03:00",
+        "text": "[B]Переданы дополнительные данные:[/B]\n Ссылка на исходный пост: [URL]https://app.wazzup24.com/1826-6940/chat/whatsapp/77787885597/fc3e1d61-cd1c-4955-9345-b0f22b543020[/URL]",
+        "textlegacy": "<b>Переданы дополнительные данные:</b><br /> Ссылка на исходный пост: <a href=\"https://app.wazzup24.com/1826-6940/chat/whatsapp/77787885597/fc3e1d61-cd1c-4955-9345-b0f22b543020\" target=\"_blank\" >https://app.wazzup24.com/1826-6940/chat/whatsapp/77787885597/fc3e1d61-cd1c-4955-9345-b0f22b543020</a>",
+        "params": {
+          "class": "bx-messenger-content-item-system",
+          "componentId": "HiddenMessage",
+          "urlId": [
+            84450
+          ],
+          "attach": [
+            {
+              "id": "84450",
+              "blocks": [
+                {
+                  "richLink": [
+                    {
+                      "name": "Wazzup App",
+                      "link": "https://app.wazzup24.com/1826-6940/chat/whatsapp/77787885597/fc3e1d61-cd1c-4955-9345-b0f22b543020",
+                      "desc": "Communicate with clients in the application on the computer, and all correspondence will be saved in CRM.",
+                      "preview": "https://cdn.wazzup24.com/icons/icon_512x512.358b79.png",
+                      "previewSize": {
+                        "height": 512,
+                        "width": 512
+                      }
+                    }
+                  ]
+                }
+              ],
+              "description": "",
+              "color": "transparent"
+            }
+          ]
+        }
+      },
+      "1069668": {
+        "id": "1069668",
+        "chatid": "64816",
+        "senderid": "0",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T14:45:05+03:00",
+        "text": "[b]Создана новая сделка[/b]",
+        "textlegacy": "<b>Создана новая сделка</b>",
+        "params": {
+          "attach": [
+            {
+              "id": 1776426305,
+              "blocks": [
+                {
+                  "link": [
+                    {
+                      "name": "G - WhatsApp",
+                      "link": "/crm/deal/details/50910/"
+                    }
+                  ]
+                }
+              ],
+              "description": "",
+              "color": "#4ba984"
+            }
+          ]
+        }
+      },
+      "1069666": {
+        "id": "1069666",
+        "chatid": "64816",
+        "senderid": "0",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T14:45:05+03:00",
+        "text": "[b]Создан новый контакт[/b]",
+        "textlegacy": "<b>Создан новый контакт</b>",
+        "params": {
+          "attach": [
+            {
+              "id": 1776426305,
+              "blocks": [
+                {
+                  "link": [
+                    {
+                      "name": "G",
+                      "link": "/crm/contact/details/63924/"
+                    }
+                  ]
+                },
+                {
+                  "grid": [
+                    {
+                      "display": "LINE",
+                      "name": "Телефон",
+                      "value": "+77787885597",
+                      "height": 20,
+                      "colorToken": "base"
+                    },
+                    {
+                      "display": "LINE",
+                      "name": "Email",
+                      "value": "77787885597@whatsapp.wazzup",
+                      "height": 20,
+                      "colorToken": "base"
+                    }
+                  ]
+                }
+              ],
+              "description": "",
+              "color": "#8d51eb"
+            }
+          ]
+        }
+      },
+      "1069662": {
+        "id": "1069662",
+        "chatid": "64816",
+        "senderid": "0",
+        "recipientid": "chat64816",
+        "date": "2026-04-17T14:45:04+03:00",
+        "text": "Начат новый диалог №[URL=/online/?IM_HISTORY=imol|26200]26200[/URL]",
+        "textlegacy": "Начат новый диалог №<a href=\"/online/?IM_HISTORY=imol|26200\" target=\"_blank\" >26200</a>",
+        "params": {
+          "class": "bx-messenger-content-item-ol-start",
+          "componentId": "StartDialogMessage"
+        }
+      }
+    },
+    "usersMessage": {
+      "chat64816": [
+        "1070480",
+        "1070150",
+        "1069804",
+        "1069802",
+        "1069800",
+        "1069796",
+        "1069794",
+        "1069792",
+        "1069790",
+        "1069788",
+        "1069786",
+        "1069784",
+        "1069782",
+        "1069778",
+        "1069776",
+        "1069774",
+        "1069772",
+        "1069770",
+        "1069768",
+        "1069766",
+        "1069764",
+        "1069762",
+        "1069760",
+        "1069748",
+        "1069746",
+        "1069744",
+        "1069742",
+        "1069740",
+        "1069738",
+        "1069732",
+        "1069730",
+        "1069728",
+        "1069726",
+        "1069724",
+        "1069722",
+        "1069720",
+        "1069718",
+        "1069716",
+        "1069714",
+        "1069712",
+        "1069710",
+        "1069708",
+        "1069706",
+        "1069704",
+        "1069702",
+        "1069700",
+        "1069698",
+        "1069696",
+        "1069692",
+        "1069678",
+        "1069674",
+        "1069672",
+        "1069670",
+        "1069668",
+        "1069666",
+        "1069662"
+      ]
+    },
+    "users": {
+      "21360": {
+        "id": "21360",
+        "name": "G",
+        "active": true,
+        "firstName": "G",
+        "lastName": "",
+        "workPosition": null,
+        "color": "#ab7761",
+        "avatar": "/bitrix/js/im/images/blank.gif",
+        "avatarId": null,
+        "birthday": false,
+        "gender": "M",
+        "phoneDevice": false,
+        "phones": false,
+        "extranet": true,
+        "network": false,
+        "bot": false,
+        "connector": true,
+        "profile": "/company/personal/user/21360/",
+        "externalAuthId": "imconnector",
+        "status": "online",
+        "idle": false,
+        "lastActivityDate": false,
+        "mobileLastDate": false,
+        "desktopLastDate": false,
+        "departments": [],
+        "absent": false,
+        "type": "extranet",
+        "eventLog": "N",
+        "services": null,
+        "botData": null
+      }
+    },
+    "openlines": {
+      "canvoteashead": {
+        "2": true
+      }
+    },
+    "userInGroup": [],
+    "woUserInGroup": [],
+    "chat": {
+      "64816": {
+        "id": "64816",
+        "parentChatId": 0,
+        "parentMessageId": 0,
+        "name": "G - WhatsApp",
+        "owner": "0",
+        "color": "#ab7761",
+        "extranet": false,
+        "avatar": "/bitrix/js/im/images/blank.gif",
+        "call": "0",
+        "callNumber": "",
+        "entityType": "LINES",
+        "entityId": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|dd1203f2-a784-4b52-aa54-cab1fda953c4|21360",
+        "entityData1": "Y|DEAL|50910|N|N|26200|1776426304|0|0|0",
+        "entityData2": "LEAD|0|COMPANY|0|CONTACT|63924|DEAL|50910",
+        "entityData3": "",
+        "messageCount": 56,
+        "public": "",
+        "muteList": {
+          "21360": false
+        },
+        "managerList": [],
+        "dateCreate": "2026-04-17T16:45:04+03:00",
+        "type": "lines",
+        "entityLink": {
+          "type": "LINES",
+          "url": "",
+          "id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|dd1203f2-a784-4b52-aa54-cab1fda953c4|21360"
+        },
+        "permissions": {
+          "manageUsersAdd": "member",
+          "manageUsersDelete": "manager",
+          "manageUi": "member",
+          "manageSettings": "owner",
+          "manageMessages": "member",
+          "canPost": "member"
+        },
+        "textFieldEnabled": true,
+        "backgroundId": null,
+        "messageType": "L",
+        "isNew": false
+      }
+    },
+    "userBlockChat": {
+      "64816": {
+        "21360": false
+      }
+    },
+    "userInChat": {
+      "64816": [
+        21360
+      ]
+    },
+    "files": {
+      "231384": {
+        "id": 231384,
+        "chatid": 64816,
+        "date": "2026-04-17T14:45:06+03:00",
+        "type": "image",
+        "name": "408ac6e1-3c12-4b14-86e9-c6ff6a9f6215.webp",
+        "extension": "webp",
+        "size": 133340,
+        "image": {
+          "height": 512,
+          "width": 512
+        },
+        "status": "done",
+        "progress": 100,
+        "authorid": 0,
+        "authorname": "Аноним",
+        "urlpreview": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231384&exact=N&_esd=65r3vGp2CZM1XCvU3tN_WwKUMcCsMf0wsRT2vjOYqmK7vc5VdyWLQOQlf8KgdXoKP1OqrLR50yBUI0WU2FgHuyDNOn64DLoXgIhlS-OTamoyQYFzDCsh4pISUhhDSHLbGTW7tzisG1_rl2a323GWS9WVcfW9crgNYPkRWogPuDPzaI1k4NZoJqigUlw%3D&fileName=408ac6e1-3c12-4b14-86e9-c6ff6a9f6215.webp",
+        "urlshow": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.showImage&SITE_ID=s1&humanRE=1&fileId=231384&width=1280&height=1280&signature=6d1a8749f8803cd0c3bc2cf250ef4c387317efcc329de3b714d6ac8936b17b00&exact=N&_esd=65r3vGp2CZM1XCvU3tN_WwKUMcCsMf0wsRT2vjOYqmK7vc5VdyWLQOQlf8KgdXoKP1OqrLR50yBUI0WU2FgHuyDNOn64DLoXgIhlS-OTamoyQYFzDCsh4pISUhhDSHLbGTW7tzisG1_rl2a323GWS9WVcfW9crgNYPkRWogPuDPzaI1k4NZoJqigUlw%3D&fileName=408ac6e1-3c12-4b14-86e9-c6ff6a9f6215.webp",
+        "urldownload": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231384&exact=N&_esd=65r3vGp2CZM1XCvU3tN_WwKUMcCsMf0wsRT2vjOYqmK7vc5VdyWLQOQlf8KgdXoKP1OqrLR50yBUI0WU2FgHuyDNOn64DLoXgIhlS-OTamoyQYFzDCsh4pISUhhDSHLbGTW7tzisG1_rl2a323GWS9WVcfW9crgNYPkRWogPuDPzaI1k4NZoJqigUlw%3D&fileName=408ac6e1-3c12-4b14-86e9-c6ff6a9f6215.webp",
+        "viewerattrs": {
+          "viewer": "",
+          "viewertype": "image",
+          "src": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231384&exact=N&_esd=65r3vGp2CZM1XCvU3tN_WwKUMcCsMf0wsRT2vjOYqmK7vc5VdyWLQOQlf8KgdXoKP1OqrLR50yBUI0WU2FgHuyDNOn64DLoXgIhlS-OTamoyQYFzDCsh4pISUhhDSHLbGTW7tzisG1_rl2a323GWS9WVcfW9crgNYPkRWogPuDPzaI1k4NZoJqigUlw%3D&fileName=408ac6e1-3c12-4b14-86e9-c6ff6a9f6215.webp",
+          "viewerresized": "",
+          "objectid": "231384",
+          "viewergroupby": "64816",
+          "imchatid": 64816,
+          "title": "408ac6e1-3c12-4b14-86e9-c6ff6a9f6215.webp",
+          "actions": "[{\"type\":\"download\"},{\"type\":\"copyToMe\",\"text\":\"Сохранить на Диск\",\"action\":\"BXIM.disk.saveToDiskAction\",\"params\":{\"fileId\":\"231384\"},\"extension\":\"disk.viewer.actions\",\"buttonIconClass\":\"ui-btn-icon-cloud\"}]"
+        },
+        "mediaurl": {
+          "preview": {
+            "250": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.showPreview&SITE_ID=s1&humanRE=1&fileId=231384&width=250&height=250&signature=8811d49b3781feb10f73b8cfdbf4ec973536677051edef74cc68d259af680f1d&exact=Y&_esd=65r3vGp2CZM1XCvU3tN_WwKUMcCsMf0wsRT2vjOYqmK7vc5VdyWLQOQlf8KgdXoKP1OqrLR50yBUI0WU2FgHuyDNOn64DLoXgIhlS-OTamoyQYFzDCsh4pISUhhDSHLbGTW7tzisG1_rl2a323GWS9WVcfW9crgNYPkRWogPuDPzaI1k4NZoJqigUlw%3D&fileName=preview.jpg"
+          }
+        },
+        "istranscribable": false,
+        "isvideonote": false,
+        "isvoicenote": false
+      },
+      "231386": {
+        "id": 231386,
+        "chatid": 64816,
+        "date": "2026-04-17T14:49:15+03:00",
+        "type": "image",
+        "name": "2415a6ba-c503-4af1-9e38-b469ce39f3e7.jpeg",
+        "extension": "jpeg",
+        "size": 138421,
+        "image": {
+          "height": 1600,
+          "width": 738
+        },
+        "status": "done",
+        "progress": 100,
+        "authorid": 0,
+        "authorname": "Аноним",
+        "urlpreview": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.showImage&SITE_ID=s1&humanRE=1&fileId=231386&width=1280&height=1280&signature=4999e039e0e553bcf13c86362942ca77d6048e5641e5b548f6eaa4e60065c39f&exact=N&_esd=3zggFp2wvdtruyQsrPQatPvhMGlz46wLkrvhw4tzBDszrQVemKUEy2ADOIBUZyvct0FSUdBLW_aXNTHkfjRNpcaxmu4M_6Ho7Apk8g3WGA9a9VIlYArmXJ3LyfH-G343YMhKd0IjZ9qlJbIBEh5ww8aChjbjd4xPc_QGJzoqlJMf5Z7jA1R56ZkPVBs%3D&fileName=2415a6ba-c503-4af1-9e38-b469ce39f3e7.jpeg",
+        "urlshow": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.showImage&SITE_ID=s1&humanRE=1&fileId=231386&width=1280&height=1280&signature=4999e039e0e553bcf13c86362942ca77d6048e5641e5b548f6eaa4e60065c39f&exact=N&_esd=3zggFp2wvdtruyQsrPQatPvhMGlz46wLkrvhw4tzBDszrQVemKUEy2ADOIBUZyvct0FSUdBLW_aXNTHkfjRNpcaxmu4M_6Ho7Apk8g3WGA9a9VIlYArmXJ3LyfH-G343YMhKd0IjZ9qlJbIBEh5ww8aChjbjd4xPc_QGJzoqlJMf5Z7jA1R56ZkPVBs%3D&fileName=2415a6ba-c503-4af1-9e38-b469ce39f3e7.jpeg",
+        "urldownload": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231386&exact=N&_esd=3zggFp2wvdtruyQsrPQatPvhMGlz46wLkrvhw4tzBDszrQVemKUEy2ADOIBUZyvct0FSUdBLW_aXNTHkfjRNpcaxmu4M_6Ho7Apk8g3WGA9a9VIlYArmXJ3LyfH-G343YMhKd0IjZ9qlJbIBEh5ww8aChjbjd4xPc_QGJzoqlJMf5Z7jA1R56ZkPVBs%3D&fileName=2415a6ba-c503-4af1-9e38-b469ce39f3e7.jpeg",
+        "viewerattrs": {
+          "viewer": "",
+          "viewertype": "image",
+          "src": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231386&exact=N&_esd=3zggFp2wvdtruyQsrPQatPvhMGlz46wLkrvhw4tzBDszrQVemKUEy2ADOIBUZyvct0FSUdBLW_aXNTHkfjRNpcaxmu4M_6Ho7Apk8g3WGA9a9VIlYArmXJ3LyfH-G343YMhKd0IjZ9qlJbIBEh5ww8aChjbjd4xPc_QGJzoqlJMf5Z7jA1R56ZkPVBs%3D&fileName=2415a6ba-c503-4af1-9e38-b469ce39f3e7.jpeg",
+          "viewerresized": "",
+          "objectid": "231386",
+          "viewergroupby": "64816",
+          "imchatid": 64816,
+          "title": "2415a6ba-c503-4af1-9e38-b469ce39f3e7.jpeg",
+          "actions": "[{\"type\":\"download\"},{\"type\":\"copyToMe\",\"text\":\"Сохранить на Диск\",\"action\":\"BXIM.disk.saveToDiskAction\",\"params\":{\"fileId\":\"231386\"},\"extension\":\"disk.viewer.actions\",\"buttonIconClass\":\"ui-btn-icon-cloud\"}]"
+        },
+        "mediaurl": {
+          "preview": {
+            "250": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.showImage&SITE_ID=s1&humanRE=1&fileId=231386&width=250&height=250&signature=e7ffa92b2b6fd08bb585bcbc7df725066ab8400403a38c21e425ba0e68019648&exact=Y&_esd=3zggFp2wvdtruyQsrPQatPvhMGlz46wLkrvhw4tzBDszrQVemKUEy2ADOIBUZyvct0FSUdBLW_aXNTHkfjRNpcaxmu4M_6Ho7Apk8g3WGA9a9VIlYArmXJ3LyfH-G343YMhKd0IjZ9qlJbIBEh5ww8aChjbjd4xPc_QGJzoqlJMf5Z7jA1R56ZkPVBs%3D&fileName=2415a6ba-c503-4af1-9e38-b469ce39f3e7.jpeg"
+          }
+        },
+        "istranscribable": false,
+        "isvideonote": false,
+        "isvoicenote": false
+      },
+      "231388": {
+        "id": 231388,
+        "chatid": 64816,
+        "date": "2026-04-17T14:49:17+03:00",
+        "type": "image",
+        "name": "69482ed0-8144-4ab0-a769-3cc21351b1c2.jpeg",
+        "extension": "jpeg",
+        "size": 157276,
+        "image": {
+          "height": 1600,
+          "width": 738
+        },
+        "status": "done",
+        "progress": 100,
+        "authorid": 0,
+        "authorname": "Аноним",
+        "urlpreview": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.showImage&SITE_ID=s1&humanRE=1&fileId=231388&width=1280&height=1280&signature=7693058730378314b045adf93d719bb3551715d9d6e3684f88c32a335cff623c&exact=N&_esd=4DIDmtY6vk0Ttpt-RC8bdvceawNQbylvpoS-0hYol0lCRmZ6Ld6aWAyD_xaOIuHSW6hbHcuOyV3uRfWEPen_gpFNSS5qfKq2iiB4Vd0bqxmgCIwuTnguKESmARY-gjJDZ1hvCr1AbqnpYwWz_rfKl7QaWx76sOCP4Ulwdqz2wBkbQ8aWlxGgEFCsYWQ%3D&fileName=69482ed0-8144-4ab0-a769-3cc21351b1c2.jpeg",
+        "urlshow": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.showImage&SITE_ID=s1&humanRE=1&fileId=231388&width=1280&height=1280&signature=7693058730378314b045adf93d719bb3551715d9d6e3684f88c32a335cff623c&exact=N&_esd=4DIDmtY6vk0Ttpt-RC8bdvceawNQbylvpoS-0hYol0lCRmZ6Ld6aWAyD_xaOIuHSW6hbHcuOyV3uRfWEPen_gpFNSS5qfKq2iiB4Vd0bqxmgCIwuTnguKESmARY-gjJDZ1hvCr1AbqnpYwWz_rfKl7QaWx76sOCP4Ulwdqz2wBkbQ8aWlxGgEFCsYWQ%3D&fileName=69482ed0-8144-4ab0-a769-3cc21351b1c2.jpeg",
+        "urldownload": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231388&exact=N&_esd=4DIDmtY6vk0Ttpt-RC8bdvceawNQbylvpoS-0hYol0lCRmZ6Ld6aWAyD_xaOIuHSW6hbHcuOyV3uRfWEPen_gpFNSS5qfKq2iiB4Vd0bqxmgCIwuTnguKESmARY-gjJDZ1hvCr1AbqnpYwWz_rfKl7QaWx76sOCP4Ulwdqz2wBkbQ8aWlxGgEFCsYWQ%3D&fileName=69482ed0-8144-4ab0-a769-3cc21351b1c2.jpeg",
+        "viewerattrs": {
+          "viewer": "",
+          "viewertype": "image",
+          "src": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231388&exact=N&_esd=4DIDmtY6vk0Ttpt-RC8bdvceawNQbylvpoS-0hYol0lCRmZ6Ld6aWAyD_xaOIuHSW6hbHcuOyV3uRfWEPen_gpFNSS5qfKq2iiB4Vd0bqxmgCIwuTnguKESmARY-gjJDZ1hvCr1AbqnpYwWz_rfKl7QaWx76sOCP4Ulwdqz2wBkbQ8aWlxGgEFCsYWQ%3D&fileName=69482ed0-8144-4ab0-a769-3cc21351b1c2.jpeg",
+          "viewerresized": "",
+          "objectid": "231388",
+          "viewergroupby": "64816",
+          "imchatid": 64816,
+          "title": "69482ed0-8144-4ab0-a769-3cc21351b1c2.jpeg",
+          "actions": "[{\"type\":\"download\"},{\"type\":\"copyToMe\",\"text\":\"Сохранить на Диск\",\"action\":\"BXIM.disk.saveToDiskAction\",\"params\":{\"fileId\":\"231388\"},\"extension\":\"disk.viewer.actions\",\"buttonIconClass\":\"ui-btn-icon-cloud\"}]"
+        },
+        "mediaurl": {
+          "preview": {
+            "250": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.showImage&SITE_ID=s1&humanRE=1&fileId=231388&width=250&height=250&signature=0eb7801ed18d6785eaf2baf9d6d44a458af7afb7279b60207c5edda8514356f7&exact=Y&_esd=4DIDmtY6vk0Ttpt-RC8bdvceawNQbylvpoS-0hYol0lCRmZ6Ld6aWAyD_xaOIuHSW6hbHcuOyV3uRfWEPen_gpFNSS5qfKq2iiB4Vd0bqxmgCIwuTnguKESmARY-gjJDZ1hvCr1AbqnpYwWz_rfKl7QaWx76sOCP4Ulwdqz2wBkbQ8aWlxGgEFCsYWQ%3D&fileName=69482ed0-8144-4ab0-a769-3cc21351b1c2.jpeg"
+          }
+        },
+        "istranscribable": false,
+        "isvideonote": false,
+        "isvoicenote": false
+      },
+      "231390": {
+        "id": 231390,
+        "chatid": 64816,
+        "date": "2026-04-17T14:49:20+03:00",
+        "type": "image",
+        "name": "eb40ecf3-58a4-4792-a637-6c4ce8a6b86b.jpeg",
+        "extension": "jpeg",
+        "size": 121264,
+        "image": {
+          "height": 1600,
+          "width": 738
+        },
+        "status": "done",
+        "progress": 100,
+        "authorid": 0,
+        "authorname": "Аноним",
+        "urlpreview": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.showImage&SITE_ID=s1&humanRE=1&fileId=231390&width=1280&height=1280&signature=27ef5925f91e69b60696af62eac6729ba1df023f4929321e5a245b70b0725a4e&exact=N&_esd=jh6vtrHQxORB1rLbmulof3B2qQp_TCdcJwb0uFJiy-1zFftu742BNDVoao8vjqUEieEqxnVMcV3EW3MMh1AcD9rXQL8M_MZROrGU_f3IDKB8rWKHFADNnWzBDafsEBHxPIr9qDB5eha_YJUCyLpCddniKD3FEfYBF8h82wSRgctlhvqRa-9Po9juBR8%3D&fileName=eb40ecf3-58a4-4792-a637-6c4ce8a6b86b.jpeg",
+        "urlshow": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.showImage&SITE_ID=s1&humanRE=1&fileId=231390&width=1280&height=1280&signature=27ef5925f91e69b60696af62eac6729ba1df023f4929321e5a245b70b0725a4e&exact=N&_esd=jh6vtrHQxORB1rLbmulof3B2qQp_TCdcJwb0uFJiy-1zFftu742BNDVoao8vjqUEieEqxnVMcV3EW3MMh1AcD9rXQL8M_MZROrGU_f3IDKB8rWKHFADNnWzBDafsEBHxPIr9qDB5eha_YJUCyLpCddniKD3FEfYBF8h82wSRgctlhvqRa-9Po9juBR8%3D&fileName=eb40ecf3-58a4-4792-a637-6c4ce8a6b86b.jpeg",
+        "urldownload": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231390&exact=N&_esd=jh6vtrHQxORB1rLbmulof3B2qQp_TCdcJwb0uFJiy-1zFftu742BNDVoao8vjqUEieEqxnVMcV3EW3MMh1AcD9rXQL8M_MZROrGU_f3IDKB8rWKHFADNnWzBDafsEBHxPIr9qDB5eha_YJUCyLpCddniKD3FEfYBF8h82wSRgctlhvqRa-9Po9juBR8%3D&fileName=eb40ecf3-58a4-4792-a637-6c4ce8a6b86b.jpeg",
+        "viewerattrs": {
+          "viewer": "",
+          "viewertype": "image",
+          "src": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231390&exact=N&_esd=jh6vtrHQxORB1rLbmulof3B2qQp_TCdcJwb0uFJiy-1zFftu742BNDVoao8vjqUEieEqxnVMcV3EW3MMh1AcD9rXQL8M_MZROrGU_f3IDKB8rWKHFADNnWzBDafsEBHxPIr9qDB5eha_YJUCyLpCddniKD3FEfYBF8h82wSRgctlhvqRa-9Po9juBR8%3D&fileName=eb40ecf3-58a4-4792-a637-6c4ce8a6b86b.jpeg",
+          "viewerresized": "",
+          "objectid": "231390",
+          "viewergroupby": "64816",
+          "imchatid": 64816,
+          "title": "eb40ecf3-58a4-4792-a637-6c4ce8a6b86b.jpeg",
+          "actions": "[{\"type\":\"download\"},{\"type\":\"copyToMe\",\"text\":\"Сохранить на Диск\",\"action\":\"BXIM.disk.saveToDiskAction\",\"params\":{\"fileId\":\"231390\"},\"extension\":\"disk.viewer.actions\",\"buttonIconClass\":\"ui-btn-icon-cloud\"}]"
+        },
+        "mediaurl": {
+          "preview": {
+            "250": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.showImage&SITE_ID=s1&humanRE=1&fileId=231390&width=250&height=250&signature=5d36dc0c252d4bce5fa2223fd75cbe31a6e92e6c8f34ba343c56cbbecd59c00d&exact=Y&_esd=jh6vtrHQxORB1rLbmulof3B2qQp_TCdcJwb0uFJiy-1zFftu742BNDVoao8vjqUEieEqxnVMcV3EW3MMh1AcD9rXQL8M_MZROrGU_f3IDKB8rWKHFADNnWzBDafsEBHxPIr9qDB5eha_YJUCyLpCddniKD3FEfYBF8h82wSRgctlhvqRa-9Po9juBR8%3D&fileName=eb40ecf3-58a4-4792-a637-6c4ce8a6b86b.jpeg"
+          }
+        },
+        "istranscribable": false,
+        "isvideonote": false,
+        "isvoicenote": false
+      },
+      "231392": {
+        "id": 231392,
+        "chatid": 64816,
+        "date": "2026-04-17T14:49:22+03:00",
+        "type": "image",
+        "name": "a2ff0517-c188-448e-9c2e-2495bd27c291.jpeg",
+        "extension": "jpeg",
+        "size": 84520,
+        "image": {
+          "height": 1600,
+          "width": 738
+        },
+        "status": "done",
+        "progress": 100,
+        "authorid": 0,
+        "authorname": "Аноним",
+        "urlpreview": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.showImage&SITE_ID=s1&humanRE=1&fileId=231392&width=1280&height=1280&signature=62ba2b0997865f1253644cf5bcae314c341089300ca5c05dce41734298bd75f8&exact=N&_esd=dtdXwUkfP5nalk1Y2N0nO1NHIm0NjxQKMTvYFfo4BiklkNSwVP2CYl5IEijAFJaiLciFxBIGrzG0yu8LATxOSe2wCnHfSNk-h8AhmiF8CzjVilc_NYfsiZy5VudkQdrBXsGZ8X5mshIdRtv0DlxMi0Bh_iZbY45MV7pKwH4p2is2FP02LqlN7FEZi9g%3D&fileName=a2ff0517-c188-448e-9c2e-2495bd27c291.jpeg",
+        "urlshow": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.showImage&SITE_ID=s1&humanRE=1&fileId=231392&width=1280&height=1280&signature=62ba2b0997865f1253644cf5bcae314c341089300ca5c05dce41734298bd75f8&exact=N&_esd=dtdXwUkfP5nalk1Y2N0nO1NHIm0NjxQKMTvYFfo4BiklkNSwVP2CYl5IEijAFJaiLciFxBIGrzG0yu8LATxOSe2wCnHfSNk-h8AhmiF8CzjVilc_NYfsiZy5VudkQdrBXsGZ8X5mshIdRtv0DlxMi0Bh_iZbY45MV7pKwH4p2is2FP02LqlN7FEZi9g%3D&fileName=a2ff0517-c188-448e-9c2e-2495bd27c291.jpeg",
+        "urldownload": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231392&exact=N&_esd=dtdXwUkfP5nalk1Y2N0nO1NHIm0NjxQKMTvYFfo4BiklkNSwVP2CYl5IEijAFJaiLciFxBIGrzG0yu8LATxOSe2wCnHfSNk-h8AhmiF8CzjVilc_NYfsiZy5VudkQdrBXsGZ8X5mshIdRtv0DlxMi0Bh_iZbY45MV7pKwH4p2is2FP02LqlN7FEZi9g%3D&fileName=a2ff0517-c188-448e-9c2e-2495bd27c291.jpeg",
+        "viewerattrs": {
+          "viewer": "",
+          "viewertype": "image",
+          "src": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231392&exact=N&_esd=dtdXwUkfP5nalk1Y2N0nO1NHIm0NjxQKMTvYFfo4BiklkNSwVP2CYl5IEijAFJaiLciFxBIGrzG0yu8LATxOSe2wCnHfSNk-h8AhmiF8CzjVilc_NYfsiZy5VudkQdrBXsGZ8X5mshIdRtv0DlxMi0Bh_iZbY45MV7pKwH4p2is2FP02LqlN7FEZi9g%3D&fileName=a2ff0517-c188-448e-9c2e-2495bd27c291.jpeg",
+          "viewerresized": "",
+          "objectid": "231392",
+          "viewergroupby": "64816",
+          "imchatid": 64816,
+          "title": "a2ff0517-c188-448e-9c2e-2495bd27c291.jpeg",
+          "actions": "[{\"type\":\"download\"},{\"type\":\"copyToMe\",\"text\":\"Сохранить на Диск\",\"action\":\"BXIM.disk.saveToDiskAction\",\"params\":{\"fileId\":\"231392\"},\"extension\":\"disk.viewer.actions\",\"buttonIconClass\":\"ui-btn-icon-cloud\"}]"
+        },
+        "mediaurl": {
+          "preview": {
+            "250": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.showImage&SITE_ID=s1&humanRE=1&fileId=231392&width=250&height=250&signature=d19f6a07ebf83e00ec5cb62a7114e1d8dbedf623b71abc2dbb1a5cc066e44c21&exact=Y&_esd=dtdXwUkfP5nalk1Y2N0nO1NHIm0NjxQKMTvYFfo4BiklkNSwVP2CYl5IEijAFJaiLciFxBIGrzG0yu8LATxOSe2wCnHfSNk-h8AhmiF8CzjVilc_NYfsiZy5VudkQdrBXsGZ8X5mshIdRtv0DlxMi0Bh_iZbY45MV7pKwH4p2is2FP02LqlN7FEZi9g%3D&fileName=a2ff0517-c188-448e-9c2e-2495bd27c291.jpeg"
+          }
+        },
+        "istranscribable": false,
+        "isvideonote": false,
+        "isvoicenote": false
+      },
+      "231394": {
+        "id": 231394,
+        "chatid": 64816,
+        "date": "2026-04-17T14:49:24+03:00",
+        "type": "image",
+        "name": "bec38a58-45ce-473f-8f57-cda25d1c9db5.jpeg",
+        "extension": "jpeg",
+        "size": 92759,
+        "image": {
+          "height": 1600,
+          "width": 738
+        },
+        "status": "done",
+        "progress": 100,
+        "authorid": 0,
+        "authorname": "Аноним",
+        "urlpreview": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.showImage&SITE_ID=s1&humanRE=1&fileId=231394&width=1280&height=1280&signature=3a3adef4142ed8627ed2f142b5662f383f4e838f5bc40ae4bf99c8dcda7c2ad8&exact=N&_esd=o28Hq7Qj4QwvZ-DFXvbTBQP-EympLnP9pLys0j5uo43cmO-4kWK71HPUViXLt1NOP5OAbmac_CzOZBAdxY7JGVUasedj6cBBUKo-dxextFPUqnqwcV3utDvOd9abiBLCFzrZAtfEWPtEu9U2Nj0speJaZo1f32EuSXqQ4zCsdxF5rrJTZGAMu2i7niM%3D&fileName=bec38a58-45ce-473f-8f57-cda25d1c9db5.jpeg",
+        "urlshow": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.showImage&SITE_ID=s1&humanRE=1&fileId=231394&width=1280&height=1280&signature=3a3adef4142ed8627ed2f142b5662f383f4e838f5bc40ae4bf99c8dcda7c2ad8&exact=N&_esd=o28Hq7Qj4QwvZ-DFXvbTBQP-EympLnP9pLys0j5uo43cmO-4kWK71HPUViXLt1NOP5OAbmac_CzOZBAdxY7JGVUasedj6cBBUKo-dxextFPUqnqwcV3utDvOd9abiBLCFzrZAtfEWPtEu9U2Nj0speJaZo1f32EuSXqQ4zCsdxF5rrJTZGAMu2i7niM%3D&fileName=bec38a58-45ce-473f-8f57-cda25d1c9db5.jpeg",
+        "urldownload": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231394&exact=N&_esd=o28Hq7Qj4QwvZ-DFXvbTBQP-EympLnP9pLys0j5uo43cmO-4kWK71HPUViXLt1NOP5OAbmac_CzOZBAdxY7JGVUasedj6cBBUKo-dxextFPUqnqwcV3utDvOd9abiBLCFzrZAtfEWPtEu9U2Nj0speJaZo1f32EuSXqQ4zCsdxF5rrJTZGAMu2i7niM%3D&fileName=bec38a58-45ce-473f-8f57-cda25d1c9db5.jpeg",
+        "viewerattrs": {
+          "viewer": "",
+          "viewertype": "image",
+          "src": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231394&exact=N&_esd=o28Hq7Qj4QwvZ-DFXvbTBQP-EympLnP9pLys0j5uo43cmO-4kWK71HPUViXLt1NOP5OAbmac_CzOZBAdxY7JGVUasedj6cBBUKo-dxextFPUqnqwcV3utDvOd9abiBLCFzrZAtfEWPtEu9U2Nj0speJaZo1f32EuSXqQ4zCsdxF5rrJTZGAMu2i7niM%3D&fileName=bec38a58-45ce-473f-8f57-cda25d1c9db5.jpeg",
+          "viewerresized": "",
+          "objectid": "231394",
+          "viewergroupby": "64816",
+          "imchatid": 64816,
+          "title": "bec38a58-45ce-473f-8f57-cda25d1c9db5.jpeg",
+          "actions": "[{\"type\":\"download\"},{\"type\":\"copyToMe\",\"text\":\"Сохранить на Диск\",\"action\":\"BXIM.disk.saveToDiskAction\",\"params\":{\"fileId\":\"231394\"},\"extension\":\"disk.viewer.actions\",\"buttonIconClass\":\"ui-btn-icon-cloud\"}]"
+        },
+        "mediaurl": {
+          "preview": {
+            "250": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.showImage&SITE_ID=s1&humanRE=1&fileId=231394&width=250&height=250&signature=e5aef252fc7972fc6727eedad6b1254f02dfc292e8aa3aadf3f8cc61b354ba31&exact=Y&_esd=o28Hq7Qj4QwvZ-DFXvbTBQP-EympLnP9pLys0j5uo43cmO-4kWK71HPUViXLt1NOP5OAbmac_CzOZBAdxY7JGVUasedj6cBBUKo-dxextFPUqnqwcV3utDvOd9abiBLCFzrZAtfEWPtEu9U2Nj0speJaZo1f32EuSXqQ4zCsdxF5rrJTZGAMu2i7niM%3D&fileName=bec38a58-45ce-473f-8f57-cda25d1c9db5.jpeg"
+          }
+        },
+        "istranscribable": false,
+        "isvideonote": false,
+        "isvoicenote": false
+      },
+      "231396": {
+        "id": 231396,
+        "chatid": 64816,
+        "date": "2026-04-17T14:49:25+03:00",
+        "type": "image",
+        "name": "c3fe7862-0257-4e42-bc79-c723fb396e9f.jpeg",
+        "extension": "jpeg",
+        "size": 86195,
+        "image": {
+          "height": 1600,
+          "width": 738
+        },
+        "status": "done",
+        "progress": 100,
+        "authorid": 0,
+        "authorname": "Аноним",
+        "urlpreview": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.showImage&SITE_ID=s1&humanRE=1&fileId=231396&width=1280&height=1280&signature=2b22d0efa331d7ad18daec0833626d43776cc20fe2cd08371aecb350632551a0&exact=N&_esd=Z8dN8ZA0KwVB48ie1059uawWnKPfGL_xw79SFat6Xdbb51erCYCQAzldN7rzM0EVQq_aCO07QQ_o0ABAOtwYI-jOAZZPC0DU9aiOFvsMzmuZEg1peeqcoxVexEwRn5lxlFPQBPPTEm26CASJqwA6qpxqMiCeiBrvIY1PrjVuAkZOq0vMWfuNtK2uInQ%3D&fileName=c3fe7862-0257-4e42-bc79-c723fb396e9f.jpeg",
+        "urlshow": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.showImage&SITE_ID=s1&humanRE=1&fileId=231396&width=1280&height=1280&signature=2b22d0efa331d7ad18daec0833626d43776cc20fe2cd08371aecb350632551a0&exact=N&_esd=Z8dN8ZA0KwVB48ie1059uawWnKPfGL_xw79SFat6Xdbb51erCYCQAzldN7rzM0EVQq_aCO07QQ_o0ABAOtwYI-jOAZZPC0DU9aiOFvsMzmuZEg1peeqcoxVexEwRn5lxlFPQBPPTEm26CASJqwA6qpxqMiCeiBrvIY1PrjVuAkZOq0vMWfuNtK2uInQ%3D&fileName=c3fe7862-0257-4e42-bc79-c723fb396e9f.jpeg",
+        "urldownload": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231396&exact=N&_esd=Z8dN8ZA0KwVB48ie1059uawWnKPfGL_xw79SFat6Xdbb51erCYCQAzldN7rzM0EVQq_aCO07QQ_o0ABAOtwYI-jOAZZPC0DU9aiOFvsMzmuZEg1peeqcoxVexEwRn5lxlFPQBPPTEm26CASJqwA6qpxqMiCeiBrvIY1PrjVuAkZOq0vMWfuNtK2uInQ%3D&fileName=c3fe7862-0257-4e42-bc79-c723fb396e9f.jpeg",
+        "viewerattrs": {
+          "viewer": "",
+          "viewertype": "image",
+          "src": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231396&exact=N&_esd=Z8dN8ZA0KwVB48ie1059uawWnKPfGL_xw79SFat6Xdbb51erCYCQAzldN7rzM0EVQq_aCO07QQ_o0ABAOtwYI-jOAZZPC0DU9aiOFvsMzmuZEg1peeqcoxVexEwRn5lxlFPQBPPTEm26CASJqwA6qpxqMiCeiBrvIY1PrjVuAkZOq0vMWfuNtK2uInQ%3D&fileName=c3fe7862-0257-4e42-bc79-c723fb396e9f.jpeg",
+          "viewerresized": "",
+          "objectid": "231396",
+          "viewergroupby": "64816",
+          "imchatid": 64816,
+          "title": "c3fe7862-0257-4e42-bc79-c723fb396e9f.jpeg",
+          "actions": "[{\"type\":\"download\"},{\"type\":\"copyToMe\",\"text\":\"Сохранить на Диск\",\"action\":\"BXIM.disk.saveToDiskAction\",\"params\":{\"fileId\":\"231396\"},\"extension\":\"disk.viewer.actions\",\"buttonIconClass\":\"ui-btn-icon-cloud\"}]"
+        },
+        "mediaurl": {
+          "preview": {
+            "250": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.showImage&SITE_ID=s1&humanRE=1&fileId=231396&width=250&height=250&signature=966a9800c21a343d2245a6b7020f9d96d0da8d3167f79b7dd05528f6ffb3d243&exact=Y&_esd=Z8dN8ZA0KwVB48ie1059uawWnKPfGL_xw79SFat6Xdbb51erCYCQAzldN7rzM0EVQq_aCO07QQ_o0ABAOtwYI-jOAZZPC0DU9aiOFvsMzmuZEg1peeqcoxVexEwRn5lxlFPQBPPTEm26CASJqwA6qpxqMiCeiBrvIY1PrjVuAkZOq0vMWfuNtK2uInQ%3D&fileName=c3fe7862-0257-4e42-bc79-c723fb396e9f.jpeg"
+          }
+        },
+        "istranscribable": false,
+        "isvideonote": false,
+        "isvoicenote": false
+      },
+      "231398": {
+        "id": 231398,
+        "chatid": 64816,
+        "date": "2026-04-17T14:49:28+03:00",
+        "type": "image",
+        "name": "d6d223c2-b33b-4958-b4b3-63c91bd931cf.jpeg",
+        "extension": "jpeg",
+        "size": 81575,
+        "image": {
+          "height": 1600,
+          "width": 738
+        },
+        "status": "done",
+        "progress": 100,
+        "authorid": 0,
+        "authorname": "Аноним",
+        "urlpreview": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.showImage&SITE_ID=s1&humanRE=1&fileId=231398&width=1280&height=1280&signature=ad6fd2b6aef02cf2878e8bcbd809df82a7de860da3bd4d03ef4bf4b53bb28f6a&exact=N&_esd=vj5uLZztX3Mwt4uOfoGC7OyPENuji2gX2DUoR27avld4dK3JwkY7Zr752R0oFVSWC24XNGhC3gDpvjdrxGtjxLa3iUNQwDf8mG-a86AYIdxntOFu_QH3eM6iKm-A1-Z8pO2zYE6ckB4048KIiEBcvQqnqVFVoqpQ91RtfR3FV2BjbOZPgaAyfLQm3SY%3D&fileName=d6d223c2-b33b-4958-b4b3-63c91bd931cf.jpeg",
+        "urlshow": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.showImage&SITE_ID=s1&humanRE=1&fileId=231398&width=1280&height=1280&signature=ad6fd2b6aef02cf2878e8bcbd809df82a7de860da3bd4d03ef4bf4b53bb28f6a&exact=N&_esd=vj5uLZztX3Mwt4uOfoGC7OyPENuji2gX2DUoR27avld4dK3JwkY7Zr752R0oFVSWC24XNGhC3gDpvjdrxGtjxLa3iUNQwDf8mG-a86AYIdxntOFu_QH3eM6iKm-A1-Z8pO2zYE6ckB4048KIiEBcvQqnqVFVoqpQ91RtfR3FV2BjbOZPgaAyfLQm3SY%3D&fileName=d6d223c2-b33b-4958-b4b3-63c91bd931cf.jpeg",
+        "urldownload": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231398&exact=N&_esd=vj5uLZztX3Mwt4uOfoGC7OyPENuji2gX2DUoR27avld4dK3JwkY7Zr752R0oFVSWC24XNGhC3gDpvjdrxGtjxLa3iUNQwDf8mG-a86AYIdxntOFu_QH3eM6iKm-A1-Z8pO2zYE6ckB4048KIiEBcvQqnqVFVoqpQ91RtfR3FV2BjbOZPgaAyfLQm3SY%3D&fileName=d6d223c2-b33b-4958-b4b3-63c91bd931cf.jpeg",
+        "viewerattrs": {
+          "viewer": "",
+          "viewertype": "image",
+          "src": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231398&exact=N&_esd=vj5uLZztX3Mwt4uOfoGC7OyPENuji2gX2DUoR27avld4dK3JwkY7Zr752R0oFVSWC24XNGhC3gDpvjdrxGtjxLa3iUNQwDf8mG-a86AYIdxntOFu_QH3eM6iKm-A1-Z8pO2zYE6ckB4048KIiEBcvQqnqVFVoqpQ91RtfR3FV2BjbOZPgaAyfLQm3SY%3D&fileName=d6d223c2-b33b-4958-b4b3-63c91bd931cf.jpeg",
+          "viewerresized": "",
+          "objectid": "231398",
+          "viewergroupby": "64816",
+          "imchatid": 64816,
+          "title": "d6d223c2-b33b-4958-b4b3-63c91bd931cf.jpeg",
+          "actions": "[{\"type\":\"download\"},{\"type\":\"copyToMe\",\"text\":\"Сохранить на Диск\",\"action\":\"BXIM.disk.saveToDiskAction\",\"params\":{\"fileId\":\"231398\"},\"extension\":\"disk.viewer.actions\",\"buttonIconClass\":\"ui-btn-icon-cloud\"}]"
+        },
+        "mediaurl": {
+          "preview": {
+            "250": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.showImage&SITE_ID=s1&humanRE=1&fileId=231398&width=250&height=250&signature=ed5f003fa5026cb262e63217ee47fbfa8eebf38437ed2d89c212cfc735668d6a&exact=Y&_esd=vj5uLZztX3Mwt4uOfoGC7OyPENuji2gX2DUoR27avld4dK3JwkY7Zr752R0oFVSWC24XNGhC3gDpvjdrxGtjxLa3iUNQwDf8mG-a86AYIdxntOFu_QH3eM6iKm-A1-Z8pO2zYE6ckB4048KIiEBcvQqnqVFVoqpQ91RtfR3FV2BjbOZPgaAyfLQm3SY%3D&fileName=d6d223c2-b33b-4958-b4b3-63c91bd931cf.jpeg"
+          }
+        },
+        "istranscribable": false,
+        "isvideonote": false,
+        "isvoicenote": false
+      },
+      "231400": {
+        "id": 231400,
+        "chatid": 64816,
+        "date": "2026-04-17T14:49:29+03:00",
+        "type": "image",
+        "name": "571c3bda-4375-4fd0-b057-bdd89899c712.jpeg",
+        "extension": "jpeg",
+        "size": 125105,
+        "image": {
+          "height": 1600,
+          "width": 738
+        },
+        "status": "done",
+        "progress": 100,
+        "authorid": 0,
+        "authorname": "Аноним",
+        "urlpreview": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.showImage&SITE_ID=s1&humanRE=1&fileId=231400&width=1280&height=1280&signature=9c5c5d6e75a06cf6dfd725677873f687754286fdb804ae8290242a0e989d9604&exact=N&_esd=nrlN4b8N7-2LqObp-j33Nl6bc91nO_RLmiV64H06wGn1reqpf5GtZLcAbIBguiAWh_Vheajyp9iVJjxnA0tuld8qrg67MJ1g2jB-rWzjSgwsN6Y-yjxssyUvQ5R3lNPQTPsgTYFbqIOTpIA1ZnIyTCdzBzkMPHZE3KyGZp7dB4zrR7WtXAfUZ9Y_b7w%3D&fileName=571c3bda-4375-4fd0-b057-bdd89899c712.jpeg",
+        "urlshow": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.showImage&SITE_ID=s1&humanRE=1&fileId=231400&width=1280&height=1280&signature=9c5c5d6e75a06cf6dfd725677873f687754286fdb804ae8290242a0e989d9604&exact=N&_esd=nrlN4b8N7-2LqObp-j33Nl6bc91nO_RLmiV64H06wGn1reqpf5GtZLcAbIBguiAWh_Vheajyp9iVJjxnA0tuld8qrg67MJ1g2jB-rWzjSgwsN6Y-yjxssyUvQ5R3lNPQTPsgTYFbqIOTpIA1ZnIyTCdzBzkMPHZE3KyGZp7dB4zrR7WtXAfUZ9Y_b7w%3D&fileName=571c3bda-4375-4fd0-b057-bdd89899c712.jpeg",
+        "urldownload": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231400&exact=N&_esd=nrlN4b8N7-2LqObp-j33Nl6bc91nO_RLmiV64H06wGn1reqpf5GtZLcAbIBguiAWh_Vheajyp9iVJjxnA0tuld8qrg67MJ1g2jB-rWzjSgwsN6Y-yjxssyUvQ5R3lNPQTPsgTYFbqIOTpIA1ZnIyTCdzBzkMPHZE3KyGZp7dB4zrR7WtXAfUZ9Y_b7w%3D&fileName=571c3bda-4375-4fd0-b057-bdd89899c712.jpeg",
+        "viewerattrs": {
+          "viewer": "",
+          "viewertype": "image",
+          "src": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231400&exact=N&_esd=nrlN4b8N7-2LqObp-j33Nl6bc91nO_RLmiV64H06wGn1reqpf5GtZLcAbIBguiAWh_Vheajyp9iVJjxnA0tuld8qrg67MJ1g2jB-rWzjSgwsN6Y-yjxssyUvQ5R3lNPQTPsgTYFbqIOTpIA1ZnIyTCdzBzkMPHZE3KyGZp7dB4zrR7WtXAfUZ9Y_b7w%3D&fileName=571c3bda-4375-4fd0-b057-bdd89899c712.jpeg",
+          "viewerresized": "",
+          "objectid": "231400",
+          "viewergroupby": "64816",
+          "imchatid": 64816,
+          "title": "571c3bda-4375-4fd0-b057-bdd89899c712.jpeg",
+          "actions": "[{\"type\":\"download\"},{\"type\":\"copyToMe\",\"text\":\"Сохранить на Диск\",\"action\":\"BXIM.disk.saveToDiskAction\",\"params\":{\"fileId\":\"231400\"},\"extension\":\"disk.viewer.actions\",\"buttonIconClass\":\"ui-btn-icon-cloud\"}]"
+        },
+        "mediaurl": {
+          "preview": {
+            "250": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.showImage&SITE_ID=s1&humanRE=1&fileId=231400&width=250&height=250&signature=0ad74ca8b6342d3b5e330e078d659953806efe86ec0685fafb727d0acbc10a1f&exact=Y&_esd=nrlN4b8N7-2LqObp-j33Nl6bc91nO_RLmiV64H06wGn1reqpf5GtZLcAbIBguiAWh_Vheajyp9iVJjxnA0tuld8qrg67MJ1g2jB-rWzjSgwsN6Y-yjxssyUvQ5R3lNPQTPsgTYFbqIOTpIA1ZnIyTCdzBzkMPHZE3KyGZp7dB4zrR7WtXAfUZ9Y_b7w%3D&fileName=571c3bda-4375-4fd0-b057-bdd89899c712.jpeg"
+          }
+        },
+        "istranscribable": false,
+        "isvideonote": false,
+        "isvoicenote": false
+      },
+      "231402": {
+        "id": 231402,
+        "chatid": 64816,
+        "date": "2026-04-17T14:49:31+03:00",
+        "type": "image",
+        "name": "746e131e-05c3-4aa8-a7b4-5203b2a715d9.jpeg",
+        "extension": "jpeg",
+        "size": 99521,
+        "image": {
+          "height": 1600,
+          "width": 738
+        },
+        "status": "done",
+        "progress": 100,
+        "authorid": 0,
+        "authorname": "Аноним",
+        "urlpreview": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.showImage&SITE_ID=s1&humanRE=1&fileId=231402&width=1280&height=1280&signature=880a60cff638a7c203f7ada71ff6192f667732a7c35aaeb9fe827e48e9f3131c&exact=N&_esd=KArZCsBw3mnIUTpNJqgCcSc586Q0FDAdd5hhANu_tFgj089_hfKZvMNLRXg1joFpuchEgawKqYYHoynJ2AgYTNzUUMb-i4V_vA0irxcgG60ajjDU1dNXx9LPUkz26lA_ELIWs6BnOQ5sUqxYOPW2vMcXqvFhZ1HFLzLvDmzgwvTqXJkozTVSsSKoXCA%3D&fileName=746e131e-05c3-4aa8-a7b4-5203b2a715d9.jpeg",
+        "urlshow": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.showImage&SITE_ID=s1&humanRE=1&fileId=231402&width=1280&height=1280&signature=880a60cff638a7c203f7ada71ff6192f667732a7c35aaeb9fe827e48e9f3131c&exact=N&_esd=KArZCsBw3mnIUTpNJqgCcSc586Q0FDAdd5hhANu_tFgj089_hfKZvMNLRXg1joFpuchEgawKqYYHoynJ2AgYTNzUUMb-i4V_vA0irxcgG60ajjDU1dNXx9LPUkz26lA_ELIWs6BnOQ5sUqxYOPW2vMcXqvFhZ1HFLzLvDmzgwvTqXJkozTVSsSKoXCA%3D&fileName=746e131e-05c3-4aa8-a7b4-5203b2a715d9.jpeg",
+        "urldownload": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231402&exact=N&_esd=KArZCsBw3mnIUTpNJqgCcSc586Q0FDAdd5hhANu_tFgj089_hfKZvMNLRXg1joFpuchEgawKqYYHoynJ2AgYTNzUUMb-i4V_vA0irxcgG60ajjDU1dNXx9LPUkz26lA_ELIWs6BnOQ5sUqxYOPW2vMcXqvFhZ1HFLzLvDmzgwvTqXJkozTVSsSKoXCA%3D&fileName=746e131e-05c3-4aa8-a7b4-5203b2a715d9.jpeg",
+        "viewerattrs": {
+          "viewer": "",
+          "viewertype": "image",
+          "src": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231402&exact=N&_esd=KArZCsBw3mnIUTpNJqgCcSc586Q0FDAdd5hhANu_tFgj089_hfKZvMNLRXg1joFpuchEgawKqYYHoynJ2AgYTNzUUMb-i4V_vA0irxcgG60ajjDU1dNXx9LPUkz26lA_ELIWs6BnOQ5sUqxYOPW2vMcXqvFhZ1HFLzLvDmzgwvTqXJkozTVSsSKoXCA%3D&fileName=746e131e-05c3-4aa8-a7b4-5203b2a715d9.jpeg",
+          "viewerresized": "",
+          "objectid": "231402",
+          "viewergroupby": "64816",
+          "imchatid": 64816,
+          "title": "746e131e-05c3-4aa8-a7b4-5203b2a715d9.jpeg",
+          "actions": "[{\"type\":\"download\"},{\"type\":\"copyToMe\",\"text\":\"Сохранить на Диск\",\"action\":\"BXIM.disk.saveToDiskAction\",\"params\":{\"fileId\":\"231402\"},\"extension\":\"disk.viewer.actions\",\"buttonIconClass\":\"ui-btn-icon-cloud\"}]"
+        },
+        "mediaurl": {
+          "preview": {
+            "250": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.showImage&SITE_ID=s1&humanRE=1&fileId=231402&width=250&height=250&signature=da1ba8f02821216e042de44a05342aa8d2a9324e67e70b71b02e7c9db33941e3&exact=Y&_esd=KArZCsBw3mnIUTpNJqgCcSc586Q0FDAdd5hhANu_tFgj089_hfKZvMNLRXg1joFpuchEgawKqYYHoynJ2AgYTNzUUMb-i4V_vA0irxcgG60ajjDU1dNXx9LPUkz26lA_ELIWs6BnOQ5sUqxYOPW2vMcXqvFhZ1HFLzLvDmzgwvTqXJkozTVSsSKoXCA%3D&fileName=746e131e-05c3-4aa8-a7b4-5203b2a715d9.jpeg"
+          }
+        },
+        "istranscribable": false,
+        "isvideonote": false,
+        "isvoicenote": false
+      },
+      "231404": {
+        "id": 231404,
+        "chatid": 64816,
+        "date": "2026-04-17T14:54:23+03:00",
+        "type": "image",
+        "name": "007f7f8f-2c7d-4dfb-a69a-67db7fb210f8.jpeg",
+        "extension": "jpeg",
+        "size": 87294,
+        "image": {
+          "height": 613,
+          "width": 733
+        },
+        "status": "done",
+        "progress": 100,
+        "authorid": 0,
+        "authorname": "Аноним",
+        "urlpreview": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231404&exact=N&_esd=R3MAh0JZz9lyhmz5tg-0__DN_vxyvqrpNM-OaGUaoKudozCwkAq19OeNwbzMto3YfODqP3nT7fS_n11JdlSjaxwr47uez20LzbP6LYpXPddx67a3Z03y2hvYqPlyaC4vyeMxA5bNvg6XAB0Hfdx4NqouQBohg8yC6-l94xnn8dJDZFlrXBcpvBE9Hwk%3D&fileName=007f7f8f-2c7d-4dfb-a69a-67db7fb210f8.jpeg",
+        "urlshow": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.showImage&SITE_ID=s1&humanRE=1&fileId=231404&width=1280&height=1280&signature=b593e0d0a0adc806991b4e4647ffb37ade8298bcc9a6f35f5cbbcc94e0c0eb83&exact=N&_esd=R3MAh0JZz9lyhmz5tg-0__DN_vxyvqrpNM-OaGUaoKudozCwkAq19OeNwbzMto3YfODqP3nT7fS_n11JdlSjaxwr47uez20LzbP6LYpXPddx67a3Z03y2hvYqPlyaC4vyeMxA5bNvg6XAB0Hfdx4NqouQBohg8yC6-l94xnn8dJDZFlrXBcpvBE9Hwk%3D&fileName=007f7f8f-2c7d-4dfb-a69a-67db7fb210f8.jpeg",
+        "urldownload": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231404&exact=N&_esd=R3MAh0JZz9lyhmz5tg-0__DN_vxyvqrpNM-OaGUaoKudozCwkAq19OeNwbzMto3YfODqP3nT7fS_n11JdlSjaxwr47uez20LzbP6LYpXPddx67a3Z03y2hvYqPlyaC4vyeMxA5bNvg6XAB0Hfdx4NqouQBohg8yC6-l94xnn8dJDZFlrXBcpvBE9Hwk%3D&fileName=007f7f8f-2c7d-4dfb-a69a-67db7fb210f8.jpeg",
+        "viewerattrs": {
+          "viewer": "",
+          "viewertype": "image",
+          "src": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231404&exact=N&_esd=R3MAh0JZz9lyhmz5tg-0__DN_vxyvqrpNM-OaGUaoKudozCwkAq19OeNwbzMto3YfODqP3nT7fS_n11JdlSjaxwr47uez20LzbP6LYpXPddx67a3Z03y2hvYqPlyaC4vyeMxA5bNvg6XAB0Hfdx4NqouQBohg8yC6-l94xnn8dJDZFlrXBcpvBE9Hwk%3D&fileName=007f7f8f-2c7d-4dfb-a69a-67db7fb210f8.jpeg",
+          "viewerresized": "",
+          "objectid": "231404",
+          "viewergroupby": "64816",
+          "imchatid": 64816,
+          "title": "007f7f8f-2c7d-4dfb-a69a-67db7fb210f8.jpeg",
+          "actions": "[{\"type\":\"download\"},{\"type\":\"copyToMe\",\"text\":\"Сохранить на Диск\",\"action\":\"BXIM.disk.saveToDiskAction\",\"params\":{\"fileId\":\"231404\"},\"extension\":\"disk.viewer.actions\",\"buttonIconClass\":\"ui-btn-icon-cloud\"}]"
+        },
+        "mediaurl": {
+          "preview": {
+            "250": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.showImage&SITE_ID=s1&humanRE=1&fileId=231404&width=250&height=250&signature=2cce39f41588a917dc37a306128cd0c3bc6204bd340f5349b3a6c0e05f1fa245&exact=Y&_esd=R3MAh0JZz9lyhmz5tg-0__DN_vxyvqrpNM-OaGUaoKudozCwkAq19OeNwbzMto3YfODqP3nT7fS_n11JdlSjaxwr47uez20LzbP6LYpXPddx67a3Z03y2hvYqPlyaC4vyeMxA5bNvg6XAB0Hfdx4NqouQBohg8yC6-l94xnn8dJDZFlrXBcpvBE9Hwk%3D&fileName=007f7f8f-2c7d-4dfb-a69a-67db7fb210f8.jpeg"
+          }
+        },
+        "istranscribable": false,
+        "isvideonote": false,
+        "isvoicenote": false
+      }
+    }
+  }
+}

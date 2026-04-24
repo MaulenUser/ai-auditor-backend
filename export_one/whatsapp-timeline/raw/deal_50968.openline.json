@@ -1,0 +1,520 @@
+{
+  "binding": {
+    "timeline_source": "deal",
+    "timeline_entity_type": "deal",
+    "timeline_entity_id": "50968",
+    "chat_id": "64906",
+    "connector_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0",
+    "connector_title": "WAZZUP: WhatsApp"
+  },
+  "dialog": {
+    "id": 64906,
+    "parent_chat_id": 0,
+    "parent_message_id": 0,
+    "name": "Уайысхан - WhatsApp",
+    "description": "Ссылка на исходный пост: https://app.wazzup24.com/1826-6940/chat/whatsapp/77763231974/fc3e1d61-cd1c-4955-9345-b0f22b543020",
+    "owner": 0,
+    "extranet": false,
+    "avatar": "https://cdn-ru.bitrix24.kz/b29289878/resize_cache/214000/ff58db95aecdfa09ae61b51b5fd8f63f/main/ca9/ca959f7409075bc40736d999e4ab62e3/4e2094b5a1e975ffa72a21fee3554045.jpg",
+    "color": "#8474c8",
+    "type": "lines",
+    "counter": 0,
+    "user_counter": 1,
+    "message_count": 10,
+    "unread_id": 0,
+    "restrictions": {
+      "avatar": true,
+      "rename": true,
+      "extend": true,
+      "call": true,
+      "mute": true,
+      "leave": true,
+      "leave_owner": true,
+      "send": true,
+      "user_list": true
+    },
+    "last_message_id": 1071104,
+    "last_id": 0,
+    "marked_id": 0,
+    "disk_folder_id": 231486,
+    "entity_type": "LINES",
+    "entity_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|eb550b44-c188-45ab-88e9-26f069d32765|21386",
+    "entity_data_1": "Y|DEAL|50968|N|N|26226|1776495707|0|0|0",
+    "entity_data_2": "LEAD|0|COMPANY|0|CONTACT|63974|DEAL|50968",
+    "entity_data_3": "",
+    "mute_list": [],
+    "date_create": "2026-04-18T10:01:46+03:00",
+    "message_type": "L",
+    "public": "",
+    "role": "guest",
+    "entity_link": {
+      "type": "LINES",
+      "url": "",
+      "id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|eb550b44-c188-45ab-88e9-26f069d32765|21386"
+    },
+    "text_field_enabled": true,
+    "background_id": null,
+    "permissions": {
+      "manage_users_add": "member",
+      "manage_users_delete": "manager",
+      "manage_ui": "member",
+      "manage_settings": "owner",
+      "manage_messages": "member",
+      "can_post": "member"
+    },
+    "is_new": false,
+    "readed_list": [
+      {
+        "user_id": 21386,
+        "user_name": "Уайысхан",
+        "message_id": 1070724,
+        "date": null
+      }
+    ],
+    "manager_list": [],
+    "last_message_views": {
+      "message_id": 1071104,
+      "first_viewers": [],
+      "count_of_viewers": 0
+    },
+    "dialog_id": "chat64906"
+  },
+  "history": {
+    "chatId": 64906,
+    "canJoin": "Y",
+    "canVoteHead": "Y",
+    "sessionId": 26226,
+    "sessionVoteHead": 0,
+    "sessionCommentHead": null,
+    "userId": "chat64906",
+    "message": {
+      "1071104": {
+        "id": "1071104",
+        "chatid": "64906",
+        "senderid": "21386",
+        "recipientid": "chat64906",
+        "date": "2026-04-18T14:06:52+03:00",
+        "text": "[URL]https://www.instagram.com/p/DW18Q6WgNzm/[/URL]",
+        "textlegacy": "<a href=\"https://www.instagram.com/p/DW18Q6WgNzm/\" target=\"_blank\" >https://www.instagram.com/p/DW18Q6WgNzm/</a>",
+        "params": {
+          "connectorMid": [
+            "d1704281-8b61-43e0-88da-ebf6b7d678ad"
+          ],
+          "fileId": [
+            231530
+          ]
+        }
+      },
+      "1070942": {
+        "id": "1070942",
+        "chatid": "64906",
+        "senderid": "21386",
+        "recipientid": "chat64906",
+        "date": "2026-04-18T13:17:16+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===",
+        "params": {
+          "connectorMid": [
+            "b6710166-b66b-4e0f-b08c-0232b777f1de"
+          ],
+          "fileId": [
+            231504
+          ]
+        }
+      },
+      "1070782": {
+        "id": "1070782",
+        "chatid": "64906",
+        "senderid": "0",
+        "recipientid": "chat64906",
+        "date": "2026-04-18T11:02:49+03:00",
+        "text": "Обращение направлено на всех участников очереди",
+        "textlegacy": "Обращение направлено на всех участников очереди",
+        "params": []
+      },
+      "1070726": {
+        "id": "1070726",
+        "chatid": "64906",
+        "senderid": "21386",
+        "recipientid": "chat64906",
+        "date": "2026-04-18T10:02:35+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nСәлеметсіз бе! Сізге компания “SAPA PLAST” жазып тұр. Айтыңызшы, сізге терезелер керек пе?",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Сәлеметсіз бе! Сізге компания “SAPA PLAST” жазып тұр. Айтыңызшы, сізге терезелер керек пе?",
+        "params": {
+          "connectorMid": [
+            "aa8f7037-dfe6-4576-8152-61a44d54721d"
+          ]
+        }
+      },
+      "1070724": {
+        "id": "1070724",
+        "chatid": "64906",
+        "senderid": "21386",
+        "recipientid": "chat64906",
+        "date": "2026-04-18T10:01:48+03:00",
+        "text": "[URL]https://www.instagram.com/p/DW18Q6WgNzm/[/URL]",
+        "textlegacy": "<a href=\"https://www.instagram.com/p/DW18Q6WgNzm/\" target=\"_blank\" >https://www.instagram.com/p/DW18Q6WgNzm/</a>",
+        "params": {
+          "connectorMid": [
+            "f25ee994-55bd-42b9-8ba1-5e2fe397d1f8"
+          ],
+          "fileId": [
+            231488
+          ]
+        }
+      },
+      "1070722": {
+        "id": "1070722",
+        "chatid": "64906",
+        "senderid": "0",
+        "recipientid": "chat64906",
+        "date": "2026-04-18T10:01:48+03:00",
+        "text": "Обращение направлено на всех участников очереди",
+        "textlegacy": "Обращение направлено на всех участников очереди",
+        "params": []
+      },
+      "1070720": {
+        "id": "1070720",
+        "chatid": "64906",
+        "senderid": "0",
+        "recipientid": "chat64906",
+        "date": "2026-04-18T10:01:48+03:00",
+        "text": "[B]Переданы дополнительные данные:[/B]\n Ссылка на исходный пост: [URL]https://app.wazzup24.com/1826-6940/chat/whatsapp/77763231974/fc3e1d61-cd1c-4955-9345-b0f22b543020[/URL]",
+        "textlegacy": "<b>Переданы дополнительные данные:</b><br /> Ссылка на исходный пост: <a href=\"https://app.wazzup24.com/1826-6940/chat/whatsapp/77763231974/fc3e1d61-cd1c-4955-9345-b0f22b543020\" target=\"_blank\" >https://app.wazzup24.com/1826-6940/chat/whatsapp/77763231974/fc3e1d61-cd1c-4955-9345-b0f22b543020</a>",
+        "params": {
+          "class": "bx-messenger-content-item-system",
+          "componentId": "HiddenMessage",
+          "urlId": [
+            84552
+          ],
+          "attach": [
+            {
+              "id": "84552",
+              "blocks": [
+                {
+                  "richLink": [
+                    {
+                      "name": "Wazzup App",
+                      "link": "https://app.wazzup24.com/1826-6940/chat/whatsapp/77763231974/fc3e1d61-cd1c-4955-9345-b0f22b543020",
+                      "desc": "Communicate with clients in the application on the computer, and all correspondence will be saved in CRM.",
+                      "preview": "https://cdn.wazzup24.com/icons/icon_512x512.358b79.png",
+                      "previewSize": {
+                        "height": 512,
+                        "width": 512
+                      }
+                    }
+                  ]
+                }
+              ],
+              "description": "",
+              "color": "transparent"
+            }
+          ]
+        }
+      },
+      "1070718": {
+        "id": "1070718",
+        "chatid": "64906",
+        "senderid": "0",
+        "recipientid": "chat64906",
+        "date": "2026-04-18T10:01:47+03:00",
+        "text": "[b]Создана новая сделка[/b]",
+        "textlegacy": "<b>Создана новая сделка</b>",
+        "params": {
+          "attach": [
+            {
+              "id": 1776495707,
+              "blocks": [
+                {
+                  "link": [
+                    {
+                      "name": "Уайысхан - WhatsApp",
+                      "link": "/crm/deal/details/50968/"
+                    }
+                  ]
+                }
+              ],
+              "description": "",
+              "color": "#556574"
+            }
+          ]
+        }
+      },
+      "1070716": {
+        "id": "1070716",
+        "chatid": "64906",
+        "senderid": "0",
+        "recipientid": "chat64906",
+        "date": "2026-04-18T10:01:47+03:00",
+        "text": "[b]Создан новый контакт[/b]",
+        "textlegacy": "<b>Создан новый контакт</b>",
+        "params": {
+          "attach": [
+            {
+              "id": 1776495707,
+              "blocks": [
+                {
+                  "link": [
+                    {
+                      "name": "Уайысхан",
+                      "link": "/crm/contact/details/63974/"
+                    }
+                  ]
+                },
+                {
+                  "grid": [
+                    {
+                      "display": "LINE",
+                      "name": "Телефон",
+                      "value": "+77763231974",
+                      "height": 20,
+                      "colorToken": "base"
+                    },
+                    {
+                      "display": "LINE",
+                      "name": "Email",
+                      "value": "77763231974@whatsapp.wazzup",
+                      "height": 20,
+                      "colorToken": "base"
+                    }
+                  ]
+                }
+              ],
+              "description": "",
+              "color": "#29619b"
+            }
+          ]
+        }
+      },
+      "1070712": {
+        "id": "1070712",
+        "chatid": "64906",
+        "senderid": "0",
+        "recipientid": "chat64906",
+        "date": "2026-04-18T10:01:46+03:00",
+        "text": "Начат новый диалог №[URL=/online/?IM_HISTORY=imol|26226]26226[/URL]",
+        "textlegacy": "Начат новый диалог №<a href=\"/online/?IM_HISTORY=imol|26226\" target=\"_blank\" >26226</a>",
+        "params": {
+          "class": "bx-messenger-content-item-ol-start",
+          "componentId": "StartDialogMessage"
+        }
+      }
+    },
+    "usersMessage": {
+      "chat64906": [
+        "1071104",
+        "1070942",
+        "1070782",
+        "1070726",
+        "1070724",
+        "1070722",
+        "1070720",
+        "1070718",
+        "1070716",
+        "1070712"
+      ]
+    },
+    "users": {
+      "21386": {
+        "id": "21386",
+        "name": "Уайысхан",
+        "active": true,
+        "firstName": "Уайысхан",
+        "lastName": "",
+        "workPosition": null,
+        "color": "#8474c8",
+        "avatar": "https://cdn-ru.bitrix24.kz/b29289878/resize_cache/214002/ff58db95aecdfa09ae61b51b5fd8f63f/main/117/117c4d3ced481cd1873af50a8047334a/978ec87d0c9b871aa7b40904663ab4652f7bd85e.jpg",
+        "avatarId": "214002",
+        "birthday": false,
+        "gender": "M",
+        "phoneDevice": false,
+        "phones": false,
+        "extranet": true,
+        "network": false,
+        "bot": false,
+        "connector": true,
+        "profile": "/company/personal/user/21386/",
+        "externalAuthId": "imconnector",
+        "status": "online",
+        "idle": false,
+        "lastActivityDate": false,
+        "mobileLastDate": false,
+        "desktopLastDate": false,
+        "departments": [],
+        "absent": false,
+        "type": "extranet",
+        "eventLog": "N",
+        "services": null,
+        "botData": null
+      }
+    },
+    "openlines": {
+      "canvoteashead": {
+        "2": true
+      }
+    },
+    "userInGroup": [],
+    "woUserInGroup": [],
+    "chat": {
+      "64906": {
+        "id": "64906",
+        "parentChatId": 0,
+        "parentMessageId": 0,
+        "name": "Уайысхан - WhatsApp",
+        "owner": "0",
+        "color": "#8474c8",
+        "extranet": false,
+        "avatar": "https://cdn-ru.bitrix24.kz/b29289878/resize_cache/214000/ff58db95aecdfa09ae61b51b5fd8f63f/main/ca9/ca959f7409075bc40736d999e4ab62e3/4e2094b5a1e975ffa72a21fee3554045.jpg",
+        "call": "0",
+        "callNumber": "",
+        "entityType": "LINES",
+        "entityId": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|eb550b44-c188-45ab-88e9-26f069d32765|21386",
+        "entityData1": "Y|DEAL|50968|N|N|26226|1776495707|0|0|0",
+        "entityData2": "LEAD|0|COMPANY|0|CONTACT|63974|DEAL|50968",
+        "entityData3": "",
+        "messageCount": 10,
+        "public": "",
+        "muteList": {
+          "21386": false
+        },
+        "managerList": [],
+        "dateCreate": "2026-04-18T12:01:46+03:00",
+        "type": "lines",
+        "entityLink": {
+          "type": "LINES",
+          "url": "",
+          "id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|eb550b44-c188-45ab-88e9-26f069d32765|21386"
+        },
+        "permissions": {
+          "manageUsersAdd": "member",
+          "manageUsersDelete": "manager",
+          "manageUi": "member",
+          "manageSettings": "owner",
+          "manageMessages": "member",
+          "canPost": "member"
+        },
+        "textFieldEnabled": true,
+        "backgroundId": null,
+        "messageType": "L",
+        "isNew": false
+      }
+    },
+    "userBlockChat": {
+      "64906": {
+        "21386": false
+      }
+    },
+    "userInChat": {
+      "64906": [
+        21386
+      ]
+    },
+    "files": {
+      "231488": {
+        "id": 231488,
+        "chatid": 64906,
+        "date": "2026-04-18T10:01:48+03:00",
+        "type": "audio",
+        "name": "b7e5bbe7-2783-44b8-85c9-5d0118da96a4.mp3",
+        "extension": "mp3",
+        "size": 212012,
+        "image": false,
+        "status": "done",
+        "progress": 100,
+        "authorid": 0,
+        "authorname": "Аноним",
+        "urlpreview": "",
+        "urlshow": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231488&exact=N&fileName=b7e5bbe7-2783-44b8-85c9-5d0118da96a4.mp3",
+        "urldownload": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231488&exact=N&fileName=b7e5bbe7-2783-44b8-85c9-5d0118da96a4.mp3",
+        "viewerattrs": {
+          "viewer": "",
+          "viewertype": "audio",
+          "src": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231488&exact=N&fileName=b7e5bbe7-2783-44b8-85c9-5d0118da96a4.mp3",
+          "objectid": "231488",
+          "viewergroupby": "64906",
+          "imchatid": 64906,
+          "title": "b7e5bbe7-2783-44b8-85c9-5d0118da96a4.mp3",
+          "actions": "[{\"type\":\"download\"},{\"type\":\"copyToMe\",\"text\":\"Сохранить на Диск\",\"action\":\"BXIM.disk.saveToDiskAction\",\"params\":{\"fileId\":\"231488\"},\"extension\":\"disk.viewer.actions\",\"buttonIconClass\":\"ui-btn-icon-cloud\"}]"
+        },
+        "mediaurl": {
+          "preview": {
+            "250": ""
+          }
+        },
+        "istranscribable": false,
+        "isvideonote": false,
+        "isvoicenote": false
+      },
+      "231504": {
+        "id": 231504,
+        "chatid": 64906,
+        "date": "2026-04-18T13:17:16+03:00",
+        "type": "audio",
+        "name": "2769db8d-5faa-42a8-b248-a7812161fd8e.mp3",
+        "extension": "mp3",
+        "size": 80300,
+        "image": false,
+        "status": "done",
+        "progress": 100,
+        "authorid": 0,
+        "authorname": "Аноним",
+        "urlpreview": "",
+        "urlshow": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231504&exact=N&fileName=2769db8d-5faa-42a8-b248-a7812161fd8e.mp3",
+        "urldownload": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231504&exact=N&fileName=2769db8d-5faa-42a8-b248-a7812161fd8e.mp3",
+        "viewerattrs": {
+          "viewer": "",
+          "viewertype": "audio",
+          "src": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231504&exact=N&fileName=2769db8d-5faa-42a8-b248-a7812161fd8e.mp3",
+          "objectid": "231504",
+          "viewergroupby": "64906",
+          "imchatid": 64906,
+          "title": "2769db8d-5faa-42a8-b248-a7812161fd8e.mp3",
+          "actions": "[{\"type\":\"download\"},{\"type\":\"copyToMe\",\"text\":\"Сохранить на Диск\",\"action\":\"BXIM.disk.saveToDiskAction\",\"params\":{\"fileId\":\"231504\"},\"extension\":\"disk.viewer.actions\",\"buttonIconClass\":\"ui-btn-icon-cloud\"}]"
+        },
+        "mediaurl": {
+          "preview": {
+            "250": ""
+          }
+        },
+        "istranscribable": false,
+        "isvideonote": false,
+        "isvoicenote": false
+      },
+      "231530": {
+        "id": 231530,
+        "chatid": 64906,
+        "date": "2026-04-18T14:06:52+03:00",
+        "type": "audio",
+        "name": "195f11e2-3f64-4af0-8e51-1f61c7fbd7b7.mp3",
+        "extension": "mp3",
+        "size": 130796,
+        "image": false,
+        "status": "done",
+        "progress": 100,
+        "authorid": 0,
+        "authorname": "Аноним",
+        "urlpreview": "",
+        "urlshow": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231530&exact=N&fileName=195f11e2-3f64-4af0-8e51-1f61c7fbd7b7.mp3",
+        "urldownload": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231530&exact=N&fileName=195f11e2-3f64-4af0-8e51-1f61c7fbd7b7.mp3",
+        "viewerattrs": {
+          "viewer": "",
+          "viewertype": "audio",
+          "src": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231530&exact=N&fileName=195f11e2-3f64-4af0-8e51-1f61c7fbd7b7.mp3",
+          "objectid": "231530",
+          "viewergroupby": "64906",
+          "imchatid": 64906,
+          "title": "195f11e2-3f64-4af0-8e51-1f61c7fbd7b7.mp3",
+          "actions": "[{\"type\":\"download\"},{\"type\":\"copyToMe\",\"text\":\"Сохранить на Диск\",\"action\":\"BXIM.disk.saveToDiskAction\",\"params\":{\"fileId\":\"231530\"},\"extension\":\"disk.viewer.actions\",\"buttonIconClass\":\"ui-btn-icon-cloud\"}]"
+        },
+        "mediaurl": {
+          "preview": {
+            "250": ""
+          }
+        },
+        "istranscribable": false,
+        "isvideonote": false,
+        "isvoicenote": false
+      }
+    }
+  }
+}

@@ -1,0 +1,215 @@
+{
+  "channel": "whatsapp",
+  "integration": "wazzup",
+  "deal_id": "50378",
+  "contact_id": "63418",
+  "company_id": "",
+  "deal_title": "Гость - WhatsApp",
+  "source_id": "2|WZ_WHATSAPP_CB0C9F5C07DE8985B74A894B883C619C0",
+  "assigned_by_id": "32",
+  "stage_id": "2",
+  "stage_semantic_id": "F",
+  "category_id": "0",
+  "date_create": "2026-04-11T14:17:55+03:00",
+  "date_modify": "2026-04-14T16:30:59+03:00",
+  "closedate": "2026-04-14T03:00:00+03:00",
+  "closed": "Y",
+  "last_communication_time": "2026-04-11T17:06:28",
+  "opportunity": "0.00000000",
+  "currency_id": "KZT",
+  "loss_reason_id": "",
+  "loss_comment": "",
+  "utm_source": "",
+  "utm_medium": "",
+  "utm_campaign": "",
+  "timeline_source": "deal",
+  "timeline_entity_type": "deal",
+  "timeline_entity_id": "50378",
+  "chat_id": "63860",
+  "session_id": "25974",
+  "dialog_id": "chat63860",
+  "connector_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0",
+  "connector_title": "WAZZUP: WhatsApp",
+  "chat_name": "Гость - WhatsApp",
+  "stats": {
+    "total_messages": 22,
+    "effective_messages": 14,
+    "manager_messages": 6,
+    "client_messages": 8,
+    "system_messages": 8,
+    "messages_with_files": 5,
+    "first_message_at": "2026-04-11T14:17:55+03:00",
+    "last_message_at": "2026-04-14T16:31:31+03:00",
+    "first_manager_response_time_sec": 67.0,
+    "avg_response_latency_sec": 19.5,
+    "conversation_duration_hours": 74.22666666666667
+  },
+  "messages": [
+    {
+      "timeline_comment_id": "1058736",
+      "created_at": "2026-04-11T14:17:56+03:00",
+      "author_id": "21176",
+      "sender_role": "client",
+      "sender_label": "Гость",
+      "text": "Саламатсыз ба",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50378"
+    },
+    {
+      "timeline_comment_id": "1058738",
+      "created_at": "2026-04-11T14:18:24+03:00",
+      "author_id": "21176",
+      "sender_role": "client",
+      "sender_label": "Гость",
+      "text": "",
+      "attachments": [
+        {
+          "type": "image",
+          "label": "438efd0c-5e9c-4acc-a12c-1603d52c0649.jpeg",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=229950&exact=N&_esd=TrM_qixYMN5U_frBJvQrz8mbTIgsEtC1d6vReMFHEljsMX97NEFOqGD18S60ncfi37q02RWhsdKSSMFeugcqbDYrFUHZppNhLgAhlxsGpyrvho7X0QUVn3yQo0s7AQ45BUelGazU1PZ3GIqGEMA_UOAs7R7ZgAXEict4OYw4nloSGgTjWXeDog8-wJM%3D&fileName=438efd0c-5e9c-4acc-a12c-1603d52c0649.jpeg"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50378"
+    },
+    {
+      "timeline_comment_id": "1058742",
+      "created_at": "2026-04-11T14:19:02+03:00",
+      "author_id": "21176",
+      "sender_role": "client",
+      "sender_label": "Гость",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "420dd19e-763b-4888-98cd-23af7ca3e193.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=229952&exact=N&fileName=420dd19e-763b-4888-98cd-23af7ca3e193.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50378"
+    },
+    {
+      "timeline_comment_id": "1058744",
+      "created_at": "2026-04-11T14:19:03+03:00",
+      "author_id": "21176",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Сәлеметсіз бе! Сізге “SAPA PLAST” компаниясы жазып отыр. Айтыңызшы, сізге терезелер керек пе?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50378"
+    },
+    {
+      "timeline_comment_id": "1058746",
+      "created_at": "2026-04-11T14:19:21+03:00",
+      "author_id": "21176",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Қалай сізге жүгінсем болады? Есіміңіз кім?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50378"
+    },
+    {
+      "timeline_comment_id": "1058770",
+      "created_at": "2026-04-11T14:20:36+03:00",
+      "author_id": "21176",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Баға м² бойынша есептеледі:\n- Эконом: 40 000–60 000 тг/м²\n- Премиум (неміс профилі): 70 000–95 000 тг/м²\n\nСіз жіберген 2 конструкция шамамен 10.6 м² шығады. Жуық жалпы құны:\n- Эконом: ~424 000–636 000 тг\n- Премиум: ~742 000–1 007 000 тг\nНақтысы таңдаған конфигурацияға қарай шығады.\n\nСізді қалай атаймын?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50378"
+    },
+    {
+      "timeline_comment_id": "1058932",
+      "created_at": "2026-04-11T15:04:46+03:00",
+      "author_id": "21176",
+      "sender_role": "client",
+      "sender_label": "Гость",
+      "text": "Жарайды рахмет",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50378"
+    },
+    {
+      "timeline_comment_id": "1058934",
+      "created_at": "2026-04-11T15:04:47+03:00",
+      "author_id": "21176",
+      "sender_role": "client",
+      "sender_label": "Гость",
+      "text": "Қажет емес",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50378"
+    },
+    {
+      "timeline_comment_id": "1058936",
+      "created_at": "2026-04-11T15:05:25+03:00",
+      "author_id": "21176",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Түсіндім. Егер кейін қажет болса, жазыңыз 🙂\nШоурумдарымыз:\n- Шымкент, Бозарық 261/1\n- Алматы, Немировича-Данченко 18е\nКеліп көре аласыз.",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50378"
+    },
+    {
+      "timeline_comment_id": "1064594",
+      "created_at": "2026-04-14T16:24:24+03:00",
+      "author_id": "21176",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Комбат, па ?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50378"
+    },
+    {
+      "timeline_comment_id": "1064596",
+      "created_at": "2026-04-14T16:24:36+03:00",
+      "author_id": "21176",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Кымбат па",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50378"
+    },
+    {
+      "timeline_comment_id": "1064602",
+      "created_at": "2026-04-14T16:26:45+03:00",
+      "author_id": "21176",
+      "sender_role": "client",
+      "sender_label": "Гость",
+      "text": "Заказ беріп қойдық",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50378"
+    },
+    {
+      "timeline_comment_id": "1064604",
+      "created_at": "2026-04-14T16:26:47+03:00",
+      "author_id": "21176",
+      "sender_role": "client",
+      "sender_label": "Гость",
+      "text": "Рахмет",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50378"
+    },
+    {
+      "timeline_comment_id": "1064614",
+      "created_at": "2026-04-14T16:31:31+03:00",
+      "author_id": "21176",
+      "sender_role": "client",
+      "sender_label": "Гость",
+      "text": "=== SYSTEM WZ === Сообщение удалено. Посмотрите в чатах Wazzup, какое сообщение удалил клиент",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50378"
+    }
+  ]
+}

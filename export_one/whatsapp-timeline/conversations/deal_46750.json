@@ -1,0 +1,217 @@
+{
+  "channel": "whatsapp",
+  "integration": "wazzup",
+  "deal_id": "46750",
+  "contact_id": "60078",
+  "company_id": "",
+  "deal_title": "77789611052 - WhatsApp",
+  "source_id": "2|WZ_WHATSAPP_CB0C9F5C07DE8985B74A894B883C619C0",
+  "assigned_by_id": "28",
+  "stage_id": "UC_GVH3WU",
+  "stage_semantic_id": "P",
+  "category_id": "0",
+  "date_create": "2026-02-13T18:17:36+03:00",
+  "date_modify": "2026-04-14T11:00:32+03:00",
+  "closedate": "2026-02-20T03:00:00+03:00",
+  "closed": "N",
+  "last_communication_time": "2026-04-11T14:49:50",
+  "opportunity": "0.00000000",
+  "currency_id": "KZT",
+  "loss_reason_id": "",
+  "loss_comment": "",
+  "utm_source": "",
+  "utm_medium": "",
+  "utm_campaign": "",
+  "timeline_source": "deal",
+  "timeline_entity_type": "deal",
+  "timeline_entity_id": "46750",
+  "chat_id": "60388",
+  "session_id": "25736",
+  "dialog_id": "chat60388",
+  "connector_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0",
+  "connector_title": "WAZZUP: WhatsApp",
+  "chat_name": "77789611052 - WhatsApp",
+  "stats": {
+    "total_messages": 12,
+    "effective_messages": 7,
+    "manager_messages": 5,
+    "client_messages": 2,
+    "system_messages": 5,
+    "messages_with_files": 6,
+    "first_message_at": "2026-04-07T15:42:16+03:00",
+    "last_message_at": "2026-04-14T11:02:04+03:00",
+    "first_manager_response_time_sec": 587063.0,
+    "avg_response_latency_sec": 586993.0,
+    "conversation_duration_hours": 163.33
+  },
+  "messages": [
+    {
+      "timeline_comment_id": "1052748",
+      "created_at": "2026-04-07T15:42:16+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Начат новый диалог №25736",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "46750"
+    },
+    {
+      "timeline_comment_id": "1052750",
+      "created_at": "2026-04-07T15:42:16+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Сделка прикреплена к диалогу",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "77789611052 - WhatsApp",
+          "url": "/crm/deal/details/46750/"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "46750"
+    },
+    {
+      "timeline_comment_id": "1052752",
+      "created_at": "2026-04-07T15:42:16+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Контактная информация сохранена в контакт",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "77789611052",
+          "url": "/crm/contact/details/60078/"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "46750"
+    },
+    {
+      "timeline_comment_id": "1052754",
+      "created_at": "2026-04-07T15:42:16+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Переданы дополнительные данные:\nСсылка на исходный пост: https://app.wazzup24.com/1826-6940/chat/whatsapp/77789611052/fc3e1d61-cd1c-4955-9345-b0f22b543020",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "Wazzup App",
+          "url": "https://app.wazzup24.com/1826-6940/chat/whatsapp/77789611052/fc3e1d61-cd1c-4955-9345-b0f22b543020"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "46750"
+    },
+    {
+      "timeline_comment_id": "1052756",
+      "created_at": "2026-04-07T15:42:17+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Обращение направлено на \"\"Нурсултан\"\" Директор Алматы SP (ответственного в CRM)",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "46750"
+    },
+    {
+      "timeline_comment_id": "1052758",
+      "created_at": "2026-04-07T15:42:17+03:00",
+      "author_id": "20098",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жандос Менеджер Алматы)",
+      "text": "Сәлеметсіз бе?!🙂 Сізді Алматы қаласындағы Сапа Пласт Компаниясының ресми шорумында сізді күтетін боламыз. Бұл жерден сіз тек сапалы өнімдермен танысып кете аласыз.\nБіздің Инстаграм парақшамыздан бүкіл жұмыстарымызды шынай отзывтарды көре аласыздар\nhttps://www.instagram.com/sapaplast.kz\n\nБізді 2Гис картасынан осылай таба аласыз;\nУлица Немировича-Данченко, 18а\nhttps://2gis.kz/almaty/geo/9430047374980723/76.868243,43.261476\nЖәне де сізге местоположение жіберіп жатырмын.\nhttps://www.google.com/maps/place/43%C2%B015'40.4%22N+76%C2%B052'05.3%22E/@43.2612251,76.8655673,17z/data=!3m1!4b1!4m4!3m3!8m2!3d43.2612251!4d76.8681422?hl=ru&entry=ttu",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "46750"
+    },
+    {
+      "timeline_comment_id": "1052760",
+      "created_at": "2026-04-07T15:42:28+03:00",
+      "author_id": "20098",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жандос Менеджер Алматы)",
+      "text": "",
+      "attachments": [
+        {
+          "type": "video",
+          "label": "WhatsApp_Video_2025-04-22_at_14.30.03.mp4",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=228598&exact=N&_esd=RsrwTjXmtXezaH_3IbKlAKjrLwXzhUPFqdsKtxToxr3ZCU-Md8hG1MREec0DjBWn1fij0S462mSjUhqnxEn46Qodgmp8rFV1KcTzx4FAsgckScYqsvsTPyYWikOcWdM-GyEyFJ6Mk0qjyVyFaQO2Bh9ORDzH_ppuSf-vdPZh4boz13Yyj0MtjNbYlRU%3D&fileName=WhatsApp_Video_2025-04-22_at_14.30.03.mp4"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "46750"
+    },
+    {
+      "timeline_comment_id": "1052762",
+      "created_at": "2026-04-07T15:42:31+03:00",
+      "author_id": "20098",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жандос Менеджер Алматы)",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "wazzup_audio.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=228600&exact=N&fileName=wazzup_audio.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "46750"
+    },
+    {
+      "timeline_comment_id": "1052764",
+      "created_at": "2026-04-07T15:42:32+03:00",
+      "author_id": "20098",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жандос Менеджер Алматы)",
+      "text": "Бир кери байланыс берип кой",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "46750"
+    },
+    {
+      "timeline_comment_id": "1052832",
+      "created_at": "2026-04-07T15:57:41+03:00",
+      "author_id": "20098",
+      "sender_role": "client",
+      "sender_label": "77789611052",
+      "text": "Алюминий профель барма",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "46750"
+    },
+    {
+      "timeline_comment_id": "1052836",
+      "created_at": "2026-04-07T15:58:51+03:00",
+      "author_id": "20098",
+      "sender_role": "client",
+      "sender_label": "77789611052",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "fd0709b0-1de2-4203-b278-afbc86753109.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=228610&exact=N&fileName=fd0709b0-1de2-4203-b278-afbc86753109.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "46750"
+    },
+    {
+      "timeline_comment_id": "1063660",
+      "created_at": "2026-04-14T11:02:04+03:00",
+      "author_id": "20098",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жандос Менеджер Алматы)",
+      "text": "ок",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "46750"
+    }
+  ]
+}

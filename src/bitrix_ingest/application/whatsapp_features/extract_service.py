@@ -194,6 +194,7 @@ class ExtractWhatsAppFeaturesService:
                 f"- Contact ID: {conversation.get('contact_id', '')}\n"
                 f"- Source ID: {conversation.get('source_id', '')}\n"
                 f"- Stage ID: {conversation.get('stage_id', '')}\n"
+                f"- Stage semantic ID: {conversation.get('stage_semantic_id', '')}\n"
                 f"- Assigned manager ID: {conversation.get('assigned_by_id', '')}\n"
                 f"- Created at: {conversation.get('date_create', '')}\n"
                 f"- Updated at: {conversation.get('date_modify', '')}\n"
@@ -235,6 +236,7 @@ class ExtractWhatsAppFeaturesService:
                         "source_id": str(conversation.get("source_id") or ""),
                         "assigned_by_id": str(conversation.get("assigned_by_id") or ""),
                         "stage_id": str(conversation.get("stage_id") or ""),
+                        "stage_semantic_id": str(conversation.get("stage_semantic_id") or ""),
                         "category_id": str(conversation.get("category_id") or ""),
                         "date_create": str(conversation.get("date_create") or ""),
                         "date_modify": str(conversation.get("date_modify") or ""),

@@ -126,24 +126,29 @@ class FakeGateway:
 
 
 def _service_with_deals(deals: list[dict[str, Any]]) -> tuple[GetCatalogService, FakeGateway]:
+    users = [
+        {"ID": "20", "NAME": "Aset", "LAST_NAME": "SP", "EMAIL": "20@example.com", "ACTIVE": True},
+        {"ID": "30", "NAME": "Raushan", "LAST_NAME": "SP", "EMAIL": "30@example.com", "ACTIVE": True},
+        {"ID": "99", "NAME": "Ardak", "LAST_NAME": "SP", "EMAIL": "99@example.com", "ACTIVE": True},
+    ]
+    funnels = [
+        {"id": 0, "name": "Default", "sort": 0, "entityTypeId": 2, "isDefault": "Y"},
+        {"id": 4, "name": "Doors", "sort": 20, "entityTypeId": 2, "isDefault": "N"},
+    ]
+    return _service_with_custom_catalog(deals, users=users, funnels=funnels)
+
+
+def _service_with_custom_catalog(
+    deals: list[dict[str, Any]],
+    *,
+    users: list[dict[str, Any]],
+    funnels: list[dict[str, Any]],
+) -> tuple[GetCatalogService, FakeGateway]:
     gateway = FakeGateway(
         deals=deals,
         calls={
-            "user.get": {
-                "result": [
-                    {"ID": "20", "NAME": "Aset", "LAST_NAME": "SP", "EMAIL": "20@example.com", "ACTIVE": True},
-                    {"ID": "30", "NAME": "Raushan", "LAST_NAME": "SP", "EMAIL": "30@example.com", "ACTIVE": True},
-                    {"ID": "99", "NAME": "Ardak", "LAST_NAME": "SP", "EMAIL": "99@example.com", "ACTIVE": True},
-                ]
-            },
-            "crm.category.list": {
-                "result": {
-                    "categories": [
-                        {"id": 0, "name": "Default", "sort": 0, "entityTypeId": 2, "isDefault": "Y"},
-                        {"id": 4, "name": "Doors", "sort": 20, "entityTypeId": 2, "isDefault": "N"},
-                    ]
-                }
-            },
+            "user.get": {"result": users},
+            "crm.category.list": {"result": {"categories": funnels}},
         },
     )
     return GetCatalogService(gateway=gateway), gateway
@@ -157,6 +162,108 @@ def test_get_funnels_returns_default_and_named_funnels() -> None:
     assert funnels == [
         {"id": "0", "name": "Default", "sort": 0},
         {"id": "4", "name": "Doors", "sort": 20},
+    ]
+
+
+def test_get_funnels_with_managers_groups_managers_by_funnel() -> None:
+    service, _gateway = _service_with_deals([
+        {
+            "ID": "1",
+            "TITLE": "Default funnel lead",
+            "SOURCE_ID": "CALL",
+            "ASSIGNED_BY_ID": "20",
+            "CATEGORY_ID": "0",
+            "DATE_CREATE": "2026-02-01T10:00:00+03:00",
+            "DATE_MODIFY": "2026-02-01T10:00:00+03:00",
+        },
+        {
+            "ID": "2",
+            "TITLE": "Doors lead 1",
+            "SOURCE_ID": "CALL",
+            "ASSIGNED_BY_ID": "30",
+            "CATEGORY_ID": "4",
+            "DATE_CREATE": "2026-02-02T10:00:00+03:00",
+            "DATE_MODIFY": "2026-02-02T10:00:00+03:00",
+        },
+        {
+            "ID": "3",
+            "TITLE": "Doors lead 2",
+            "SOURCE_ID": "WZ001",
+            "ASSIGNED_BY_ID": "20",
+            "CATEGORY_ID": "4",
+            "DATE_CREATE": "2026-02-03T10:00:00+03:00",
+            "DATE_MODIFY": "2026-02-03T10:00:00+03:00",
+        },
+    ])
+
+    funnels = service.get_funnels_with_managers()
+
+    assert funnels == [
+        {
+            "id": "0",
+            "name": "Default",
+            "sort": 0,
+            "manager_count": 1,
+            "managers": [
+                {"id": "20", "name": "Aset SP", "email": "20@example.com", "active": True},
+            ],
+        },
+        {
+            "id": "4",
+            "name": "Doors",
+            "sort": 20,
+            "manager_count": 2,
+            "managers": [
+                {"id": "20", "name": "Aset SP", "email": "20@example.com", "active": True},
+                {"id": "30", "name": "Raushan SP", "email": "30@example.com", "active": True},
+            ],
+        },
+    ]
+
+
+def test_get_funnels_with_managers_can_filter_inactive_users() -> None:
+    service, _gateway = _service_with_custom_catalog(
+        [
+            {
+                "ID": "1",
+                "TITLE": "Doors lead 1",
+                "SOURCE_ID": "CALL",
+                "ASSIGNED_BY_ID": "20",
+                "CATEGORY_ID": "4",
+                "DATE_CREATE": "2026-02-02T10:00:00+03:00",
+                "DATE_MODIFY": "2026-02-02T10:00:00+03:00",
+            },
+            {
+                "ID": "2",
+                "TITLE": "Doors lead 2",
+                "SOURCE_ID": "CALL",
+                "ASSIGNED_BY_ID": "99",
+                "CATEGORY_ID": "4",
+                "DATE_CREATE": "2026-02-03T10:00:00+03:00",
+                "DATE_MODIFY": "2026-02-03T10:00:00+03:00",
+            },
+        ],
+        users=[
+            {"ID": "20", "NAME": "Aset", "LAST_NAME": "SP", "EMAIL": "20@example.com", "ACTIVE": True},
+            {"ID": "99", "NAME": "Dormant", "LAST_NAME": "SP", "EMAIL": "99@example.com", "ACTIVE": False},
+        ],
+        funnels=[
+            {"id": 4, "name": "Doors", "sort": 20, "entityTypeId": 2, "isDefault": "N"},
+        ],
+    )
+
+    funnels = service.get_funnels_with_managers(active_only=True)
+
+    assert funnels == [
+        {
+            "id": "4",
+            "name": "Doors",
+            "sort": 20,
+            "manager_count": 1,
+            "managers": [
+                {"id": "20", "name": "Aset SP", "email": "20@example.com", "active": True},
+            ],
+        },
     ]
 
 
@@ -332,4 +439,43 @@ def test_preview_loads_all_item_pages() -> None:
 
     assert preview["deal_count"] == 55
     assert preview["total_deals_scanned"] == 55
+    assert [request["start"] for request in gateway.item_requests] == [0, 50]
+
+
+def test_get_funnels_with_managers_loads_all_item_pages() -> None:
+    deals = [
+        {
+            "ID": str(index),
+            "TITLE": f"Lead {index}",
+            "SOURCE_ID": "CALL",
+            "ASSIGNED_BY_ID": "20" if index % 2 else "30",
+            "CATEGORY_ID": "4",
+            "DATE_CREATE": "2026-02-01T10:00:00+03:00",
+            "DATE_MODIFY": "2026-02-01T10:00:00+03:00",
+        }
+        for index in range(1, 56)
+    ]
+    service, gateway = _service_with_deals(deals)
+
+    funnels = service.get_funnels_with_managers()
+
+    assert funnels == [
+        {
+            "id": "0",
+            "name": "Default",
+            "sort": 0,
+            "manager_count": 0,
+            "managers": [],
+        },
+        {
+            "id": "4",
+            "name": "Doors",
+            "sort": 20,
+            "manager_count": 2,
+            "managers": [
+                {"id": "20", "name": "Aset SP", "email": "20@example.com", "active": True},
+                {"id": "30", "name": "Raushan SP", "email": "30@example.com", "active": True},
+            ],
+        },
+    ]
     assert [request["start"] for request in gateway.item_requests] == [0, 50]

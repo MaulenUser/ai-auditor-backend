@@ -17,7 +17,7 @@ from ..application.audit import RunAuditRequest, RunAuditService
 from ..application.call_features import ExtractCallFeaturesRequest, ExtractCallFeaturesService
 from ..application.call_records import CallRecordsScanRequest, CallRecordsScanService
 from ..application.catalog import GetCatalogService
-from ..application.crm import CrmExportRequest, CrmExportService
+from ..application.crm import CrmExportRequest, CrmExportService, StageHistoryRequest, StageHistoryService
 from ..application.recordings import DownloadRecordingsRequest, DownloadRecordingsService
 from ..application.transcribe import TranscribeRecordingsRequest, TranscribeRecordingsService
 from ..application.whatsapp import WhatsAppExportRequest, WhatsAppExportService
@@ -33,6 +33,7 @@ from ..domain.exceptions import DomainError
 from ..infrastructure.http import BitrixClient
 from ..infrastructure.http.file_downloader import RequestsFileDownloader
 from ..infrastructure.openai import OpenAiResponsesClient, OpenAiTranscriptionClient
+from ..infrastructure.audit_trace import AuditTraceRecorder, TracedJsonSink
 from ..infrastructure.persistence import FileSystemJsonWriter
 from ..infrastructure.persistence.memory_writer import InMemoryJsonSink, TeeJsonSink
 
@@ -170,6 +171,54 @@ def get_managers(
 
 
 @app.get(
+    "/catalog/funnels-with-managers",
+    summary="\u0412\u043e\u0440\u043e\u043d\u043a\u0438 \u0441 \u043c\u0435\u043d\u0435\u0434\u0436\u0435\u0440\u0430\u043c\u0438",
+    tags=["Catalog"],
+)
+def get_funnels_with_managers(
+    date_from: Optional[str] = Query(
+        None,
+        description="\u0414\u0430\u0442\u0430 \u043d\u0430\u0447\u0430\u043b\u0430 (ISO 8601); "
+        "\u043e\u0433\u0440\u0430\u043d\u0438\u0447\u0438\u0432\u0430\u0435\u0442 "
+        "\u0441\u0434\u0435\u043b\u043a\u0438 \u0434\u043b\u044f \u043f\u043e\u0438\u0441\u043a\u0430 "
+        "\u043c\u0435\u043d\u0435\u0434\u0436\u0435\u0440\u043e\u0432",
+    ),
+    date_to: Optional[str] = Query(
+        None,
+        description="\u0414\u0430\u0442\u0430 \u043a\u043e\u043d\u0446\u0430 (ISO 8601); "
+        "\u043e\u0433\u0440\u0430\u043d\u0438\u0447\u0438\u0432\u0430\u0435\u0442 "
+        "\u0441\u0434\u0435\u043b\u043a\u0438 \u0434\u043b\u044f \u043f\u043e\u0438\u0441\u043a\u0430 "
+        "\u043c\u0435\u043d\u0435\u0434\u0436\u0435\u0440\u043e\u0432",
+    ),
+    active_only: bool = Query(
+        False,
+        description="\u0412\u043e\u0437\u0432\u0440\u0430\u0449\u0430\u0442\u044c "
+        "\u0442\u043e\u043b\u044c\u043a\u043e \u0430\u043a\u0442\u0438\u0432\u043d\u044b\u0445 "
+        "\u043c\u0435\u043d\u0435\u0434\u0436\u0435\u0440\u043e\u0432",
+    ),
+    webhook_url: str | None = Security(_webhook_header),
+) -> dict[str, Any]:
+    """\u0412\u043e\u0437\u0432\u0440\u0430\u0449\u0430\u0435\u0442 \u0432\u043e\u0440\u043e\u043d\u043a\u0438 \u0438 \u043c\u0435\u043d\u0435\u0434\u0436\u0435\u0440\u043e\u0432 \u043f\u043e \u0441\u0434\u0435\u043b\u043a\u0430\u043c \u0432 \u043a\u0430\u0436\u0434\u043e\u0439 \u0432\u043e\u0440\u043e\u043d\u043a\u0435.
+
+    \u0421\u0432\u044f\u0437\u044c "\u0432\u043e\u0440\u043e\u043d\u043a\u0430 -> \u043c\u0435\u043d\u0435\u0434\u0436\u0435\u0440\u044b"
+    \u0441\u0442\u0440\u043e\u0438\u0442\u0441\u044f \u043f\u043e \u0444\u0430\u043a\u0442\u0438\u0447\u0435\u0441\u043a\u0438\u043c
+    \u043e\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0435\u043d\u043d\u044b\u043c \u0432 \u0441\u0434\u0435\u043b\u043a\u0430\u0445 (`ASSIGNED_BY_ID`),
+    \u0442\u0430\u043a \u043a\u0430\u043a \u043e\u0442\u0434\u0435\u043b\u044c\u043d\u043e\u0433\u043e webhook-\u043c\u0435\u0442\u043e\u0434\u0430
+    \u0441 \u043f\u0440\u044f\u043c\u043e\u0439 \u043f\u0440\u0438\u0432\u044f\u0437\u043a\u043e\u0439 \u0434\u043b\u044f \u044d\u0442\u043e\u0433\u043e \u043d\u0435\u0442.
+    """
+    url = _require_webhook(webhook_url)
+    try:
+        funnels = GetCatalogService(gateway=BitrixClient(url)).get_funnels_with_managers(
+            date_from=_none(date_from),
+            date_to=_none(date_to),
+            active_only=active_only,
+        )
+    except DomainError as exc:
+        raise HTTPException(status_code=502, detail=str(exc)) from exc
+    return {"funnels": funnels}
+
+
+@app.get(
     "/audit/preview",
     summary="Предварительный расчёт аудита",
     tags=["Audit"],
@@ -251,31 +300,88 @@ def run_audit(
 
     funnel_slug = ("funnels_" + "_".join(clean_funnels)) if clean_funnels else "all_funnels"
     resolved_output = Path(output_dir) / funnel_slug
+    trace_path = resolved_output / "audit-run.trace.json"
+
+    # 0.2 s between every Bitrix call prevents 503 rate-limit bursts.
+    _CALL_DELAY = 0.2
 
     sink, mem = _tee()
-    return _run_service(
-        lambda: RunAuditService(
-            bitrix_gateway=BitrixClient(bitrix_url),
-            responses_gateway=OpenAiResponsesClient(key),
-            sink=sink,
-            call_gateway=BitrixClient(crm_webhook_url) if crm_webhook_url else None,
-            transcription_gateway=OpenAiTranscriptionClient(key) if crm_webhook_url else None,
-            file_downloader=RequestsFileDownloader() if crm_webhook_url else None,
-        ).execute(
-            RunAuditRequest(
-                output_dir=resolved_output,
-                funnel_ids=clean_funnels,
-                date_from=_none(date_from),
-                date_to=_none(date_to),
-                responsible_id=resolved_responsible,
-                limit=limit,
-                model=model,
-                recommendations_model=recommendations_model,
-                source_label=_none(source_label) or "",
-            )
-        ),
-        mem,
+    trace = AuditTraceRecorder(
+        trace_path,
+        run_name="audit.run",
+        request_details={
+            "funnel_ids": clean_funnels or [],
+            "date_from": _none(date_from),
+            "date_to": _none(date_to),
+            "responsible_id": resolved_responsible,
+            "limit": limit,
+            "model": model,
+            "recommendations_model": recommendations_model,
+            "source_label": _none(source_label) or "",
+            "output_dir": resolved_output,
+            "call_audit_enabled": bool(crm_webhook_url),
+        },
     )
+    traced_sink = TracedJsonSink(sink, trace)
+    request_payload = RunAuditRequest(
+        output_dir=resolved_output,
+        funnel_ids=clean_funnels,
+        date_from=_none(date_from),
+        date_to=_none(date_to),
+        responsible_id=resolved_responsible,
+        limit=limit,
+        model=model,
+        recommendations_model=recommendations_model,
+        source_label=_none(source_label) or "",
+    )
+    try:
+        RunAuditService(
+            bitrix_gateway=BitrixClient(
+                bitrix_url,
+                call_delay=_CALL_DELAY,
+                trace=trace,
+                trace_name="bitrix.whatsapp",
+            ),
+            responses_gateway=OpenAiResponsesClient(
+                key,
+                trace=trace,
+                trace_name="openai.responses",
+            ),
+            sink=traced_sink,
+            call_gateway=BitrixClient(
+                crm_webhook_url,
+                call_delay=_CALL_DELAY,
+                trace=trace,
+                trace_name="bitrix.crm",
+            ) if crm_webhook_url else None,
+            transcription_gateway=OpenAiTranscriptionClient(
+                key,
+                trace=trace,
+                trace_name="openai.transcription",
+            ) if crm_webhook_url else None,
+            file_downloader=RequestsFileDownloader(
+                trace=trace,
+                trace_name="recording.download",
+            ) if crm_webhook_url else None,
+            trace=trace,
+        ).execute(request_payload)
+    except (FileNotFoundError, ValueError) as exc:
+        trace.finish(status="error", error=exc)
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    except DomainError as exc:
+        trace.finish(status="error", error=exc)
+        raise HTTPException(status_code=502, detail=str(exc)) from exc
+    except Exception as exc:
+        trace.finish(status="error", error=exc)
+        raise
+    trace.finish(status="ok")
+    return {
+        "status": "ok",
+        "data": mem.data,
+        "meta": {
+            "trace_file": trace_path.as_posix(),
+        },
+    }
 
 
 @app.post("/crm/export")
@@ -351,6 +457,55 @@ def download_recordings(
     )
 
 
+@app.post(
+    "/crm/stage-history",
+    summary="История переходов по стадиям",
+    tags=["CRM"],
+)
+def export_stage_history(
+    date_from: Optional[str] = Form(None, description="Дата начала (ISO 8601)"),
+    date_to: Optional[str] = Form(None, description="Дата конца (ISO 8601)"),
+    funnel_id: Optional[List[str]] = Form(None, description="ID воронок"),
+    deal_ids: Optional[List[str]] = Form(None, description="ID конкретных сделок"),
+    responsible_id: Optional[str] = Form(None, description="ID ответственного менеджера"),
+    whatsapp_only: bool = Form(False, description="Только WhatsApp-сделки"),
+    limit: int = Form(0, description="Максимум сделок (0 = все)"),
+    skip_existing: bool = Form(False, description="Пропускать уже экспортированные"),
+    output_dir: str = Form("export/stage-history", description="Папка вывода"),
+    page_delay: float = Form(0.0, description="Пауза между страницами (сек)"),
+    webhook_url: str | None = Security(_webhook_header),
+) -> dict[str, Any]:
+    """Экспортирует историю переходов по стадиям воронки для каждой сделки.
+
+    Выходные файлы:
+    - ``catalog_stages.json`` — маппинг stage_id → name
+    - ``histories/deal_{id}.json`` — история переходов на сделку
+    - ``all_histories.json`` — сводная таблица всех сделок
+    - ``deals.source.json``, ``report.json``, ``errors.json``
+    """
+    url = _require_webhook(webhook_url)
+    clean_funnels = [f for f in (funnel_id or []) if _none(f)] or None
+    sink, mem = _tee()
+    return _run_service(
+        lambda: StageHistoryService(
+            gateway=BitrixClient(url, page_delay=page_delay), sink=sink,
+        ).execute(
+            StageHistoryRequest(
+                output_dir=Path(output_dir),
+                category_ids=clean_funnels,
+                deal_ids=deal_ids,
+                date_from=_none(date_from),
+                date_to=_none(date_to),
+                responsible_id=_none(responsible_id),
+                whatsapp_only=whatsapp_only,
+                limit=limit,
+                skip_existing=skip_existing,
+            )
+        ),
+        mem,
+    )
+
+
 @app.post("/whatsapp/export")
 def export_whatsapp(
     date_from: Optional[str] = Form(None, description="Дата начала (ISO 8601)"),
@@ -363,7 +518,11 @@ def export_whatsapp(
     page_delay: float = Form(0.3, description="Пауза между страницами (сек)"),
     webhook_url: str | None = Security(_whatsapp_webhook_header),
 ) -> dict[str, Any]:
-    """Экспорт WhatsApp через Open Lines API → ``export/whatsapp-timeline/``."""
+    """Экспорт WhatsApp через Open Lines API → ``export/whatsapp-timeline/``.
+
+    ``date_from`` / ``date_to`` отбирают сделки по CRM-датам, но не обрезают
+    историю сообщений внутри найденного чата.
+    """
     url = _require_webhook(webhook_url)
     clean_funnels = [f for f in (funnel_id or []) if _none(f)] or None
     sink, mem = _tee()

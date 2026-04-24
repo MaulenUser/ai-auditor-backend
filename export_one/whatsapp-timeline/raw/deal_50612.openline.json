@@ -1,0 +1,403 @@
+{
+  "binding": {
+    "timeline_source": "deal",
+    "timeline_entity_type": "deal",
+    "timeline_entity_id": "50612",
+    "chat_id": "64202",
+    "connector_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0",
+    "connector_title": "WAZZUP: WhatsApp"
+  },
+  "dialog": {
+    "id": 64202,
+    "parent_chat_id": 0,
+    "parent_message_id": 0,
+    "name": "Жумадил - WhatsApp",
+    "description": "Ссылка на исходный пост: https://app.wazzup24.com/1826-6940/chat/whatsapp/77710352001/fc3e1d61-cd1c-4955-9345-b0f22b543020",
+    "owner": 0,
+    "extranet": false,
+    "avatar": "https://cdn-ru.bitrix24.kz/b29289878/resize_cache/213142/ff58db95aecdfa09ae61b51b5fd8f63f/main/22a/22a7e6632d6141ae38642770878b1c8a/062e55d7379814eb29a5566a64b308d0.jpg",
+    "color": "#64a513",
+    "type": "lines",
+    "counter": 0,
+    "user_counter": 1,
+    "message_count": 10,
+    "unread_id": 0,
+    "restrictions": {
+      "avatar": true,
+      "rename": true,
+      "extend": true,
+      "call": true,
+      "mute": true,
+      "leave": true,
+      "leave_owner": true,
+      "send": true,
+      "user_list": true
+    },
+    "last_message_id": 1070086,
+    "last_id": 0,
+    "marked_id": 0,
+    "disk_folder_id": 0,
+    "entity_type": "LINES",
+    "entity_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|21de9dfb-6bec-48f2-adf9-a5848bd8737e|21262",
+    "entity_data_1": "Y|DEAL|50612|N|N|26078|1776170252|0|0|0",
+    "entity_data_2": "LEAD|0|COMPANY|0|CONTACT|63638|DEAL|50612",
+    "entity_data_3": "",
+    "mute_list": [],
+    "date_create": "2026-04-14T15:37:31+03:00",
+    "message_type": "L",
+    "public": "",
+    "role": "guest",
+    "entity_link": {
+      "type": "LINES",
+      "url": "",
+      "id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|21de9dfb-6bec-48f2-adf9-a5848bd8737e|21262"
+    },
+    "text_field_enabled": true,
+    "background_id": null,
+    "permissions": {
+      "manage_users_add": "member",
+      "manage_users_delete": "manager",
+      "manage_ui": "member",
+      "manage_settings": "owner",
+      "manage_messages": "member",
+      "can_post": "member"
+    },
+    "is_new": false,
+    "readed_list": [
+      {
+        "user_id": 21262,
+        "user_name": "Жумадил",
+        "message_id": 1064508,
+        "date": null
+      }
+    ],
+    "manager_list": [],
+    "last_message_views": {
+      "message_id": 1070086,
+      "first_viewers": [],
+      "count_of_viewers": 0
+    },
+    "dialog_id": "chat64202"
+  },
+  "history": {
+    "chatId": 64202,
+    "canJoin": "Y",
+    "canVoteHead": "Y",
+    "sessionId": 26078,
+    "sessionVoteHead": 0,
+    "sessionCommentHead": null,
+    "userId": "chat64202",
+    "message": {
+      "1070086": {
+        "id": "1070086",
+        "chatid": "64202",
+        "senderid": "0",
+        "recipientid": "chat64202",
+        "date": "2026-04-17T22:42:49+03:00",
+        "text": "Обращение также направлено [USER=1 REPLACE]sapa.plast.bitrix@mail.ru[/USER]",
+        "textlegacy": "Обращение также направлено [USER=1 REPLACE]sapa.plast.bitrix@mail.ru[/USER]",
+        "params": {
+          "notify": "N"
+        }
+      },
+      "1065868": {
+        "id": "1065868",
+        "chatid": "64202",
+        "senderid": "0",
+        "recipientid": "chat64202",
+        "date": "2026-04-15T09:47:29+03:00",
+        "text": "Обращение также направлено [USER=5716 REPLACE]Ернур Исаков[/USER]",
+        "textlegacy": "Обращение также направлено [USER=5716 REPLACE]Ернур Исаков[/USER]",
+        "params": {
+          "notify": "N"
+        }
+      },
+      "1064620": {
+        "id": "1064620",
+        "chatid": "64202",
+        "senderid": "0",
+        "recipientid": "chat64202",
+        "date": "2026-04-14T16:37:41+03:00",
+        "text": "Обращение также направлено [USER=18 REPLACE]\"\"Нурсултан\"\" Директор Алматы SP[/USER]",
+        "textlegacy": "Обращение также направлено [USER=18 REPLACE]\"\"Нурсултан\"\" Директор Алматы SP[/USER]",
+        "params": {
+          "notify": "N"
+        }
+      },
+      "1064510": {
+        "id": "1064510",
+        "chatid": "64202",
+        "senderid": "21262",
+        "recipientid": "chat64202",
+        "date": "2026-04-14T15:38:10+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nСәлеметсіз бе! Сізге “SAPA PLAST” компаниясы жазып тұр. Терезелер керек пе?",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Сәлеметсіз бе! Сізге “SAPA PLAST” компаниясы жазып тұр. Терезелер керек пе?",
+        "params": {
+          "connectorMid": [
+            "04ff9e95-0e1b-4d77-b0e1-7fa4cba0d034"
+          ]
+        }
+      },
+      "1064508": {
+        "id": "1064508",
+        "chatid": "64202",
+        "senderid": "21262",
+        "recipientid": "chat64202",
+        "date": "2026-04-14T15:37:34+03:00",
+        "text": "Сәлеметсіз бе, мен Тараздағы терезелердің құнын есептегім келеді\n[URL]https://www.instagram.com/p/DXFXVoQAJ2w/[/URL]",
+        "textlegacy": "Сәлеметсіз бе, мен Тараздағы терезелердің құнын есептегім келеді<br /><a href=\"https://www.instagram.com/p/DXFXVoQAJ2w/\" target=\"_blank\" >https://www.instagram.com/p/DXFXVoQAJ2w/</a>",
+        "params": {
+          "connectorMid": [
+            "592c2abe-8e8f-4793-aed6-68e6a203d7ea"
+          ]
+        }
+      },
+      "1064506": {
+        "id": "1064506",
+        "chatid": "64202",
+        "senderid": "0",
+        "recipientid": "chat64202",
+        "date": "2026-04-14T15:37:34+03:00",
+        "text": "Обращение направлено на всех участников очереди",
+        "textlegacy": "Обращение направлено на всех участников очереди",
+        "params": []
+      },
+      "1064504": {
+        "id": "1064504",
+        "chatid": "64202",
+        "senderid": "0",
+        "recipientid": "chat64202",
+        "date": "2026-04-14T15:37:33+03:00",
+        "text": "[B]Переданы дополнительные данные:[/B]\n Ссылка на исходный пост: [URL]https://app.wazzup24.com/1826-6940/chat/whatsapp/77710352001/fc3e1d61-cd1c-4955-9345-b0f22b543020[/URL]",
+        "textlegacy": "<b>Переданы дополнительные данные:</b><br /> Ссылка на исходный пост: <a href=\"https://app.wazzup24.com/1826-6940/chat/whatsapp/77710352001/fc3e1d61-cd1c-4955-9345-b0f22b543020\" target=\"_blank\" >https://app.wazzup24.com/1826-6940/chat/whatsapp/77710352001/fc3e1d61-cd1c-4955-9345-b0f22b543020</a>",
+        "params": {
+          "class": "bx-messenger-content-item-system",
+          "componentId": "HiddenMessage",
+          "urlId": [
+            83908
+          ],
+          "attach": [
+            {
+              "id": "83908",
+              "blocks": [
+                {
+                  "richLink": [
+                    {
+                      "name": "Wazzup App",
+                      "link": "https://app.wazzup24.com/1826-6940/chat/whatsapp/77710352001/fc3e1d61-cd1c-4955-9345-b0f22b543020",
+                      "desc": "Communicate with clients in the application on the computer, and all correspondence will be saved in CRM.",
+                      "preview": "https://cdn.wazzup24.com/icons/icon_512x512.358b79.png",
+                      "previewSize": {
+                        "height": 512,
+                        "width": 512
+                      }
+                    }
+                  ]
+                }
+              ],
+              "description": "",
+              "color": "transparent"
+            }
+          ]
+        }
+      },
+      "1064502": {
+        "id": "1064502",
+        "chatid": "64202",
+        "senderid": "0",
+        "recipientid": "chat64202",
+        "date": "2026-04-14T15:37:33+03:00",
+        "text": "[b]Создана новая сделка[/b]",
+        "textlegacy": "<b>Создана новая сделка</b>",
+        "params": {
+          "attach": [
+            {
+              "id": 1776170253,
+              "blocks": [
+                {
+                  "link": [
+                    {
+                      "name": "Жумадил - WhatsApp",
+                      "link": "/crm/deal/details/50612/"
+                    }
+                  ]
+                }
+              ],
+              "description": "",
+              "color": "#4ba5c3"
+            }
+          ]
+        }
+      },
+      "1064500": {
+        "id": "1064500",
+        "chatid": "64202",
+        "senderid": "0",
+        "recipientid": "chat64202",
+        "date": "2026-04-14T15:37:33+03:00",
+        "text": "[b]Создан новый контакт[/b]",
+        "textlegacy": "<b>Создан новый контакт</b>",
+        "params": {
+          "attach": [
+            {
+              "id": 1776170253,
+              "blocks": [
+                {
+                  "link": [
+                    {
+                      "name": "Жумадил",
+                      "link": "/crm/contact/details/63638/"
+                    }
+                  ]
+                },
+                {
+                  "grid": [
+                    {
+                      "display": "LINE",
+                      "name": "Телефон",
+                      "value": "+77710352001",
+                      "height": 20,
+                      "colorToken": "base"
+                    },
+                    {
+                      "display": "LINE",
+                      "name": "Email",
+                      "value": "77710352001@whatsapp.wazzup",
+                      "height": 20,
+                      "colorToken": "base"
+                    }
+                  ]
+                }
+              ],
+              "description": "",
+              "color": "#909090"
+            }
+          ]
+        }
+      },
+      "1064496": {
+        "id": "1064496",
+        "chatid": "64202",
+        "senderid": "0",
+        "recipientid": "chat64202",
+        "date": "2026-04-14T15:37:31+03:00",
+        "text": "Начат новый диалог №[URL=/online/?IM_HISTORY=imol|26078]26078[/URL]",
+        "textlegacy": "Начат новый диалог №<a href=\"/online/?IM_HISTORY=imol|26078\" target=\"_blank\" >26078</a>",
+        "params": {
+          "class": "bx-messenger-content-item-ol-start",
+          "componentId": "StartDialogMessage"
+        }
+      }
+    },
+    "usersMessage": {
+      "chat64202": [
+        "1070086",
+        "1065868",
+        "1064620",
+        "1064510",
+        "1064508",
+        "1064506",
+        "1064504",
+        "1064502",
+        "1064500",
+        "1064496"
+      ]
+    },
+    "users": {
+      "21262": {
+        "id": "21262",
+        "name": "Жумадил",
+        "active": true,
+        "firstName": "Жумадил",
+        "lastName": "",
+        "workPosition": null,
+        "color": "#64a513",
+        "avatar": "https://cdn-ru.bitrix24.kz/b29289878/resize_cache/213144/ff58db95aecdfa09ae61b51b5fd8f63f/main/088/08898a335f0183a40a965ab15e7415cd/584dedae8235039013e59ffa684b07febb412307.jpg",
+        "avatarId": "213144",
+        "birthday": false,
+        "gender": "M",
+        "phoneDevice": false,
+        "phones": false,
+        "extranet": true,
+        "network": false,
+        "bot": false,
+        "connector": true,
+        "profile": "/company/personal/user/21262/",
+        "externalAuthId": "imconnector",
+        "status": "online",
+        "idle": false,
+        "lastActivityDate": false,
+        "mobileLastDate": false,
+        "desktopLastDate": false,
+        "departments": [],
+        "absent": false,
+        "type": "extranet",
+        "eventLog": "N",
+        "services": null,
+        "botData": null
+      }
+    },
+    "openlines": {
+      "canvoteashead": {
+        "2": true
+      }
+    },
+    "userInGroup": [],
+    "woUserInGroup": [],
+    "chat": {
+      "64202": {
+        "id": "64202",
+        "parentChatId": 0,
+        "parentMessageId": 0,
+        "name": "Жумадил - WhatsApp",
+        "owner": "0",
+        "color": "#64a513",
+        "extranet": false,
+        "avatar": "https://cdn-ru.bitrix24.kz/b29289878/resize_cache/213142/ff58db95aecdfa09ae61b51b5fd8f63f/main/22a/22a7e6632d6141ae38642770878b1c8a/062e55d7379814eb29a5566a64b308d0.jpg",
+        "call": "0",
+        "callNumber": "",
+        "entityType": "LINES",
+        "entityId": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|21de9dfb-6bec-48f2-adf9-a5848bd8737e|21262",
+        "entityData1": "Y|DEAL|50612|N|N|26078|1776170252|0|0|0",
+        "entityData2": "LEAD|0|COMPANY|0|CONTACT|63638|DEAL|50612",
+        "entityData3": "",
+        "messageCount": 10,
+        "public": "",
+        "muteList": {
+          "21262": false
+        },
+        "managerList": [],
+        "dateCreate": "2026-04-14T17:37:31+03:00",
+        "type": "lines",
+        "entityLink": {
+          "type": "LINES",
+          "url": "",
+          "id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|21de9dfb-6bec-48f2-adf9-a5848bd8737e|21262"
+        },
+        "permissions": {
+          "manageUsersAdd": "member",
+          "manageUsersDelete": "manager",
+          "manageUi": "member",
+          "manageSettings": "owner",
+          "manageMessages": "member",
+          "canPost": "member"
+        },
+        "textFieldEnabled": true,
+        "backgroundId": null,
+        "messageType": "L",
+        "isNew": false
+      }
+    },
+    "userBlockChat": {
+      "64202": {
+        "21262": false
+      }
+    },
+    "userInChat": {
+      "64202": [
+        21262
+      ]
+    },
+    "files": []
+  }
+}

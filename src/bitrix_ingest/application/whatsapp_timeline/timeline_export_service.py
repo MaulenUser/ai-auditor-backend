@@ -12,7 +12,7 @@ from pathlib import Path
 from typing import Any
 
 from ...domain.whatsapp import TimelineSource
-from ..date_range import within_any_record_datetime_range
+from ..date_range import build_closed_filter, within_any_record_datetime_range
 from ..ports import BitrixGateway, JsonSink
 from ..whatsapp.conversation_assembler import ConversationAssembler
 from ..whatsapp.deal_filter import WhatsAppDealFilter
@@ -20,8 +20,11 @@ from ..whatsapp.deal_filter import WhatsAppDealFilter
 logger = logging.getLogger(__name__)
 
 _DEAL_SELECT = [
-    "ID", "TITLE", "CONTACT_ID", "SOURCE_ID", "ASSIGNED_BY_ID",
-    "STAGE_ID", "CATEGORY_ID", "DATE_CREATE", "DATE_MODIFY", "LAST_COMMUNICATION_TIME",
+    "ID", "TITLE", "CONTACT_ID", "COMPANY_ID", "SOURCE_ID", "ASSIGNED_BY_ID",
+    "STAGE_ID", "STAGE_SEMANTIC_ID", "CATEGORY_ID", "DATE_CREATE", "DATE_MODIFY",
+    "CLOSEDATE", "CLOSED",
+    "LAST_COMMUNICATION_TIME", "OPPORTUNITY", "CURRENCY_ID",
+    "LOSS_REASON_ID", "LOSS_COMMENT", "UTM_SOURCE", "UTM_MEDIUM", "UTM_CAMPAIGN",
 ]
 _TIMELINE_SELECT = ["ID", "CREATED", "ENTITY_ID", "ENTITY_TYPE", "AUTHOR_ID", "COMMENT", "FILES"]
 
@@ -53,10 +56,13 @@ class WhatsAppTimelineExportService:
         self._assembler = assembler or ConversationAssembler()
 
     def execute(self, request: WhatsAppTimelineExportRequest) -> None:
+        import time as _time
         raw_dir = request.output_dir / "raw"
         conversations_dir = request.output_dir / "conversations"
         for d in (request.output_dir, raw_dir, conversations_dir):
             d.mkdir(parents=True, exist_ok=True)
+
+        page_delay = float(getattr(self._gateway, "page_delay", 0.0) or 0.0)
 
         profile = self._gateway.call("profile")
         result = profile.get("result") or {}
@@ -82,7 +88,9 @@ class WhatsAppTimelineExportService:
             "messages_with_files": 0,
         }
 
-        for deal in deals:
+        for deal_index, deal in enumerate(deals):
+            if deal_index > 0 and page_delay > 0:
+                _time.sleep(page_delay)
             deal_id = str(deal.get("ID", ""))
             conversation_path = conversations_dir / f"deal_{deal_id}.json"
 
@@ -112,6 +120,10 @@ class WhatsAppTimelineExportService:
                     "deal_title": str(deal.get("TITLE", "")),
                     "contact_id": str(deal.get("CONTACT_ID", "")),
                     "source_id": str(deal.get("SOURCE_ID", "")),
+                    "assigned_by_id": str(deal.get("ASSIGNED_BY_ID", "")),
+                    "stage_id": str(deal.get("STAGE_ID", "")),
+                    "stage_semantic_id": str(deal.get("STAGE_SEMANTIC_ID", "")),
+                    "category_id": str(deal.get("CATEGORY_ID", "")),
                     "total_messages": stats.total_messages,
                     "manager_messages": stats.manager_messages,
                     "client_messages": stats.client_messages,
@@ -157,6 +169,9 @@ class WhatsAppTimelineExportService:
             deal_filter["CATEGORY_ID"] = clean if len(clean) > 1 else clean[0]
         if request.responsible_id:
             deal_filter["ASSIGNED_BY_ID"] = request.responsible_id
+        # Push DATE_MODIFY bounds to Bitrix so it filters server-side.
+        date_bounds = build_closed_filter("DATE_MODIFY", date_from=request.date_from, date_to=request.date_to)
+        deal_filter.update(date_bounds)
         all_deals = self._gateway.list_all(
             "crm.deal.list",
             select=_DEAL_SELECT,

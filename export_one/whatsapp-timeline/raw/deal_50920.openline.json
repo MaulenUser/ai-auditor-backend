@@ -1,0 +1,470 @@
+{
+  "binding": {
+    "timeline_source": "deal",
+    "timeline_entity_type": "deal",
+    "timeline_entity_id": "50920",
+    "chat_id": "64824",
+    "connector_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0",
+    "connector_title": "WAZZUP: WhatsApp"
+  },
+  "dialog": {
+    "id": 64824,
+    "parent_chat_id": 0,
+    "parent_message_id": 0,
+    "name": "АльменоваАйманАбдуалиевна - WhatsApp",
+    "description": "Ссылка на исходный пост: https://app.wazzup24.com/1826-6940/chat/whatsapp/77768631687/fc3e1d61-cd1c-4955-9345-b0f22b543020",
+    "owner": 0,
+    "extranet": false,
+    "avatar": "",
+    "color": "#29619b",
+    "type": "lines",
+    "counter": 0,
+    "user_counter": 1,
+    "message_count": 12,
+    "unread_id": 0,
+    "restrictions": {
+      "avatar": true,
+      "rename": true,
+      "extend": true,
+      "call": true,
+      "mute": true,
+      "leave": true,
+      "leave_owner": true,
+      "send": true,
+      "user_list": true
+    },
+    "last_message_id": 1070970,
+    "last_id": 0,
+    "marked_id": 0,
+    "disk_folder_id": 231510,
+    "entity_type": "LINES",
+    "entity_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|c06050f6-c88c-41e5-877e-510184306649|21364",
+    "entity_data_1": "Y|DEAL|50920|N|N|26204|1776433719|0|0|0",
+    "entity_data_2": "LEAD|0|COMPANY|0|CONTACT|63934|DEAL|50920",
+    "entity_data_3": "",
+    "mute_list": [],
+    "date_create": "2026-04-17T16:48:39+03:00",
+    "message_type": "L",
+    "public": "",
+    "role": "guest",
+    "entity_link": {
+      "type": "LINES",
+      "url": "",
+      "id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|c06050f6-c88c-41e5-877e-510184306649|21364"
+    },
+    "text_field_enabled": true,
+    "background_id": null,
+    "permissions": {
+      "manage_users_add": "member",
+      "manage_users_delete": "manager",
+      "manage_ui": "member",
+      "manage_settings": "owner",
+      "manage_messages": "member",
+      "can_post": "member"
+    },
+    "is_new": false,
+    "readed_list": [
+      {
+        "user_id": 21364,
+        "user_name": "АльменоваАйманАбдуалиевна",
+        "message_id": 1069860,
+        "date": null
+      }
+    ],
+    "manager_list": [],
+    "last_message_views": {
+      "message_id": 1070970,
+      "first_viewers": [],
+      "count_of_viewers": 0
+    },
+    "dialog_id": "chat64824"
+  },
+  "history": {
+    "chatId": 64824,
+    "canJoin": "Y",
+    "canVoteHead": "Y",
+    "sessionId": 26204,
+    "sessionVoteHead": 0,
+    "sessionCommentHead": null,
+    "userId": "chat64824",
+    "message": {
+      "1070970": {
+        "id": "1070970",
+        "chatid": "64824",
+        "senderid": "21364",
+        "recipientid": "chat64824",
+        "date": "2026-04-18T13:19:16+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===",
+        "params": {
+          "connectorMid": [
+            "c70536e1-430e-4a2d-a3bd-47341b00b128"
+          ],
+          "fileId": [
+            231512
+          ]
+        }
+      },
+      "1070852": {
+        "id": "1070852",
+        "chatid": "64824",
+        "senderid": "0",
+        "recipientid": "chat64824",
+        "date": "2026-04-18T11:17:07+03:00",
+        "text": "Обращение также направлено [USER=18 REPLACE]\"\"Нурсултан\"\" Директор Алматы SP[/USER]",
+        "textlegacy": "Обращение также направлено [USER=18 REPLACE]\"\"Нурсултан\"\" Директор Алматы SP[/USER]",
+        "params": {
+          "notify": "N"
+        }
+      },
+      "1070484": {
+        "id": "1070484",
+        "chatid": "64824",
+        "senderid": "0",
+        "recipientid": "chat64824",
+        "date": "2026-04-18T08:13:02+03:00",
+        "text": "Обращение также направлено [USER=36 REPLACE]Аружан Шымкент менеджер SP[/USER]",
+        "textlegacy": "Обращение также направлено [USER=36 REPLACE]Аружан Шымкент менеджер SP[/USER]",
+        "params": {
+          "notify": "N"
+        }
+      },
+      "1070362": {
+        "id": "1070362",
+        "chatid": "64824",
+        "senderid": "0",
+        "recipientid": "chat64824",
+        "date": "2026-04-18T07:10:21+03:00",
+        "text": "Обращение также направлено [USER=28 REPLACE]Жандос Менеджер Алматы[/USER]",
+        "textlegacy": "Обращение также направлено [USER=28 REPLACE]Жандос Менеджер Алматы[/USER]",
+        "params": {
+          "notify": "N"
+        }
+      },
+      "1070154": {
+        "id": "1070154",
+        "chatid": "64824",
+        "senderid": "0",
+        "recipientid": "chat64824",
+        "date": "2026-04-17T22:42:52+03:00",
+        "text": "Обращение также направлено [USER=1 REPLACE]sapa.plast.bitrix@mail.ru[/USER]",
+        "textlegacy": "Обращение также направлено [USER=1 REPLACE]sapa.plast.bitrix@mail.ru[/USER]",
+        "params": {
+          "notify": "N"
+        }
+      },
+      "1069862": {
+        "id": "1069862",
+        "chatid": "64824",
+        "senderid": "21364",
+        "recipientid": "chat64824",
+        "date": "2026-04-17T16:49:29+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nСәлеметсіз бе! Сізге компания “SAPA PLAST” жазып отыр. Айтыңызшы, сізге терезелер керек пе?",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Сәлеметсіз бе! Сізге компания “SAPA PLAST” жазып отыр. Айтыңызшы, сізге терезелер керек пе?",
+        "params": {
+          "connectorMid": [
+            "8743795c-797e-4174-a8a5-a3acde7f6f85"
+          ]
+        }
+      },
+      "1069860": {
+        "id": "1069860",
+        "chatid": "64824",
+        "senderid": "21364",
+        "recipientid": "chat64824",
+        "date": "2026-04-17T16:48:41+03:00",
+        "text": "Сәлеметсіз бе, мен Түркістан қаласында терезелердің құнын есептегім келеді\n[URL]https://www.instagram.com/p/DW18Q6WgNzm/[/URL]",
+        "textlegacy": "Сәлеметсіз бе, мен Түркістан қаласында терезелердің құнын есептегім келеді<br /><a href=\"https://www.instagram.com/p/DW18Q6WgNzm/\" target=\"_blank\" >https://www.instagram.com/p/DW18Q6WgNzm/</a>",
+        "params": {
+          "connectorMid": [
+            "b3e6b237-0d4b-4ba2-b7ac-ad0ccbe4f3ac"
+          ]
+        }
+      },
+      "1069858": {
+        "id": "1069858",
+        "chatid": "64824",
+        "senderid": "0",
+        "recipientid": "chat64824",
+        "date": "2026-04-17T16:48:41+03:00",
+        "text": "Обращение направлено на [USER=32 REPLACE]Эсмиральда Шымкент менеджер SP[/USER]",
+        "textlegacy": "Обращение направлено на [USER=32 REPLACE]Эсмиральда Шымкент менеджер SP[/USER]",
+        "params": []
+      },
+      "1069856": {
+        "id": "1069856",
+        "chatid": "64824",
+        "senderid": "0",
+        "recipientid": "chat64824",
+        "date": "2026-04-17T16:48:40+03:00",
+        "text": "[B]Переданы дополнительные данные:[/B]\n Ссылка на исходный пост: [URL]https://app.wazzup24.com/1826-6940/chat/whatsapp/77768631687/fc3e1d61-cd1c-4955-9345-b0f22b543020[/URL]",
+        "textlegacy": "<b>Переданы дополнительные данные:</b><br /> Ссылка на исходный пост: <a href=\"https://app.wazzup24.com/1826-6940/chat/whatsapp/77768631687/fc3e1d61-cd1c-4955-9345-b0f22b543020\" target=\"_blank\" >https://app.wazzup24.com/1826-6940/chat/whatsapp/77768631687/fc3e1d61-cd1c-4955-9345-b0f22b543020</a>",
+        "params": {
+          "class": "bx-messenger-content-item-system",
+          "componentId": "HiddenMessage",
+          "urlId": [
+            84462
+          ],
+          "attach": [
+            {
+              "id": "84462",
+              "blocks": [
+                {
+                  "richLink": [
+                    {
+                      "name": "Wazzup App",
+                      "link": "https://app.wazzup24.com/1826-6940/chat/whatsapp/77768631687/fc3e1d61-cd1c-4955-9345-b0f22b543020",
+                      "desc": "Communicate with clients in the application on the computer, and all correspondence will be saved in CRM.",
+                      "preview": "https://cdn.wazzup24.com/icons/icon_512x512.358b79.png",
+                      "previewSize": {
+                        "height": 512,
+                        "width": 512
+                      }
+                    }
+                  ]
+                }
+              ],
+              "description": "",
+              "color": "transparent"
+            }
+          ]
+        }
+      },
+      "1069854": {
+        "id": "1069854",
+        "chatid": "64824",
+        "senderid": "0",
+        "recipientid": "chat64824",
+        "date": "2026-04-17T16:48:40+03:00",
+        "text": "[b]Создана новая сделка[/b]",
+        "textlegacy": "<b>Создана новая сделка</b>",
+        "params": {
+          "attach": [
+            {
+              "id": 1776433720,
+              "blocks": [
+                {
+                  "link": [
+                    {
+                      "name": "АльменоваАйманАбдуалиевна - WhatsApp",
+                      "link": "/crm/deal/details/50920/"
+                    }
+                  ]
+                }
+              ],
+              "description": "",
+              "color": "#64a513"
+            }
+          ]
+        }
+      },
+      "1069852": {
+        "id": "1069852",
+        "chatid": "64824",
+        "senderid": "0",
+        "recipientid": "chat64824",
+        "date": "2026-04-17T16:48:40+03:00",
+        "text": "[b]Создан новый контакт[/b]",
+        "textlegacy": "<b>Создан новый контакт</b>",
+        "params": {
+          "attach": [
+            {
+              "id": 1776433720,
+              "blocks": [
+                {
+                  "link": [
+                    {
+                      "name": "АльменоваАйманАбдуалиевна",
+                      "link": "/crm/contact/details/63934/"
+                    }
+                  ]
+                },
+                {
+                  "grid": [
+                    {
+                      "display": "LINE",
+                      "name": "Телефон",
+                      "value": "+77768631687",
+                      "height": 20,
+                      "colorToken": "base"
+                    },
+                    {
+                      "display": "LINE",
+                      "name": "Email",
+                      "value": "77768631687@whatsapp.wazzup",
+                      "height": 20,
+                      "colorToken": "base"
+                    }
+                  ]
+                }
+              ],
+              "description": "",
+              "color": "#4ba984"
+            }
+          ]
+        }
+      },
+      "1069848": {
+        "id": "1069848",
+        "chatid": "64824",
+        "senderid": "0",
+        "recipientid": "chat64824",
+        "date": "2026-04-17T16:48:39+03:00",
+        "text": "Начат новый диалог №[URL=/online/?IM_HISTORY=imol|26204]26204[/URL]",
+        "textlegacy": "Начат новый диалог №<a href=\"/online/?IM_HISTORY=imol|26204\" target=\"_blank\" >26204</a>",
+        "params": {
+          "class": "bx-messenger-content-item-ol-start",
+          "componentId": "StartDialogMessage"
+        }
+      }
+    },
+    "usersMessage": {
+      "chat64824": [
+        "1070970",
+        "1070852",
+        "1070484",
+        "1070362",
+        "1070154",
+        "1069862",
+        "1069860",
+        "1069858",
+        "1069856",
+        "1069854",
+        "1069852",
+        "1069848"
+      ]
+    },
+    "users": {
+      "21364": {
+        "id": "21364",
+        "name": "АльменоваАйманАбдуалиевна",
+        "active": true,
+        "firstName": "АльменоваАйманАбдуалиевна",
+        "lastName": "",
+        "workPosition": null,
+        "color": "#4ba5c3",
+        "avatar": "/bitrix/js/im/images/blank.gif",
+        "avatarId": null,
+        "birthday": false,
+        "gender": "M",
+        "phoneDevice": false,
+        "phones": false,
+        "extranet": true,
+        "network": false,
+        "bot": false,
+        "connector": true,
+        "profile": "/company/personal/user/21364/",
+        "externalAuthId": "imconnector",
+        "status": "online",
+        "idle": false,
+        "lastActivityDate": false,
+        "mobileLastDate": false,
+        "desktopLastDate": false,
+        "departments": [],
+        "absent": false,
+        "type": "extranet",
+        "eventLog": "N",
+        "services": null,
+        "botData": null
+      }
+    },
+    "openlines": {
+      "canvoteashead": {
+        "2": true
+      }
+    },
+    "userInGroup": [],
+    "woUserInGroup": [],
+    "chat": {
+      "64824": {
+        "id": "64824",
+        "parentChatId": 0,
+        "parentMessageId": 0,
+        "name": "АльменоваАйманАбдуалиевна - WhatsApp",
+        "owner": "0",
+        "color": "#29619b",
+        "extranet": false,
+        "avatar": "/bitrix/js/im/images/blank.gif",
+        "call": "0",
+        "callNumber": "",
+        "entityType": "LINES",
+        "entityId": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|c06050f6-c88c-41e5-877e-510184306649|21364",
+        "entityData1": "Y|DEAL|50920|N|N|26204|1776433719|0|0|0",
+        "entityData2": "LEAD|0|COMPANY|0|CONTACT|63934|DEAL|50920",
+        "entityData3": "",
+        "messageCount": 12,
+        "public": "",
+        "muteList": {
+          "21364": false
+        },
+        "managerList": [],
+        "dateCreate": "2026-04-17T18:48:39+03:00",
+        "type": "lines",
+        "entityLink": {
+          "type": "LINES",
+          "url": "",
+          "id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|c06050f6-c88c-41e5-877e-510184306649|21364"
+        },
+        "permissions": {
+          "manageUsersAdd": "member",
+          "manageUsersDelete": "manager",
+          "manageUi": "member",
+          "manageSettings": "owner",
+          "manageMessages": "member",
+          "canPost": "member"
+        },
+        "textFieldEnabled": true,
+        "backgroundId": null,
+        "messageType": "L",
+        "isNew": false
+      }
+    },
+    "userBlockChat": {
+      "64824": {
+        "21364": false
+      }
+    },
+    "userInChat": {
+      "64824": [
+        21364
+      ]
+    },
+    "files": {
+      "231512": {
+        "id": 231512,
+        "chatid": 64824,
+        "date": "2026-04-18T13:19:16+03:00",
+        "type": "audio",
+        "name": "cd3008ce-f70c-4c5c-8cb0-f6349df0664f.mp3",
+        "extension": "mp3",
+        "size": 85100,
+        "image": false,
+        "status": "done",
+        "progress": 100,
+        "authorid": 0,
+        "authorname": "Аноним",
+        "urlpreview": "",
+        "urlshow": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231512&exact=N&fileName=cd3008ce-f70c-4c5c-8cb0-f6349df0664f.mp3",
+        "urldownload": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231512&exact=N&fileName=cd3008ce-f70c-4c5c-8cb0-f6349df0664f.mp3",
+        "viewerattrs": {
+          "viewer": "",
+          "viewertype": "audio",
+          "src": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231512&exact=N&fileName=cd3008ce-f70c-4c5c-8cb0-f6349df0664f.mp3",
+          "objectid": "231512",
+          "viewergroupby": "64824",
+          "imchatid": 64824,
+          "title": "cd3008ce-f70c-4c5c-8cb0-f6349df0664f.mp3",
+          "actions": "[{\"type\":\"download\"},{\"type\":\"copyToMe\",\"text\":\"Сохранить на Диск\",\"action\":\"BXIM.disk.saveToDiskAction\",\"params\":{\"fileId\":\"231512\"},\"extension\":\"disk.viewer.actions\",\"buttonIconClass\":\"ui-btn-icon-cloud\"}]"
+        },
+        "mediaurl": {
+          "preview": {
+            "250": ""
+          }
+        },
+        "istranscribable": false,
+        "isvideonote": false,
+        "isvoicenote": false
+      }
+    }
+  }
+}

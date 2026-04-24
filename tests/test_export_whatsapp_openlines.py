@@ -16,6 +16,7 @@ def _deal(deal_id: str, *, contact_id: str = "64050") -> dict[str, str]:
         "SOURCE_ID": "WZ-1",
         "ASSIGNED_BY_ID": "5",
         "STAGE_ID": "NEW",
+        "STAGE_SEMANTIC_ID": "P",
         "CATEGORY_ID": "0",
         "DATE_CREATE": "2026-04-19T16:32:29+03:00",
         "DATE_MODIFY": "2026-04-19T18:44:07+03:00",
@@ -134,8 +135,6 @@ def test_build_conversation_reads_deal_openline_history(tmp_path):
         "51044",
         dirs.paths_for("51044"),
         include_system_messages=True,
-        date_from=None,
-        date_to=None,
     )
 
     assert conversation.timeline_source == "deal"
@@ -144,6 +143,7 @@ def test_build_conversation_reads_deal_openline_history(tmp_path):
     assert conversation.dialog_id == "chat64990"
     assert conversation.connector_title == "WAZZUP: WhatsApp"
     assert conversation.chat_name == ". - WhatsApp"
+    assert conversation.stage_semantic_id == "P"
     assert [message.sender_role for message in conversation.messages] == ["system", "client", "manager"]
     assert conversation.messages[0].text == "Created deal"
     assert conversation.messages[1].attachments[0].url == "https://cdn.example.com/price.pdf"
@@ -217,8 +217,6 @@ def test_build_conversation_falls_back_to_contact_openline_history(tmp_path):
         "51044",
         dirs.paths_for("51044"),
         include_system_messages=True,
-        date_from=None,
-        date_to=None,
     )
 
     assert conversation.timeline_source == "contact"
@@ -293,13 +291,143 @@ def test_outgoing_connector_message_is_classified_as_manager(tmp_path):
         "51054",
         dirs.paths_for("51054"),
         include_system_messages=True,
-        date_from=None,
-        date_to=None,
     )
 
     assert conversation.messages[0].sender_role == "manager"
     assert conversation.messages[0].text == "Hello"
-    assert conversation.messages[0].sender_label is None
+    assert conversation.messages[0].sender_label == "Phone"
+
+
+def test_client_reply_message_drops_quoted_prefix(tmp_path):
+    gateway = _Gateway(
+        {
+            "imopenlines.crm.chat.get": [
+                {
+                    "result": [
+                        {
+                            "CHAT_ID": "64993",
+                            "CONNECTOR_ID": "wz_whatsapp_connector",
+                            "CONNECTOR_TITLE": "WAZZUP: WhatsApp",
+                        }
+                    ]
+                }
+            ],
+            "imopenlines.dialog.get": [
+                {
+                    "result": {
+                        "id": 64993,
+                        "name": ". - WhatsApp",
+                        "dialog_id": "chat64993",
+                        "entity_data_1": "Y|DEAL|51055|N|N|26253|1776605548|0|0|0",
+                    }
+                }
+            ],
+            "imopenlines.session.history.get": [
+                {
+                    "result": {
+                        "sessionId": 26253,
+                        "message": {
+                            "1071708": {
+                                "id": "1071708",
+                                "senderid": "21410",
+                                "date": "2026-04-19T19:37:45+03:00",
+                                "text": ">>Which city?\n\n\nShymkent",
+                                "params": {},
+                            }
+                        },
+                        "users": {
+                            "21410": {
+                                "id": "21410",
+                                "name": "Client",
+                                "connector": True,
+                                "externalAuthId": "imconnector",
+                            }
+                        },
+                        "files": [],
+                    }
+                }
+            ],
+        }
+    )
+    service = WhatsAppExportService(gateway=gateway, sink=_Sink())
+    dirs = _OutputDirectories.prepare(tmp_path)
+
+    conversation = service._build_conversation_with_fallback(
+        _deal("51055"),
+        "51055",
+        dirs.paths_for("51055"),
+        include_system_messages=True,
+    )
+
+    assert conversation.messages[0].sender_role == "client"
+    assert conversation.messages[0].text == "Shymkent"
+    assert conversation.messages[0].sender_label == "Client"
+
+
+def test_quoted_outgoing_connector_message_is_classified_as_manager(tmp_path):
+    gateway = _Gateway(
+        {
+            "imopenlines.crm.chat.get": [
+                {
+                    "result": [
+                        {
+                            "CHAT_ID": "64994",
+                            "CONNECTOR_ID": "wz_whatsapp_connector",
+                            "CONNECTOR_TITLE": "WAZZUP: WhatsApp",
+                        }
+                    ]
+                }
+            ],
+            "imopenlines.dialog.get": [
+                {
+                    "result": {
+                        "id": 64994,
+                        "name": ". - WhatsApp",
+                        "dialog_id": "chat64994",
+                        "entity_data_1": "Y|DEAL|51056|N|N|26254|1776605548|0|0|0",
+                    }
+                }
+            ],
+            "imopenlines.session.history.get": [
+                {
+                    "result": {
+                        "sessionId": 26254,
+                        "message": {
+                            "1071712": {
+                                "id": "1071712",
+                                "senderid": "21410",
+                                "date": "2026-04-19T19:38:15+03:00",
+                                "text": ">>Shymkent\n\n\n=== Outgoing message, author: Phone ===\nBazaryk 261/1",
+                                "params": {},
+                            }
+                        },
+                        "users": {
+                            "21410": {
+                                "id": "21410",
+                                "name": "Client",
+                                "connector": True,
+                                "externalAuthId": "imconnector",
+                            }
+                        },
+                        "files": [],
+                    }
+                }
+            ],
+        }
+    )
+    service = WhatsAppExportService(gateway=gateway, sink=_Sink())
+    dirs = _OutputDirectories.prepare(tmp_path)
+
+    conversation = service._build_conversation_with_fallback(
+        _deal("51056"),
+        "51056",
+        dirs.paths_for("51056"),
+        include_system_messages=True,
+    )
+
+    assert conversation.messages[0].sender_role == "manager"
+    assert conversation.messages[0].text == "Bazaryk 261/1"
+    assert conversation.messages[0].sender_label == "Phone"
 
 
 def test_lowercase_file_urls_are_exported_as_attachments(tmp_path):
@@ -368,8 +496,6 @@ def test_lowercase_file_urls_are_exported_as_attachments(tmp_path):
         "51054",
         dirs.paths_for("51054"),
         include_system_messages=True,
-        date_from=None,
-        date_to=None,
     )
 
     assert conversation.messages[0].text == ""
@@ -441,8 +567,6 @@ def test_build_conversation_uses_chat_id_when_dialog_session_id_is_zero(tmp_path
         "28736",
         dirs.paths_for("28736"),
         include_system_messages=True,
-        date_from=None,
-        date_to=None,
     )
 
     assert conversation.chat_id == "41080"
@@ -527,3 +651,102 @@ def test_execute_can_exclude_system_messages_from_output(tmp_path):
     assert conversation["stats"]["system_messages"] == 0
     report = sink.documents[str(tmp_path / "report.json")]
     assert report["totals"]["system_messages"] == 0
+
+
+def test_execute_keeps_full_chat_history_for_selected_deal(tmp_path):
+    deal = _deal("43428", contact_id="57096") | {
+        "TITLE": "77055997906 - WhatsApp",
+        "DATE_CREATE": "2025-12-10T13:18:57+03:00",
+        "DATE_MODIFY": "2026-04-14T11:48:28+03:00",
+        "LAST_COMMUNICATION_TIME": "2026-04-14T13:47:36",
+    }
+    gateway = _Gateway(
+        {
+            "profile": [{"result": {"ID": 1, "NAME": "", "LAST_NAME": ""}}],
+            "crm.deal.list": [{"result": [deal]}],
+            "imopenlines.crm.chat.get": [
+                {
+                    "result": [
+                        {
+                            "CHAT_ID": "55564",
+                            "CONNECTOR_ID": "wz_whatsapp_connector",
+                            "CONNECTOR_TITLE": "WAZZUP: WhatsApp",
+                        }
+                    ]
+                }
+            ],
+            "imopenlines.dialog.get": [
+                {
+                    "result": {
+                        "id": 55564,
+                        "name": "77055997906 - WhatsApp",
+                        "dialog_id": "chat55564",
+                        "entity_data_1": "Y|DEAL|43428|N|N|22870|1765361937|0|0|0",
+                    }
+                }
+            ],
+            "imopenlines.session.history.get": [
+                {
+                    "result": {
+                        "sessionId": 22870,
+                        "message": {
+                            "948804": {
+                                "id": "948804",
+                                "senderid": "0",
+                                "date": "2025-12-10T13:18:56+03:00",
+                                "text": "Начат новый диалог №22870",
+                                "params": {},
+                            },
+                            "951668": {
+                                "id": "951668",
+                                "senderid": "18606",
+                                "date": "2025-12-13T14:08:10+03:00",
+                                "text": "Терезелер жөнінде ақпарат керек",
+                                "params": {},
+                            },
+                            "956468": {
+                                "id": "956468",
+                                "senderid": "18606",
+                                "date": "2025-12-20T15:25:10+03:00",
+                                "text": "=== Исходящее сообщение, автор: Битрикс24 (Жанна) ===\nСалеметсіз бе",
+                                "params": {},
+                            },
+                        },
+                        "users": {
+                            "18606": {
+                                "id": "18606",
+                                "name": "77055997906",
+                                "connector": True,
+                                "externalAuthId": "imconnector",
+                            }
+                        },
+                        "files": [],
+                    }
+                }
+            ],
+        }
+    )
+    sink = _Sink()
+    service = WhatsAppExportService(gateway=gateway, sink=sink)
+
+    service.execute(
+        WhatsAppExportRequest(
+            output_dir=tmp_path,
+            limit=1,
+            date_from="2026-03-01",
+            include_system_messages=True,
+        )
+    )
+
+    conversation = sink.documents[str(tmp_path / "conversations" / "deal_43428.json")]
+    assert [message["created_at"] for message in conversation["messages"]] == [
+        "2025-12-10T13:18:56+03:00",
+        "2025-12-13T14:08:10+03:00",
+        "2025-12-20T15:25:10+03:00",
+    ]
+    assert [message["sender_role"] for message in conversation["messages"]] == [
+        "system",
+        "client",
+        "manager",
+    ]
+    assert conversation["stats"]["total_messages"] == 3

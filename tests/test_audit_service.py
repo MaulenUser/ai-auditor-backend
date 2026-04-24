@@ -6,6 +6,7 @@ from pathlib import Path
 import pytest
 
 from bitrix_ingest.application.audit.audit_service import RunAuditRequest, RunAuditService
+from bitrix_ingest.infrastructure.audit_trace import AuditTraceRecorder
 
 
 class DummyGateway:
@@ -66,6 +67,14 @@ def _write_report(output_dir: Path, *, total_messages: int, deal_id: str = "4933
             ensure_ascii=False,
             indent=2,
         ),
+        encoding="utf-8",
+    )
+
+
+def _write_deals_source(output_dir: Path, deals: list[dict[str, object]]) -> None:
+    output_dir.mkdir(parents=True, exist_ok=True)
+    (output_dir / "deals.source.json").write_text(
+        json.dumps(deals, ensure_ascii=False, indent=2),
         encoding="utf-8",
     )
 
@@ -328,3 +337,163 @@ def test_run_audit_skips_call_pipeline_without_crm_webhook(tmp_path, monkeypatch
             date_to="2026-04-01",
         )
     )
+
+
+def test_run_audit_writes_trace_file_with_stage_durations(tmp_path, monkeypatch):
+    import bitrix_ingest.application.audit.audit_service as audit_module
+
+    def fake_openlines_execute(self, request):
+        _write_report(Path(request.output_dir), total_messages=3)
+
+    def fail_if_timeline_called(self, request):  # pragma: no cover - assertion helper
+        raise AssertionError("Timeline export should not run when Open Lines already has messages")
+
+    def fake_features_execute(self, request):
+        feature_dir = Path(request.output_dir)
+        (feature_dir / "features").mkdir(parents=True, exist_ok=True)
+        (feature_dir / "raw").mkdir(parents=True, exist_ok=True)
+        (feature_dir / "features" / "deal_49334.json").write_text("{}", encoding="utf-8")
+        (feature_dir / "errors.json").write_text("[]", encoding="utf-8")
+
+    def fake_aggregate_execute(self, request):
+        output_dir = Path(request.output_dir)
+        output_dir.mkdir(parents=True, exist_ok=True)
+        (output_dir / "aggregate.json").write_text('{"total": 1}', encoding="utf-8")
+
+    def fake_recommendations_execute(self, request):
+        output_dir = Path(request.output_dir)
+        output_dir.mkdir(parents=True, exist_ok=True)
+        (output_dir / "recommendations.json").write_text('{"score": 7}', encoding="utf-8")
+
+    monkeypatch.setattr(audit_module.WhatsAppExportService, "execute", fake_openlines_execute)
+    monkeypatch.setattr(audit_module.WhatsAppTimelineExportService, "execute", fail_if_timeline_called)
+    monkeypatch.setattr(audit_module.ExtractWhatsAppFeaturesService, "execute", fake_features_execute)
+    monkeypatch.setattr(audit_module.AggregateFeatureService, "execute", fake_aggregate_execute)
+    monkeypatch.setattr(audit_module.GenerateRecommendationsService, "execute", fake_recommendations_execute)
+
+    trace_path = tmp_path / "audit" / "audit-run.trace.json"
+    trace = AuditTraceRecorder(
+        trace_path,
+        run_name="audit.run",
+        request_details={"limit": 0},
+    )
+    service = RunAuditService(
+        bitrix_gateway=DummyGateway(),
+        responses_gateway=DummyResponsesGateway(),
+        sink=FileSink(),
+        trace=trace,
+    )
+
+    service.execute(
+        RunAuditRequest(
+            output_dir=tmp_path / "audit",
+            funnel_ids=["2"],
+            date_from="2026-01-01",
+            date_to="2026-04-01",
+        )
+    )
+    trace.finish(status="ok")
+
+    payload = json.loads(trace_path.read_text(encoding="utf-8"))
+    assert payload["run"]["status"] == "ok"
+    stage_names = [event["name"] for event in payload["events"] if event["type"] == "stage"]
+    assert "whatsapp_export" in stage_names
+    assert "whatsapp_openlines_export" in stage_names
+    assert "whatsapp_feature_extraction" in stage_names
+    assert "feature_aggregation" in stage_names
+    assert "recommendation_generation" in stage_names
+    assert all(float(event["duration_ms"]) >= 0 for event in payload["events"])
+
+
+def test_run_audit_writes_crm_outcome_summary(tmp_path, monkeypatch):
+    import bitrix_ingest.application.audit.audit_service as audit_module
+
+    def fake_openlines_execute(self, request):
+        output_dir = Path(request.output_dir)
+        _write_report(output_dir, total_messages=3)
+        _write_deals_source(
+            output_dir,
+            [
+                {
+                    "ID": "1",
+                    "ASSIGNED_BY_ID": "36",
+                    "STAGE_ID": "WON",
+                    "STAGE_SEMANTIC_ID": "S",
+                    "OPPORTUNITY": "150000.00",
+                },
+                {
+                    "ID": "2",
+                    "ASSIGNED_BY_ID": "36",
+                    "STAGE_ID": "LOSE",
+                    "STAGE_SEMANTIC_ID": "F",
+                    "OPPORTUNITY": "0.00",
+                },
+                {
+                    "ID": "3",
+                    "ASSIGNED_BY_ID": "32",
+                    "STAGE_ID": "EXECUTING",
+                    "STAGE_SEMANTIC_ID": "P",
+                    "OPPORTUNITY": "275000.00",
+                },
+            ],
+        )
+
+    def fail_if_timeline_called(self, request):  # pragma: no cover - assertion helper
+        raise AssertionError("Timeline export should not run when Open Lines already has messages")
+
+    def fake_features_execute(self, request):
+        feature_dir = Path(request.output_dir)
+        (feature_dir / "features").mkdir(parents=True, exist_ok=True)
+        (feature_dir / "raw").mkdir(parents=True, exist_ok=True)
+        (feature_dir / "features" / "deal_1.json").write_text("{}", encoding="utf-8")
+        (feature_dir / "errors.json").write_text("[]", encoding="utf-8")
+
+    def fake_aggregate_execute(self, request):
+        output_dir = Path(request.output_dir)
+        output_dir.mkdir(parents=True, exist_ok=True)
+        (output_dir / "aggregate.json").write_text('{"total": 1}', encoding="utf-8")
+
+    def fake_recommendations_execute(self, request):
+        output_dir = Path(request.output_dir)
+        output_dir.mkdir(parents=True, exist_ok=True)
+        (output_dir / "recommendations.json").write_text('{"score": 7}', encoding="utf-8")
+
+    monkeypatch.setattr(audit_module.WhatsAppExportService, "execute", fake_openlines_execute)
+    monkeypatch.setattr(audit_module.WhatsAppTimelineExportService, "execute", fail_if_timeline_called)
+    monkeypatch.setattr(audit_module.ExtractWhatsAppFeaturesService, "execute", fake_features_execute)
+    monkeypatch.setattr(audit_module.AggregateFeatureService, "execute", fake_aggregate_execute)
+    monkeypatch.setattr(audit_module.GenerateRecommendationsService, "execute", fake_recommendations_execute)
+
+    service = RunAuditService(
+        bitrix_gateway=DummyGateway(),
+        responses_gateway=DummyResponsesGateway(),
+        sink=FileSink(),
+    )
+
+    service.execute(
+        RunAuditRequest(
+            output_dir=tmp_path / "audit",
+            funnel_ids=["0"],
+            date_from="2026-03-01",
+            date_to="2026-04-07",
+        )
+    )
+
+    payload = json.loads(
+        (tmp_path / "audit" / "analytics" / "crm_outcome_summary.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    assert payload["overall"] == {
+        "total": 3,
+        "successful": 1,
+        "failed": 1,
+        "in_progress": 1,
+        "unknown": 0,
+        "successful_amount": 150000.0,
+        "failed_amount": 0.0,
+        "in_progress_amount": 275000.0,
+    }
+    assert payload["by_manager"][0]["assigned_by_id"] == "36"
+    assert payload["by_manager"][0]["successful"] == 1
+    assert payload["by_manager"][0]["failed"] == 1

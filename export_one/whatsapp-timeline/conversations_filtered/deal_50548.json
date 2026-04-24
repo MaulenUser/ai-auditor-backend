@@ -1,0 +1,138 @@
+{
+  "channel": "whatsapp",
+  "integration": "wazzup",
+  "deal_id": "50548",
+  "contact_id": "63582",
+  "company_id": "",
+  "deal_title": "77002402440 - WhatsApp",
+  "source_id": "2|WZ_WHATSAPP_CB0C9F5C07DE8985B74A894B883C619C0",
+  "assigned_by_id": "28",
+  "stage_id": "3",
+  "stage_semantic_id": "F",
+  "category_id": "0",
+  "date_create": "2026-04-13T18:30:31+03:00",
+  "date_modify": "2026-04-14T18:08:09+03:00",
+  "closedate": "2026-04-14T03:00:00+03:00",
+  "closed": "Y",
+  "last_communication_time": "2026-04-14T09:46:13",
+  "opportunity": "0.00000000",
+  "currency_id": "KZT",
+  "loss_reason_id": "",
+  "loss_comment": "",
+  "utm_source": "",
+  "utm_medium": "",
+  "utm_campaign": "",
+  "timeline_source": "deal",
+  "timeline_entity_type": "deal",
+  "timeline_entity_id": "50548",
+  "chat_id": "64054",
+  "session_id": "26044",
+  "dialog_id": "chat64054",
+  "connector_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0",
+  "connector_title": "WAZZUP: WhatsApp",
+  "chat_name": "77002402440 - WhatsApp",
+  "stats": {
+    "total_messages": 16,
+    "effective_messages": 7,
+    "manager_messages": 2,
+    "client_messages": 5,
+    "system_messages": 9,
+    "messages_with_files": 5,
+    "first_message_at": "2026-04-13T18:30:31+03:00",
+    "last_message_at": "2026-04-17T22:42:47+03:00",
+    "first_manager_response_time_sec": 80362.0,
+    "avg_response_latency_sec": 16719.5,
+    "conversation_duration_hours": 100.20444444444445
+  },
+  "messages": [
+    {
+      "timeline_comment_id": "1062750",
+      "created_at": "2026-04-13T18:30:33+03:00",
+      "author_id": "21242",
+      "sender_role": "client",
+      "sender_label": "77002402440",
+      "text": "=== SYSTEM WZ ===\nCheck this message on your device",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50548"
+    },
+    {
+      "timeline_comment_id": "1062752",
+      "created_at": "2026-04-13T18:30:51+03:00",
+      "author_id": "21242",
+      "sender_role": "client",
+      "sender_label": "77002402440",
+      "text": "=== SYSTEM WZ === Сообщение удалено. Посмотрите в чатах Wazzup, какое сообщение удалил клиент",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50548"
+    },
+    {
+      "timeline_comment_id": "1063022",
+      "created_at": "2026-04-14T07:49:29+03:00",
+      "author_id": "21242",
+      "sender_role": "client",
+      "sender_label": "77002402440",
+      "text": "=== SYSTEM WZ === Пропущенный звонок от клиента.",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50548"
+    },
+    {
+      "timeline_comment_id": "1064646",
+      "created_at": "2026-04-14T16:49:55+03:00",
+      "author_id": "21242",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "86c49187-f813-4d79-b9dd-89e4fcd4f537.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=230582&exact=N&fileName=86c49187-f813-4d79-b9dd-89e4fcd4f537.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50548"
+    },
+    {
+      "timeline_comment_id": "1064800",
+      "created_at": "2026-04-14T17:50:38+03:00",
+      "author_id": "21242",
+      "sender_role": "client",
+      "sender_label": "77002402440",
+      "text": "Алатын болсам хабарга шыгам казирге баска жұмыстарын битирип жатырм уйдин",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50548"
+    },
+    {
+      "timeline_comment_id": "1064802",
+      "created_at": "2026-04-14T18:07:31+03:00",
+      "author_id": "21242",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "8344fedd-fd15-4eff-b8c0-a05030b9020d.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=230664&exact=N&fileName=8344fedd-fd15-4eff-b8c0-a05030b9020d.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50548"
+    },
+    {
+      "timeline_comment_id": "1064804",
+      "created_at": "2026-04-14T18:08:01+03:00",
+      "author_id": "21242",
+      "sender_role": "client",
+      "sender_label": "77002402440",
+      "text": "🤝",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50548"
+    }
+  ]
+}

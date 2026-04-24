@@ -17,7 +17,7 @@ from ...domain.whatsapp import (
     WhatsAppConversation,
     WhatsAppMessage,
 )
-from ..date_range import within_any_record_datetime_range, within_datetime_range
+from ..date_range import build_closed_filter, within_any_record_datetime_range
 from ..ports import BitrixGateway, JsonSink
 from .bbcode import BBCodeStripper
 from .deal_filter import WhatsAppDealFilter
@@ -30,24 +30,40 @@ _DEAL_SELECT: list[str] = [
     "ID",
     "TITLE",
     "CONTACT_ID",
+    "COMPANY_ID",
     "SOURCE_ID",
     "ASSIGNED_BY_ID",
     "STAGE_ID",
+    "STAGE_SEMANTIC_ID",
     "CATEGORY_ID",
     "DATE_CREATE",
     "DATE_MODIFY",
+    "CLOSEDATE",
+    "CLOSED",
     "LAST_COMMUNICATION_TIME",
+    "OPPORTUNITY",
+    "CURRENCY_ID",
+    "LOSS_REASON_ID",
+    "LOSS_COMMENT",
+    "UTM_SOURCE",
+    "UTM_MEDIUM",
+    "UTM_CAMPAIGN",
 ]
 _DEAL_ORDER: dict[str, str] = {"DATE_MODIFY": "DESC"}
 _WHATSAPP_CONNECTOR = re.compile(r"whatsapp|wazzup", re.IGNORECASE)
 _PLACEHOLDER_LABEL = re.compile(r"^[\s.\-]+$")
 _GENERIC_BBCODE_TAG = re.compile(r"\[/?[a-z]+(?:=[^\]]+)?(?: [^\]]+)?\]", re.IGNORECASE)
 _OUTGOING_MARKER = re.compile(
-    r"^===\s*(?:Исходящее сообщение|Outgoing message).*?===\s*(?:\n|$)",
+    r"(?:^|\n)\s*===\s*(?:Исходящее сообщение|Outgoing message).*?===\s*(?:\n|$)",
     re.IGNORECASE,
 )
 _INCOMING_MARKER = re.compile(
-    r"^===\s*(?:Входящее сообщение|Incoming message).*?===\s*(?:\n|$)",
+    r"(?:^|\n)\s*===\s*(?:Входящее сообщение|Incoming message).*?===\s*(?:\n|$)",
+    re.IGNORECASE,
+)
+# Extracts the author name from the Wazzup message header line.
+_AUTHOR_NAME_RE = re.compile(
+    r"===\s*(?:Исходящее сообщение|Outgoing message),\s*(?:автор|author):\s*(.+?)\s*===",
     re.IGNORECASE,
 )
 
@@ -111,6 +127,10 @@ class _ExportAccumulator:
                 "deal_title": str(deal.get("TITLE", "")),
                 "contact_id": str(deal.get("CONTACT_ID", "")),
                 "source_id": str(deal.get("SOURCE_ID", "")),
+                "assigned_by_id": str(deal.get("ASSIGNED_BY_ID", "")),
+                "stage_id": str(deal.get("STAGE_ID", "")),
+                "stage_semantic_id": str(deal.get("STAGE_SEMANTIC_ID", "")),
+                "category_id": str(deal.get("CATEGORY_ID", "")),
                 "chat_id": conversation.chat_id,
                 "session_id": conversation.session_id,
                 "dialog_id": conversation.dialog_id,
@@ -178,12 +198,15 @@ class WhatsAppExportService:
 
     def execute(self, request: WhatsAppExportRequest) -> None:
         directories = _OutputDirectories.prepare(request.output_dir)
+        page_delay = float(getattr(self._gateway, "page_delay", 0.0) or 0.0)
 
         self._export_profile(directories.root)
         deals = self._load_whatsapp_deals(request, directories.root)
 
         accumulator = _ExportAccumulator.for_deals(deals_scanned=len(deals))
-        for deal in deals:
+        for i, deal in enumerate(deals):
+            if i > 0 and page_delay > 0:
+                time.sleep(page_delay)
             self._process_deal(deal, request, directories, accumulator)
 
         self._write_reports(directories.root, accumulator)
@@ -215,6 +238,11 @@ class WhatsAppExportService:
             deal_filter["CATEGORY_ID"] = clean if len(clean) > 1 else clean[0]
         if request.responsible_id:
             deal_filter["ASSIGNED_BY_ID"] = request.responsible_id
+        # Push DATE_MODIFY bounds to Bitrix so it filters server-side.
+        # Without this, we paginate ALL deals (can be 4000+) and filter locally.
+        # Local DATE_CREATE filter still runs after to catch edge cases.
+        date_bounds = build_closed_filter("DATE_MODIFY", date_from=request.date_from, date_to=request.date_to)
+        deal_filter.update(date_bounds)
 
         whatsapp, raw_deals_scanned, whatsapp_matches = self._scan_whatsapp_deals(
             request=request,
@@ -331,8 +359,6 @@ class WhatsAppExportService:
                 deal_id,
                 paths,
                 include_system_messages=request.include_system_messages,
-                date_from=request.date_from,
-                date_to=request.date_to,
             )
             self._sink.write(paths.conversation, conversation.to_dict())
             accumulator.record_conversation(deal, conversation, paths.conversation)
@@ -353,8 +379,6 @@ class WhatsAppExportService:
         paths: "_DealPaths",
         *,
         include_system_messages: bool,
-        date_from: str | None,
-        date_to: str | None,
     ) -> WhatsAppConversation:
         deal_conversation = self._fetch_openline_conversation(
             deal=deal,
@@ -362,8 +386,6 @@ class WhatsAppExportService:
             entity_id=deal_id,
             raw_destination=paths.deal_openline_raw,
             include_system_messages=include_system_messages,
-            date_from=date_from,
-            date_to=date_to,
         )
         if deal_conversation is not None:
             return deal_conversation
@@ -388,8 +410,6 @@ class WhatsAppExportService:
             entity_id=contact_id,
             raw_destination=paths.contact_openline_raw,
             include_system_messages=include_system_messages,
-            date_from=date_from,
-            date_to=date_to,
         )
         if contact_conversation is not None:
             logger.info(
@@ -414,8 +434,6 @@ class WhatsAppExportService:
         entity_id: str,
         raw_destination: Path,
         include_system_messages: bool,
-        date_from: str | None,
-        date_to: str | None,
     ) -> WhatsAppConversation | None:
         binding = self._find_chat_binding(entity_type=entity_type, entity_id=entity_id)
         raw_payload: dict[str, Any] = {
@@ -442,8 +460,6 @@ class WhatsAppExportService:
             dialog=dialog,
             history=history,
             include_system_messages=include_system_messages,
-            date_from=date_from,
-            date_to=date_to,
         )
 
     def _find_chat_binding(
@@ -510,8 +526,6 @@ class WhatsAppExportService:
         dialog: dict[str, Any],
         history: dict[str, Any],
         include_system_messages: bool,
-        date_from: str | None,
-        date_to: str | None,
     ) -> WhatsAppConversation:
         users = history.get("users") or {}
         files_index = self._index_files(history.get("files"))
@@ -523,15 +537,6 @@ class WhatsAppExportService:
                 deal=deal,
             )
             for message in self._ordered_history_messages(history)
-        ]
-        messages = [
-            message
-            for message in messages
-            if within_datetime_range(
-                message.created_at,
-                date_from=date_from,
-                date_to=date_to,
-            )
         ]
         if not include_system_messages:
             messages = [message for message in messages if not message.is_system_message]
@@ -546,10 +551,13 @@ class WhatsAppExportService:
             source_id=str(deal.get("SOURCE_ID", "")),
             assigned_by_id=str(deal.get("ASSIGNED_BY_ID", "")),
             stage_id=str(deal.get("STAGE_ID", "")),
+            stage_semantic_id=str(deal.get("STAGE_SEMANTIC_ID", "")),
             category_id=str(deal.get("CATEGORY_ID", "")),
             date_create=str(deal.get("DATE_CREATE", "")),
             date_modify=str(deal.get("DATE_MODIFY", "")),
-            last_communication_time=str(deal.get("LAST_COMMUNICATION_TIME", "")),
+            last_communication_time=self._normalize_last_comm_time(
+                str(deal.get("LAST_COMMUNICATION_TIME", ""))
+            ),
             timeline_source=binding.timeline_source,
             timeline_entity_type=binding.timeline_entity_type,
             timeline_entity_id=binding.timeline_entity_id,
@@ -561,6 +569,16 @@ class WhatsAppExportService:
             chat_name=str(dialog.get("name") or ""),
             stats=stats,
             messages=messages,
+            opportunity=str(deal.get("OPPORTUNITY", "") or ""),
+            currency_id=str(deal.get("CURRENCY_ID", "") or ""),
+            closedate=str(deal.get("CLOSEDATE", "") or ""),
+            closed=str(deal.get("CLOSED", "") or ""),
+            loss_reason_id=str(deal.get("LOSS_REASON_ID", "") or ""),
+            loss_comment=str(deal.get("LOSS_COMMENT", "") or ""),
+            utm_source=str(deal.get("UTM_SOURCE", "") or ""),
+            utm_medium=str(deal.get("UTM_MEDIUM", "") or ""),
+            utm_campaign=str(deal.get("UTM_CAMPAIGN", "") or ""),
+            company_id=str(deal.get("COMPANY_ID", "") or ""),
         )
 
     def _empty_conversation(
@@ -580,14 +598,27 @@ class WhatsAppExportService:
             source_id=str(deal.get("SOURCE_ID", "")),
             assigned_by_id=str(deal.get("ASSIGNED_BY_ID", "")),
             stage_id=str(deal.get("STAGE_ID", "")),
+            stage_semantic_id=str(deal.get("STAGE_SEMANTIC_ID", "")),
             category_id=str(deal.get("CATEGORY_ID", "")),
             date_create=str(deal.get("DATE_CREATE", "")),
             date_modify=str(deal.get("DATE_MODIFY", "")),
-            last_communication_time=str(deal.get("LAST_COMMUNICATION_TIME", "")),
+            last_communication_time=self._normalize_last_comm_time(
+                str(deal.get("LAST_COMMUNICATION_TIME", ""))
+            ),
             timeline_source=timeline_source,
             timeline_entity_type=timeline_entity_type,
             timeline_entity_id=timeline_entity_id,
             stats=ConversationStats.from_messages([]),
+            opportunity=str(deal.get("OPPORTUNITY", "") or ""),
+            currency_id=str(deal.get("CURRENCY_ID", "") or ""),
+            closedate=str(deal.get("CLOSEDATE", "") or ""),
+            closed=str(deal.get("CLOSED", "") or ""),
+            loss_reason_id=str(deal.get("LOSS_REASON_ID", "") or ""),
+            loss_comment=str(deal.get("LOSS_COMMENT", "") or ""),
+            utm_source=str(deal.get("UTM_SOURCE", "") or ""),
+            utm_medium=str(deal.get("UTM_MEDIUM", "") or ""),
+            utm_campaign=str(deal.get("UTM_CAMPAIGN", "") or ""),
+            company_id=str(deal.get("COMPANY_ID", "") or ""),
         )
 
     # ------------------------------------------------------------------
@@ -621,7 +652,7 @@ class WhatsAppExportService:
             created_at=str(message.get("date") or ""),
             author_id=sender_id,
             sender_role=role.value,
-            sender_label=self._sender_label(sender, role, direction),
+            sender_label=self._sender_label(sender, role, direction, raw_text),
             text=clean_text,
             attachments=self._extract_attachments(message, files_index),
             is_system_message=(role is SenderRole.SYSTEM),
@@ -650,11 +681,20 @@ class WhatsAppExportService:
         sender: dict[str, Any],
         role: SenderRole,
         direction: str,
+        raw_text: str = "",
     ) -> str | None:
+        # For outgoing messages through a connector, prefer the author name from the
+        # Wazzup header line (e.g. "=== Исходящее сообщение, автор: Иванов ===") over
+        # the connector user's display name (which belongs to the client account).
         if direction == "outgoing" and (
             sender.get("connector")
             or str(sender.get("externalAuthId") or "").lower() == "imconnector"
         ):
+            match = _AUTHOR_NAME_RE.search(raw_text)
+            if match:
+                author = self._whitespace.normalize(match.group(1))
+                if author and not _PLACEHOLDER_LABEL.fullmatch(author):
+                    return author
             return None
         raw_label = str(sender.get("name") or "")
         label = self._whitespace.normalize(raw_label)
@@ -671,11 +711,35 @@ class WhatsAppExportService:
     def _extract_direction(self, text: str) -> tuple[str, str]:
         if not text:
             return "unknown", text
-        if _OUTGOING_MARKER.match(text):
-            return "outgoing", self._whitespace.normalize(_OUTGOING_MARKER.sub("", text, count=1))
-        if _INCOMING_MARKER.match(text):
-            return "incoming", self._whitespace.normalize(_INCOMING_MARKER.sub("", text, count=1))
-        return "unknown", text
+        outgoing = _OUTGOING_MARKER.search(text)
+        if outgoing:
+            return "outgoing", self._whitespace.normalize(text[outgoing.end():])
+        incoming = _INCOMING_MARKER.search(text)
+        if incoming:
+            return "incoming", self._whitespace.normalize(text[incoming.end():])
+        return "unknown", self._strip_reply_quote(text)
+
+    def _strip_reply_quote(self, text: str) -> str:
+        lines = text.split("\n")
+        saw_quote = False
+        body_start: int | None = None
+
+        for index, line in enumerate(lines):
+            stripped = line.strip()
+            if not saw_quote:
+                if stripped.startswith(">>"):
+                    saw_quote = True
+                else:
+                    return text
+                continue
+
+            if stripped and not stripped.startswith(">>"):
+                body_start = index
+                break
+
+        if not saw_quote or body_start is None:
+            return text
+        return self._whitespace.normalize("\n".join(lines[body_start:]))
 
     def _extract_attachments(
         self,
@@ -889,6 +953,17 @@ class WhatsAppExportService:
         if "whatsapp" in text:
             return "whatsapp"
         return "openlines"
+
+    @staticmethod
+    def _normalize_last_comm_time(raw: str) -> str:
+        """Convert Bitrix 'DD.MM.YYYY HH:MM:SS' to ISO 8601 when needed."""
+        if not raw or "T" in raw:
+            return raw
+        try:
+            dt = datetime.strptime(raw, "%d.%m.%Y %H:%M:%S")
+            return dt.isoformat()
+        except ValueError:
+            return raw
 
 
 # ---------------------------------------------------------------------------

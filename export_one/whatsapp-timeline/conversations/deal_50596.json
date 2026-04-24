@@ -1,0 +1,222 @@
+{
+  "channel": "whatsapp",
+  "integration": "wazzup",
+  "deal_id": "50596",
+  "contact_id": "63624",
+  "company_id": "",
+  "deal_title": "77078544445 - WhatsApp",
+  "source_id": "2|WZ_WHATSAPP_CB0C9F5C07DE8985B74A894B883C619C0",
+  "assigned_by_id": "28",
+  "stage_id": "LOSE",
+  "stage_semantic_id": "F",
+  "category_id": "0",
+  "date_create": "2026-04-14T11:16:27+03:00",
+  "date_modify": "2026-04-15T13:44:15+03:00",
+  "closedate": "2026-04-15T03:00:00+03:00",
+  "closed": "Y",
+  "last_communication_time": "2026-04-15T15:43:43",
+  "opportunity": "0.00000000",
+  "currency_id": "KZT",
+  "loss_reason_id": "",
+  "loss_comment": "",
+  "utm_source": "",
+  "utm_medium": "",
+  "utm_campaign": "",
+  "timeline_source": "deal",
+  "timeline_entity_type": "deal",
+  "timeline_entity_id": "50596",
+  "chat_id": "64128",
+  "session_id": "26062",
+  "dialog_id": "chat64128",
+  "connector_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0",
+  "connector_title": "WAZZUP: WhatsApp",
+  "chat_name": "77078544445 - WhatsApp",
+  "stats": {
+    "total_messages": 13,
+    "effective_messages": 7,
+    "manager_messages": 4,
+    "client_messages": 3,
+    "system_messages": 6,
+    "messages_with_files": 5,
+    "first_message_at": "2026-04-14T11:16:27+03:00",
+    "last_message_at": "2026-04-14T13:16:44+03:00",
+    "first_manager_response_time_sec": 234.0,
+    "avg_response_latency_sec": 32.0,
+    "conversation_duration_hours": 2.004722222222222
+  },
+  "messages": [
+    {
+      "timeline_comment_id": "1063676",
+      "created_at": "2026-04-14T11:16:27+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Начат новый диалог №26062",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "50596"
+    },
+    {
+      "timeline_comment_id": "1063680",
+      "created_at": "2026-04-14T11:16:28+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Создан новый контакт",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "77078544445",
+          "url": "/crm/contact/details/63624/"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "50596"
+    },
+    {
+      "timeline_comment_id": "1063682",
+      "created_at": "2026-04-14T11:16:28+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Создана новая сделка",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "77078544445 - WhatsApp",
+          "url": "/crm/deal/details/50596/"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "50596"
+    },
+    {
+      "timeline_comment_id": "1063684",
+      "created_at": "2026-04-14T11:16:28+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Переданы дополнительные данные:\nСсылка на исходный пост: https://app.wazzup24.com/1826-6940/chat/whatsapp/77078544445/fc3e1d61-cd1c-4955-9345-b0f22b543020",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "Wazzup App",
+          "url": "https://app.wazzup24.com/1826-6940/chat/whatsapp/77078544445/fc3e1d61-cd1c-4955-9345-b0f22b543020"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "50596"
+    },
+    {
+      "timeline_comment_id": "1063686",
+      "created_at": "2026-04-14T11:16:29+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Обращение направлено на всех участников очереди",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "50596"
+    },
+    {
+      "timeline_comment_id": "1063688",
+      "created_at": "2026-04-14T11:16:29+03:00",
+      "author_id": "21256",
+      "sender_role": "client",
+      "sender_label": "77078544445",
+      "text": "=== SYSTEM WZ ===\nCheck this message on your device",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50596"
+    },
+    {
+      "timeline_comment_id": "1063704",
+      "created_at": "2026-04-14T11:19:42+03:00",
+      "author_id": "21256",
+      "sender_role": "client",
+      "sender_label": "77078544445",
+      "text": "4,50/3.50\n4.50/3.50\n4,50/3,50\n4.50/3.50\n2.50/3.50\n1.80/2.10 нан 7 еу\n0.90/2.10 нан 3еу\n1.40/4м",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50596"
+    },
+    {
+      "timeline_comment_id": "1063712",
+      "created_at": "2026-04-14T11:20:23+03:00",
+      "author_id": "21256",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Сәлеметсіз бе! Сізге “SAPA PLAST” компаниясы жазып отыр. Айтыңызшы, сізге терезелер керек пе?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50596"
+    },
+    {
+      "timeline_comment_id": "1064122",
+      "created_at": "2026-04-14T13:15:57+03:00",
+      "author_id": "28",
+      "sender_role": "manager",
+      "sender_label": "Жандос Менеджер Алматы",
+      "text": "Сәлеметсіз бе?!🙂 Сізді Алматы қаласындағы Сапа Пласт Компаниясының ресми шорумында сізді күтетін боламыз. Бұл жерден сіз тек сапалы өнімдермен танысып кете аласыз.\nБіздің Инстаграм парақшамыздан бүкіл жұмыстарымызды шынай отзывтарды көре аласыздар\nhttps://www.instagram.com/sapaplast.kz\n\nБізді 2Гис картасынан осылай таба аласыз;\nУлица Немировича-Данченко, 18а\nhttps://2gis.kz/almaty/geo/9430047374980723/76.868243,43.261476\nЖәне де сізге местоположение жіберіп жатырмын.\nhttps://www.google.com/maps/place/43%C2%B015'40.4%22N+76%C2%B052'05.3%22E/@43.2612251,76.8655673,17z/data=!3m1!4b1!4m4!3m3!8m2!3d43.2612251!4d76.8681422?hl=ru&entry=ttu",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50596"
+    },
+    {
+      "timeline_comment_id": "1064128",
+      "created_at": "2026-04-14T13:16:03+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Жандос Менеджер Алматы начал работу с диалогом",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "50596"
+    },
+    {
+      "timeline_comment_id": "1064132",
+      "created_at": "2026-04-14T13:16:19+03:00",
+      "author_id": "28",
+      "sender_role": "manager",
+      "sender_label": "Жандос Менеджер Алматы",
+      "text": "",
+      "attachments": [
+        {
+          "type": "video",
+          "label": "WhatsApp_Video_2025-04-22_at_14.30.03.mp4",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=230508&exact=N&_esd=UNm240bZQJeAN3XtA6cA7XSqKALxHXI3tkhwaaBQ0_S26oYJT8pr-m57g5AVNeB2xfu4G2-J8FsQtWrL2Ej__2K7U6-aTqFjBSB4s3tuihu5-HYj-mUywtRMQBY-SJHxZE_pCHdrdwIWOxngCS5Yfm0fFOQCVlsh_OBYD8Ff6N33cTj0EkkZFiZPx0I%3D&fileName=WhatsApp_Video_2025-04-22_at_14.30.03.mp4"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50596"
+    },
+    {
+      "timeline_comment_id": "1064134",
+      "created_at": "2026-04-14T13:16:21+03:00",
+      "author_id": "21256",
+      "sender_role": "client",
+      "sender_label": "77078544445",
+      "text": "=== SYSTEM WZ === Сообщение не отправлено. Превышен максимальный размер вложения — 10 MB.",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50596"
+    },
+    {
+      "timeline_comment_id": "1064136",
+      "created_at": "2026-04-14T13:16:44+03:00",
+      "author_id": "28",
+      "sender_role": "manager",
+      "sender_label": "Жандос Менеджер Алматы",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "wazzup_audio.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=230510&exact=N&fileName=wazzup_audio.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50596"
+    }
+  ]
+}

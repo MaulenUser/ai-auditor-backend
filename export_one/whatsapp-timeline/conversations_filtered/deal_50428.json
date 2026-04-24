@@ -1,0 +1,272 @@
+{
+  "channel": "whatsapp",
+  "integration": "wazzup",
+  "deal_id": "50428",
+  "contact_id": "63466",
+  "company_id": "",
+  "deal_title": "Balzhan - WhatsApp",
+  "source_id": "2|WZ_WHATSAPP_CB0C9F5C07DE8985B74A894B883C619C0",
+  "assigned_by_id": "28",
+  "stage_id": "LOSE",
+  "stage_semantic_id": "F",
+  "category_id": "0",
+  "date_create": "2026-04-12T08:16:36+03:00",
+  "date_modify": "2026-04-17T09:13:25+03:00",
+  "closedate": "2026-04-17T03:00:00+03:00",
+  "closed": "Y",
+  "last_communication_time": "2026-04-13T09:52:03",
+  "opportunity": "0.00000000",
+  "currency_id": "KZT",
+  "loss_reason_id": "",
+  "loss_comment": "",
+  "utm_source": "",
+  "utm_medium": "",
+  "utm_campaign": "",
+  "timeline_source": "deal",
+  "timeline_entity_type": "deal",
+  "timeline_entity_id": "50428",
+  "chat_id": "63898",
+  "session_id": "25992",
+  "dialog_id": "chat63898",
+  "connector_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0",
+  "connector_title": "WAZZUP: WhatsApp",
+  "chat_name": "Balzhan - WhatsApp",
+  "stats": {
+    "total_messages": 26,
+    "effective_messages": 17,
+    "manager_messages": 10,
+    "client_messages": 7,
+    "system_messages": 9,
+    "messages_with_files": 9,
+    "first_message_at": "2026-04-12T08:16:36+03:00",
+    "last_message_at": "2026-04-14T09:10:20+03:00",
+    "first_manager_response_time_sec": 52.0,
+    "avg_response_latency_sec": 45.6,
+    "conversation_duration_hours": 48.89555555555555
+  },
+  "messages": [
+    {
+      "timeline_comment_id": "1059214",
+      "created_at": "2026-04-12T08:16:38+03:00",
+      "author_id": "21192",
+      "sender_role": "client",
+      "sender_label": "Balzhan",
+      "text": "Сәлеметсіз бе, мен Алматыдағы терезелердің құнын есептегім келеді\nhttps://www.instagram.com/p/DW18R5kAAtC/",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50428"
+    },
+    {
+      "timeline_comment_id": "1059216",
+      "created_at": "2026-04-12T08:17:30+03:00",
+      "author_id": "21192",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Здравствуйте! Вам пишет компания “SAPA PLAST”. Подскажите, вам нужны окна?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50428"
+    },
+    {
+      "timeline_comment_id": "1059218",
+      "created_at": "2026-04-12T08:19:12+03:00",
+      "author_id": "21192",
+      "sender_role": "client",
+      "sender_label": "Balzhan",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "212d5f6d-cb72-4fff-8e83-a912ea7cfd78.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=230002&exact=N&fileName=212d5f6d-cb72-4fff-8e83-a912ea7cfd78.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50428"
+    },
+    {
+      "timeline_comment_id": "1059220",
+      "created_at": "2026-04-12T08:20:12+03:00",
+      "author_id": "21192",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Есіміңіз кім болады?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50428"
+    },
+    {
+      "timeline_comment_id": "1059222",
+      "created_at": "2026-04-12T08:21:25+03:00",
+      "author_id": "21192",
+      "sender_role": "client",
+      "sender_label": "Balzhan",
+      "text": "Балжан",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50428"
+    },
+    {
+      "timeline_comment_id": "1059224",
+      "created_at": "2026-04-12T08:22:09+03:00",
+      "author_id": "21192",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Балжан, қай қаладансыз? Алматыдансыз ба?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50428"
+    },
+    {
+      "timeline_comment_id": "1059226",
+      "created_at": "2026-04-12T08:23:03+03:00",
+      "author_id": "21192",
+      "sender_role": "client",
+      "sender_label": "Balzhan",
+      "text": "Ия,жерүй",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50428"
+    },
+    {
+      "timeline_comment_id": "1059228",
+      "created_at": "2026-04-12T08:23:39+03:00",
+      "author_id": "21192",
+      "sender_role": "client",
+      "sender_label": "Balzhan",
+      "text": "",
+      "attachments": [
+        {
+          "type": "image",
+          "label": "a459f2ce-81d3-4153-9536-7167ee2690ad.jpeg",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=230004&exact=N&_esd=4137FtHSMv6fWXMtyGOt1xan_QvL-6eTr3lUeBqHEFvfOTmRafPVbBLxtYK02p5tI-zZVaabZ3SOnXDNvXdgiuTzD1xNE3Vs54r3JjNYXOBFVtQun6cMsCpf_Hur6h_PY_rmSbytmqLoaV56r5jQA4jkrHZawDtw8KpwGADnTUsKz2L6uGyfV79s0Vs%3D&fileName=a459f2ce-81d3-4153-9536-7167ee2690ad.jpeg"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50428"
+    },
+    {
+      "timeline_comment_id": "1059230",
+      "created_at": "2026-04-12T08:23:57+03:00",
+      "author_id": "21192",
+      "sender_role": "client",
+      "sender_label": "Balzhan",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "71cb79a5-d367-468c-a856-a678aad2b220.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=230006&exact=N&fileName=71cb79a5-d367-468c-a856-a678aad2b220.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50428"
+    },
+    {
+      "timeline_comment_id": "1059232",
+      "created_at": "2026-04-12T08:23:57+03:00",
+      "author_id": "21192",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Рахмет, Балжан. Шамамен қанша терезе керек?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50428"
+    },
+    {
+      "timeline_comment_id": "1059234",
+      "created_at": "2026-04-12T08:24:16+03:00",
+      "author_id": "21192",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Балжан, жалпы неше терезе болады?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50428"
+    },
+    {
+      "timeline_comment_id": "1059236",
+      "created_at": "2026-04-12T08:25:35+03:00",
+      "author_id": "21192",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Рахмет, Балжан. Сызбаңызға қарай жалпы алаңы шамамен 11 м² шығады.\nПремиум (неміс профилі, Artek): 70 000–95 000 тг/м².\nАлдын ала есеп: шамамен 770 000–1 045 000 тг. Нақтысы өлшеу мен таңдауыңызға қарай шығады.\n\nҚай түсті қалайсыз: ақ, комбинированный немесе түсті?\nСтеклопакет екікамерлі ме, үшкамерлі ме?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50428"
+    },
+    {
+      "timeline_comment_id": "1059238",
+      "created_at": "2026-04-12T08:26:31+03:00",
+      "author_id": "21192",
+      "sender_role": "client",
+      "sender_label": "Balzhan",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "c44f22e3-6a8b-4434-8a9e-f52c2e24cb1a.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=230008&exact=N&fileName=c44f22e3-6a8b-4434-8a9e-f52c2e24cb1a.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50428"
+    },
+    {
+      "timeline_comment_id": "1059240",
+      "created_at": "2026-04-12T08:27:43+03:00",
+      "author_id": "21192",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Жақсы, қоңыр түсті қылып белгіледім.\nСтеклопакет екікамерлі ме, үшкамерлі ме қалайсыз?\n\nАйта кетейін, біз тек Artek неміс сапасындағы профильмен жұмыс жасаймыз.",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50428"
+    },
+    {
+      "timeline_comment_id": "1060998",
+      "created_at": "2026-04-13T07:53:58+03:00",
+      "author_id": "21192",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жандос Менеджер Алматы)",
+      "text": "Сәлеметсіз бе?!🙂 Сізді Алматы қаласындағы Сапа Пласт Компаниясының ресми шорумында сізді күтетін боламыз. Бұл жерден сіз тек сапалы өнімдермен танысып кете аласыз.\nБіздің Инстаграм парақшамыздан бүкіл жұмыстарымызды шынай отзывтарды көре аласыздар\nhttps://www.instagram.com/sapaplast.kz\n\nБізді 2Гис картасынан осылай таба аласыз;\nУлица Немировича-Данченко, 18а\nhttps://2gis.kz/almaty/geo/9430047374980723/76.868243,43.261476\nЖәне де сізге местоположение жіберіп жатырмын.\nhttps://www.google.com/maps/place/43%C2%B015'40.4%22N+76%C2%B052'05.3%22E/@43.2612251,76.8655673,17z/data=!3m1!4b1!4m4!3m3!8m2!3d43.2612251!4d76.8681422?hl=ru&entry=ttu",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50428"
+    },
+    {
+      "timeline_comment_id": "1061000",
+      "created_at": "2026-04-13T07:54:20+03:00",
+      "author_id": "21192",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жандос Менеджер Алматы)",
+      "text": "",
+      "attachments": [
+        {
+          "type": "video",
+          "label": "WhatsApp_Video_2025-04-22_at_14.30.03.mp4",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=230158&exact=N&_esd=wBYV4m9OdTQhu7z185_Nt2B5AOO2mgiM6r7TKhCBkjKPLoI4TsF9IfzKYcA1MWRMIeyta8v09Fw000CsshL8fKhX5kTvi68weQB7bcRA6Dpcday8Ov6X3Bjuok2chuZBIDEKT2Q9uwllr_sdBa3k22n22nPA3z7vbkA0dp0lj2BevTYVFF8JnsPE4G0%3D&fileName=WhatsApp_Video_2025-04-22_at_14.30.03.mp4"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50428"
+    },
+    {
+      "timeline_comment_id": "1061006",
+      "created_at": "2026-04-13T07:54:24+03:00",
+      "author_id": "21192",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жандос Менеджер Алматы)",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "wazzup_audio.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=230162&exact=N&fileName=wazzup_audio.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50428"
+    }
+  ]
+}

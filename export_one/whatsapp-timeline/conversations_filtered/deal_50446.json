@@ -1,0 +1,155 @@
+{
+  "channel": "whatsapp",
+  "integration": "wazzup",
+  "deal_id": "50446",
+  "contact_id": "63484",
+  "company_id": "",
+  "deal_title": ". - WhatsApp",
+  "source_id": "2|WZ_WHATSAPP_CB0C9F5C07DE8985B74A894B883C619C0",
+  "assigned_by_id": "28",
+  "stage_id": "LOSE",
+  "stage_semantic_id": "F",
+  "category_id": "0",
+  "date_create": "2026-04-12T10:55:50+03:00",
+  "date_modify": "2026-04-16T09:55:27+03:00",
+  "closedate": "2026-04-16T03:00:00+03:00",
+  "closed": "Y",
+  "last_communication_time": "2026-04-13T09:57:52",
+  "opportunity": "0.00000000",
+  "currency_id": "KZT",
+  "loss_reason_id": "",
+  "loss_comment": "",
+  "utm_source": "",
+  "utm_medium": "",
+  "utm_campaign": "",
+  "timeline_source": "deal",
+  "timeline_entity_type": "deal",
+  "timeline_entity_id": "50446",
+  "chat_id": "63912",
+  "session_id": "26004",
+  "dialog_id": "chat63912",
+  "connector_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0",
+  "connector_title": "WAZZUP: WhatsApp",
+  "chat_name": ". - WhatsApp",
+  "stats": {
+    "total_messages": 17,
+    "effective_messages": 8,
+    "manager_messages": 6,
+    "client_messages": 2,
+    "system_messages": 9,
+    "messages_with_files": 6,
+    "first_message_at": "2026-04-12T10:55:50+03:00",
+    "last_message_at": "2026-04-16T09:55:40+03:00",
+    "first_manager_response_time_sec": 34.0,
+    "avg_response_latency_sec": 132812.0,
+    "conversation_duration_hours": 94.99722222222222
+  },
+  "messages": [
+    {
+      "timeline_comment_id": "1059498",
+      "created_at": "2026-04-12T10:55:51+03:00",
+      "author_id": "21204",
+      "sender_role": "client",
+      "sender_label": null,
+      "text": "Сәлеметсіз бе, мен Алматыдағы терезелердің құнын есептегім келеді\nhttps://www.instagram.com/p/DW18R5kAAtC/",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50446"
+    },
+    {
+      "timeline_comment_id": "1059500",
+      "created_at": "2026-04-12T10:56:25+03:00",
+      "author_id": "21204",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Сәлеметсіз бе! Сізге “SAPA PLAST” компаниясы жазып отыр. Айтыңызшы, сізге терезелер керек пе?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50446"
+    },
+    {
+      "timeline_comment_id": "1061044",
+      "created_at": "2026-04-13T08:01:40+03:00",
+      "author_id": "21204",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жандос Менеджер Алматы)",
+      "text": "Сәлеметсіз бе?!🙂 Сізді Алматы қаласындағы Сапа Пласт Компаниясының ресми шорумында сізді күтетін боламыз. Бұл жерден сіз тек сапалы өнімдермен танысып кете аласыз.\nБіздің Инстаграм парақшамыздан бүкіл жұмыстарымызды шынай отзывтарды көре аласыздар\nhttps://www.instagram.com/sapaplast.kz\n\nБізді 2Гис картасынан осылай таба аласыз;\nУлица Немировича-Данченко, 18а\nhttps://2gis.kz/almaty/geo/9430047374980723/76.868243,43.261476\nЖәне де сізге местоположение жіберіп жатырмын.\nhttps://www.google.com/maps/place/43%C2%B015'40.4%22N+76%C2%B052'05.3%22E/@43.2612251,76.8655673,17z/data=!3m1!4b1!4m4!3m3!8m2!3d43.2612251!4d76.8681422?hl=ru&entry=ttu",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50446"
+    },
+    {
+      "timeline_comment_id": "1061046",
+      "created_at": "2026-04-13T08:02:02+03:00",
+      "author_id": "21204",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жандос Менеджер Алматы)",
+      "text": "",
+      "attachments": [
+        {
+          "type": "video",
+          "label": "WhatsApp_Video_2025-04-22_at_14.30.03.mp4",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=230170&exact=N&_esd=wMbY7JnPDMjto79peuogWjsw37kSB1P0pREsnekrQvFeiGR8CM27twrdMyzNP1b1ePtZk7EasDOQzRPk-zYX3SduVr_afs0ZNGzyUQw2kAqP6VoVwCDAxWugw-_IonYavhrk4ioECbMWpHeHdGrDdgMh0PhH-BxhA2nPxn2tA3O30ZXHtU98yqwCCfA%3D&fileName=WhatsApp_Video_2025-04-22_at_14.30.03.mp4"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50446"
+    },
+    {
+      "timeline_comment_id": "1061048",
+      "created_at": "2026-04-13T08:02:03+03:00",
+      "author_id": "21204",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жандос Менеджер Алматы)",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "wazzup_audio.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=230172&exact=N&fileName=wazzup_audio.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50446"
+    },
+    {
+      "timeline_comment_id": "1061066",
+      "created_at": "2026-04-13T08:08:56+03:00",
+      "author_id": "21204",
+      "sender_role": "client",
+      "sender_label": null,
+      "text": "",
+      "attachments": [
+        {
+          "type": "image",
+          "label": "5e21e4d5-c310-45a0-8e33-d28192ac509f.jpeg",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=230178&exact=N&_esd=0LOZo3aB6zWS1wRCVyi4Mui7sQTPj-M2Ny66wfNx1ghqdrI9sr0i9S8stJFgj2Q3fLv5jEpFNEoLziMIXQ9Ah_Ej44wa6GyTycVjoIZM0kgCHXoFdiA58RhZEWFGtOOnDYWevPF7CJEkbQYnfXh63WOfTQVEnor7PP1mIlyTuuimFd_gVAE5XHs6DbY%3D&fileName=5e21e4d5-c310-45a0-8e33-d28192ac509f.jpeg"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50446"
+    },
+    {
+      "timeline_comment_id": "1067774",
+      "created_at": "2026-04-16T09:55:26+03:00",
+      "author_id": "21204",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жандос Менеджер Алматы)",
+      "text": "Бир кери байланыс",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50446"
+    },
+    {
+      "timeline_comment_id": "1067782",
+      "created_at": "2026-04-16T09:55:40+03:00",
+      "author_id": "21204",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жандос Менеджер Алматы)",
+      "text": "Ассалаумагалейкум",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50446"
+    }
+  ]
+}

@@ -1,0 +1,255 @@
+{
+  "channel": "whatsapp",
+  "integration": "wazzup",
+  "deal_id": "50192",
+  "contact_id": "63248",
+  "company_id": "",
+  "deal_title": "Айнур Акишева - WhatsApp",
+  "source_id": "2|WZ_WHATSAPP_CB0C9F5C07DE8985B74A894B883C619C0",
+  "assigned_by_id": "28",
+  "stage_id": "UC_C0RQFW",
+  "stage_semantic_id": "P",
+  "category_id": "0",
+  "date_create": "2026-04-09T11:40:15+03:00",
+  "date_modify": "2026-04-18T09:45:04+03:00",
+  "closedate": "2026-04-16T03:00:00+03:00",
+  "closed": "N",
+  "last_communication_time": "2026-04-09T13:47:14",
+  "opportunity": "0.00000000",
+  "currency_id": "KZT",
+  "loss_reason_id": "",
+  "loss_comment": "",
+  "utm_source": "",
+  "utm_medium": "",
+  "utm_campaign": "",
+  "timeline_source": "deal",
+  "timeline_entity_type": "deal",
+  "timeline_entity_id": "50192",
+  "chat_id": "63536",
+  "session_id": "25856",
+  "dialog_id": "chat63536",
+  "connector_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0",
+  "connector_title": "WAZZUP: WhatsApp",
+  "chat_name": "Айнур Акишева - WhatsApp",
+  "stats": {
+    "total_messages": 16,
+    "effective_messages": 7,
+    "manager_messages": 4,
+    "client_messages": 3,
+    "system_messages": 9,
+    "messages_with_files": 5,
+    "first_message_at": "2026-04-09T11:40:15+03:00",
+    "last_message_at": "2026-04-13T16:26:28+03:00",
+    "first_manager_response_time_sec": 606.0,
+    "avg_response_latency_sec": 1262.5,
+    "conversation_duration_hours": 100.77027777777778
+  },
+  "messages": [
+    {
+      "timeline_comment_id": "1055850",
+      "created_at": "2026-04-09T11:40:15+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Начат новый диалог №25856",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "50192"
+    },
+    {
+      "timeline_comment_id": "1055854",
+      "created_at": "2026-04-09T11:40:16+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Создан новый контакт",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "Айнур Акишева",
+          "url": "/crm/contact/details/63248/"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "50192"
+    },
+    {
+      "timeline_comment_id": "1055856",
+      "created_at": "2026-04-09T11:40:16+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Создана новая сделка",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "Айнур Акишева - WhatsApp",
+          "url": "/crm/deal/details/50192/"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "50192"
+    },
+    {
+      "timeline_comment_id": "1055858",
+      "created_at": "2026-04-09T11:40:16+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Переданы дополнительные данные:\nСсылка на исходный пост: https://app.wazzup24.com/1826-6940/chat/whatsapp/77055250420/fc3e1d61-cd1c-4955-9345-b0f22b543020",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "Wazzup App",
+          "url": "https://app.wazzup24.com/1826-6940/chat/whatsapp/77055250420/fc3e1d61-cd1c-4955-9345-b0f22b543020"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "50192"
+    },
+    {
+      "timeline_comment_id": "1055860",
+      "created_at": "2026-04-09T11:40:17+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Обращение направлено на всех участников очереди",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "50192"
+    },
+    {
+      "timeline_comment_id": "1055862",
+      "created_at": "2026-04-09T11:40:17+03:00",
+      "author_id": "21094",
+      "sender_role": "client",
+      "sender_label": "Айнур Акишева",
+      "text": "Сәлеметсіз бе, мен Алматыдағы терезелердің құнын есептегім келеді\nhttps://www.instagram.com/p/DW18R5kAAtC/",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50192"
+    },
+    {
+      "timeline_comment_id": "1055872",
+      "created_at": "2026-04-09T11:50:23+03:00",
+      "author_id": "21094",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жандос Менеджер Алматы)",
+      "text": "Сәлеметсіз бе?!🙂 Сізді Алматы қаласындағы Сапа Пласт Компаниясының ресми шорумында сізді күтетін боламыз. Бұл жерден сіз тек сапалы өнімдермен танысып кете аласыз.\nБіздің Инстаграм парақшамыздан бүкіл жұмыстарымызды шынай отзывтарды көре аласыздар\nhttps://www.instagram.com/sapaplast.kz\n\nБізді 2Гис картасынан осылай таба аласыз;\nУлица Немировича-Данченко, 18а\nhttps://2gis.kz/almaty/geo/9430047374980723/76.868243,43.261476\nЖәне де сізге местоположение жіберіп жатырмын.\nhttps://www.google.com/maps/place/43%C2%B015'40.4%22N+76%C2%B052'05.3%22E/@43.2612251,76.8655673,17z/data=!3m1!4b1!4m4!3m3!8m2!3d43.2612251!4d76.8681422?hl=ru&entry=ttu",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50192"
+    },
+    {
+      "timeline_comment_id": "1055874",
+      "created_at": "2026-04-09T11:50:34+03:00",
+      "author_id": "21094",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жандос Менеджер Алматы)",
+      "text": "",
+      "attachments": [
+        {
+          "type": "video",
+          "label": "WhatsApp_Video_2025-04-22_at_14.30.03.mp4",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=229314&exact=N&_esd=Er2snGle2h73RiGqaYt6wIbao7BySTcqwH0kEtRSV3pjDqHDFqA-26ne5ymRWJcQeYZYXjKNrduyHGznGsxsGFHXBHWid--1TBwgPUBiJ6WdRSNLVDsPHJo6wt9BlTeP-4_TssevHjdLBtyvGlOwf0BBJ93fOHpkl2DO53aq-k5vDKQMPskiumGPYjA%3D&fileName=WhatsApp_Video_2025-04-22_at_14.30.03.mp4"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50192"
+    },
+    {
+      "timeline_comment_id": "1055876",
+      "created_at": "2026-04-09T11:51:13+03:00",
+      "author_id": "21094",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жандос Менеджер Алматы)",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "wazzup_audio.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=229316&exact=N&fileName=wazzup_audio.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50192"
+    },
+    {
+      "timeline_comment_id": "1055884",
+      "created_at": "2026-04-09T11:53:32+03:00",
+      "author_id": "21094",
+      "sender_role": "client",
+      "sender_label": "Айнур Акишева",
+      "text": "Сәлеметсіз",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50192"
+    },
+    {
+      "timeline_comment_id": "1055886",
+      "created_at": "2026-04-09T11:53:34+03:00",
+      "author_id": "21094",
+      "sender_role": "client",
+      "sender_label": "Айнур Акишева",
+      "text": "Жақсы",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50192"
+    },
+    {
+      "timeline_comment_id": "1055930",
+      "created_at": "2026-04-09T12:25:33+03:00",
+      "author_id": "21094",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жандос Менеджер Алматы)",
+      "text": "Кутемиз",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50192"
+    },
+    {
+      "timeline_comment_id": "1056480",
+      "created_at": "2026-04-10T07:24:37+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Обращение также направлено Ернур Исаков",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "50192"
+    },
+    {
+      "timeline_comment_id": "1056712",
+      "created_at": "2026-04-10T08:26:04+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Обращение также направлено \"\"Нурсултан\"\" Директор Алматы SP",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "50192"
+    },
+    {
+      "timeline_comment_id": "1060688",
+      "created_at": "2026-04-13T07:21:22+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Обращение также направлено Асет Шымкент менеджер SP",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "50192"
+    },
+    {
+      "timeline_comment_id": "1062602",
+      "created_at": "2026-04-13T16:26:28+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Обращение также направлено sapa.plast.bitrix@mail.ru",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "50192"
+    }
+  ]
+}

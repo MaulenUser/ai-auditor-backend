@@ -1,0 +1,907 @@
+{
+  "binding": {
+    "timeline_source": "deal",
+    "timeline_entity_type": "deal",
+    "timeline_entity_id": "50682",
+    "chat_id": "64268",
+    "connector_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0",
+    "connector_title": "WAZZUP: WhatsApp"
+  },
+  "dialog": {
+    "id": 64268,
+    "parent_chat_id": 0,
+    "parent_message_id": 0,
+    "name": "QQQ - WhatsApp",
+    "description": "Ссылка на исходный пост: https://app.wazzup24.com/1826-6940/chat/whatsapp/77019332295/fc3e1d61-cd1c-4955-9345-b0f22b543020",
+    "owner": 0,
+    "extranet": false,
+    "avatar": "",
+    "color": "#64a513",
+    "type": "lines",
+    "counter": 0,
+    "user_counter": 1,
+    "message_count": 33,
+    "unread_id": 0,
+    "restrictions": {
+      "avatar": true,
+      "rename": true,
+      "extend": true,
+      "call": true,
+      "mute": true,
+      "leave": true,
+      "leave_owner": true,
+      "send": true,
+      "user_list": true
+    },
+    "last_message_id": 1070030,
+    "last_id": 0,
+    "marked_id": 0,
+    "disk_folder_id": 230730,
+    "entity_type": "LINES",
+    "entity_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|037e9243-5ed5-44f1-bb43-c4ac23c2becb|21282",
+    "entity_data_1": "Y|DEAL|50682|N|N|26100|1776226559|0|0|0",
+    "entity_data_2": "LEAD|0|COMPANY|0|CONTACT|63706|DEAL|50682",
+    "entity_data_3": "",
+    "mute_list": [],
+    "date_create": "2026-04-15T07:15:59+03:00",
+    "message_type": "L",
+    "public": "",
+    "role": "guest",
+    "entity_link": {
+      "type": "LINES",
+      "url": "",
+      "id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|037e9243-5ed5-44f1-bb43-c4ac23c2becb|21282"
+    },
+    "text_field_enabled": true,
+    "background_id": null,
+    "permissions": {
+      "manage_users_add": "member",
+      "manage_users_delete": "manager",
+      "manage_ui": "member",
+      "manage_settings": "owner",
+      "manage_messages": "member",
+      "can_post": "member"
+    },
+    "is_new": false,
+    "readed_list": [
+      {
+        "user_id": 21282,
+        "user_name": "QQQ",
+        "message_id": 1065154,
+        "date": null
+      }
+    ],
+    "manager_list": [],
+    "last_message_views": {
+      "message_id": 1070030,
+      "first_viewers": [],
+      "count_of_viewers": 0
+    },
+    "dialog_id": "chat64268"
+  },
+  "history": {
+    "chatId": 64268,
+    "canJoin": "Y",
+    "canVoteHead": "Y",
+    "sessionId": 26100,
+    "sessionVoteHead": 0,
+    "sessionCommentHead": null,
+    "userId": "chat64268",
+    "message": {
+      "1070030": {
+        "id": "1070030",
+        "chatid": "64268",
+        "senderid": "0",
+        "recipientid": "chat64268",
+        "date": "2026-04-17T22:42:35+03:00",
+        "text": "Обращение также направлено [USER=1 REPLACE]sapa.plast.bitrix@mail.ru[/USER]",
+        "textlegacy": "Обращение также направлено [USER=1 REPLACE]sapa.plast.bitrix@mail.ru[/USER]",
+        "params": {
+          "notify": "N"
+        }
+      },
+      "1067484": {
+        "id": "1067484",
+        "chatid": "64268",
+        "senderid": "21282",
+        "recipientid": "chat64268",
+        "date": "2026-04-16T07:36:42+03:00",
+        "text": "=== Исходящее сообщение, автор: Битрикс24 (Жандос Менеджер Алматы) ===",
+        "textlegacy": "=== Исходящее сообщение, автор: Битрикс24 (Жандос Менеджер Алматы) ===",
+        "params": {
+          "connectorMid": [
+            "cf0ee94b-a301-4b14-a380-32fdbcd553fd"
+          ],
+          "fileId": [
+            231060
+          ]
+        }
+      },
+      "1065592": {
+        "id": "1065592",
+        "chatid": "64268",
+        "senderid": "0",
+        "recipientid": "chat64268",
+        "date": "2026-04-15T09:18:35+03:00",
+        "text": "Обращение также направлено [USER=18 REPLACE]\"\"Нурсултан\"\" Директор Алматы SP[/USER]",
+        "textlegacy": "Обращение также направлено [USER=18 REPLACE]\"\"Нурсултан\"\" Директор Алматы SP[/USER]",
+        "params": {
+          "notify": "N"
+        }
+      },
+      "1065326": {
+        "id": "1065326",
+        "chatid": "64268",
+        "senderid": "21282",
+        "recipientid": "chat64268",
+        "date": "2026-04-15T08:08:14+03:00",
+        "text": "=== Исходящее сообщение, автор: Битрикс24 (Жандос Менеджер Алматы) ===\nСәлеметсіз бе?!🙂 Сізді Алматы қаласындағы Сапа Пласт Компаниясының ресми шорумында сізді күтетін боламыз. Бұл жерден сіз тек сапалы өнімдермен танысып кете аласыз. \nБіздің Инстаграм парақшамыздан бүкіл жұмыстарымызды шынай отзывтарды көре аласыздар\n[URL]https://www.instagram.com/sapaplast.kz[/URL]\n\nБізді 2Гис картасынан осылай таба аласыз; \nУлица Немировича-Данченко, 18а\n[URL]https://2gis.kz/almaty/geo/9430047374980723/76.868243,43.261476[/URL]\nЖәне де сізге местоположение жіберіп жатырмын.\n[URL=https://www.google.com/maps/place/43%C2%B015%2740.4%22N+76%C2%B052%2705.3%22E/@43.2612251,76.8655673,17z/data=!3m1!4b1!4m4!3m3!8m2!3d43.2612251!4d76.8681422?hl=ru&entry=ttu]https://www.google.com/maps/place/43%C2%B015'40.4%22N+76%C2%B052'05.3%22E/@43.2612251,76.8655673,17z/data=!3m1!4b1!4m4!3m3!8m2!3d43.2612251!4d76.8681422?hl=ru&entry=ttu[/URL]",
+        "textlegacy": "=== Исходящее сообщение, автор: Битрикс24 (Жандос Менеджер Алматы) ===<br />Сәлеметсіз бе?!🙂 Сізді Алматы қаласындағы Сапа Пласт Компаниясының ресми шорумында сізді күтетін боламыз. Бұл жерден сіз тек сапалы өнімдермен танысып кете аласыз. <br />Біздің Инстаграм парақшамыздан бүкіл жұмыстарымызды шынай отзывтарды көре аласыздар<br /><a href=\"https://www.instagram.com/sapaplast.kz\" target=\"_blank\" >https://www.instagram.com/sapaplast.kz</a><br /><br />Бізді 2Гис картасынан осылай таба аласыз; <br />Улица Немировича-Данченко, 18а<br /><a href=\"https://2gis.kz/almaty/geo/9430047374980723/76.868243,43.261476\" target=\"_blank\" >https://2gis.kz/almaty/geo/9430047374980723/76.868243,43.261476</a><br />Және де сізге местоположение жіберіп жатырмын.<br /><a href=\"https://www.google.com/maps/place/43%C2%B015%2740.4%22N+76%C2%B052%2705.3%22E/@43.2612251,76.8655673,17z/data=!3m1!4b1!4m4!3m3!8m2!3d43.2612251!4d76.8681422?hl=ru&amp;entry=ttu\" target=\"_blank\" >https://www.google.com/maps/place/43%C2%B015'40.4%22N+76%C2%B052'05.3%22E/@43.2612251,76.8655673,17z/data=!3m1!4b1!4m4!3m3!8m2!3d43.2612251!4d76.8681422?hl=ru&amp;entry=ttu</a>",
+        "params": {
+          "connectorMid": [
+            "c8bec8f4-98b0-4c17-b795-a44c5f5d95f7"
+          ]
+        }
+      },
+      "1065324": {
+        "id": "1065324",
+        "chatid": "64268",
+        "senderid": "21282",
+        "recipientid": "chat64268",
+        "date": "2026-04-15T08:07:24+03:00",
+        "text": "=== Исходящее сообщение, автор: Битрикс24 (Жандос Менеджер Алматы) ===\nСәлеметсіз бе?!🙂 Сізді Алматы қаласындағы Сапа Пласт Компаниясының ресми шорумында сізді күтетін боламыз. Бұл жерден сіз тек сапалы өнімдермен танысып кете аласыз. \nБіздің Инстаграм парақшамыздан бүкіл жұмыстарымызды шынай отзывтарды көре аласыздар\n[URL]https://www.instagram.com/sapaplast.kz[/URL]\n\nБізді 2Гис картасынан осылай таба аласыз; \nУлица Немировича-Данченко, 18а\n[URL]https://2gis.kz/almaty/geo/9430047374980723/76.868243,43.261476[/URL]\nЖәне де сізге местоположение жіберіп жатырмын.\n[URL=https://www.google.com/maps/place/43%C2%B015%2740.4%22N+76%C2%B052%2705.3%22E/@43.2612251,76.8655673,17z/data=!3m1!4b1!4m4!3m3!8m2!3d43.2612251!4d76.8681422?hl=ru&entry=ttu]https://www.google.com/maps/place/43%C2%B015'40.4%22N+76%C2%B052'05.3%22E/@43.2612251,76.8655673,17z/data=!3m1!4b1!4m4!3m3!8m2!3d43.2612251!4d76.8681422?hl=ru&entry=ttu[/URL]",
+        "textlegacy": "=== Исходящее сообщение, автор: Битрикс24 (Жандос Менеджер Алматы) ===<br />Сәлеметсіз бе?!🙂 Сізді Алматы қаласындағы Сапа Пласт Компаниясының ресми шорумында сізді күтетін боламыз. Бұл жерден сіз тек сапалы өнімдермен танысып кете аласыз. <br />Біздің Инстаграм парақшамыздан бүкіл жұмыстарымызды шынай отзывтарды көре аласыздар<br /><a href=\"https://www.instagram.com/sapaplast.kz\" target=\"_blank\" >https://www.instagram.com/sapaplast.kz</a><br /><br />Бізді 2Гис картасынан осылай таба аласыз; <br />Улица Немировича-Данченко, 18а<br /><a href=\"https://2gis.kz/almaty/geo/9430047374980723/76.868243,43.261476\" target=\"_blank\" >https://2gis.kz/almaty/geo/9430047374980723/76.868243,43.261476</a><br />Және де сізге местоположение жіберіп жатырмын.<br /><a href=\"https://www.google.com/maps/place/43%C2%B015%2740.4%22N+76%C2%B052%2705.3%22E/@43.2612251,76.8655673,17z/data=!3m1!4b1!4m4!3m3!8m2!3d43.2612251!4d76.8681422?hl=ru&amp;entry=ttu\" target=\"_blank\" >https://www.google.com/maps/place/43%C2%B015'40.4%22N+76%C2%B052'05.3%22E/@43.2612251,76.8655673,17z/data=!3m1!4b1!4m4!3m3!8m2!3d43.2612251!4d76.8681422?hl=ru&amp;entry=ttu</a>",
+        "params": {
+          "connectorMid": [
+            "c8bec8f4-98b0-4c17-b795-a44c5f5d95f7"
+          ]
+        }
+      },
+      "1065322": {
+        "id": "1065322",
+        "chatid": "64268",
+        "senderid": "21282",
+        "recipientid": "chat64268",
+        "date": "2026-04-15T08:06:44+03:00",
+        "text": "=== Исходящее сообщение, автор: Битрикс24 (Жандос Менеджер Алматы) ===\nСәлеметсіз бе?!🙂 Сізді Алматы қаласындағы Сапа Пласт Компаниясының ресми шорумында сізді күтетін боламыз. Бұл жерден сіз тек сапалы өнімдермен танысып кете аласыз. \nБіздің Инстаграм парақшамыздан бүкіл жұмыстарымызды шынай отзывтарды көре аласыздар\n[URL]https://www.instagram.com/sapaplast.kz[/URL]\n\nБізді 2Гис картасынан осылай таба аласыз; \nУлица Немировича-Данченко, 18а\n[URL]https://2gis.kz/almaty/geo/9430047374980723/76.868243,43.261476[/URL]\nЖәне де сізге местоположение жіберіп жатырмын.\n[URL=https://www.google.com/maps/place/43%C2%B015%2740.4%22N+76%C2%B052%2705.3%22E/@43.2612251,76.8655673,17z/data=!3m1!4b1!4m4!3m3!8m2!3d43.2612251!4d76.8681422?hl=ru&entry=ttu]https://www.google.com/maps/place/43%C2%B015'40.4%22N+76%C2%B052'05.3%22E/@43.2612251,76.8655673,17z/data=!3m1!4b1!4m4!3m3!8m2!3d43.2612251!4d76.8681422?hl=ru&entry=ttu[/URL]",
+        "textlegacy": "=== Исходящее сообщение, автор: Битрикс24 (Жандос Менеджер Алматы) ===<br />Сәлеметсіз бе?!🙂 Сізді Алматы қаласындағы Сапа Пласт Компаниясының ресми шорумында сізді күтетін боламыз. Бұл жерден сіз тек сапалы өнімдермен танысып кете аласыз. <br />Біздің Инстаграм парақшамыздан бүкіл жұмыстарымызды шынай отзывтарды көре аласыздар<br /><a href=\"https://www.instagram.com/sapaplast.kz\" target=\"_blank\" >https://www.instagram.com/sapaplast.kz</a><br /><br />Бізді 2Гис картасынан осылай таба аласыз; <br />Улица Немировича-Данченко, 18а<br /><a href=\"https://2gis.kz/almaty/geo/9430047374980723/76.868243,43.261476\" target=\"_blank\" >https://2gis.kz/almaty/geo/9430047374980723/76.868243,43.261476</a><br />Және де сізге местоположение жіберіп жатырмын.<br /><a href=\"https://www.google.com/maps/place/43%C2%B015%2740.4%22N+76%C2%B052%2705.3%22E/@43.2612251,76.8655673,17z/data=!3m1!4b1!4m4!3m3!8m2!3d43.2612251!4d76.8681422?hl=ru&amp;entry=ttu\" target=\"_blank\" >https://www.google.com/maps/place/43%C2%B015'40.4%22N+76%C2%B052'05.3%22E/@43.2612251,76.8655673,17z/data=!3m1!4b1!4m4!3m3!8m2!3d43.2612251!4d76.8681422?hl=ru&amp;entry=ttu</a>",
+        "params": {
+          "connectorMid": [
+            "c8bec8f4-98b0-4c17-b795-a44c5f5d95f7"
+          ]
+        }
+      },
+      "1065320": {
+        "id": "1065320",
+        "chatid": "64268",
+        "senderid": "21282",
+        "recipientid": "chat64268",
+        "date": "2026-04-15T08:06:14+03:00",
+        "text": "=== Исходящее сообщение, автор: Битрикс24 (Жандос Менеджер Алматы) ===\nСәлеметсіз бе?!🙂 Сізді Алматы қаласындағы Сапа Пласт Компаниясының ресми шорумында сізді күтетін боламыз. Бұл жерден сіз тек сапалы өнімдермен танысып кете аласыз. \nБіздің Инстаграм парақшамыздан бүкіл жұмыстарымызды шынай отзывтарды көре аласыздар\n[URL]https://www.instagram.com/sapaplast.kz[/URL]\n\nБізді 2Гис картасынан осылай таба аласыз; \nУлица Немировича-Данченко, 18а\n[URL]https://2gis.kz/almaty/geo/9430047374980723/76.868243,43.261476[/URL]\nЖәне де сізге местоположение жіберіп жатырмын.\n[URL=https://www.google.com/maps/place/43%C2%B015%2740.4%22N+76%C2%B052%2705.3%22E/@43.2612251,76.8655673,17z/data=!3m1!4b1!4m4!3m3!8m2!3d43.2612251!4d76.8681422?hl=ru&entry=ttu]https://www.google.com/maps/place/43%C2%B015'40.4%22N+76%C2%B052'05.3%22E/@43.2612251,76.8655673,17z/data=!3m1!4b1!4m4!3m3!8m2!3d43.2612251!4d76.8681422?hl=ru&entry=ttu[/URL]",
+        "textlegacy": "=== Исходящее сообщение, автор: Битрикс24 (Жандос Менеджер Алматы) ===<br />Сәлеметсіз бе?!🙂 Сізді Алматы қаласындағы Сапа Пласт Компаниясының ресми шорумында сізді күтетін боламыз. Бұл жерден сіз тек сапалы өнімдермен танысып кете аласыз. <br />Біздің Инстаграм парақшамыздан бүкіл жұмыстарымызды шынай отзывтарды көре аласыздар<br /><a href=\"https://www.instagram.com/sapaplast.kz\" target=\"_blank\" >https://www.instagram.com/sapaplast.kz</a><br /><br />Бізді 2Гис картасынан осылай таба аласыз; <br />Улица Немировича-Данченко, 18а<br /><a href=\"https://2gis.kz/almaty/geo/9430047374980723/76.868243,43.261476\" target=\"_blank\" >https://2gis.kz/almaty/geo/9430047374980723/76.868243,43.261476</a><br />Және де сізге местоположение жіберіп жатырмын.<br /><a href=\"https://www.google.com/maps/place/43%C2%B015%2740.4%22N+76%C2%B052%2705.3%22E/@43.2612251,76.8655673,17z/data=!3m1!4b1!4m4!3m3!8m2!3d43.2612251!4d76.8681422?hl=ru&amp;entry=ttu\" target=\"_blank\" >https://www.google.com/maps/place/43%C2%B015'40.4%22N+76%C2%B052'05.3%22E/@43.2612251,76.8655673,17z/data=!3m1!4b1!4m4!3m3!8m2!3d43.2612251!4d76.8681422?hl=ru&amp;entry=ttu</a>",
+        "params": {
+          "connectorMid": [
+            "c8bec8f4-98b0-4c17-b795-a44c5f5d95f7"
+          ]
+        }
+      },
+      "1065318": {
+        "id": "1065318",
+        "chatid": "64268",
+        "senderid": "21282",
+        "recipientid": "chat64268",
+        "date": "2026-04-15T08:06:13+03:00",
+        "text": "=== Исходящее сообщение, автор: Битрикс24 (Жандос Менеджер Алматы) ===",
+        "textlegacy": "=== Исходящее сообщение, автор: Битрикс24 (Жандос Менеджер Алматы) ===",
+        "params": {
+          "connectorMid": [
+            "31eec62f-9905-4b41-9625-f9781bfdf839"
+          ],
+          "fileId": [
+            230762
+          ]
+        }
+      },
+      "1065316": {
+        "id": "1065316",
+        "chatid": "64268",
+        "senderid": "21282",
+        "recipientid": "chat64268",
+        "date": "2026-04-15T08:06:11+03:00",
+        "text": "=== Исходящее сообщение, автор: Битрикс24 (Жандос Менеджер Алматы) ===",
+        "textlegacy": "=== Исходящее сообщение, автор: Битрикс24 (Жандос Менеджер Алматы) ===",
+        "params": {
+          "connectorMid": [
+            "aa8ce0cf-6bbd-42ca-ad93-8c98e250f884"
+          ],
+          "fileId": [
+            230760
+          ]
+        }
+      },
+      "1065314": {
+        "id": "1065314",
+        "chatid": "64268",
+        "senderid": "21282",
+        "recipientid": "chat64268",
+        "date": "2026-04-15T08:05:49+03:00",
+        "text": "=== Исходящее сообщение, автор: Битрикс24 (Жандос Менеджер Алматы) ===\nСәлеметсіз бе?!🙂 Сізді Алматы қаласындағы Сапа Пласт Компаниясының ресми шорумында сізді күтетін боламыз. Бұл жерден сіз тек сапалы өнімдермен танысып кете аласыз. \nБіздің Инстаграм парақшамыздан бүкіл жұмыстарымызды шынай отзывтарды көре аласыздар\n[URL]https://www.instagram.com/sapaplast.kz[/URL]\n\nБізді 2Гис картасынан осылай таба аласыз; \nУлица Немировича-Данченко, 18а\n[URL]https://2gis.kz/almaty/geo/9430047374980723/76.868243,43.261476[/URL]\nЖәне де сізге местоположение жіберіп жатырмын.\n[URL=https://www.google.com/maps/place/43%C2%B015%2740.4%22N+76%C2%B052%2705.3%22E/@43.2612251,76.8655673,17z/data=!3m1!4b1!4m4!3m3!8m2!3d43.2612251!4d76.8681422?hl=ru&entry=ttu]https://www.google.com/maps/place/43%C2%B015'40.4%22N+76%C2%B052'05.3%22E/@43.2612251,76.8655673,17z/data=!3m1!4b1!4m4!3m3!8m2!3d43.2612251!4d76.8681422?hl=ru&entry=ttu[/URL]",
+        "textlegacy": "=== Исходящее сообщение, автор: Битрикс24 (Жандос Менеджер Алматы) ===<br />Сәлеметсіз бе?!🙂 Сізді Алматы қаласындағы Сапа Пласт Компаниясының ресми шорумында сізді күтетін боламыз. Бұл жерден сіз тек сапалы өнімдермен танысып кете аласыз. <br />Біздің Инстаграм парақшамыздан бүкіл жұмыстарымызды шынай отзывтарды көре аласыздар<br /><a href=\"https://www.instagram.com/sapaplast.kz\" target=\"_blank\" >https://www.instagram.com/sapaplast.kz</a><br /><br />Бізді 2Гис картасынан осылай таба аласыз; <br />Улица Немировича-Данченко, 18а<br /><a href=\"https://2gis.kz/almaty/geo/9430047374980723/76.868243,43.261476\" target=\"_blank\" >https://2gis.kz/almaty/geo/9430047374980723/76.868243,43.261476</a><br />Және де сізге местоположение жіберіп жатырмын.<br /><a href=\"https://www.google.com/maps/place/43%C2%B015%2740.4%22N+76%C2%B052%2705.3%22E/@43.2612251,76.8655673,17z/data=!3m1!4b1!4m4!3m3!8m2!3d43.2612251!4d76.8681422?hl=ru&amp;entry=ttu\" target=\"_blank\" >https://www.google.com/maps/place/43%C2%B015'40.4%22N+76%C2%B052'05.3%22E/@43.2612251,76.8655673,17z/data=!3m1!4b1!4m4!3m3!8m2!3d43.2612251!4d76.8681422?hl=ru&amp;entry=ttu</a>",
+        "params": {
+          "connectorMid": [
+            "c8bec8f4-98b0-4c17-b795-a44c5f5d95f7"
+          ]
+        }
+      },
+      "1065288": {
+        "id": "1065288",
+        "chatid": "64268",
+        "senderid": "21282",
+        "recipientid": "chat64268",
+        "date": "2026-04-15T07:44:43+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nЕкікамерлі немесе үшкамерлі орнатамыз. Қайсысын таңдайсыз?",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Екікамерлі немесе үшкамерлі орнатамыз. Қайсысын таңдайсыз?",
+        "params": {
+          "connectorMid": [
+            "ec2733df-50a9-454d-a862-442f593877c2"
+          ]
+        }
+      },
+      "1065266": {
+        "id": "1065266",
+        "chatid": "64268",
+        "senderid": "21282",
+        "recipientid": "chat64268",
+        "date": "2026-04-15T07:43:58+03:00",
+        "text": "Қанша камера",
+        "textlegacy": "Қанша камера",
+        "params": {
+          "connectorMid": [
+            "31718935-545a-4bbb-8216-080cddcd54f2"
+          ]
+        }
+      },
+      "1065258": {
+        "id": "1065258",
+        "chatid": "64268",
+        "senderid": "21282",
+        "recipientid": "chat64268",
+        "date": "2026-04-15T07:41:57+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nЕкікамерлі немесе үшкамерлі стеклопакет орнатамыз. Қайсысын қалайсыз?",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Екікамерлі немесе үшкамерлі стеклопакет орнатамыз. Қайсысын қалайсыз?",
+        "params": {
+          "connectorMid": [
+            "2c95924e-4915-4fdf-957f-0b2b67475878"
+          ]
+        }
+      },
+      "1065256": {
+        "id": "1065256",
+        "chatid": "64268",
+        "senderid": "21282",
+        "recipientid": "chat64268",
+        "date": "2026-04-15T07:41:27+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nҚазір нақтылап, сізге қайта хабарласамын 🙂\n\nАйтыңызшы, түсі қандай болсын: ақ, комбинирленген әлде түрлі-түсті?",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Қазір нақтылап, сізге қайта хабарласамын 🙂<br /><br />Айтыңызшы, түсі қандай болсын: ақ, комбинирленген әлде түрлі-түсті?",
+        "params": {
+          "connectorMid": [
+            "64934c0c-9bfd-4876-95ba-b3d26143ad42"
+          ]
+        }
+      },
+      "1065254": {
+        "id": "1065254",
+        "chatid": "64268",
+        "senderid": "21282",
+        "recipientid": "chat64268",
+        "date": "2026-04-15T07:41:10+03:00",
+        "text": "Стеклосы қандай саласыздар",
+        "textlegacy": "Стеклосы қандай саласыздар",
+        "params": {
+          "connectorMid": [
+            "d47f3839-decd-4624-a20a-2f911b7f6f8f"
+          ]
+        }
+      },
+      "1065252": {
+        "id": "1065252",
+        "chatid": "64268",
+        "senderid": "21282",
+        "recipientid": "chat64268",
+        "date": "2026-04-15T07:40:19+03:00",
+        "text": "Қанша уақыт кетеді",
+        "textlegacy": "Қанша уақыт кетеді",
+        "params": {
+          "connectorMid": [
+            "56063aa1-17df-4cc8-8750-d87653243baf"
+          ]
+        }
+      },
+      "1065204": {
+        "id": "1065204",
+        "chatid": "64268",
+        "senderid": "21282",
+        "recipientid": "chat64268",
+        "date": "2026-04-15T07:24:56+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nАлматы, керемет. Сызбаларыңызға рахмет 🙂\n\nЖалпы ауданы шамамен 28.7 м².\nБаға м² бойынша есептеледі:\n- Эконом: 40 000–60 000 тг/м²\n- Премиум (неміс профилі): 70 000–95 000 тг/м²\n\nЖуық смета сіздің өлшемдеріңізге:\n- Эконом: ~1 150 000–1 720 000 тг\n- Премиум: ~2 010 000–2 725 000 тг\nНақтысы таңдауыңызға қарай шығады.\n\nСызба бойынша барлығы 9 бұйым, дұрыс па?",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Алматы, керемет. Сызбаларыңызға рахмет 🙂<br /><br />Жалпы ауданы шамамен 28.7 м².<br />Баға м² бойынша есептеледі:<br />- Эконом: 40 000–60 000 тг/м²<br />- Премиум (неміс профилі): 70 000–95 000 тг/м²<br /><br />Жуық смета сіздің өлшемдеріңізге:<br />- Эконом: ~1 150 000–1 720 000 тг<br />- Премиум: ~2 010 000–2 725 000 тг<br />Нақтысы таңдауыңызға қарай шығады.<br /><br />Сызба бойынша барлығы 9 бұйым, дұрыс па?",
+        "params": {
+          "connectorMid": [
+            "28496f47-3d5f-4bf8-aaaa-12cd5701620b"
+          ]
+        }
+      },
+      "1065200": {
+        "id": "1065200",
+        "chatid": "64268",
+        "senderid": "21282",
+        "recipientid": "chat64268",
+        "date": "2026-04-15T07:23:45+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nИә, жіберіңіз 🙂 Қай қаладансыз?",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Иә, жіберіңіз 🙂 Қай қаладансыз?",
+        "params": {
+          "connectorMid": [
+            "1a795d1a-cee3-4276-a34f-870e2be51154"
+          ]
+        }
+      },
+      "1065198": {
+        "id": "1065198",
+        "chatid": "64268",
+        "senderid": "21282",
+        "recipientid": "chat64268",
+        "date": "2026-04-15T07:23:43+03:00",
+        "text": ">>Тоқсын, қай қаладансыз?\n \n \nАлматы ғой",
+        "textlegacy": "&gt;&gt;Тоқсын, қай қаладансыз?<br /> <br /> <br />Алматы ғой",
+        "params": {
+          "connectorMid": [
+            "b07af404-4963-45cc-84a8-9d15e5139776"
+          ]
+        }
+      },
+      "1065196": {
+        "id": "1065196",
+        "chatid": "64268",
+        "senderid": "21282",
+        "recipientid": "chat64268",
+        "date": "2026-04-15T07:23:38+03:00",
+        "text": "",
+        "textlegacy": "",
+        "params": {
+          "connectorMid": [
+            "c8872801-71fd-416e-a927-d119775ef895"
+          ],
+          "fileId": [
+            230732
+          ]
+        }
+      },
+      "1065192": {
+        "id": "1065192",
+        "chatid": "64268",
+        "senderid": "21282",
+        "recipientid": "chat64268",
+        "date": "2026-04-15T07:23:26+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nТоқсын, қай қаладансыз?",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Тоқсын, қай қаладансыз?",
+        "params": {
+          "connectorMid": [
+            "301028fc-2a2c-4713-bfad-8e7897adc2eb"
+          ]
+        }
+      },
+      "1065188": {
+        "id": "1065188",
+        "chatid": "64268",
+        "senderid": "21282",
+        "recipientid": "chat64268",
+        "date": "2026-04-15T07:23:08+03:00",
+        "text": "Сізге проемдардың размерін жіберейін",
+        "textlegacy": "Сізге проемдардың размерін жіберейін",
+        "params": {
+          "connectorMid": [
+            "e3e68d04-030c-4b5e-acba-a20d0b2bba44"
+          ]
+        }
+      },
+      "1065184": {
+        "id": "1065184",
+        "chatid": "64268",
+        "senderid": "21282",
+        "recipientid": "chat64268",
+        "date": "2026-04-15T07:22:51+03:00",
+        "text": "Мен Тоқсын",
+        "textlegacy": "Мен Тоқсын",
+        "params": {
+          "connectorMid": [
+            "0122340b-b2ab-414d-a8ba-7a5ab57796dc"
+          ]
+        }
+      },
+      "1065172": {
+        "id": "1065172",
+        "chatid": "64268",
+        "senderid": "21282",
+        "recipientid": "chat64268",
+        "date": "2026-04-15T07:17:41+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nАлюминий терезелердің бағасы м² бойынша есептеледі:\n- Эконом-серия: 40 000–60 000 тг/м²\n- Премиум (неміс профилі): 70 000–95 000 тг/м²\nНақты құны өлшемі мен таңдауыңызға қарай шығады.\n\nЕсіміңіз кім болады?",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Алюминий терезелердің бағасы м² бойынша есептеледі:<br />- Эконом-серия: 40 000–60 000 тг/м²<br />- Премиум (неміс профилі): 70 000–95 000 тг/м²<br />Нақты құны өлшемі мен таңдауыңызға қарай шығады.<br /><br />Есіміңіз кім болады?",
+        "params": {
+          "connectorMid": [
+            "4ed25014-700f-4407-9a09-b5c73c71facb"
+          ]
+        }
+      },
+      "1065166": {
+        "id": "1065166",
+        "chatid": "64268",
+        "senderid": "21282",
+        "recipientid": "chat64268",
+        "date": "2026-04-15T07:16:47+03:00",
+        "text": "Терезе Иә",
+        "textlegacy": "Терезе Иә",
+        "params": {
+          "connectorMid": [
+            "9198afdd-5433-4eeb-8ae9-b19bf29c7e7d"
+          ]
+        }
+      },
+      "1065164": {
+        "id": "1065164",
+        "chatid": "64268",
+        "senderid": "21282",
+        "recipientid": "chat64268",
+        "date": "2026-04-15T07:16:39+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nСәлеметсіз бе! Сізге SAPA PLAST компаниясы жазып отыр. Сізге терезелер керек пе?",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Сәлеметсіз бе! Сізге SAPA PLAST компаниясы жазып отыр. Сізге терезелер керек пе?",
+        "params": {
+          "connectorMid": [
+            "d1e9b9fd-6aa6-49c6-b92c-5479c1ae6a99"
+          ]
+        }
+      },
+      "1065162": {
+        "id": "1065162",
+        "chatid": "64268",
+        "senderid": "21282",
+        "recipientid": "chat64268",
+        "date": "2026-04-15T07:16:38+03:00",
+        "text": "Алюминий терезелер қанша тұрады",
+        "textlegacy": "Алюминий терезелер қанша тұрады",
+        "params": {
+          "connectorMid": [
+            "96a77ac0-1a21-4370-832b-c3d25c4fcb4d"
+          ]
+        }
+      },
+      "1065158": {
+        "id": "1065158",
+        "chatid": "64268",
+        "senderid": "0",
+        "recipientid": "chat64268",
+        "date": "2026-04-15T07:16:20+03:00",
+        "text": "Обращение направлено на всех участников очереди",
+        "textlegacy": "Обращение направлено на всех участников очереди",
+        "params": []
+      },
+      "1065154": {
+        "id": "1065154",
+        "chatid": "64268",
+        "senderid": "21282",
+        "recipientid": "chat64268",
+        "date": "2026-04-15T07:16:01+03:00",
+        "text": "Салаумағаликум\n[URL]https://www.instagram.com/p/DW18R5kAAtC/[/URL]",
+        "textlegacy": "Салаумағаликум<br /><a href=\"https://www.instagram.com/p/DW18R5kAAtC/\" target=\"_blank\" >https://www.instagram.com/p/DW18R5kAAtC/</a>",
+        "params": {
+          "connectorMid": [
+            "95d1f83b-21c0-4fca-88f9-18075ab34719"
+          ]
+        }
+      },
+      "1065152": {
+        "id": "1065152",
+        "chatid": "64268",
+        "senderid": "0",
+        "recipientid": "chat64268",
+        "date": "2026-04-15T07:16:00+03:00",
+        "text": "[B]Переданы дополнительные данные:[/B]\n Ссылка на исходный пост: [URL]https://app.wazzup24.com/1826-6940/chat/whatsapp/77019332295/fc3e1d61-cd1c-4955-9345-b0f22b543020[/URL]",
+        "textlegacy": "<b>Переданы дополнительные данные:</b><br /> Ссылка на исходный пост: <a href=\"https://app.wazzup24.com/1826-6940/chat/whatsapp/77019332295/fc3e1d61-cd1c-4955-9345-b0f22b543020\" target=\"_blank\" >https://app.wazzup24.com/1826-6940/chat/whatsapp/77019332295/fc3e1d61-cd1c-4955-9345-b0f22b543020</a>",
+        "params": {
+          "class": "bx-messenger-content-item-system",
+          "componentId": "HiddenMessage",
+          "urlId": [
+            83980
+          ],
+          "attach": [
+            {
+              "id": "83980",
+              "blocks": [
+                {
+                  "richLink": [
+                    {
+                      "name": "Wazzup App",
+                      "link": "https://app.wazzup24.com/1826-6940/chat/whatsapp/77019332295/fc3e1d61-cd1c-4955-9345-b0f22b543020",
+                      "desc": "Communicate with clients in the application on the computer, and all correspondence will be saved in CRM.",
+                      "preview": "https://cdn.wazzup24.com/icons/icon_512x512.358b79.png",
+                      "previewSize": {
+                        "height": 512,
+                        "width": 512
+                      }
+                    }
+                  ]
+                }
+              ],
+              "description": "",
+              "color": "transparent"
+            }
+          ]
+        }
+      },
+      "1065150": {
+        "id": "1065150",
+        "chatid": "64268",
+        "senderid": "0",
+        "recipientid": "chat64268",
+        "date": "2026-04-15T07:16:00+03:00",
+        "text": "[b]Создана новая сделка[/b]",
+        "textlegacy": "<b>Создана новая сделка</b>",
+        "params": {
+          "attach": [
+            {
+              "id": 1776226560,
+              "blocks": [
+                {
+                  "link": [
+                    {
+                      "name": "QQQ - WhatsApp",
+                      "link": "/crm/deal/details/50682/"
+                    }
+                  ]
+                }
+              ],
+              "description": "",
+              "color": "#df532d"
+            }
+          ]
+        }
+      },
+      "1065148": {
+        "id": "1065148",
+        "chatid": "64268",
+        "senderid": "0",
+        "recipientid": "chat64268",
+        "date": "2026-04-15T07:16:00+03:00",
+        "text": "[b]Создан новый контакт[/b]",
+        "textlegacy": "<b>Создан новый контакт</b>",
+        "params": {
+          "attach": [
+            {
+              "id": 1776226560,
+              "blocks": [
+                {
+                  "link": [
+                    {
+                      "name": "QQQ",
+                      "link": "/crm/contact/details/63706/"
+                    }
+                  ]
+                },
+                {
+                  "grid": [
+                    {
+                      "display": "LINE",
+                      "name": "Телефон",
+                      "value": "+77019332295",
+                      "height": 20,
+                      "colorToken": "base"
+                    },
+                    {
+                      "display": "LINE",
+                      "name": "Email",
+                      "value": "77019332295@whatsapp.wazzup",
+                      "height": 20,
+                      "colorToken": "base"
+                    }
+                  ]
+                }
+              ],
+              "description": "",
+              "color": "#e8a441"
+            }
+          ]
+        }
+      },
+      "1065144": {
+        "id": "1065144",
+        "chatid": "64268",
+        "senderid": "0",
+        "recipientid": "chat64268",
+        "date": "2026-04-15T07:15:59+03:00",
+        "text": "Начат новый диалог №[URL=/online/?IM_HISTORY=imol|26100]26100[/URL]",
+        "textlegacy": "Начат новый диалог №<a href=\"/online/?IM_HISTORY=imol|26100\" target=\"_blank\" >26100</a>",
+        "params": {
+          "class": "bx-messenger-content-item-ol-start",
+          "componentId": "StartDialogMessage"
+        }
+      }
+    },
+    "usersMessage": {
+      "chat64268": [
+        "1070030",
+        "1067484",
+        "1065592",
+        "1065326",
+        "1065324",
+        "1065322",
+        "1065320",
+        "1065318",
+        "1065316",
+        "1065314",
+        "1065288",
+        "1065266",
+        "1065258",
+        "1065256",
+        "1065254",
+        "1065252",
+        "1065204",
+        "1065200",
+        "1065198",
+        "1065196",
+        "1065192",
+        "1065188",
+        "1065184",
+        "1065172",
+        "1065166",
+        "1065164",
+        "1065162",
+        "1065158",
+        "1065154",
+        "1065152",
+        "1065150",
+        "1065148",
+        "1065144"
+      ]
+    },
+    "users": {
+      "21282": {
+        "id": "21282",
+        "name": "QQQ",
+        "active": true,
+        "firstName": "QQQ",
+        "lastName": "",
+        "workPosition": null,
+        "color": "#64a513",
+        "avatar": "/bitrix/js/im/images/blank.gif",
+        "avatarId": null,
+        "birthday": false,
+        "gender": "M",
+        "phoneDevice": false,
+        "phones": false,
+        "extranet": true,
+        "network": false,
+        "bot": false,
+        "connector": true,
+        "profile": "/company/personal/user/21282/",
+        "externalAuthId": "imconnector",
+        "status": "online",
+        "idle": false,
+        "lastActivityDate": false,
+        "mobileLastDate": false,
+        "desktopLastDate": false,
+        "departments": [],
+        "absent": false,
+        "type": "extranet",
+        "eventLog": "N",
+        "services": null,
+        "botData": null
+      }
+    },
+    "openlines": {
+      "canvoteashead": {
+        "2": true
+      }
+    },
+    "userInGroup": [],
+    "woUserInGroup": [],
+    "chat": {
+      "64268": {
+        "id": "64268",
+        "parentChatId": 0,
+        "parentMessageId": 0,
+        "name": "QQQ - WhatsApp",
+        "owner": "0",
+        "color": "#64a513",
+        "extranet": false,
+        "avatar": "/bitrix/js/im/images/blank.gif",
+        "call": "0",
+        "callNumber": "",
+        "entityType": "LINES",
+        "entityId": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|037e9243-5ed5-44f1-bb43-c4ac23c2becb|21282",
+        "entityData1": "Y|DEAL|50682|N|N|26100|1776226559|0|0|0",
+        "entityData2": "LEAD|0|COMPANY|0|CONTACT|63706|DEAL|50682",
+        "entityData3": "",
+        "messageCount": 33,
+        "public": "",
+        "muteList": {
+          "21282": false
+        },
+        "managerList": [],
+        "dateCreate": "2026-04-15T09:15:59+03:00",
+        "type": "lines",
+        "entityLink": {
+          "type": "LINES",
+          "url": "",
+          "id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|037e9243-5ed5-44f1-bb43-c4ac23c2becb|21282"
+        },
+        "permissions": {
+          "manageUsersAdd": "member",
+          "manageUsersDelete": "manager",
+          "manageUi": "member",
+          "manageSettings": "owner",
+          "manageMessages": "member",
+          "canPost": "member"
+        },
+        "textFieldEnabled": true,
+        "backgroundId": null,
+        "messageType": "L",
+        "isNew": false
+      }
+    },
+    "userBlockChat": {
+      "64268": {
+        "21282": false
+      }
+    },
+    "userInChat": {
+      "64268": [
+        21282
+      ]
+    },
+    "files": {
+      "230732": {
+        "id": 230732,
+        "chatid": 64268,
+        "date": "2026-04-15T07:23:38+03:00",
+        "type": "image",
+        "name": "26a63a33-a4e1-4aac-b3e8-74c8b93bdcf1.jpeg",
+        "extension": "jpeg",
+        "size": 290160,
+        "image": {
+          "height": 1215,
+          "width": 1080
+        },
+        "status": "done",
+        "progress": 100,
+        "authorid": 0,
+        "authorname": "Аноним",
+        "urlpreview": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=230732&exact=N&_esd=fHKccUYAAFoVTkJCvmOFcN1w7EbVa6c2YAN1SrYb0tKTinoK04NKzYDOSMOqaQMSEs_g6cvVuSPkVVotOPvvbEhoulPCz3GnyQNlhVOu81YGBfXi1ohSyJ8TrpwifbJ6bVuMb3n6BvblziA1mRS1t6RYnH5xmHeIEqeICeFu-l7DTv9XNSLhY4BJ7lo%3D&fileName=26a63a33-a4e1-4aac-b3e8-74c8b93bdcf1.jpeg",
+        "urlshow": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.showImage&SITE_ID=s1&humanRE=1&fileId=230732&width=1280&height=1280&signature=30f3293202a1579cd97340d7494d4d831b494eb317cd6216d1897dafde40c154&exact=N&_esd=fHKccUYAAFoVTkJCvmOFcN1w7EbVa6c2YAN1SrYb0tKTinoK04NKzYDOSMOqaQMSEs_g6cvVuSPkVVotOPvvbEhoulPCz3GnyQNlhVOu81YGBfXi1ohSyJ8TrpwifbJ6bVuMb3n6BvblziA1mRS1t6RYnH5xmHeIEqeICeFu-l7DTv9XNSLhY4BJ7lo%3D&fileName=26a63a33-a4e1-4aac-b3e8-74c8b93bdcf1.jpeg",
+        "urldownload": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=230732&exact=N&_esd=fHKccUYAAFoVTkJCvmOFcN1w7EbVa6c2YAN1SrYb0tKTinoK04NKzYDOSMOqaQMSEs_g6cvVuSPkVVotOPvvbEhoulPCz3GnyQNlhVOu81YGBfXi1ohSyJ8TrpwifbJ6bVuMb3n6BvblziA1mRS1t6RYnH5xmHeIEqeICeFu-l7DTv9XNSLhY4BJ7lo%3D&fileName=26a63a33-a4e1-4aac-b3e8-74c8b93bdcf1.jpeg",
+        "viewerattrs": {
+          "viewer": "",
+          "viewertype": "image",
+          "src": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=230732&exact=N&_esd=fHKccUYAAFoVTkJCvmOFcN1w7EbVa6c2YAN1SrYb0tKTinoK04NKzYDOSMOqaQMSEs_g6cvVuSPkVVotOPvvbEhoulPCz3GnyQNlhVOu81YGBfXi1ohSyJ8TrpwifbJ6bVuMb3n6BvblziA1mRS1t6RYnH5xmHeIEqeICeFu-l7DTv9XNSLhY4BJ7lo%3D&fileName=26a63a33-a4e1-4aac-b3e8-74c8b93bdcf1.jpeg",
+          "viewerresized": "",
+          "objectid": "230732",
+          "viewergroupby": "64268",
+          "imchatid": 64268,
+          "title": "26a63a33-a4e1-4aac-b3e8-74c8b93bdcf1.jpeg",
+          "actions": "[{\"type\":\"download\"},{\"type\":\"copyToMe\",\"text\":\"Сохранить на Диск\",\"action\":\"BXIM.disk.saveToDiskAction\",\"params\":{\"fileId\":\"230732\"},\"extension\":\"disk.viewer.actions\",\"buttonIconClass\":\"ui-btn-icon-cloud\"}]"
+        },
+        "mediaurl": {
+          "preview": {
+            "250": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.showImage&SITE_ID=s1&humanRE=1&fileId=230732&width=250&height=250&signature=6507e9507ca41700091ed0c3bb94c28490c02d8fb4614383add5edb73bde9097&exact=Y&_esd=fHKccUYAAFoVTkJCvmOFcN1w7EbVa6c2YAN1SrYb0tKTinoK04NKzYDOSMOqaQMSEs_g6cvVuSPkVVotOPvvbEhoulPCz3GnyQNlhVOu81YGBfXi1ohSyJ8TrpwifbJ6bVuMb3n6BvblziA1mRS1t6RYnH5xmHeIEqeICeFu-l7DTv9XNSLhY4BJ7lo%3D&fileName=26a63a33-a4e1-4aac-b3e8-74c8b93bdcf1.jpeg"
+          }
+        },
+        "istranscribable": false,
+        "isvideonote": false,
+        "isvoicenote": false
+      },
+      "230760": {
+        "id": 230760,
+        "chatid": 64268,
+        "date": "2026-04-15T08:06:11+03:00",
+        "type": "video",
+        "name": "WhatsApp_Video_2025-04-22_at_14.30.03.mp4",
+        "extension": "mp4",
+        "size": 21302189,
+        "image": false,
+        "status": "done",
+        "progress": 100,
+        "authorid": 0,
+        "authorname": "Аноним",
+        "urlpreview": "",
+        "urlshow": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=230760&exact=N&_esd=gHgPfF0ocyvd0ZONnLSrGSZKBWff9GJ4JDhOOXR3oHrvCgMVnlgj6SejHF5BtPxSJUzYimapqRHkeWNtFRaITiGw5QQP3Vgk-TeH2ps1SzwErYJ2RxHnPDBiSfaJ_alkzYMWpgfzPOLAoe7ZprrxIskx2O_WrqeSU3-xFk-a729VMQVYLxWbkpVNFfA%3D&fileName=WhatsApp_Video_2025-04-22_at_14.30.03.mp4",
+        "urldownload": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=230760&exact=N&_esd=gHgPfF0ocyvd0ZONnLSrGSZKBWff9GJ4JDhOOXR3oHrvCgMVnlgj6SejHF5BtPxSJUzYimapqRHkeWNtFRaITiGw5QQP3Vgk-TeH2ps1SzwErYJ2RxHnPDBiSfaJ_alkzYMWpgfzPOLAoe7ZprrxIskx2O_WrqeSU3-xFk-a729VMQVYLxWbkpVNFfA%3D&fileName=WhatsApp_Video_2025-04-22_at_14.30.03.mp4",
+        "viewerattrs": {
+          "viewer": "",
+          "viewertype": "video",
+          "src": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=230760&exact=N&_esd=gHgPfF0ocyvd0ZONnLSrGSZKBWff9GJ4JDhOOXR3oHrvCgMVnlgj6SejHF5BtPxSJUzYimapqRHkeWNtFRaITiGw5QQP3Vgk-TeH2ps1SzwErYJ2RxHnPDBiSfaJ_alkzYMWpgfzPOLAoe7ZprrxIskx2O_WrqeSU3-xFk-a729VMQVYLxWbkpVNFfA%3D&fileName=WhatsApp_Video_2025-04-22_at_14.30.03.mp4",
+          "objectid": "230760",
+          "viewergroupby": "64268",
+          "imchatid": 64268,
+          "title": "WhatsApp_Video_2025-04-22_at_14.30.03.mp4",
+          "actions": "[{\"type\":\"download\"},{\"type\":\"copyToMe\",\"text\":\"Сохранить на Диск\",\"action\":\"BXIM.disk.saveToDiskAction\",\"params\":{\"fileId\":\"230760\"},\"extension\":\"disk.viewer.actions\",\"buttonIconClass\":\"ui-btn-icon-cloud\"}]"
+        },
+        "mediaurl": {
+          "preview": {
+            "250": ""
+          }
+        },
+        "istranscribable": false,
+        "isvideonote": false,
+        "isvoicenote": false
+      },
+      "230762": {
+        "id": 230762,
+        "chatid": 64268,
+        "date": "2026-04-15T08:06:13+03:00",
+        "type": "audio",
+        "name": "wazzup_audio.mp3",
+        "extension": "mp3",
+        "size": 179564,
+        "image": false,
+        "status": "done",
+        "progress": 100,
+        "authorid": 0,
+        "authorname": "Аноним",
+        "urlpreview": "",
+        "urlshow": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=230762&exact=N&fileName=wazzup_audio.mp3",
+        "urldownload": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=230762&exact=N&fileName=wazzup_audio.mp3",
+        "viewerattrs": {
+          "viewer": "",
+          "viewertype": "audio",
+          "src": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=230762&exact=N&fileName=wazzup_audio.mp3",
+          "objectid": "230762",
+          "viewergroupby": "64268",
+          "imchatid": 64268,
+          "title": "wazzup_audio.mp3",
+          "actions": "[{\"type\":\"download\"},{\"type\":\"copyToMe\",\"text\":\"Сохранить на Диск\",\"action\":\"BXIM.disk.saveToDiskAction\",\"params\":{\"fileId\":\"230762\"},\"extension\":\"disk.viewer.actions\",\"buttonIconClass\":\"ui-btn-icon-cloud\"}]"
+        },
+        "mediaurl": {
+          "preview": {
+            "250": ""
+          }
+        },
+        "istranscribable": false,
+        "isvideonote": false,
+        "isvoicenote": false
+      },
+      "231060": {
+        "id": 231060,
+        "chatid": 64268,
+        "date": "2026-04-16T07:36:42+03:00",
+        "type": "audio",
+        "name": "wazzup_audio (1).mp3",
+        "extension": "mp3",
+        "size": 254828,
+        "image": false,
+        "status": "done",
+        "progress": 100,
+        "authorid": 0,
+        "authorname": "Аноним",
+        "urlpreview": "",
+        "urlshow": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231060&exact=N&fileName=wazzup_audio%20%281%29.mp3",
+        "urldownload": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231060&exact=N&fileName=wazzup_audio%20%281%29.mp3",
+        "viewerattrs": {
+          "viewer": "",
+          "viewertype": "audio",
+          "src": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231060&exact=N&fileName=wazzup_audio%20%281%29.mp3",
+          "objectid": "231060",
+          "viewergroupby": "64268",
+          "imchatid": 64268,
+          "title": "wazzup_audio (1).mp3",
+          "actions": "[{\"type\":\"download\"},{\"type\":\"copyToMe\",\"text\":\"Сохранить на Диск\",\"action\":\"BXIM.disk.saveToDiskAction\",\"params\":{\"fileId\":\"231060\"},\"extension\":\"disk.viewer.actions\",\"buttonIconClass\":\"ui-btn-icon-cloud\"}]"
+        },
+        "mediaurl": {
+          "preview": {
+            "250": ""
+          }
+        },
+        "istranscribable": false,
+        "isvideonote": false,
+        "isvoicenote": false
+      }
+    }
+  }
+}

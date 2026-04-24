@@ -35,7 +35,7 @@ CRM_ENTITY_SPECS: tuple[EntityExportSpec, ...] = (
         method="crm.deal.list",
         output_file="deals.json",
         select=(
-            "ID", "TITLE", "STAGE_ID", "CATEGORY_ID", "ASSIGNED_BY_ID",
+            "ID", "TITLE", "STAGE_ID", "STAGE_SEMANTIC_ID", "CATEGORY_ID", "ASSIGNED_BY_ID",
             "OPPORTUNITY", "CURRENCY_ID", "CONTACT_ID", "COMPANY_ID",
             "DATE_CREATE", "DATE_MODIFY", "CLOSEDATE", "CLOSED",
         ),

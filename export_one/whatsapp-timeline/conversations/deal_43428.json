@@ -1,0 +1,378 @@
+{
+  "channel": "whatsapp",
+  "integration": "wazzup",
+  "deal_id": "43428",
+  "contact_id": "57096",
+  "company_id": "",
+  "deal_title": "77055997906 - WhatsApp",
+  "source_id": "2|WZ_WHATSAPP_CB0C9F5C07DE8985B74A894B883C619C0",
+  "assigned_by_id": "26",
+  "stage_id": "3",
+  "stage_semantic_id": "F",
+  "category_id": "0",
+  "date_create": "2025-12-10T13:18:57+03:00",
+  "date_modify": "2026-04-14T11:48:28+03:00",
+  "closedate": "2026-04-14T03:00:00+03:00",
+  "closed": "Y",
+  "last_communication_time": "2026-04-14T13:47:36",
+  "opportunity": "0.00000000",
+  "currency_id": "KZT",
+  "loss_reason_id": "",
+  "loss_comment": "",
+  "utm_source": "",
+  "utm_medium": "",
+  "utm_campaign": "",
+  "timeline_source": "deal",
+  "timeline_entity_type": "deal",
+  "timeline_entity_id": "43428",
+  "chat_id": "55564",
+  "session_id": "22870",
+  "dialog_id": "chat55564",
+  "connector_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0",
+  "connector_title": "WAZZUP: WhatsApp",
+  "chat_name": "77055997906 - WhatsApp",
+  "stats": {
+    "total_messages": 25,
+    "effective_messages": 14,
+    "manager_messages": 11,
+    "client_messages": 3,
+    "system_messages": 11,
+    "messages_with_files": 9,
+    "first_message_at": "2025-12-10T13:18:56+03:00",
+    "last_message_at": "2026-01-20T15:26:23+03:00",
+    "first_manager_response_time_sec": 261413.0,
+    "avg_response_latency_sec": 130706.0,
+    "conversation_duration_hours": 986.1241666666666
+  },
+  "messages": [
+    {
+      "timeline_comment_id": "948804",
+      "created_at": "2025-12-10T13:18:56+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Начат новый диалог №22870",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "43428"
+    },
+    {
+      "timeline_comment_id": "948808",
+      "created_at": "2025-12-10T13:18:58+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Создан новый контакт",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "77055997906",
+          "url": "/crm/contact/details/57096/"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "43428"
+    },
+    {
+      "timeline_comment_id": "948810",
+      "created_at": "2025-12-10T13:18:58+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Создана новая сделка",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "77055997906 - WhatsApp",
+          "url": "/crm/deal/details/43428/"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "43428"
+    },
+    {
+      "timeline_comment_id": "948812",
+      "created_at": "2025-12-10T13:18:58+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Переданы дополнительные данные:\nСсылка на исходный пост: https://app.wazzup24.com/1826-6940/chat/whatsapp/77055997906/fc3e1d61-cd1c-4955-9345-b0f22b543020",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "Wazzup App",
+          "url": "https://app.wazzup24.com/1826-6940/chat/whatsapp/77055997906/fc3e1d61-cd1c-4955-9345-b0f22b543020"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "43428"
+    },
+    {
+      "timeline_comment_id": "948814",
+      "created_at": "2025-12-10T13:18:58+03:00",
+      "author_id": "18606",
+      "sender_role": "client",
+      "sender_label": "77055997906",
+      "text": "=== SYSTEM WZ ===\nCheck this message on your device",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "43428"
+    },
+    {
+      "timeline_comment_id": "948816",
+      "created_at": "2025-12-10T13:19:00+03:00",
+      "author_id": "18606",
+      "sender_role": "client",
+      "sender_label": "77055997906",
+      "text": "=== SYSTEM WZ === Сообщение удалено. Посмотрите в чатах Wazzup, какое сообщение удалил клиент",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "43428"
+    },
+    {
+      "timeline_comment_id": "948898",
+      "created_at": "2025-12-10T15:28:24+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Обращение направлено на Жасұлан Қуатұлы Шымкент менеджер SP",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "43428"
+    },
+    {
+      "timeline_comment_id": "948968",
+      "created_at": "2025-12-10T16:44:23+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "У Эсмиральда Шымкент менеджер SP начался рабочий день. Теперь этот оператор тоже может видеть обращение",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "43428"
+    },
+    {
+      "timeline_comment_id": "949208",
+      "created_at": "2025-12-11T09:37:00+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "У \"\"Нурсултан\"\" Директор Алматы SP начался рабочий день. Теперь этот оператор тоже может видеть обращение",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "43428"
+    },
+    {
+      "timeline_comment_id": "951616",
+      "created_at": "2025-12-13T13:55:51+03:00",
+      "author_id": "18606",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жанна Шымкент менеджер SP)",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "wazzup_audio.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=208532&exact=N&fileName=wazzup_audio.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "43428"
+    },
+    {
+      "timeline_comment_id": "951668",
+      "created_at": "2025-12-13T14:08:10+03:00",
+      "author_id": "18606",
+      "sender_role": "client",
+      "sender_label": "77055997906",
+      "text": "Терезелер жөнінде ақпарат керек",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "43428"
+    },
+    {
+      "timeline_comment_id": "951670",
+      "created_at": "2025-12-13T14:08:11+03:00",
+      "author_id": "18606",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Сапа пласт компаниясына хабарласқаныңыз үшін рақмет!\nБізден үйіңіздің сәнін келтіретін сапалы терезелер мен есіктер тапсырыс бере аласыз. Сізбен біздің менеджер хабарласады.\n\nСпасибо за обращение в Компания Sapaplast Окна и Двери! У нас можете заказать качественные окна для вашего дома. С вами скоро свяжется менеджер, пока можете ознакомиться с нашим инстаграмом:\nhttps://www.instagram.com/sapaplast.kz",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "43428"
+    },
+    {
+      "timeline_comment_id": "951676",
+      "created_at": "2025-12-13T14:10:02+03:00",
+      "author_id": "18606",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жанна Шымкент менеджер SP)",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "wazzup_audio (1).mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=208576&exact=N&fileName=wazzup_audio%20%281%29.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "43428"
+    },
+    {
+      "timeline_comment_id": "951682",
+      "created_at": "2025-12-13T14:10:13+03:00",
+      "author_id": "18606",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жанна Шымкент менеджер SP)",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "wazzup_audio (2).mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=208578&exact=N&fileName=wazzup_audio%20%282%29.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "43428"
+    },
+    {
+      "timeline_comment_id": "951684",
+      "created_at": "2025-12-13T14:10:35+03:00",
+      "author_id": "18606",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жанна Шымкент менеджер SP)",
+      "text": "",
+      "attachments": [
+        {
+          "type": "video",
+          "label": "copy_108E357D-9967-42C4-B616-499F3FB0418E.mp4",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=208580&exact=N&_esd=SSEHoygrXkzZbWXENpvy9bEoIBsDPgiPD7lsVJQh2int4mMxAAYUZTqM42t299PzlSc4z6NeYBGw6XAuuswwDALiDePmH8SorYAu1ePpuR833Mcv0M8WiVacivknoZDC8wN9RlM1I_u0WHQz9jrZIWN_OrCKP4IFNgnuwQpH9vz5uZAA_EOsWKRgKEdczLId&fileName=copy_108E357D-9967-42C4-B616-499F3FB0418E.mp4"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "43428"
+    },
+    {
+      "timeline_comment_id": "951686",
+      "created_at": "2025-12-13T14:10:44+03:00",
+      "author_id": "18606",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жанна Шымкент менеджер SP)",
+      "text": "",
+      "attachments": [
+        {
+          "type": "video",
+          "label": "copy_4D7492C4-F395-4A50-9CD7-A5F38CF40C0A.mp4",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=208582&exact=N&_esd=hwe7SWNzlZaodnx2DwBgu8ze97fILICaei-jxEHI92Vrlip1sVIuOB9w_TSK8oYwrfo8d439G9hnYVrLSZ4ncXNn3CHFYfz6O-I1DMOGl_us4Q8oMXN0Jhpv_iTvNk_IW-W651Y45sTTtSN_RNhSaTVI3_1fVBxbAvNGCDkTM6d5ez_XIAAfzyg5YxaXCsc_&fileName=copy_4D7492C4-F395-4A50-9CD7-A5F38CF40C0A.mp4"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "43428"
+    },
+    {
+      "timeline_comment_id": "951688",
+      "created_at": "2025-12-13T14:11:07+03:00",
+      "author_id": "18606",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "",
+      "attachments": [
+        {
+          "type": "video",
+          "label": "f3d6fa29-fea9-4ef3-917c-d276efd4418c.mp4",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=208584&exact=N&_esd=yr_VDDWj7hVvTbojhBu16a_UED3d0-utV8_FYYsn5PhGHJWufHTmAcXe1P9atzqKB5b9TAsVK2BMHruUYklGeqPu4zqQ-SOtdFZC8nxO9dLYGj_3AN4_Iith7C_-wJWPSFuQE6nL0AlEnhPLAaC2_dgC2fJARxMCLG1Qrv575wqNBMRMcmrL6pf2-Q%3D%3D&fileName=f3d6fa29-fea9-4ef3-917c-d276efd4418c.mp4"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "43428"
+    },
+    {
+      "timeline_comment_id": "956468",
+      "created_at": "2025-12-20T15:25:10+03:00",
+      "author_id": "18606",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жанна Шымкент менеджер SP)",
+      "text": "Салеметсіз бе",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "43428"
+    },
+    {
+      "timeline_comment_id": "956470",
+      "created_at": "2025-12-20T15:25:22+03:00",
+      "author_id": "18606",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жанна Шымкент менеджер SP)",
+      "text": "Sapa plast компаниясынан жазып тұрмын пластик терезе бойынша",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "43428"
+    },
+    {
+      "timeline_comment_id": "956472",
+      "created_at": "2025-12-20T15:25:41+03:00",
+      "author_id": "18606",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жанна Шымкент менеджер SP)",
+      "text": "терезе жайлы видео жіберіп шыккан едім",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "43428"
+    },
+    {
+      "timeline_comment_id": "956474",
+      "created_at": "2025-12-20T15:26:01+03:00",
+      "author_id": "18606",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жанна Шымкент менеджер SP)",
+      "text": "қарап шықтыңыз ба ?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "43428"
+    },
+    {
+      "timeline_comment_id": "963010",
+      "created_at": "2025-12-25T19:17:56+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "У Жандос Менеджер Алматы начался рабочий день. Теперь этот оператор тоже может видеть обращение",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "43428"
+    },
+    {
+      "timeline_comment_id": "966332",
+      "created_at": "2026-01-10T07:39:06+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "У Әсет Шымкент менеджер SP начался рабочий день. Теперь этот оператор тоже может видеть обращение",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "43428"
+    },
+    {
+      "timeline_comment_id": "979760",
+      "created_at": "2026-01-20T11:28:15+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "У Ернур Исаков начался рабочий день. Теперь этот оператор тоже может видеть обращение",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "43428"
+    },
+    {
+      "timeline_comment_id": "980976",
+      "created_at": "2026-01-20T15:26:23+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Автоматическое завершение диалога",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "43428"
+    }
+  ]
+}

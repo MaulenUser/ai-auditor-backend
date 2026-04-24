@@ -1,0 +1,238 @@
+{
+  "channel": "whatsapp",
+  "integration": "wazzup",
+  "deal_id": "50962",
+  "contact_id": "63970",
+  "company_id": "",
+  "deal_title": "руслан - WhatsApp",
+  "source_id": "2|WZ_WHATSAPP_CB0C9F5C07DE8985B74A894B883C619C0",
+  "assigned_by_id": "9940",
+  "stage_id": "LOSE",
+  "stage_semantic_id": "F",
+  "category_id": "0",
+  "date_create": "2026-04-18T08:20:42+03:00",
+  "date_modify": "2026-04-18T09:20:45+03:00",
+  "closedate": "2026-04-18T03:00:00+03:00",
+  "closed": "Y",
+  "last_communication_time": "2026-04-18T11:08:09",
+  "opportunity": "0.00000000",
+  "currency_id": "KZT",
+  "loss_reason_id": "",
+  "loss_comment": "",
+  "utm_source": "",
+  "utm_medium": "",
+  "utm_campaign": "",
+  "timeline_source": "deal",
+  "timeline_entity_type": "deal",
+  "timeline_entity_id": "50962",
+  "chat_id": "64866",
+  "session_id": "26222",
+  "dialog_id": "chat64866",
+  "connector_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0",
+  "connector_title": "WAZZUP: WhatsApp",
+  "chat_name": "руслан - WhatsApp",
+  "stats": {
+    "total_messages": 15,
+    "effective_messages": 8,
+    "manager_messages": 6,
+    "client_messages": 2,
+    "system_messages": 7,
+    "messages_with_files": 4,
+    "first_message_at": "2026-04-18T08:20:42+03:00",
+    "last_message_at": "2026-04-20T14:31:19+03:00",
+    "first_manager_response_time_sec": 26.0,
+    "avg_response_latency_sec": 87680.5,
+    "conversation_duration_hours": 54.176944444444445
+  },
+  "messages": [
+    {
+      "timeline_comment_id": "1070500",
+      "created_at": "2026-04-18T08:20:42+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Начат новый диалог №26222",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "50962"
+    },
+    {
+      "timeline_comment_id": "1070504",
+      "created_at": "2026-04-18T08:20:43+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Создан новый контакт",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "руслан",
+          "url": "/crm/contact/details/63970/"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "50962"
+    },
+    {
+      "timeline_comment_id": "1070506",
+      "created_at": "2026-04-18T08:20:43+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Создана новая сделка",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "руслан - WhatsApp",
+          "url": "/crm/deal/details/50962/"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "50962"
+    },
+    {
+      "timeline_comment_id": "1070508",
+      "created_at": "2026-04-18T08:20:43+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Переданы дополнительные данные:\nСсылка на исходный пост: https://app.wazzup24.com/1826-6940/chat/whatsapp/77056990990/fc3e1d61-cd1c-4955-9345-b0f22b543020",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "Wazzup App",
+          "url": "https://app.wazzup24.com/1826-6940/chat/whatsapp/77056990990/fc3e1d61-cd1c-4955-9345-b0f22b543020"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "50962"
+    },
+    {
+      "timeline_comment_id": "1070510",
+      "created_at": "2026-04-18T08:20:44+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Обращение направлено на всех участников очереди",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "50962"
+    },
+    {
+      "timeline_comment_id": "1070512",
+      "created_at": "2026-04-18T08:20:44+03:00",
+      "author_id": "21382",
+      "sender_role": "client",
+      "sender_label": "руслан",
+      "text": "https://www.instagram.com/p/DW18Q6WgNzm/",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "b847e03d-4697-4f1c-ae0e-4ba97fb1e36e.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231464&exact=N&fileName=b847e03d-4697-4f1c-ae0e-4ba97fb1e36e.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50962"
+    },
+    {
+      "timeline_comment_id": "1070514",
+      "created_at": "2026-04-18T08:21:10+03:00",
+      "author_id": "21382",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Сәлеметсіз бе! Сізге “SAPA PLAST” компаниясы жазып отыр. Айтыңызшы, сізге терезелер керек пе?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50962"
+    },
+    {
+      "timeline_comment_id": "1070866",
+      "created_at": "2026-04-18T11:22:46+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Обращение также направлено \"\"Нурсултан\"\" Директор Алматы SP",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "50962"
+    },
+    {
+      "timeline_comment_id": "1070880",
+      "created_at": "2026-04-18T12:25:20+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Обращение также направлено sapa.plast.bitrix@mail.ru",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "50962"
+    },
+    {
+      "timeline_comment_id": "1070910",
+      "created_at": "2026-04-18T13:13:56+03:00",
+      "author_id": "21382",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Саламатсыз ба?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50962"
+    },
+    {
+      "timeline_comment_id": "1070912",
+      "created_at": "2026-04-18T13:14:19+03:00",
+      "author_id": "21382",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Терезеге заявка тастаған екенсіз?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50962"
+    },
+    {
+      "timeline_comment_id": "1070914",
+      "created_at": "2026-04-18T13:14:44+03:00",
+      "author_id": "21382",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Қай қаладан боласыз?Қанша терезе қажет?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50962"
+    },
+    {
+      "timeline_comment_id": "1071092",
+      "created_at": "2026-04-18T13:48:58+03:00",
+      "author_id": "21382",
+      "sender_role": "client",
+      "sender_label": "руслан",
+      "text": "Шымкент",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50962"
+    },
+    {
+      "timeline_comment_id": "1072964",
+      "created_at": "2026-04-20T14:31:13+03:00",
+      "author_id": "21382",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Саламатсыз ба",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50962"
+    },
+    {
+      "timeline_comment_id": "1072966",
+      "created_at": "2026-04-20T14:31:19+03:00",
+      "author_id": "21382",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "қанша терезе қажет?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50962"
+    }
+  ]
+}

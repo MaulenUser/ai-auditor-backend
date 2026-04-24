@@ -1,0 +1,473 @@
+{
+  "binding": {
+    "timeline_source": "deal",
+    "timeline_entity_type": "deal",
+    "timeline_entity_id": "51090",
+    "chat_id": "65086",
+    "connector_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0",
+    "connector_title": "WAZZUP: WhatsApp"
+  },
+  "dialog": {
+    "id": 65086,
+    "parent_chat_id": 0,
+    "parent_message_id": 0,
+    "name": "Айдын - WhatsApp",
+    "description": "Ссылка на исходный пост: https://app.wazzup24.com/1826-6940/chat/whatsapp/77778929294/fc3e1d61-cd1c-4955-9345-b0f22b543020",
+    "owner": 0,
+    "extranet": false,
+    "avatar": "",
+    "color": "#29619b",
+    "type": "lines",
+    "counter": 0,
+    "user_counter": 1,
+    "message_count": 13,
+    "unread_id": 0,
+    "restrictions": {
+      "avatar": true,
+      "rename": true,
+      "extend": true,
+      "call": true,
+      "mute": true,
+      "leave": true,
+      "leave_owner": true,
+      "send": true,
+      "user_list": true
+    },
+    "last_message_id": 1073728,
+    "last_id": 0,
+    "marked_id": 0,
+    "disk_folder_id": 0,
+    "entity_type": "LINES",
+    "entity_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|1918faaf-662e-40d2-897d-fb263450df56|21444",
+    "entity_data_1": "Y|DEAL|51090|N|N|26290|1776668915|0|0|0",
+    "entity_data_2": "LEAD|0|COMPANY|0|CONTACT|64094|DEAL|51090",
+    "entity_data_3": "",
+    "mute_list": [],
+    "date_create": "2026-04-20T10:08:35+03:00",
+    "message_type": "L",
+    "public": "",
+    "role": "guest",
+    "entity_link": {
+      "type": "LINES",
+      "url": "",
+      "id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|1918faaf-662e-40d2-897d-fb263450df56|21444"
+    },
+    "text_field_enabled": true,
+    "background_id": null,
+    "permissions": {
+      "manage_users_add": "member",
+      "manage_users_delete": "manager",
+      "manage_ui": "member",
+      "manage_settings": "owner",
+      "manage_messages": "member",
+      "can_post": "member"
+    },
+    "is_new": false,
+    "readed_list": [
+      {
+        "user_id": 21444,
+        "user_name": "Айдын",
+        "message_id": 1072492,
+        "date": null
+      }
+    ],
+    "manager_list": [],
+    "last_message_views": {
+      "message_id": 1073728,
+      "first_viewers": [],
+      "count_of_viewers": 0
+    },
+    "dialog_id": "chat65086"
+  },
+  "history": {
+    "chatId": 65086,
+    "canJoin": "Y",
+    "canVoteHead": "Y",
+    "sessionId": 26290,
+    "sessionVoteHead": 0,
+    "sessionCommentHead": null,
+    "userId": "chat65086",
+    "message": {
+      "1073728": {
+        "id": "1073728",
+        "chatid": "65086",
+        "senderid": "0",
+        "recipientid": "chat65086",
+        "date": "2026-04-21T10:59:29+03:00",
+        "text": "Обращение также направлено [USER=18 REPLACE]\"\"Нурсултан\"\" Директор Алматы SP[/USER]",
+        "textlegacy": "Обращение также направлено [USER=18 REPLACE]\"\"Нурсултан\"\" Директор Алматы SP[/USER]",
+        "params": {
+          "notify": "N"
+        }
+      },
+      "1073136": {
+        "id": "1073136",
+        "chatid": "65086",
+        "senderid": "0",
+        "recipientid": "chat65086",
+        "date": "2026-04-20T21:29:22+03:00",
+        "text": "Обращение также направлено [USER=1 REPLACE]sapa.plast.bitrix@mail.ru[/USER]",
+        "textlegacy": "Обращение также направлено [USER=1 REPLACE]sapa.plast.bitrix@mail.ru[/USER]",
+        "params": {
+          "notify": "N"
+        }
+      },
+      "1072898": {
+        "id": "1072898",
+        "chatid": "65086",
+        "senderid": "0",
+        "recipientid": "chat65086",
+        "date": "2026-04-20T13:11:27+03:00",
+        "text": "Обращение также направлено [USER=32 REPLACE]Эсмиральда Шымкент менеджер SP[/USER]",
+        "textlegacy": "Обращение также направлено [USER=32 REPLACE]Эсмиральда Шымкент менеджер SP[/USER]",
+        "params": {
+          "notify": "N"
+        }
+      },
+      "1072858": {
+        "id": "1072858",
+        "chatid": "65086",
+        "senderid": "0",
+        "recipientid": "chat65086",
+        "date": "2026-04-20T12:10:27+03:00",
+        "text": "Обращение также направлено [USER=36 REPLACE]Аружан Шымкент менеджер SP[/USER]",
+        "textlegacy": "Обращение также направлено [USER=36 REPLACE]Аружан Шымкент менеджер SP[/USER]",
+        "params": {
+          "notify": "N"
+        }
+      },
+      "1072506": {
+        "id": "1072506",
+        "chatid": "65086",
+        "senderid": "21444",
+        "recipientid": "chat65086",
+        "date": "2026-04-20T10:09:16+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nСейчас уточню и вернусь к вам 🙂",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Сейчас уточню и вернусь к вам 🙂",
+        "params": {
+          "connectorMid": [
+            "f2db64a4-28af-4228-bb6f-e7324c13590d"
+          ]
+        }
+      },
+      "1072496": {
+        "id": "1072496",
+        "chatid": "65086",
+        "senderid": "21444",
+        "recipientid": "chat65086",
+        "date": "2026-04-20T10:08:42+03:00",
+        "text": "[URL]https://polimerdisk.asia/kk.html[/URL]",
+        "textlegacy": "<a href=\"https://polimerdisk.asia/kk.html\" target=\"_blank\" >https://polimerdisk.asia/kk.html</a>",
+        "params": {
+          "connectorMid": [
+            "c879a3c5-e0ee-4dbd-a2dc-b2767b00a6bd"
+          ],
+          "urlId": [
+            84762
+          ],
+          "urlOnly": "Y",
+          "attach": [
+            {
+              "id": "84762",
+              "blocks": [
+                {
+                  "richLink": [
+                    {
+                      "name": "Polimerdisk — Алматыдағы ұнтақ бояу, полимерлік пеш 12 м",
+                      "link": "https://polimerdisk.asia/kk.html",
+                      "desc": "Алматыдағы ұнтақ бояу. 12 м дейін полимерлік пеш. Бағасы 1500 тг/м² бастап. Мекенжай: Суюнбай 66В. Телефон/WhatsApp: +7 777 892 9294.",
+                      "preview": "https://polimerdisk.asia/images/IMG_0447_11zon.webp",
+                      "previewSize": {
+                        "height": 1722,
+                        "width": 1290
+                      }
+                    }
+                  ]
+                }
+              ],
+              "description": "",
+              "color": "transparent"
+            }
+          ]
+        }
+      },
+      "1072494": {
+        "id": "1072494",
+        "chatid": "65086",
+        "senderid": "21444",
+        "recipientid": "chat65086",
+        "date": "2026-04-20T10:08:41+03:00",
+        "text": "Мы занимаемся полимерно-порошковой покраской алюминиевых профилей, витражных конструкций и металлоизделий.\nВ работе используем печь до 12 метров,  можем закрывать как мелкие, так и крупные объёмы.\nБуду рад сотрудничеству 🤝",
+        "textlegacy": "Мы занимаемся полимерно-порошковой покраской алюминиевых профилей, витражных конструкций и металлоизделий.<br />В работе используем печь до 12 метров, &nbsp;можем закрывать как мелкие, так и крупные объёмы.<br />Буду рад сотрудничеству 🤝",
+        "params": {
+          "connectorMid": [
+            "d93b5971-78fb-46e8-a4fb-05536c56daf0"
+          ]
+        }
+      },
+      "1072492": {
+        "id": "1072492",
+        "chatid": "65086",
+        "senderid": "21444",
+        "recipientid": "chat65086",
+        "date": "2026-04-20T10:08:37+03:00",
+        "text": "Здравствуйте!",
+        "textlegacy": "Здравствуйте!",
+        "params": {
+          "connectorMid": [
+            "c94e685e-5366-49dc-9016-c05285454632"
+          ]
+        }
+      },
+      "1072490": {
+        "id": "1072490",
+        "chatid": "65086",
+        "senderid": "0",
+        "recipientid": "chat65086",
+        "date": "2026-04-20T10:08:37+03:00",
+        "text": "Обращение направлено на [USER=28 REPLACE]Жандос Менеджер Алматы[/USER]",
+        "textlegacy": "Обращение направлено на [USER=28 REPLACE]Жандос Менеджер Алматы[/USER]",
+        "params": []
+      },
+      "1072488": {
+        "id": "1072488",
+        "chatid": "65086",
+        "senderid": "0",
+        "recipientid": "chat65086",
+        "date": "2026-04-20T10:08:36+03:00",
+        "text": "[B]Переданы дополнительные данные:[/B]\n Ссылка на исходный пост: [URL]https://app.wazzup24.com/1826-6940/chat/whatsapp/77778929294/fc3e1d61-cd1c-4955-9345-b0f22b543020[/URL]",
+        "textlegacy": "<b>Переданы дополнительные данные:</b><br /> Ссылка на исходный пост: <a href=\"https://app.wazzup24.com/1826-6940/chat/whatsapp/77778929294/fc3e1d61-cd1c-4955-9345-b0f22b543020\" target=\"_blank\" >https://app.wazzup24.com/1826-6940/chat/whatsapp/77778929294/fc3e1d61-cd1c-4955-9345-b0f22b543020</a>",
+        "params": {
+          "class": "bx-messenger-content-item-system",
+          "componentId": "HiddenMessage",
+          "urlId": [
+            84760
+          ],
+          "attach": [
+            {
+              "id": "84760",
+              "blocks": [
+                {
+                  "richLink": [
+                    {
+                      "name": "Wazzup App",
+                      "link": "https://app.wazzup24.com/1826-6940/chat/whatsapp/77778929294/fc3e1d61-cd1c-4955-9345-b0f22b543020",
+                      "desc": "Communicate with clients in the application on the computer, and all correspondence will be saved in CRM.",
+                      "preview": "https://cdn.wazzup24.com/icons/icon_512x512.358b79.png",
+                      "previewSize": {
+                        "height": 512,
+                        "width": 512
+                      }
+                    }
+                  ]
+                }
+              ],
+              "description": "",
+              "color": "transparent"
+            }
+          ]
+        }
+      },
+      "1072486": {
+        "id": "1072486",
+        "chatid": "65086",
+        "senderid": "0",
+        "recipientid": "chat65086",
+        "date": "2026-04-20T10:08:36+03:00",
+        "text": "[b]Создана новая сделка[/b]",
+        "textlegacy": "<b>Создана новая сделка</b>",
+        "params": {
+          "attach": [
+            {
+              "id": 1776668916,
+              "blocks": [
+                {
+                  "link": [
+                    {
+                      "name": "Айдын - WhatsApp",
+                      "link": "/crm/deal/details/51090/"
+                    }
+                  ]
+                }
+              ],
+              "description": "",
+              "color": "#909090"
+            }
+          ]
+        }
+      },
+      "1072484": {
+        "id": "1072484",
+        "chatid": "65086",
+        "senderid": "0",
+        "recipientid": "chat65086",
+        "date": "2026-04-20T10:08:36+03:00",
+        "text": "[b]Создан новый контакт[/b]",
+        "textlegacy": "<b>Создан новый контакт</b>",
+        "params": {
+          "attach": [
+            {
+              "id": 1776668916,
+              "blocks": [
+                {
+                  "link": [
+                    {
+                      "name": "Айдын",
+                      "link": "/crm/contact/details/64094/"
+                    }
+                  ]
+                },
+                {
+                  "grid": [
+                    {
+                      "display": "LINE",
+                      "name": "Телефон",
+                      "value": "+77778929294",
+                      "height": 20,
+                      "colorToken": "base"
+                    },
+                    {
+                      "display": "LINE",
+                      "name": "Email",
+                      "value": "77778929294@whatsapp.wazzup",
+                      "height": 20,
+                      "colorToken": "base"
+                    }
+                  ]
+                }
+              ],
+              "description": "",
+              "color": "#58cc47"
+            }
+          ]
+        }
+      },
+      "1072480": {
+        "id": "1072480",
+        "chatid": "65086",
+        "senderid": "0",
+        "recipientid": "chat65086",
+        "date": "2026-04-20T10:08:35+03:00",
+        "text": "Начат новый диалог №[URL=/online/?IM_HISTORY=imol|26290]26290[/URL]",
+        "textlegacy": "Начат новый диалог №<a href=\"/online/?IM_HISTORY=imol|26290\" target=\"_blank\" >26290</a>",
+        "params": {
+          "class": "bx-messenger-content-item-ol-start",
+          "componentId": "StartDialogMessage"
+        }
+      }
+    },
+    "usersMessage": {
+      "chat65086": [
+        "1073728",
+        "1073136",
+        "1072898",
+        "1072858",
+        "1072506",
+        "1072496",
+        "1072494",
+        "1072492",
+        "1072490",
+        "1072488",
+        "1072486",
+        "1072484",
+        "1072480"
+      ]
+    },
+    "users": {
+      "21444": {
+        "id": "21444",
+        "name": "Айдын",
+        "active": true,
+        "firstName": "Айдын",
+        "lastName": "",
+        "workPosition": null,
+        "color": "#4ba5c3",
+        "avatar": "/bitrix/js/im/images/blank.gif",
+        "avatarId": null,
+        "birthday": false,
+        "gender": "M",
+        "phoneDevice": false,
+        "phones": false,
+        "extranet": true,
+        "network": false,
+        "bot": false,
+        "connector": true,
+        "profile": "/company/personal/user/21444/",
+        "externalAuthId": "imconnector",
+        "status": "online",
+        "idle": false,
+        "lastActivityDate": false,
+        "mobileLastDate": false,
+        "desktopLastDate": false,
+        "departments": [],
+        "absent": false,
+        "type": "extranet",
+        "eventLog": "N",
+        "services": null,
+        "botData": null
+      }
+    },
+    "openlines": {
+      "canvoteashead": {
+        "2": true
+      }
+    },
+    "userInGroup": [],
+    "woUserInGroup": [],
+    "chat": {
+      "65086": {
+        "id": "65086",
+        "parentChatId": 0,
+        "parentMessageId": 0,
+        "name": "Айдын - WhatsApp",
+        "owner": "0",
+        "color": "#29619b",
+        "extranet": false,
+        "avatar": "/bitrix/js/im/images/blank.gif",
+        "call": "0",
+        "callNumber": "",
+        "entityType": "LINES",
+        "entityId": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|1918faaf-662e-40d2-897d-fb263450df56|21444",
+        "entityData1": "Y|DEAL|51090|N|N|26290|1776668915|0|0|0",
+        "entityData2": "LEAD|0|COMPANY|0|CONTACT|64094|DEAL|51090",
+        "entityData3": "",
+        "messageCount": 13,
+        "public": "",
+        "muteList": {
+          "21444": false
+        },
+        "managerList": [],
+        "dateCreate": "2026-04-20T12:08:35+03:00",
+        "type": "lines",
+        "entityLink": {
+          "type": "LINES",
+          "url": "",
+          "id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|1918faaf-662e-40d2-897d-fb263450df56|21444"
+        },
+        "permissions": {
+          "manageUsersAdd": "member",
+          "manageUsersDelete": "manager",
+          "manageUi": "member",
+          "manageSettings": "owner",
+          "manageMessages": "member",
+          "canPost": "member"
+        },
+        "textFieldEnabled": true,
+        "backgroundId": null,
+        "messageType": "L",
+        "isNew": false
+      }
+    },
+    "userBlockChat": {
+      "65086": {
+        "21444": false
+      }
+    },
+    "userInChat": {
+      "65086": [
+        21444
+      ]
+    },
+    "files": []
+  }
+}

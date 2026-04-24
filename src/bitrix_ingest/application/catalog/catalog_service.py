@@ -14,6 +14,8 @@ _ITEM_DEAL_PREVIEW_SELECT = [
     "id", "title", "sourceId", "assignedById", "categoryId", "createdTime", "updatedTime",
 ]
 _ITEM_DEAL_PREVIEW_ORDER = {"updatedTime": "DESC", "id": "DESC"}
+_ITEM_FUNNEL_MANAGER_SELECT = ["id", "categoryId", "assignedById"]
+_ITEM_FUNNEL_MANAGER_ORDER = {"categoryId": "ASC", "assignedById": "ASC", "id": "DESC"}
 
 
 class GetCatalogService:
@@ -52,6 +54,50 @@ class GetCatalogService:
         logger.info("Funnels loaded: %d", len(funnels))
         return funnels
 
+    def get_stages(self, category_ids: list[str] | None = None) -> list[dict[str, Any]]:
+        """Return deal stages from crm.status.list for given funnels.
+
+        Default funnel uses entity_id "DEAL_STAGE".
+        Custom funnels use "C{category_id}:DEAL_STAGE".
+        """
+        entity_ids: list[str] = []
+        for cat_id in (category_ids or []):
+            if str(cat_id) == "0":
+                entity_ids.append("DEAL_STAGE")
+            else:
+                entity_ids.append(f"C{cat_id}:DEAL_STAGE")
+        if not entity_ids:
+            entity_ids = ["DEAL_STAGE"]
+
+        stages: list[dict[str, Any]] = []
+        seen: set[tuple[str, str]] = set()
+        for entity_id in entity_ids:
+            response = self._gateway.call(
+                "crm.status.list",
+                body={"filter": {"ENTITY_ID": entity_id}},
+            )
+            rows = response.get("result") or []
+            if not isinstance(rows, list):
+                rows = [rows]
+            for row in rows:
+                if not isinstance(row, dict):
+                    continue
+                status_id = str(row.get("STATUS_ID") or row.get("ID") or "")
+                name = str(row.get("NAME") or "")
+                key = (entity_id, status_id)
+                if key in seen or not status_id:
+                    continue
+                seen.add(key)
+                stages.append({
+                    "id": status_id,
+                    "name": name,
+                    "entity_id": entity_id,
+                    "sort": int(row.get("SORT") or 0),
+                    "semantics": str(row.get("COLOR") or row.get("SEMANTICS") or ""),
+                })
+        logger.info("Stages loaded: %d across %d funnels", len(stages), len(entity_ids))
+        return stages
+
     def get_managers(self) -> list[dict[str, Any]]:
         response = self._gateway.call("user.get")
         items = response.get("result") or []
@@ -73,6 +119,50 @@ class GetCatalogService:
             })
         logger.info("Managers loaded: %d", len(managers))
         return managers
+
+    def get_funnels_with_managers(
+        self,
+        *,
+        date_from: str | None = None,
+        date_to: str | None = None,
+        active_only: bool = False,
+    ) -> list[dict[str, Any]]:
+        """Return every funnel together with managers inferred from deal ownership.
+
+        Bitrix24 webhooks do not expose a direct funnel-to-manager binding for the
+        current portal setup, so the relation is derived from deal
+        ``assignedById`` values found in each funnel.
+        """
+        funnels = self.get_funnels()
+        managers = self.get_managers()
+        manager_ids_by_funnel = self._collect_funnel_manager_ids(
+            date_from=date_from,
+            date_to=date_to,
+        )
+
+        catalog: list[dict[str, Any]] = []
+        total_links = 0
+        for funnel in funnels:
+            funnel_id = funnel["id"]
+            manager_ids = manager_ids_by_funnel.get(funnel_id, set())
+            funnel_managers = self._resolve_managers(
+                manager_ids,
+                managers=managers,
+                active_only=active_only,
+            )
+            total_links += len(funnel_managers)
+            catalog.append({
+                **funnel,
+                "manager_count": len(funnel_managers),
+                "managers": funnel_managers,
+            })
+
+        logger.info(
+            "Funnels with managers loaded: %d funnels, %d manager links",
+            len(catalog),
+            total_links,
+        )
+        return catalog
 
     # ------------------------------------------------------------------
     # Audit preview — counts deals/managers before the full run
@@ -211,7 +301,52 @@ class GetCatalogService:
             date_from=date_from,
             date_to=date_to,
         )
-        deals: list[dict[str, Any]] = []
+        rows = self._list_item_rows(
+            select=_ITEM_DEAL_PREVIEW_SELECT,
+            filter_=filter_,
+            order=_ITEM_DEAL_PREVIEW_ORDER,
+            context=context,
+        )
+        return [self._normalize_item_deal(row) for row in rows if isinstance(row, dict)]
+
+    def _collect_funnel_manager_ids(
+        self,
+        *,
+        date_from: str | None,
+        date_to: str | None,
+    ) -> dict[str, set[str]]:
+        filter_ = self._build_item_filter(
+            category_id=None,
+            responsible_id=None,
+            date_from=date_from,
+            date_to=date_to,
+        )
+        rows = self._list_item_rows(
+            select=_ITEM_FUNNEL_MANAGER_SELECT,
+            filter_=filter_,
+            order=_ITEM_FUNNEL_MANAGER_ORDER,
+            context="catalog funnel managers",
+        )
+        manager_ids_by_funnel: dict[str, set[str]] = {}
+        for row in rows:
+            if not isinstance(row, dict):
+                continue
+            funnel_id = self._stringify_value(row.get("categoryId")).strip()
+            manager_id = self._stringify_value(row.get("assignedById")).strip()
+            if not funnel_id or not manager_id or manager_id == "0":
+                continue
+            manager_ids_by_funnel.setdefault(funnel_id, set()).add(manager_id)
+        return manager_ids_by_funnel
+
+    def _list_item_rows(
+        self,
+        *,
+        select: list[str],
+        filter_: dict[str, Any],
+        order: dict[str, Any],
+        context: str,
+    ) -> list[dict[str, Any]]:
+        rows_acc: list[dict[str, Any]] = []
         start = 0
         page_num = 1
 
@@ -221,25 +356,25 @@ class GetCatalogService:
                 "crm.item.list",
                 body={
                     "entityTypeId": 2,
-                    "select": _ITEM_DEAL_PREVIEW_SELECT,
+                    "select": select,
                     "filter": filter_,
-                    "order": _ITEM_DEAL_PREVIEW_ORDER,
+                    "order": order,
                     "start": start,
                 },
                 label=label,
             )
 
             result = response.get("result") or {}
-            rows = (result.get("items") or []) if isinstance(result, dict) else []
-            if not isinstance(rows, list):
-                rows = [rows]
+            page_rows = (result.get("items") or []) if isinstance(result, dict) else []
+            if not isinstance(page_rows, list):
+                page_rows = [page_rows]
 
-            deals.extend(self._normalize_item_deal(row) for row in rows if isinstance(row, dict))
+            rows_acc.extend(row for row in page_rows if isinstance(row, dict))
             logger.info(
                 "%s: loaded %d rows, total %d",
                 label,
-                len(rows),
-                len(deals),
+                len(page_rows),
+                len(rows_acc),
             )
 
             next_start = response.get("next")
@@ -248,9 +383,9 @@ class GetCatalogService:
                     "crm.item.list %s pagination completed on page %d. Total rows: %d",
                     context,
                     page_num,
-                    len(deals),
+                    len(rows_acc),
                 )
-                return deals
+                return rows_acc
 
             start = int(next_start)
             page_num += 1
@@ -412,3 +547,36 @@ class GetCatalogService:
                 "available_scope_managers": scope_managers,
             })
         return warnings
+
+    @staticmethod
+    def _resolve_managers(
+        manager_ids: set[str],
+        *,
+        managers: list[dict[str, Any]],
+        active_only: bool,
+    ) -> list[dict[str, Any]]:
+        if not manager_ids:
+            return []
+
+        resolved: list[dict[str, Any]] = []
+        known_ids: set[str] = set()
+        for manager in managers:
+            manager_id = manager["id"]
+            if manager_id not in manager_ids:
+                continue
+            if active_only and not manager["active"]:
+                continue
+            resolved.append(manager)
+            known_ids.add(manager_id)
+
+        if not active_only:
+            for manager_id in sorted(manager_ids - known_ids):
+                resolved.append({
+                    "id": manager_id,
+                    "name": f"User {manager_id}",
+                    "email": "",
+                    "active": False,
+                })
+
+        resolved.sort(key=lambda row: (row["name"].casefold(), row["id"]))
+        return resolved

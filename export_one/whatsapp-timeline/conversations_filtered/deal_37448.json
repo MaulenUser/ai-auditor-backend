@@ -1,0 +1,311 @@
+{
+  "channel": "whatsapp",
+  "integration": "wazzup",
+  "deal_id": "37448",
+  "contact_id": "33014",
+  "company_id": "",
+  "deal_title": "Ибрагим - WhatsApp",
+  "source_id": "2|WZ_WHATSAPP_CB0C9F5C07DE8985B74A894B883C619C0",
+  "assigned_by_id": "28",
+  "stage_id": "LOSE",
+  "stage_semantic_id": "F",
+  "category_id": "0",
+  "date_create": "2025-09-16T09:19:44+03:00",
+  "date_modify": "2026-04-15T10:53:57+03:00",
+  "closedate": "2026-04-15T03:00:00+03:00",
+  "closed": "Y",
+  "last_communication_time": "2026-04-15T12:53:02",
+  "opportunity": "0.00000000",
+  "currency_id": "KZT",
+  "loss_reason_id": "",
+  "loss_comment": "",
+  "utm_source": "",
+  "utm_medium": "",
+  "utm_campaign": "",
+  "timeline_source": "deal",
+  "timeline_entity_type": "deal",
+  "timeline_entity_id": "37448",
+  "chat_id": "22556",
+  "session_id": "19788",
+  "dialog_id": "chat22556",
+  "connector_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0",
+  "connector_title": "WAZZUP: WhatsApp",
+  "chat_name": "Ибрагим - WhatsApp",
+  "stats": {
+    "total_messages": 24,
+    "effective_messages": 18,
+    "manager_messages": 10,
+    "client_messages": 8,
+    "system_messages": 6,
+    "messages_with_files": 13,
+    "first_message_at": "2025-09-16T09:19:44+03:00",
+    "last_message_at": "2025-10-23T11:40:51+03:00",
+    "first_manager_response_time_sec": 79838.0,
+    "avg_response_latency_sec": 3919.0,
+    "conversation_duration_hours": 890.3519444444445
+  },
+  "messages": [
+    {
+      "timeline_comment_id": "837612",
+      "created_at": "2025-09-16T09:19:45+03:00",
+      "author_id": "6518",
+      "sender_role": "client",
+      "sender_label": "Ибрагим",
+      "text": "Здравствуйте",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "37448"
+    },
+    {
+      "timeline_comment_id": "837616",
+      "created_at": "2025-09-16T09:19:55+03:00",
+      "author_id": "6518",
+      "sender_role": "client",
+      "sender_label": "Ибрагим",
+      "text": "Мы насет окон пишем",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "37448"
+    },
+    {
+      "timeline_comment_id": "837624",
+      "created_at": "2025-09-16T09:20:57+03:00",
+      "author_id": "6518",
+      "sender_role": "client",
+      "sender_label": "Ибрагим",
+      "text": "2.65 на 2,70 витраж стдверью по середине один штук",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "37448"
+    },
+    {
+      "timeline_comment_id": "837628",
+      "created_at": "2025-09-16T09:21:38+03:00",
+      "author_id": "6518",
+      "sender_role": "client",
+      "sender_label": "Ибрагим",
+      "text": "1,80 на 1.80 5 штук",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "37448"
+    },
+    {
+      "timeline_comment_id": "837630",
+      "created_at": "2025-09-16T09:22:12+03:00",
+      "author_id": "6518",
+      "sender_role": "client",
+      "sender_label": "Ибрагим",
+      "text": "0.80 на 1.80 3 штуки",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "37448"
+    },
+    {
+      "timeline_comment_id": "837690",
+      "created_at": "2025-09-16T09:27:43+03:00",
+      "author_id": "6518",
+      "sender_role": "client",
+      "sender_label": "Ибрагим",
+      "text": "Такой цвет и ветраж и окна",
+      "attachments": [
+        {
+          "type": "image",
+          "label": "7789212d-7e5f-4546-94d2-9787b94153dd.jpeg",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=182854&exact=N&_esd=BqjETv-pVbTrcwrtG0IQedxJlc97R35NJ4x2W9oX5JMdnkkxQmZkH5B8SDWFec9zBrnByWzDGDIJuFmTr385gZUIKhGORjPVw1gqe-Rtm4xl5_Ji6JrKtJrPl8En0IBwtEWR7iCu6kF-g_KsAsJQ1hLEtWphsANhbGDCvFlJC-nqTcg1GdEdgEGtV4o%3D&fileName=7789212d-7e5f-4546-94d2-9787b94153dd.jpeg"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "37448"
+    },
+    {
+      "timeline_comment_id": "838978",
+      "created_at": "2025-09-17T06:24:54+03:00",
+      "author_id": "6518",
+      "sender_role": "client",
+      "sender_label": "Ибрагим",
+      "text": "Здравствуйте",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "37448"
+    },
+    {
+      "timeline_comment_id": "838980",
+      "created_at": "2025-09-17T06:25:04+03:00",
+      "author_id": "6518",
+      "sender_role": "client",
+      "sender_label": "Ибрагим",
+      "text": "Вы так и не дали ответ",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "37448"
+    },
+    {
+      "timeline_comment_id": "839024",
+      "created_at": "2025-09-17T07:30:23+03:00",
+      "author_id": "6518",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Лайла Алматы менеджер SP)",
+      "text": "Сәлеметсіз бе, не сапа, пластикпен санаймыз ба, не айып етпеңіз, бізге жақсылап жіберіңіз. Тәжірибеде екі 80 200 80 метр шыныс дверью, оны алюминийден санаймыз ғой, ал қалғанын уже пятикамерный пластикпен санайын. Андратектет болады ғой?",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "wazzup_audio (1).mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=183306&exact=N&fileName=wazzup_audio%20%281%29.mp3",
+          "transcribed": true
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "37448"
+    },
+    {
+      "timeline_comment_id": "839030",
+      "created_at": "2025-09-17T07:32:39+03:00",
+      "author_id": "6518",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Лайла Алматы менеджер SP)",
+      "text": "Иә, мысалы Алматы қаласында, немесе облысында ма, соны толығырақ айта берсеңіз.",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "wazzup_audio (2).mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=183312&exact=N&fileName=wazzup_audio%20%282%29.mp3",
+          "transcribed": true
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "37448"
+    },
+    {
+      "timeline_comment_id": "840792",
+      "created_at": "2025-09-17T11:06:15+03:00",
+      "author_id": "6518",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Лайла Алматы менеджер SP)",
+      "text": "Немецкий 🇩🇪\n5-ти камерный профиль \"ARtec 70\"( 10 лет гарантии),\nЦвет- Цветной\n\n32мм стеклопакет\n(4-10-4-10-4)(три стекла)(2 год гарантии);\nМультифункциональный Прастой\nАлюминий дверь Терминал .теплый серия . каленный стекло\nФурнитура \"ROTO\" (немецкое пр-во)(2год гарантии),\nОткрывание сложное\n\nРучки \"Roto SECUSTIC\" цвет серебристый;\n\nНакладки на петли серебристые;\nПодаконики Хомлайн Цветной\nМоскитные сетки в подарок\n\nАрмированное железо внутри профиля 1,5мм,\n\nЦена со скидкой 2 500..000тг.; за наличный сумма\n\nСрок изготовления 15 рабочих дней.\n\n✅Доставка,\n✅Установка. Стандарный монтаж\n\nС уважением,\nменеджер Лейла\nТел.: 87073065555\n\nКомпания \"Sapaplast\"\n\nНаш instagram:// www.instagram.com/sapaplast.kz\n\n⚠Данная цена действительна в течении 5-ти дней!",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "37448"
+    },
+    {
+      "timeline_comment_id": "840794",
+      "created_at": "2025-09-17T11:06:23+03:00",
+      "author_id": "6518",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Лайла Алматы менеджер SP)",
+      "text": "",
+      "attachments": [
+        {
+          "type": "file",
+          "label": "1262_Ибрагим_Алматы.pdf",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=183852&exact=N&fileName=1262_%D0%98%D0%B1%D1%80%D0%B0%D0%B3%D0%B8%D0%BC_%D0%90%D0%BB%D0%BC%D0%B0%D1%82%D1%8B.pdf"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "37448"
+    },
+    {
+      "timeline_comment_id": "840796",
+      "created_at": "2025-09-17T11:06:26+03:00",
+      "author_id": "6518",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Лайла Алматы менеджер SP)",
+      "text": "",
+      "attachments": [
+        {
+          "type": "video",
+          "label": "copy_108E357D-9967-42C4-B616-499F3FB0418E.mp4",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=183854&exact=N&_esd=V8Y6qUSWebrYDj1NINyWoILwPrYa-zW0noMeTochqWmaHNzlXp1_8nx2eAm4UTmvlxv1ZgPCC3iAopWd-rHbHFZWr6slHFKOuwkt2lJ_JQz3O8RsfcdU9LUScbrbyAyuCdoUMooBX537vGBlOflnzuXgdntioS6Ir57sGVhmi6KMKp9NTjwfTeGSY--bPMWm&fileName=copy_108E357D-9967-42C4-B616-499F3FB0418E.mp4"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "37448"
+    },
+    {
+      "timeline_comment_id": "840798",
+      "created_at": "2025-09-17T11:06:29+03:00",
+      "author_id": "6518",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Лайла Алматы менеджер SP)",
+      "text": "",
+      "attachments": [
+        {
+          "type": "file",
+          "label": "1263_Ибрагим_Алматы.pdf",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=183856&exact=N&fileName=1263_%D0%98%D0%B1%D1%80%D0%B0%D0%B3%D0%B8%D0%BC_%D0%90%D0%BB%D0%BC%D0%B0%D1%82%D1%8B.pdf"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "37448"
+    },
+    {
+      "timeline_comment_id": "840802",
+      "created_at": "2025-09-17T11:06:33+03:00",
+      "author_id": "6518",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Лайла Алматы менеджер SP)",
+      "text": "",
+      "attachments": [
+        {
+          "type": "video",
+          "label": "copy_AD424071-D731-4B8F-9C81-426BB4D6686B.mp4",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=183858&exact=N&_esd=TvfAdY6PWTXdmdnQiVh_d1nVZvuJJXaGYJ1dL9-ISg7VYK8mU-CbKCA8nafo6Ryk1h8366zYsau1gBkNWOX26_-_LowRVbTD24p6dwJK56bFzKLk4msfIua6AGSmd_sscd5zIOr9F7sB-fZqQQZkXojqjPmm3gLiFnSgp6BkPxUOkW_gBPIp77Haj-9zfF84&fileName=copy_AD424071-D731-4B8F-9C81-426BB4D6686B.mp4"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "37448"
+    },
+    {
+      "timeline_comment_id": "840806",
+      "created_at": "2025-09-17T11:07:39+03:00",
+      "author_id": "6518",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Лайла Алматы менеджер SP)",
+      "text": "",
+      "attachments": [
+        {
+          "type": "video",
+          "label": "WhatsApp_Video_2025-09-15_at_15.28.15__2_.mp4",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=183860&exact=N&_esd=zextWvJMDjhamf89N9H1hB0x3g4F9q5TOfFFPWU43mnQ26A8bykK1xPBiWGD8sOfK4osHGnmabR7oAKrcuIIu62NOujsYbCd_FazLiPtQE2I0WNYj9q5it-B9oXHRJVFFQ1YvBu7bTPl9_g-hs5A9kkUBzGzz1_nx3ujHr000yTQF2MSCmhUMeQ3UETlsHxp&fileName=WhatsApp_Video_2025-09-15_at_15.28.15__2_.mp4"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "37448"
+    },
+    {
+      "timeline_comment_id": "843036",
+      "created_at": "2025-09-18T11:10:15+03:00",
+      "author_id": "6518",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Лайла Алматы менеджер SP)",
+      "text": "Саламатсыз ба, сапапласқан нәрсеңіз туралы сөйлесіп жатыр, өлшемі қалай болжатыр кеше санап баға ұсынған едіңіз бізге?",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "wazzup_audio (3).mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=184284&exact=N&fileName=wazzup_audio%20%283%29.mp3",
+          "transcribed": true
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "37448"
+    },
+    {
+      "timeline_comment_id": "849658",
+      "created_at": "2025-09-23T11:39:37+03:00",
+      "author_id": "6518",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Лайла Алматы менеджер SP)",
+      "text": "Сәлематсыз ба! Сапапласт компаниясынан хабарласып отыр едім, терезе бойынша шешіміңізді білейін деген едім. Қандай шешім қабылдап жатырсыз, бағасын көріп тұрсыз ба барлығымен? Сонымүмкіндік болса жауап берсеңіз.",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "wazzup_audio (4).mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=185834&exact=N&fileName=wazzup_audio%20%284%29.mp3",
+          "transcribed": true
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "37448"
+    }
+  ]
+}

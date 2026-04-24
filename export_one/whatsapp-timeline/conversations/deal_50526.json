@@ -1,0 +1,635 @@
+{
+  "channel": "whatsapp",
+  "integration": "wazzup",
+  "deal_id": "50526",
+  "contact_id": "63562",
+  "company_id": "",
+  "deal_title": "Шухрат - WhatsApp",
+  "source_id": "2|WZ_WHATSAPP_CB0C9F5C07DE8985B74A894B883C619C0",
+  "assigned_by_id": "28",
+  "stage_id": "UC_C0RQFW",
+  "stage_semantic_id": "P",
+  "category_id": "0",
+  "date_create": "2026-04-13T10:13:31+03:00",
+  "date_modify": "2026-04-21T11:59:48+03:00",
+  "closedate": "2026-04-20T03:00:00+03:00",
+  "closed": "N",
+  "last_communication_time": "2026-04-17T16:25:16",
+  "opportunity": "0.00000000",
+  "currency_id": "KZT",
+  "loss_reason_id": "",
+  "loss_comment": "",
+  "utm_source": "",
+  "utm_medium": "",
+  "utm_campaign": "",
+  "timeline_source": "deal",
+  "timeline_entity_type": "deal",
+  "timeline_entity_id": "50526",
+  "chat_id": "64028",
+  "session_id": "26034",
+  "dialog_id": "chat64028",
+  "connector_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0",
+  "connector_title": "WAZZUP: WhatsApp",
+  "chat_name": "Шухрат - WhatsApp",
+  "stats": {
+    "total_messages": 44,
+    "effective_messages": 36,
+    "manager_messages": 23,
+    "client_messages": 13,
+    "system_messages": 8,
+    "messages_with_files": 17,
+    "first_message_at": "2026-04-13T10:13:31+03:00",
+    "last_message_at": "2026-04-16T14:44:10+03:00",
+    "first_manager_response_time_sec": 42.0,
+    "avg_response_latency_sec": 18950.88888888889,
+    "conversation_duration_hours": 76.51083333333334
+  },
+  "messages": [
+    {
+      "timeline_comment_id": "1061388",
+      "created_at": "2026-04-13T10:13:31+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Начат новый диалог №26034",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1061392",
+      "created_at": "2026-04-13T10:13:31+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Создан новый контакт",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "Шухрат",
+          "url": "/crm/contact/details/63562/"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1061394",
+      "created_at": "2026-04-13T10:13:31+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Создана новая сделка",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "Шухрат - WhatsApp",
+          "url": "/crm/deal/details/50526/"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1061396",
+      "created_at": "2026-04-13T10:13:32+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Переданы дополнительные данные:\nСсылка на исходный пост: https://app.wazzup24.com/1826-6940/chat/whatsapp/77077804078/fc3e1d61-cd1c-4955-9345-b0f22b543020",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "Wazzup App",
+          "url": "https://app.wazzup24.com/1826-6940/chat/whatsapp/77077804078/fc3e1d61-cd1c-4955-9345-b0f22b543020"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1061398",
+      "created_at": "2026-04-13T10:13:32+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Обращение направлено на всех участников очереди",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1061400",
+      "created_at": "2026-04-13T10:13:32+03:00",
+      "author_id": "21234",
+      "sender_role": "client",
+      "sender_label": "Шухрат",
+      "text": "Ассаламу алейкум",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1061402",
+      "created_at": "2026-04-13T10:14:14+03:00",
+      "author_id": "21234",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Сәлеметсіз бе! Сізге “SAPA PLAST” компаниясы жазып отыр. Терезелер керек пе? 🙂",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1061408",
+      "created_at": "2026-04-13T10:15:17+03:00",
+      "author_id": "21234",
+      "sender_role": "client",
+      "sender_label": "Шухрат",
+      "text": "Кендиги5\nБиик 2,6",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1061410",
+      "created_at": "2026-04-13T10:15:40+03:00",
+      "author_id": "21234",
+      "sender_role": "client",
+      "sender_label": "Шухрат",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "009a4353-0958-454f-b62d-ba5f3fa0d094.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=230262&exact=N&fileName=009a4353-0958-454f-b62d-ba5f3fa0d094.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1061412",
+      "created_at": "2026-04-13T10:16:06+03:00",
+      "author_id": "21234",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Рахмет, өлшемдерді түсіндім. Есіміңіз кім болады?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1061414",
+      "created_at": "2026-04-13T10:16:33+03:00",
+      "author_id": "21234",
+      "sender_role": "client",
+      "sender_label": "Шухрат",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "51380635-149d-43e8-928d-0febd9452b94.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=230264&exact=N&fileName=51380635-149d-43e8-928d-0febd9452b94.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1061416",
+      "created_at": "2026-04-13T10:16:49+03:00",
+      "author_id": "21234",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Түсіндім: 5,0 м × 2,6 м, ашылмайтын. Есіміңізді айтып жібересіз бе?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1061420",
+      "created_at": "2026-04-13T10:17:26+03:00",
+      "author_id": "21234",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Рақмет, Шукрат. Қай қаладан боласыз?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1061422",
+      "created_at": "2026-04-13T10:17:46+03:00",
+      "author_id": "21234",
+      "sender_role": "client",
+      "sender_label": "Шухрат",
+      "text": "",
+      "attachments": [
+        {
+          "type": "image",
+          "label": "fcaead9b-47a6-436f-acad-5881ccc848d2.jpeg",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=230268&exact=N&_esd=JHOb_8dnStZ_p3jJk8Y6_JoOOlqT6flNy1mivUOZqj0gygSAe_YuCXgib0GTv4Y1b0bJBLhmCDU9fRm2Mjoxp_UfCXUZksO4z1pkjLrE3yVZaVY_EnATjhfjANOQMqvKfoENR6ypE02llpedWDWirsZejrPmgFS_B7wxmqsJE-bZtNPX4j1QFNS4zSE%3D&fileName=fcaead9b-47a6-436f-acad-5881ccc848d2.jpeg"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1061426",
+      "created_at": "2026-04-13T10:18:40+03:00",
+      "author_id": "21234",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Рақмет, сызбаны алдым. Шукрат, қай қаладансыз?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1061430",
+      "created_at": "2026-04-13T10:21:18+03:00",
+      "author_id": "21234",
+      "sender_role": "client",
+      "sender_label": "Шухрат",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "edbbc9f1-9fd7-4b7f-a488-4e17a9ecd817.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=230272&exact=N&fileName=edbbc9f1-9fd7-4b7f-a488-4e17a9ecd817.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1061432",
+      "created_at": "2026-04-13T10:22:16+03:00",
+      "author_id": "21234",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Рахмет, Алматы екенсіз.\n\nСіздің өлшеміңіз 5,0 × 2,6 = 13 м², ашылмайтын.\nБағалар м² бойынша:\n- Эконом серия: 40 000–60 000 тг/м² → шамамен 520 000–780 000 тг.\n- Премиум (неміс профилі): 70 000–95 000 тг/м² → шамамен 910 000–1 235 000 тг.\nНақтысы таңдауыңызға қарай шығады.\n\nШамамен қанша терезе керек?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1061434",
+      "created_at": "2026-04-13T10:23:49+03:00",
+      "author_id": "21234",
+      "sender_role": "client",
+      "sender_label": "Шухрат",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "24651a18-503d-47a5-9b20-5944e2f146e6.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=230274&exact=N&fileName=24651a18-503d-47a5-9b20-5944e2f146e6.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1061436",
+      "created_at": "2026-04-13T10:24:26+03:00",
+      "author_id": "21234",
+      "sender_role": "client",
+      "sender_label": "Шухрат",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "a8b6b6fb-5966-4cc5-a518-0b1ebd50badb.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=230276&exact=N&fileName=a8b6b6fb-5966-4cc5-a518-0b1ebd50badb.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1061438",
+      "created_at": "2026-04-13T10:25:03+03:00",
+      "author_id": "21234",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Түсті вариант болады. Қара/қоңыр жағын да қарастырамыз. Сейчас уточню и вернусь к вам 🙂\n\nҚай түсті қарайсыз: ақ, комбинированный немесе түсті?\nСтеклопакет екікамерлі ме, үшкамерлі ме?\n\nЕгер ыңғайлы болса, Алматыдағы шоурумға келе аласыз: Немировича-Данченко 18е.",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1061440",
+      "created_at": "2026-04-13T10:25:32+03:00",
+      "author_id": "21234",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Шукрат, түсіндім. Біз тек көрсетілген м² бағамен жұмыс істейміз, жеңілдік берілмейді. Качество полностью соответствует цене 🤍\n\nҚай түсті қарайсыз: ақ, комбинированный, әлде қоңыр/қара?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1061442",
+      "created_at": "2026-04-13T10:26:36+03:00",
+      "author_id": "21234",
+      "sender_role": "client",
+      "sender_label": "Шухрат",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "da3bba1f-d473-4322-ab02-487281875991.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=230278&exact=N&fileName=da3bba1f-d473-4322-ab02-487281875991.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1061444",
+      "created_at": "2026-04-13T10:27:39+03:00",
+      "author_id": "21234",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Шукрат, сіздің 13 м² үшін алдын ала есеп:\n\n- Эконом серия: 520 000–780 000 тг\n- Премиум (неміс профилі): 910 000–1 235 000 тг\n\nЕкікамерлі де, үшкамерлі де жасаймыз. Нақты баға түсі мен конфигурациясына қарай шығады.\n\nҚай түсті қарайсыз: ақ, комбинированный, әлде қоңыр/қара?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1061920",
+      "created_at": "2026-04-13T16:16:53+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Обращение также направлено sapa.plast.bitrix@mail.ru",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1063232",
+      "created_at": "2026-04-14T08:54:58+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Обращение также направлено Аружан Шымкент менеджер SP",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1064048",
+      "created_at": "2026-04-14T12:49:48+03:00",
+      "author_id": "21234",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жандос Менеджер Алматы)",
+      "text": "Сәлеметсіз бе?!🙂 Сізді Алматы қаласындағы Сапа Пласт Компаниясының ресми шорумында сізді күтетін боламыз. Бұл жерден сіз тек сапалы өнімдермен танысып кете аласыз.\nБіздің Инстаграм парақшамыздан бүкіл жұмыстарымызды шынай отзывтарды көре аласыздар\nhttps://www.instagram.com/sapaplast.kz\n\nБізді 2Гис картасынан осылай таба аласыз;\nУлица Немировича-Данченко, 18а\nhttps://2gis.kz/almaty/geo/9430047374980723/76.868243,43.261476\nЖәне де сізге местоположение жіберіп жатырмын.\nhttps://www.google.com/maps/place/43%C2%B015'40.4%22N+76%C2%B052'05.3%22E/@43.2612251,76.8655673,17z/data=!3m1!4b1!4m4!3m3!8m2!3d43.2612251!4d76.8681422?hl=ru&entry=ttu",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1064050",
+      "created_at": "2026-04-14T12:50:17+03:00",
+      "author_id": "21234",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жандос Менеджер Алматы)",
+      "text": "",
+      "attachments": [
+        {
+          "type": "video",
+          "label": "WhatsApp_Video_2025-04-22_at_14.30.03.mp4",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=230500&exact=N&_esd=TNJRPF139PfP2L6KSBLOQYcJJ9TjroiEZDTkvp8p7M3uSA0tbY7oGaW1Qf09NriQrhyB0-Fa5M1nI-kw63WC39xJwI5ys9qvUTgF_MpnlHAr8GvRDp_WTelopYi4N2z_IYxvRlrO70ImiF-gF0DVoCtZey0LEqfqtAIk00UVJESDvBf50uefVVtQoxw%3D&fileName=WhatsApp_Video_2025-04-22_at_14.30.03.mp4"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1064052",
+      "created_at": "2026-04-14T12:50:19+03:00",
+      "author_id": "21234",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жандос Менеджер Алматы)",
+      "text": "Сәлеметсіз бе?!🙂 Сізді Алматы қаласындағы Сапа Пласт Компаниясының ресми шорумында сізді күтетін боламыз. Бұл жерден сіз тек сапалы өнімдермен танысып кете аласыз.\nБіздің Инстаграм парақшамыздан бүкіл жұмыстарымызды шынай отзывтарды көре аласыздар\nhttps://www.instagram.com/sapaplast.kz\n\nБізді 2Гис картасынан осылай таба аласыз;\nУлица Немировича-Данченко, 18а\nhttps://2gis.kz/almaty/geo/9430047374980723/76.868243,43.261476\nЖәне де сізге местоположение жіберіп жатырмын.\nhttps://www.google.com/maps/place/43%C2%B015'40.4%22N+76%C2%B052'05.3%22E/@43.2612251,76.8655673,17z/data=!3m1!4b1!4m4!3m3!8m2!3d43.2612251!4d76.8681422?hl=ru&entry=ttu",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1064054",
+      "created_at": "2026-04-14T12:50:40+03:00",
+      "author_id": "21234",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жандос Менеджер Алматы)",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "wazzup_audio.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=230502&exact=N&fileName=wazzup_audio.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1064056",
+      "created_at": "2026-04-14T12:50:49+03:00",
+      "author_id": "21234",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жандос Менеджер Алматы)",
+      "text": "Сәлеметсіз бе?!🙂 Сізді Алматы қаласындағы Сапа Пласт Компаниясының ресми шорумында сізді күтетін боламыз. Бұл жерден сіз тек сапалы өнімдермен танысып кете аласыз.\nБіздің Инстаграм парақшамыздан бүкіл жұмыстарымызды шынай отзывтарды көре аласыздар\nhttps://www.instagram.com/sapaplast.kz\n\nБізді 2Гис картасынан осылай таба аласыз;\nУлица Немировича-Данченко, 18а\nhttps://2gis.kz/almaty/geo/9430047374980723/76.868243,43.261476\nЖәне де сізге местоположение жіберіп жатырмын.\nhttps://www.google.com/maps/place/43%C2%B015'40.4%22N+76%C2%B052'05.3%22E/@43.2612251,76.8655673,17z/data=!3m1!4b1!4m4!3m3!8m2!3d43.2612251!4d76.8681422?hl=ru&entry=ttu",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1064060",
+      "created_at": "2026-04-14T12:51:30+03:00",
+      "author_id": "21234",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жандос Менеджер Алматы)",
+      "text": "Сәлеметсіз бе?!🙂 Сізді Алматы қаласындағы Сапа Пласт Компаниясының ресми шорумында сізді күтетін боламыз. Бұл жерден сіз тек сапалы өнімдермен танысып кете аласыз.\nБіздің Инстаграм парақшамыздан бүкіл жұмыстарымызды шынай отзывтарды көре аласыздар\nhttps://www.instagram.com/sapaplast.kz\n\nБізді 2Гис картасынан осылай таба аласыз;\nУлица Немировича-Данченко, 18а\nhttps://2gis.kz/almaty/geo/9430047374980723/76.868243,43.261476\nЖәне де сізге местоположение жіберіп жатырмын.\nhttps://www.google.com/maps/place/43%C2%B015'40.4%22N+76%C2%B052'05.3%22E/@43.2612251,76.8655673,17z/data=!3m1!4b1!4m4!3m3!8m2!3d43.2612251!4d76.8681422?hl=ru&entry=ttu",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1064062",
+      "created_at": "2026-04-14T12:52:21+03:00",
+      "author_id": "21234",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жандос Менеджер Алматы)",
+      "text": "Сәлеметсіз бе?!🙂 Сізді Алматы қаласындағы Сапа Пласт Компаниясының ресми шорумында сізді күтетін боламыз. Бұл жерден сіз тек сапалы өнімдермен танысып кете аласыз.\nБіздің Инстаграм парақшамыздан бүкіл жұмыстарымызды шынай отзывтарды көре аласыздар\nhttps://www.instagram.com/sapaplast.kz\n\nБізді 2Гис картасынан осылай таба аласыз;\nУлица Немировича-Данченко, 18а\nhttps://2gis.kz/almaty/geo/9430047374980723/76.868243,43.261476\nЖәне де сізге местоположение жіберіп жатырмын.\nhttps://www.google.com/maps/place/43%C2%B015'40.4%22N+76%C2%B052'05.3%22E/@43.2612251,76.8655673,17z/data=!3m1!4b1!4m4!3m3!8m2!3d43.2612251!4d76.8681422?hl=ru&entry=ttu",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1064064",
+      "created_at": "2026-04-14T12:53:41+03:00",
+      "author_id": "21234",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жандос Менеджер Алматы)",
+      "text": "Сәлеметсіз бе?!🙂 Сізді Алматы қаласындағы Сапа Пласт Компаниясының ресми шорумында сізді күтетін боламыз. Бұл жерден сіз тек сапалы өнімдермен танысып кете аласыз.\nБіздің Инстаграм парақшамыздан бүкіл жұмыстарымызды шынай отзывтарды көре аласыздар\nhttps://www.instagram.com/sapaplast.kz\n\nБізді 2Гис картасынан осылай таба аласыз;\nУлица Немировича-Данченко, 18а\nhttps://2gis.kz/almaty/geo/9430047374980723/76.868243,43.261476\nЖәне де сізге местоположение жіберіп жатырмын.\nhttps://www.google.com/maps/place/43%C2%B015'40.4%22N+76%C2%B052'05.3%22E/@43.2612251,76.8655673,17z/data=!3m1!4b1!4m4!3m3!8m2!3d43.2612251!4d76.8681422?hl=ru&entry=ttu",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1064116",
+      "created_at": "2026-04-14T13:04:02+03:00",
+      "author_id": "21234",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жандос Менеджер Алматы)",
+      "text": "Сәлеметсіз бе?!🙂 Сізді Алматы қаласындағы Сапа Пласт Компаниясының ресми шорумында сізді күтетін боламыз. Бұл жерден сіз тек сапалы өнімдермен танысып кете аласыз.\nБіздің Инстаграм парақшамыздан бүкіл жұмыстарымызды шынай отзывтарды көре аласыздар\nhttps://www.instagram.com/sapaplast.kz\n\nБізді 2Гис картасынан осылай таба аласыз;\nУлица Немировича-Данченко, 18а\nhttps://2gis.kz/almaty/geo/9430047374980723/76.868243,43.261476\nЖәне де сізге местоположение жіберіп жатырмын.\nhttps://www.google.com/maps/place/43%C2%B015'40.4%22N+76%C2%B052'05.3%22E/@43.2612251,76.8655673,17z/data=!3m1!4b1!4m4!3m3!8m2!3d43.2612251!4d76.8681422?hl=ru&entry=ttu",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1064146",
+      "created_at": "2026-04-14T13:34:23+03:00",
+      "author_id": "28",
+      "sender_role": "manager",
+      "sender_label": "Жандос Менеджер Алматы",
+      "text": "Сәлеметсіз бе?!🙂 Сізді Алматы қаласындағы Сапа Пласт Компаниясының ресми шорумында сізді күтетін боламыз. Бұл жерден сіз тек сапалы өнімдермен танысып кете аласыз.\nБіздің Инстаграм парақшамыздан бүкіл жұмыстарымызды шынай отзывтарды көре аласыздар\nhttps://www.instagram.com/sapaplast.kz\n\nБізді 2Гис картасынан осылай таба аласыз;\nУлица Немировича-Данченко, 18а\nhttps://2gis.kz/almaty/geo/9430047374980723/76.868243,43.261476\nЖәне де сізге местоположение жіберіп жатырмын.\nhttps://www.google.com/maps/place/43%C2%B015'40.4%22N+76%C2%B052'05.3%22E/@43.2612251,76.8655673,17z/data=!3m1!4b1!4m4!3m3!8m2!3d43.2612251!4d76.8681422?hl=ru&entry=ttu",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1064152",
+      "created_at": "2026-04-14T13:34:28+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Жандос Менеджер Алматы начал работу с диалогом",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1064256",
+      "created_at": "2026-04-14T14:04:45+03:00",
+      "author_id": "28",
+      "sender_role": "manager",
+      "sender_label": "Жандос Менеджер Алматы",
+      "text": "Сәлеметсіз бе?!🙂 Сізді Алматы қаласындағы Сапа Пласт Компаниясының ресми шорумында сізді күтетін боламыз. Бұл жерден сіз тек сапалы өнімдермен танысып кете аласыз.\nБіздің Инстаграм парақшамыздан бүкіл жұмыстарымызды шынай отзывтарды көре аласыздар\nhttps://www.instagram.com/sapaplast.kz\n\nБізді 2Гис картасынан осылай таба аласыз;\nУлица Немировича-Данченко, 18а\nhttps://2gis.kz/almaty/geo/9430047374980723/76.868243,43.261476\nЖәне де сізге местоположение жіберіп жатырмын.\nhttps://www.google.com/maps/place/43%C2%B015'40.4%22N+76%C2%B052'05.3%22E/@43.2612251,76.8655673,17z/data=!3m1!4b1!4m4!3m3!8m2!3d43.2612251!4d76.8681422?hl=ru&entry=ttu",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1064342",
+      "created_at": "2026-04-14T14:26:29+03:00",
+      "author_id": "21234",
+      "sender_role": "client",
+      "sender_label": "Шухрат",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "d624ba79-3aa6-4e5a-96e2-36e3a1163596.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=230526&exact=N&fileName=d624ba79-3aa6-4e5a-96e2-36e3a1163596.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1064346",
+      "created_at": "2026-04-14T14:28:00+03:00",
+      "author_id": "21234",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жандос Менеджер Алматы)",
+      "text": "Жаксы",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1064348",
+      "created_at": "2026-04-14T14:28:20+03:00",
+      "author_id": "21234",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жандос Менеджер Алматы)",
+      "text": "Кутемиз",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1064350",
+      "created_at": "2026-04-14T14:30:53+03:00",
+      "author_id": "21234",
+      "sender_role": "client",
+      "sender_label": "Шухрат",
+      "text": "",
+      "attachments": [
+        {
+          "type": "image",
+          "label": "8fcbca66-967f-4cc1-abf5-c1f0fad094ca.jpeg",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=230530&exact=N&_esd=IHEdwXgtSlny_fs_oGyrlOPXMV6MPA0p6BHb5Hoakwcqi46Ce8VOdDiRpB9ZYZLQOBi9jviphBuEo932NbAKDMgvdx-YJxr69UkH8YFGZs3tbmt04558TplOpVY98ffDh_3py6kxnl_G2yZ_gIOZaI39xcaeYv3_pe-L6kqOC_dnQVTm93kp_nPvkAo%3D&fileName=8fcbca66-967f-4cc1-abf5-c1f0fad094ca.jpeg"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1064352",
+      "created_at": "2026-04-14T14:31:11+03:00",
+      "author_id": "21234",
+      "sender_role": "client",
+      "sender_label": "Шухрат",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "6a08c2a4-2684-4411-be09-248c9a34b9bc.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=230532&exact=N&fileName=6a08c2a4-2684-4411-be09-248c9a34b9bc.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1068190",
+      "created_at": "2026-04-16T13:47:22+03:00",
+      "author_id": "21234",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жандос Менеджер Алматы)",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "wazzup_audio (1).mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231174&exact=N&fileName=wazzup_audio%20%281%29.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50526"
+    },
+    {
+      "timeline_comment_id": "1068246",
+      "created_at": "2026-04-16T14:44:10+03:00",
+      "author_id": "21234",
+      "sender_role": "client",
+      "sender_label": "Шухрат",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "f12ebdad-d2c4-4990-bf3b-609c7ccbe4e5.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231182&exact=N&fileName=f12ebdad-d2c4-4990-bf3b-609c7ccbe4e5.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50526"
+    }
+  ]
+}

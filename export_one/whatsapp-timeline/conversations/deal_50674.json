@@ -1,0 +1,288 @@
+{
+  "channel": "whatsapp",
+  "integration": "wazzup",
+  "deal_id": "50674",
+  "contact_id": "63698",
+  "company_id": "",
+  "deal_title": "Акайша Мадияровна - WhatsApp",
+  "source_id": "2|WZ_WHATSAPP_CB0C9F5C07DE8985B74A894B883C619C0",
+  "assigned_by_id": "9940",
+  "stage_id": "LOSE",
+  "stage_semantic_id": "F",
+  "category_id": "0",
+  "date_create": "2026-04-15T06:44:01+03:00",
+  "date_modify": "2026-04-15T08:43:30+03:00",
+  "closedate": "2026-04-15T03:00:00+03:00",
+  "closed": "Y",
+  "last_communication_time": "2026-04-15T10:42:00",
+  "opportunity": "0.00000000",
+  "currency_id": "KZT",
+  "loss_reason_id": "",
+  "loss_comment": "",
+  "utm_source": "",
+  "utm_medium": "",
+  "utm_campaign": "",
+  "timeline_source": "deal",
+  "timeline_entity_type": "deal",
+  "timeline_entity_id": "50674",
+  "chat_id": "64236",
+  "session_id": "26092",
+  "dialog_id": "chat64236",
+  "connector_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0",
+  "connector_title": "WAZZUP: WhatsApp",
+  "chat_name": "Акайша Мадияровна - WhatsApp",
+  "stats": {
+    "total_messages": 19,
+    "effective_messages": 8,
+    "manager_messages": 4,
+    "client_messages": 4,
+    "system_messages": 11,
+    "messages_with_files": 5,
+    "first_message_at": "2026-04-15T06:44:00+03:00",
+    "last_message_at": "2026-04-17T22:42:49+03:00",
+    "first_manager_response_time_sec": 50.0,
+    "avg_response_latency_sec": 52.25,
+    "conversation_duration_hours": 63.98027777777778
+  },
+  "messages": [
+    {
+      "timeline_comment_id": "1064994",
+      "created_at": "2026-04-15T06:44:00+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Начат новый диалог №26092",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "50674"
+    },
+    {
+      "timeline_comment_id": "1064998",
+      "created_at": "2026-04-15T06:44:01+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Создан новый контакт",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "Акайша Мадияровна",
+          "url": "/crm/contact/details/63698/"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "50674"
+    },
+    {
+      "timeline_comment_id": "1065000",
+      "created_at": "2026-04-15T06:44:01+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Создана новая сделка",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "Акайша Мадияровна - WhatsApp",
+          "url": "/crm/deal/details/50674/"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "50674"
+    },
+    {
+      "timeline_comment_id": "1065002",
+      "created_at": "2026-04-15T06:44:01+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Переданы дополнительные данные:\nСсылка на исходный пост: https://app.wazzup24.com/1826-6940/chat/whatsapp/77075524397/fc3e1d61-cd1c-4955-9345-b0f22b543020",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "Wazzup App",
+          "url": "https://app.wazzup24.com/1826-6940/chat/whatsapp/77075524397/fc3e1d61-cd1c-4955-9345-b0f22b543020"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "50674"
+    },
+    {
+      "timeline_comment_id": "1065004",
+      "created_at": "2026-04-15T06:44:02+03:00",
+      "author_id": "21274",
+      "sender_role": "client",
+      "sender_label": "Акайша Мадияровна",
+      "text": "Ссылка:\n\n\nПривет! Можно узнать об этом подробнее?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50674"
+    },
+    {
+      "timeline_comment_id": "1065008",
+      "created_at": "2026-04-15T06:44:31+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Обращение также направлено Жандос Менеджер Алматы",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "50674"
+    },
+    {
+      "timeline_comment_id": "1065012",
+      "created_at": "2026-04-15T06:44:52+03:00",
+      "author_id": "21274",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Здравствуйте! Вам пишет компания “SAPA PLAST”. Подскажите, вам нужны окна?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50674"
+    },
+    {
+      "timeline_comment_id": "1065066",
+      "created_at": "2026-04-15T07:04:51+03:00",
+      "author_id": "21274",
+      "sender_role": "client",
+      "sender_label": "Акайша Мадияровна",
+      "text": "Входной есік керек",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50674"
+    },
+    {
+      "timeline_comment_id": "1065072",
+      "created_at": "2026-04-15T07:06:09+03:00",
+      "author_id": "21274",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Сәлеметсіз бе! Кіреберіс (ағаш/темір) есік бойынша бөлек менеджерлер жұмыс істейді. Осы нөмірге жазыңыз: 87710709494 — бағасын және суреттерін жіберіп береді 🙂",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50674"
+    },
+    {
+      "timeline_comment_id": "1065116",
+      "created_at": "2026-04-15T07:14:52+03:00",
+      "author_id": "21274",
+      "sender_role": "client",
+      "sender_label": "Акайша Мадияровна",
+      "text": "👌",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50674"
+    },
+    {
+      "timeline_comment_id": "1065118",
+      "created_at": "2026-04-15T07:14:52+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Контактная информация сохранена в контакт",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "Акайша Мадияровна",
+          "url": "/crm/contact/details/63698/"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "50674"
+    },
+    {
+      "timeline_comment_id": "1065140",
+      "created_at": "2026-04-15T07:15:37+03:00",
+      "author_id": "21274",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Түсіндім 🙂 Есіктер бойынша: 87710709494 — WhatsApp-қа жазыңыз, бағасын және суреттерін жібереді.\nЕгер терезе/витраж керек болса, айтыңыз — көмектесеміз.",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50674"
+    },
+    {
+      "timeline_comment_id": "1065156",
+      "created_at": "2026-04-15T07:16:20+03:00",
+      "author_id": "21274",
+      "sender_role": "client",
+      "sender_label": "Акайша Мадияровна",
+      "text": "👌",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50674"
+    },
+    {
+      "timeline_comment_id": "1065160",
+      "created_at": "2026-04-15T07:16:20+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Контактная информация сохранена в контакт",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "Акайша Мадияровна",
+          "url": "/crm/contact/details/63698/"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "50674"
+    },
+    {
+      "timeline_comment_id": "1065168",
+      "created_at": "2026-04-15T07:16:56+03:00",
+      "author_id": "21274",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Түсіндім! Есіктер бойынша — 87710709494 нөміріне жазыңыз.\n\nЕгер терезе/витраж керек болса, көмектесеміз. Шоурумдарымыз:\n- Шымкент, Бозарық 261/1\n- Алматы, Немировича-Данченко 18е\n\nКеліп көре аласыз 🙂",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50674"
+    },
+    {
+      "timeline_comment_id": "1065290",
+      "created_at": "2026-04-15T07:46:06+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Обращение направлено на всех участников очереди",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "50674"
+    },
+    {
+      "timeline_comment_id": "1065440",
+      "created_at": "2026-04-15T08:46:24+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Обращение также направлено \"\"Нурсултан\"\" Директор Алматы SP",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "50674"
+    },
+    {
+      "timeline_comment_id": "1065878",
+      "created_at": "2026-04-15T09:47:30+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Обращение также направлено Ернур Исаков",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "50674"
+    },
+    {
+      "timeline_comment_id": "1070096",
+      "created_at": "2026-04-17T22:42:49+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Обращение также направлено sapa.plast.bitrix@mail.ru",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "50674"
+    }
+  ]
+}

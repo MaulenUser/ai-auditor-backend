@@ -1,0 +1,835 @@
+{
+  "binding": {
+    "timeline_source": "deal",
+    "timeline_entity_type": "deal",
+    "timeline_entity_id": "50740",
+    "chat_id": "64578",
+    "connector_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0",
+    "connector_title": "WAZZUP: WhatsApp"
+  },
+  "dialog": {
+    "id": 64578,
+    "parent_chat_id": 0,
+    "parent_message_id": 0,
+    "name": "Ерке - WhatsApp",
+    "description": "Ссылка на исходный пост: https://app.wazzup24.com/1826-6940/chat/whatsapp/77762768096/fc3e1d61-cd1c-4955-9345-b0f22b543020",
+    "owner": 0,
+    "extranet": false,
+    "avatar": "",
+    "color": "#29619b",
+    "type": "lines",
+    "counter": 0,
+    "user_counter": 1,
+    "message_count": 36,
+    "unread_id": 0,
+    "restrictions": {
+      "avatar": true,
+      "rename": true,
+      "extend": true,
+      "call": true,
+      "mute": true,
+      "leave": true,
+      "leave_owner": true,
+      "send": true,
+      "user_list": true
+    },
+    "last_message_id": 1070102,
+    "last_id": 0,
+    "marked_id": 0,
+    "disk_folder_id": 0,
+    "entity_type": "LINES",
+    "entity_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|8153d2ac-5456-4deb-ba77-632484a5851a|21304",
+    "entity_data_1": "Y|DEAL|50740|N|N|26140|1776274249|0|0|0",
+    "entity_data_2": "LEAD|0|COMPANY|0|CONTACT|31788|DEAL|50740",
+    "entity_data_3": "",
+    "mute_list": [],
+    "date_create": "2026-04-15T20:30:49+03:00",
+    "message_type": "L",
+    "public": "",
+    "role": "guest",
+    "entity_link": {
+      "type": "LINES",
+      "url": "",
+      "id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|8153d2ac-5456-4deb-ba77-632484a5851a|21304"
+    },
+    "text_field_enabled": true,
+    "background_id": null,
+    "permissions": {
+      "manage_users_add": "member",
+      "manage_users_delete": "manager",
+      "manage_ui": "member",
+      "manage_settings": "owner",
+      "manage_messages": "member",
+      "can_post": "member"
+    },
+    "is_new": false,
+    "readed_list": [
+      {
+        "user_id": 21304,
+        "user_name": "Ерке",
+        "message_id": 1067258,
+        "date": null
+      }
+    ],
+    "manager_list": [],
+    "last_message_views": {
+      "message_id": 1070102,
+      "first_viewers": [],
+      "count_of_viewers": 0
+    },
+    "dialog_id": "chat64578"
+  },
+  "history": {
+    "chatId": 64578,
+    "canJoin": "Y",
+    "canVoteHead": "Y",
+    "sessionId": 26140,
+    "sessionVoteHead": 0,
+    "sessionCommentHead": null,
+    "userId": "chat64578",
+    "message": {
+      "1070102": {
+        "id": "1070102",
+        "chatid": "64578",
+        "senderid": "0",
+        "recipientid": "chat64578",
+        "date": "2026-04-17T22:42:49+03:00",
+        "text": "Обращение также направлено [USER=1 REPLACE]sapa.plast.bitrix@mail.ru[/USER]",
+        "textlegacy": "Обращение также направлено [USER=1 REPLACE]sapa.plast.bitrix@mail.ru[/USER]",
+        "params": {
+          "notify": "N"
+        }
+      },
+      "1067616": {
+        "id": "1067616",
+        "chatid": "64578",
+        "senderid": "0",
+        "recipientid": "chat64578",
+        "date": "2026-04-16T08:35:06+03:00",
+        "text": "Обращение направлено на всех участников очереди",
+        "textlegacy": "Обращение направлено на всех участников очереди",
+        "params": []
+      },
+      "1067478": {
+        "id": "1067478",
+        "chatid": "64578",
+        "senderid": "0",
+        "recipientid": "chat64578",
+        "date": "2026-04-16T07:31:39+03:00",
+        "text": "Обращение направлено на всех участников очереди",
+        "textlegacy": "Обращение направлено на всех участников очереди",
+        "params": []
+      },
+      "1067436": {
+        "id": "1067436",
+        "chatid": "64578",
+        "senderid": "21304",
+        "recipientid": "chat64578",
+        "date": "2026-04-16T07:17:11+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nДа суббота работаем",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Да суббота работаем",
+        "params": {
+          "connectorMid": [
+            "c40f9024-7ec3-4f33-9667-1850de5e5f5f"
+          ],
+          "dateText": [
+            "суббота"
+          ],
+          "dateTs": [
+            1776528000
+          ]
+        }
+      },
+      "1067434": {
+        "id": "1067434",
+        "chatid": "64578",
+        "senderid": "21304",
+        "recipientid": "chat64578",
+        "date": "2026-04-16T07:17:10+03:00",
+        "text": ">>Вы в субботу работаете?\n \n \n=== Исходящее сообщение, автор: Телефон ===\nЗдравствуйте!",
+        "textlegacy": "&gt;&gt;Вы в субботу работаете?<br /> <br /> <br />=== Исходящее сообщение, автор: Телефон ===<br />Здравствуйте!",
+        "params": {
+          "connectorMid": [
+            "83f8b6a4-fa5b-4c46-a3d1-34b1afdf1603"
+          ],
+          "dateText": [
+            "субботу"
+          ],
+          "dateTs": [
+            1776528000
+          ]
+        }
+      },
+      "1067310": {
+        "id": "1067310",
+        "chatid": "64578",
+        "senderid": "21304",
+        "recipientid": "chat64578",
+        "date": "2026-04-15T21:16:36+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nЕркежан, всё отлично, пишите завтра — будем на связи 🙂  \nШоурум: Алматы, ул. Немировича-Данченко 18е.  \nКогда вам удобно заглянуть, согласуем время и финально посчитаем антрацит с трёхкамерным стеклопакетом. Хорошего вечера!",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Еркежан, всё отлично, пишите завтра — будем на связи 🙂 &nbsp;<br />Шоурум: Алматы, ул. Немировича-Данченко 18е. &nbsp;<br />Когда вам удобно заглянуть, согласуем время и финально посчитаем антрацит с трёхкамерным стеклопакетом. Хорошего вечера!",
+        "params": {
+          "connectorMid": [
+            "87fc9b37-6a94-43e8-b3da-f8c5f4a8740f"
+          ],
+          "dateText": [
+            "завтра"
+          ],
+          "dateTs": [
+            1776355200
+          ]
+        }
+      },
+      "1067308": {
+        "id": "1067308",
+        "chatid": "64578",
+        "senderid": "21304",
+        "recipientid": "chat64578",
+        "date": "2026-04-15T21:15:50+03:00",
+        "text": "Извините за беспокойство))",
+        "textlegacy": "Извините за беспокойство))",
+        "params": {
+          "connectorMid": [
+            "a5be8a3e-4b9b-42eb-8ce6-23b1807984ea"
+          ]
+        }
+      },
+      "1067306": {
+        "id": "1067306",
+        "chatid": "64578",
+        "senderid": "21304",
+        "recipientid": "chat64578",
+        "date": "2026-04-15T21:15:32+03:00",
+        "text": "Уже поздно оказывается",
+        "textlegacy": "Уже поздно оказывается",
+        "params": {
+          "connectorMid": [
+            "7284be5b-8edd-4a4b-b551-33806d3073bd"
+          ]
+        }
+      },
+      "1067304": {
+        "id": "1067304",
+        "chatid": "64578",
+        "senderid": "21304",
+        "recipientid": "chat64578",
+        "date": "2026-04-15T21:15:22+03:00",
+        "text": "Ладно завтра напишу",
+        "textlegacy": "Ладно завтра напишу",
+        "params": {
+          "connectorMid": [
+            "a8c4e1e7-4188-4da8-8a94-056894386411"
+          ],
+          "dateText": [
+            "завтра"
+          ],
+          "dateTs": [
+            1776355200
+          ]
+        }
+      },
+      "1067302": {
+        "id": "1067302",
+        "chatid": "64578",
+        "senderid": "21304",
+        "recipientid": "chat64578",
+        "date": "2026-04-15T20:59:52+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nСейчас уточню и вернусь к вам 🙂",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Сейчас уточню и вернусь к вам 🙂",
+        "params": {
+          "connectorMid": [
+            "4ad9bef8-da4d-44dd-a7e4-54be9c806e9e"
+          ]
+        }
+      },
+      "1067300": {
+        "id": "1067300",
+        "chatid": "64578",
+        "senderid": "21304",
+        "recipientid": "chat64578",
+        "date": "2026-04-15T20:58:57+03:00",
+        "text": "Вы в субботу работаете?",
+        "textlegacy": "Вы в субботу работаете?",
+        "params": {
+          "connectorMid": [
+            "1e7ec9d8-c0ae-484e-bc74-efc304257b88"
+          ],
+          "dateText": [
+            "субботу"
+          ],
+          "dateTs": [
+            1776528000
+          ]
+        }
+      },
+      "1067298": {
+        "id": "1067298",
+        "chatid": "64578",
+        "senderid": "21304",
+        "recipientid": "chat64578",
+        "date": "2026-04-15T20:58:48+03:00",
+        "text": "Ок",
+        "textlegacy": "Ок",
+        "params": {
+          "connectorMid": [
+            "aec35801-ef72-47ce-8e9e-6247d6d6e2ef"
+          ]
+        }
+      },
+      "1067296": {
+        "id": "1067296",
+        "chatid": "64578",
+        "senderid": "21304",
+        "recipientid": "chat64578",
+        "date": "2026-04-15T20:41:14+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nПриняла: трёхкамерный стеклопакет, цвет антрацит.\n\nОриентир по эконом-серии:\n- Площадь ≈ 25.15 м²\n- Цена: 40 000–60 000 тг/м²\nИтого примерно: 1 006 000 – 1 509 000 тг.\nТочная сумма выйдет после финальной комплектации.\n\nУдобно подъехать в наш шоурум в Алматы, ул. Немировича-Данченко 18е, чтобы закрепить параметры и оформить?",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Приняла: трёхкамерный стеклопакет, цвет антрацит.<br /><br />Ориентир по эконом-серии:<br />- Площадь ≈ 25.15 м²<br />- Цена: 40 000–60 000 тг/м²<br />Итого примерно: 1 006 000 – 1 509 000 тг.<br />Точная сумма выйдет после финальной комплектации.<br /><br />Удобно подъехать в наш шоурум в Алматы, ул. Немировича-Данченко 18е, чтобы закрепить параметры и оформить?",
+        "params": {
+          "connectorMid": [
+            "0427d9aa-f82b-4fd0-aaa1-11caee3abece"
+          ],
+          "dateText": [
+            "25.15"
+          ],
+          "dateTs": [
+            1805990400
+          ]
+        }
+      },
+      "1067294": {
+        "id": "1067294",
+        "chatid": "64578",
+        "senderid": "21304",
+        "recipientid": "chat64578",
+        "date": "2026-04-15T20:40:07+03:00",
+        "text": "Давайте трехкамерный посчитайте",
+        "textlegacy": "Давайте трехкамерный посчитайте",
+        "params": {
+          "connectorMid": [
+            "66ab71da-8ae8-45e9-a483-1b582e972b09"
+          ]
+        }
+      },
+      "1067292": {
+        "id": "1067292",
+        "chatid": "64578",
+        "senderid": "21304",
+        "recipientid": "chat64578",
+        "date": "2026-04-15T20:39:11+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nАнтрацит — поняла 🙂\n\nПо эконом-серии ориентир по вашим размерам:\n- Общая площадь ≈ 25.15 м²\n- Цена: от 40 000 до 60 000 тг/м²\nИтого примерно: 1 006 000 – 1 509 000 тг.\nТочная сумма зависит от комплектации, выбранного стеклопакета.\n\nСтеклопакет хотите двухкамерный или трёхкамерный?",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Антрацит — поняла 🙂<br /><br />По эконом-серии ориентир по вашим размерам:<br />- Общая площадь ≈ 25.15 м²<br />- Цена: от 40 000 до 60 000 тг/м²<br />Итого примерно: 1 006 000 – 1 509 000 тг.<br />Точная сумма зависит от комплектации, выбранного стеклопакета.<br /><br />Стеклопакет хотите двухкамерный или трёхкамерный?",
+        "params": {
+          "connectorMid": [
+            "bdf0ccc9-ecfe-4b1d-8804-bd5fcf9a1152"
+          ],
+          "dateText": [
+            "25.15"
+          ],
+          "dateTs": [
+            1805990400
+          ]
+        }
+      },
+      "1067290": {
+        "id": "1067290",
+        "chatid": "64578",
+        "senderid": "21304",
+        "recipientid": "chat64578",
+        "date": "2026-04-15T20:38:05+03:00",
+        "text": ">>Какой цвет рассматриваете: белый, комбинированный или цветной?\n \n \nАнтрацид)",
+        "textlegacy": "&gt;&gt;Какой цвет рассматриваете: белый, комбинированный или цветной?<br /> <br /> <br />Антрацид)",
+        "params": {
+          "connectorMid": [
+            "a221543b-0a01-40ca-8592-1b9073f45f60"
+          ]
+        }
+      },
+      "1067288": {
+        "id": "1067288",
+        "chatid": "64578",
+        "senderid": "21304",
+        "recipientid": "chat64578",
+        "date": "2026-04-15T20:37:55+03:00",
+        "text": "3штрина×2 высота - 2 терезе\n1,70высота×1,50 ширина- 3 терезе\n50×50 - 2 терезе форточка\n2ширина×2,5высота - 1 терезе",
+        "textlegacy": "3штрина×2 высота - 2 терезе<br />1,70высота×1,50 ширина- 3 терезе<br />50×50 - 2 терезе форточка<br />2ширина×2,5высота - 1 терезе",
+        "params": {
+          "connectorMid": [
+            "33a36348-b88b-4f5b-80cf-30c4f6754b60"
+          ]
+        }
+      },
+      "1067286": {
+        "id": "1067286",
+        "chatid": "64578",
+        "senderid": "21304",
+        "recipientid": "chat64578",
+        "date": "2026-04-15T20:37:44+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nКакой цвет рассматриваете: белый, комбинированный или цветной?",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Какой цвет рассматриваете: белый, комбинированный или цветной?",
+        "params": {
+          "connectorMid": [
+            "a4ff9a5c-b9e8-451c-905c-482a95faf610"
+          ]
+        }
+      },
+      "1067284": {
+        "id": "1067284",
+        "chatid": "64578",
+        "senderid": "21304",
+        "recipientid": "chat64578",
+        "date": "2026-04-15T20:37:00+03:00",
+        "text": "Аха",
+        "textlegacy": "Аха",
+        "params": {
+          "connectorMid": [
+            "c8957186-2464-4cf6-b7c4-ffa5357ef3ea"
+          ]
+        }
+      },
+      "1067282": {
+        "id": "1067282",
+        "chatid": "64578",
+        "senderid": "21304",
+        "recipientid": "chat64578",
+        "date": "2026-04-15T20:36:20+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nУточню, размеры указаны в метрах?",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Уточню, размеры указаны в метрах?",
+        "params": {
+          "connectorMid": [
+            "91b62f16-9713-44b7-aaa8-109a465e6bbd"
+          ]
+        }
+      },
+      "1067280": {
+        "id": "1067280",
+        "chatid": "64578",
+        "senderid": "21304",
+        "recipientid": "chat64578",
+        "date": "2026-04-15T20:35:34+03:00",
+        "text": "Даа",
+        "textlegacy": "Даа",
+        "params": {
+          "connectorMid": [
+            "bf1c116c-c93d-478e-8c2d-8071125a44c2"
+          ]
+        }
+      },
+      "1067278": {
+        "id": "1067278",
+        "chatid": "64578",
+        "senderid": "21304",
+        "recipientid": "chat64578",
+        "date": "2026-04-15T20:35:12+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nЕркежан, правильно понимаю, всего 8 окон?",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Еркежан, правильно понимаю, всего 8 окон?",
+        "params": {
+          "connectorMid": [
+            "604acb5e-cb91-46a0-8a1f-721ea5990944"
+          ]
+        }
+      },
+      "1067276": {
+        "id": "1067276",
+        "chatid": "64578",
+        "senderid": "21304",
+        "recipientid": "chat64578",
+        "date": "2026-04-15T20:34:17+03:00",
+        "text": "Туздыбастау",
+        "textlegacy": "Туздыбастау",
+        "params": {
+          "connectorMid": [
+            "2bba8d1b-f94f-4916-9b4e-610f72245eb5"
+          ]
+        }
+      },
+      "1067274": {
+        "id": "1067274",
+        "chatid": "64578",
+        "senderid": "21304",
+        "recipientid": "chat64578",
+        "date": "2026-04-15T20:34:16+03:00",
+        "text": "Из Алматинский области",
+        "textlegacy": "Из Алматинский области",
+        "params": {
+          "connectorMid": [
+            "efc4a9c6-af38-4c36-8b9b-9de032a8da03"
+          ]
+        }
+      },
+      "1067272": {
+        "id": "1067272",
+        "chatid": "64578",
+        "senderid": "21304",
+        "recipientid": "chat64578",
+        "date": "2026-04-15T20:33:48+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nЕркежан, из какого вы города?",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Еркежан, из какого вы города?",
+        "params": {
+          "connectorMid": [
+            "90f93be8-27ae-4343-85e2-692637a74fda"
+          ]
+        }
+      },
+      "1067270": {
+        "id": "1067270",
+        "chatid": "64578",
+        "senderid": "21304",
+        "recipientid": "chat64578",
+        "date": "2026-04-15T20:33:18+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nПонимаю, подберём эконом-серию. Как я могу к вам обращаться?",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Понимаю, подберём эконом-серию. Как я могу к вам обращаться?",
+        "params": {
+          "connectorMid": [
+            "04f7b51d-0bc2-4870-b4f6-905e4ed60a6f"
+          ]
+        }
+      },
+      "1067268": {
+        "id": "1067268",
+        "chatid": "64578",
+        "senderid": "21304",
+        "recipientid": "chat64578",
+        "date": "2026-04-15T20:33:00+03:00",
+        "text": "Меня зовут Еркежан",
+        "textlegacy": "Меня зовут Еркежан",
+        "params": {
+          "connectorMid": [
+            "41db0823-dbe7-4c9a-bf8c-0df50ea61f95"
+          ]
+        }
+      },
+      "1067266": {
+        "id": "1067266",
+        "chatid": "64578",
+        "senderid": "21304",
+        "recipientid": "chat64578",
+        "date": "2026-04-15T20:32:41+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nКак я могу к вам обращаться?",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Как я могу к вам обращаться?",
+        "params": {
+          "connectorMid": [
+            "021b6a5e-0c5a-43ec-89eb-a5f1d9b95e20"
+          ]
+        }
+      },
+      "1067264": {
+        "id": "1067264",
+        "chatid": "64578",
+        "senderid": "21304",
+        "recipientid": "chat64578",
+        "date": "2026-04-15T20:32:13+03:00",
+        "text": "Нам нужно бюджетный вариант",
+        "textlegacy": "Нам нужно бюджетный вариант",
+        "params": {
+          "connectorMid": [
+            "2b95d4d5-0bde-44f3-9e07-42492ad71ff6"
+          ]
+        }
+      },
+      "1067262": {
+        "id": "1067262",
+        "chatid": "64578",
+        "senderid": "21304",
+        "recipientid": "chat64578",
+        "date": "2026-04-15T20:31:56+03:00",
+        "text": "3×2,5 - 2 терезе\n1,70×1,50 - 3 терезе\n50×50 - 2 терезе\n2×2,5 - 1 терезе",
+        "textlegacy": "3×2,5 - 2 терезе<br />1,70×1,50 - 3 терезе<br />50×50 - 2 терезе<br />2×2,5 - 1 терезе",
+        "params": {
+          "connectorMid": [
+            "05c4748a-fa26-45b6-87a4-02fe8d826862"
+          ]
+        }
+      },
+      "1067260": {
+        "id": "1067260",
+        "chatid": "64578",
+        "senderid": "21304",
+        "recipientid": "chat64578",
+        "date": "2026-04-15T20:31:28+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nЗдравствуйте! Вам пишет компания “SAPA PLAST”. Подскажите, вам нужны окна?",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Здравствуйте! Вам пишет компания “SAPA PLAST”. Подскажите, вам нужны окна?",
+        "params": {
+          "connectorMid": [
+            "d8950afc-2ba8-4be7-9564-10507d36884f"
+          ]
+        }
+      },
+      "1067258": {
+        "id": "1067258",
+        "chatid": "64578",
+        "senderid": "21304",
+        "recipientid": "chat64578",
+        "date": "2026-04-15T20:30:51+03:00",
+        "text": "Здравствуйте, я хочу рассчитать стоимость окон в Алматы\n[URL]https://www.instagram.com/p/DW18R5kAAtC/[/URL]",
+        "textlegacy": "Здравствуйте, я хочу рассчитать стоимость окон в Алматы<br /><a href=\"https://www.instagram.com/p/DW18R5kAAtC/\" target=\"_blank\" >https://www.instagram.com/p/DW18R5kAAtC/</a>",
+        "params": {
+          "connectorMid": [
+            "60ab85b9-3c9f-45b9-a2f5-8b3ffac90c88"
+          ]
+        }
+      },
+      "1067256": {
+        "id": "1067256",
+        "chatid": "64578",
+        "senderid": "0",
+        "recipientid": "chat64578",
+        "date": "2026-04-15T20:30:50+03:00",
+        "text": "[B]Переданы дополнительные данные:[/B]\n Ссылка на исходный пост: [URL]https://app.wazzup24.com/1826-6940/chat/whatsapp/77762768096/fc3e1d61-cd1c-4955-9345-b0f22b543020[/URL]",
+        "textlegacy": "<b>Переданы дополнительные данные:</b><br /> Ссылка на исходный пост: <a href=\"https://app.wazzup24.com/1826-6940/chat/whatsapp/77762768096/fc3e1d61-cd1c-4955-9345-b0f22b543020\" target=\"_blank\" >https://app.wazzup24.com/1826-6940/chat/whatsapp/77762768096/fc3e1d61-cd1c-4955-9345-b0f22b543020</a>",
+        "params": {
+          "class": "bx-messenger-content-item-system",
+          "componentId": "HiddenMessage",
+          "urlId": [
+            84182
+          ],
+          "attach": [
+            {
+              "id": "84182",
+              "blocks": [
+                {
+                  "richLink": [
+                    {
+                      "name": "Wazzup App",
+                      "link": "https://app.wazzup24.com/1826-6940/chat/whatsapp/77762768096/fc3e1d61-cd1c-4955-9345-b0f22b543020",
+                      "desc": "Communicate with clients in the application on the computer, and all correspondence will be saved in CRM.",
+                      "preview": "https://cdn.wazzup24.com/icons/icon_512x512.358b79.png",
+                      "previewSize": {
+                        "height": 512,
+                        "width": 512
+                      }
+                    }
+                  ]
+                }
+              ],
+              "description": "",
+              "color": "transparent"
+            }
+          ]
+        }
+      },
+      "1067254": {
+        "id": "1067254",
+        "chatid": "64578",
+        "senderid": "0",
+        "recipientid": "chat64578",
+        "date": "2026-04-15T20:30:50+03:00",
+        "text": "[b]Контактная информация сохранена в контакт[/b]",
+        "textlegacy": "<b>Контактная информация сохранена в контакт</b>",
+        "params": {
+          "attach": [
+            {
+              "id": 1776274250,
+              "blocks": [
+                {
+                  "link": [
+                    {
+                      "name": "Ерке",
+                      "link": "/crm/contact/details/31788/"
+                    }
+                  ]
+                },
+                {
+                  "grid": [
+                    {
+                      "display": "LINE",
+                      "name": "Телефон",
+                      "value": "+77762768096[br]+7 (776) 276-80-96",
+                      "height": 20,
+                      "colorToken": "base"
+                    },
+                    {
+                      "display": "LINE",
+                      "name": "Email",
+                      "value": "77762768096@whatsapp.wazzup",
+                      "height": 20,
+                      "colorToken": "base"
+                    }
+                  ]
+                }
+              ],
+              "description": "",
+              "color": "#8d51eb"
+            }
+          ]
+        }
+      },
+      "1067252": {
+        "id": "1067252",
+        "chatid": "64578",
+        "senderid": "0",
+        "recipientid": "chat64578",
+        "date": "2026-04-15T20:30:50+03:00",
+        "text": "[b]Создана новая сделка[/b]",
+        "textlegacy": "<b>Создана новая сделка</b>",
+        "params": {
+          "attach": [
+            {
+              "id": 1776274250,
+              "blocks": [
+                {
+                  "link": [
+                    {
+                      "name": "Ерке - WhatsApp",
+                      "link": "/crm/deal/details/50740/"
+                    }
+                  ]
+                }
+              ],
+              "description": "",
+              "color": "#728f7a"
+            }
+          ]
+        }
+      },
+      "1067248": {
+        "id": "1067248",
+        "chatid": "64578",
+        "senderid": "0",
+        "recipientid": "chat64578",
+        "date": "2026-04-15T20:30:49+03:00",
+        "text": "Начат новый диалог №[URL=/online/?IM_HISTORY=imol|26140]26140[/URL]",
+        "textlegacy": "Начат новый диалог №<a href=\"/online/?IM_HISTORY=imol|26140\" target=\"_blank\" >26140</a>",
+        "params": {
+          "class": "bx-messenger-content-item-ol-start",
+          "componentId": "StartDialogMessage"
+        }
+      }
+    },
+    "usersMessage": {
+      "chat64578": [
+        "1070102",
+        "1067616",
+        "1067478",
+        "1067436",
+        "1067434",
+        "1067310",
+        "1067308",
+        "1067306",
+        "1067304",
+        "1067302",
+        "1067300",
+        "1067298",
+        "1067296",
+        "1067294",
+        "1067292",
+        "1067290",
+        "1067288",
+        "1067286",
+        "1067284",
+        "1067282",
+        "1067280",
+        "1067278",
+        "1067276",
+        "1067274",
+        "1067272",
+        "1067270",
+        "1067268",
+        "1067266",
+        "1067264",
+        "1067262",
+        "1067260",
+        "1067258",
+        "1067256",
+        "1067254",
+        "1067252",
+        "1067248"
+      ]
+    },
+    "users": {
+      "21304": {
+        "id": "21304",
+        "name": "Ерке",
+        "active": true,
+        "firstName": "Ерке",
+        "lastName": "",
+        "workPosition": null,
+        "color": "#4ba5c3",
+        "avatar": "/bitrix/js/im/images/blank.gif",
+        "avatarId": null,
+        "birthday": false,
+        "gender": "M",
+        "phoneDevice": false,
+        "phones": false,
+        "extranet": true,
+        "network": false,
+        "bot": false,
+        "connector": true,
+        "profile": "/company/personal/user/21304/",
+        "externalAuthId": "imconnector",
+        "status": "online",
+        "idle": false,
+        "lastActivityDate": false,
+        "mobileLastDate": false,
+        "desktopLastDate": false,
+        "departments": [],
+        "absent": false,
+        "type": "extranet",
+        "eventLog": "N",
+        "services": null,
+        "botData": null
+      }
+    },
+    "openlines": {
+      "canvoteashead": {
+        "2": true
+      }
+    },
+    "userInGroup": [],
+    "woUserInGroup": [],
+    "chat": {
+      "64578": {
+        "id": "64578",
+        "parentChatId": 0,
+        "parentMessageId": 0,
+        "name": "Ерке - WhatsApp",
+        "owner": "0",
+        "color": "#29619b",
+        "extranet": false,
+        "avatar": "/bitrix/js/im/images/blank.gif",
+        "call": "0",
+        "callNumber": "",
+        "entityType": "LINES",
+        "entityId": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|8153d2ac-5456-4deb-ba77-632484a5851a|21304",
+        "entityData1": "Y|DEAL|50740|N|N|26140|1776274249|0|0|0",
+        "entityData2": "LEAD|0|COMPANY|0|CONTACT|31788|DEAL|50740",
+        "entityData3": "",
+        "messageCount": 36,
+        "public": "",
+        "muteList": {
+          "21304": false
+        },
+        "managerList": [],
+        "dateCreate": "2026-04-15T22:30:49+03:00",
+        "type": "lines",
+        "entityLink": {
+          "type": "LINES",
+          "url": "",
+          "id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|8153d2ac-5456-4deb-ba77-632484a5851a|21304"
+        },
+        "permissions": {
+          "manageUsersAdd": "member",
+          "manageUsersDelete": "manager",
+          "manageUi": "member",
+          "manageSettings": "owner",
+          "manageMessages": "member",
+          "canPost": "member"
+        },
+        "textFieldEnabled": true,
+        "backgroundId": null,
+        "messageType": "L",
+        "isNew": false
+      }
+    },
+    "userBlockChat": {
+      "64578": {
+        "21304": false
+      }
+    },
+    "userInChat": {
+      "64578": [
+        21304
+      ]
+    },
+    "files": []
+  }
+}

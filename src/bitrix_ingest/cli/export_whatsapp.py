@@ -35,13 +35,13 @@ def build_parser() -> argparse.ArgumentParser:
         "--modified-from",
         dest="date_from",
         default=None,
-        help="Inclusive start date/datetime filter on deal DATE_CREATE/DATE_MODIFY and message timestamps",
+        help="Inclusive start date/datetime filter on deal DATE_CREATE/DATE_MODIFY",
     )
     parser.add_argument(
         "--date-to",
         dest="date_to",
         default=None,
-        help="Inclusive end date/datetime filter on deal DATE_CREATE/DATE_MODIFY and message timestamps",
+        help="Inclusive end date/datetime filter on deal DATE_CREATE/DATE_MODIFY",
     )
     parser.add_argument(
         "--deal-ids",

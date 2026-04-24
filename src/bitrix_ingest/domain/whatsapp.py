@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from datetime import datetime, timezone
 from enum import Enum
 from typing import Any
 
@@ -54,9 +55,10 @@ class WhatsAppMessage:
         return bool(self.attachments)
 
     def to_dict(self) -> dict[str, Any]:
+        # raw_comment is preserved in raw/*.json; omitted here to reduce file size.
+        # message_id duplicates timeline_comment_id and is intentionally omitted.
         return {
             "timeline_comment_id": self.timeline_comment_id,
-            "message_id": self.message_id,
             "created_at": self.created_at,
             "author_id": self.author_id,
             "sender_role": self.sender_role,
@@ -64,14 +66,28 @@ class WhatsAppMessage:
             "text": self.text,
             "attachments": [a.to_dict() for a in self.attachments],
             "is_system_message": self.is_system_message,
-            "raw_comment": self.raw_comment,
             "deal_id": self.deal_id,
         }
 
 
+def _parse_ts(value: str) -> datetime | None:
+    if not value:
+        return None
+    try:
+        return datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except (ValueError, TypeError):
+        return None
+
+
+def _to_utc(dt: datetime) -> datetime:
+    if dt.tzinfo is None:
+        return dt.replace(tzinfo=timezone.utc)
+    return dt.astimezone(timezone.utc)
+
+
 @dataclass
 class ConversationStats:
-    """Aggregate counts for a conversation. Derived from the message list."""
+    """Aggregate counts and derived KPIs for a conversation."""
 
     total_messages: int
     manager_messages: int
@@ -80,14 +96,14 @@ class ConversationStats:
     messages_with_files: int
     first_message_at: str | None
     last_message_at: str | None
+    # Derived analytics fields
+    effective_messages: int = 0
+    first_manager_response_time_sec: float | None = None
+    avg_response_latency_sec: float | None = None
+    conversation_duration_hours: float | None = None
 
     @classmethod
     def from_messages(cls, messages: list[WhatsAppMessage]) -> "ConversationStats":
-        """Compute stats directly from a list of messages.
-
-        Keeping this constructor on the stats object ensures there is exactly
-        one place in the codebase that knows how to derive counts from messages.
-        """
         if not messages:
             return cls(
                 total_messages=0,
@@ -109,6 +125,11 @@ class ConversationStats:
             if message.has_attachments():
                 files_count += 1
 
+        effective = role_counts[SenderRole.MANAGER] + role_counts[SenderRole.CLIENT]
+        first_response = _compute_first_response_time(messages)
+        avg_latency = _compute_avg_response_latency(messages)
+        duration = _compute_duration_hours(messages)
+
         return cls(
             total_messages=len(messages),
             manager_messages=role_counts[SenderRole.MANAGER],
@@ -117,18 +138,79 @@ class ConversationStats:
             messages_with_files=files_count,
             first_message_at=messages[0].created_at,
             last_message_at=messages[-1].created_at,
+            effective_messages=effective,
+            first_manager_response_time_sec=first_response,
+            avg_response_latency_sec=avg_latency,
+            conversation_duration_hours=duration,
         )
 
     def to_dict(self) -> dict[str, Any]:
         return {
             "total_messages": self.total_messages,
+            "effective_messages": self.effective_messages,
             "manager_messages": self.manager_messages,
             "client_messages": self.client_messages,
             "system_messages": self.system_messages,
             "messages_with_files": self.messages_with_files,
             "first_message_at": self.first_message_at,
             "last_message_at": self.last_message_at,
+            "first_manager_response_time_sec": self.first_manager_response_time_sec,
+            "avg_response_latency_sec": self.avg_response_latency_sec,
+            "conversation_duration_hours": self.conversation_duration_hours,
         }
+
+
+def _compute_first_response_time(messages: list[WhatsAppMessage]) -> float | None:
+    """Seconds from first client message to first subsequent manager message."""
+    first_client_ts: datetime | None = None
+    for msg in messages:
+        if msg.sender_role == SenderRole.CLIENT:
+            first_client_ts = _parse_ts(msg.created_at)
+            break
+    if first_client_ts is None:
+        return None
+    first_client_ts = _to_utc(first_client_ts)
+    for msg in messages:
+        if msg.sender_role != SenderRole.MANAGER:
+            continue
+        ts = _parse_ts(msg.created_at)
+        if ts is None:
+            continue
+        ts = _to_utc(ts)
+        if ts >= first_client_ts:
+            return (ts - first_client_ts).total_seconds()
+    return None
+
+
+def _compute_avg_response_latency(messages: list[WhatsAppMessage]) -> float | None:
+    """Mean seconds from each client message to the next manager message."""
+    latencies: list[float] = []
+    pending_client_ts: datetime | None = None
+    for msg in messages:
+        if msg.sender_role == SenderRole.CLIENT:
+            ts = _parse_ts(msg.created_at)
+            if ts is not None:
+                pending_client_ts = _to_utc(ts)
+        elif msg.sender_role == SenderRole.MANAGER and pending_client_ts is not None:
+            ts = _parse_ts(msg.created_at)
+            if ts is not None:
+                ts = _to_utc(ts)
+                if ts >= pending_client_ts:
+                    latencies.append((ts - pending_client_ts).total_seconds())
+            pending_client_ts = None
+    if not latencies:
+        return None
+    return sum(latencies) / len(latencies)
+
+
+def _compute_duration_hours(messages: list[WhatsAppMessage]) -> float | None:
+    if len(messages) < 2:
+        return None
+    first = _parse_ts(messages[0].created_at)
+    last = _parse_ts(messages[-1].created_at)
+    if first is None or last is None:
+        return None
+    return (_to_utc(last) - _to_utc(first)).total_seconds() / 3600.0
 
 
 @dataclass
@@ -143,6 +225,7 @@ class WhatsAppConversation:
     source_id: str
     assigned_by_id: str
     stage_id: str
+    stage_semantic_id: str
     category_id: str
     date_create: str
     date_modify: str
@@ -158,6 +241,17 @@ class WhatsAppConversation:
     connector_id: str = ""
     connector_title: str = ""
     chat_name: str = ""
+    # Deal analytics fields
+    opportunity: str = ""
+    currency_id: str = ""
+    closedate: str = ""
+    closed: str = ""
+    loss_reason_id: str = ""
+    loss_comment: str = ""
+    utm_source: str = ""
+    utm_medium: str = ""
+    utm_campaign: str = ""
+    company_id: str = ""
 
     @property
     def is_empty(self) -> bool:
@@ -169,14 +263,25 @@ class WhatsAppConversation:
             "integration": self.integration,
             "deal_id": self.deal_id,
             "contact_id": self.contact_id,
+            "company_id": self.company_id,
             "deal_title": self.deal_title,
             "source_id": self.source_id,
             "assigned_by_id": self.assigned_by_id,
             "stage_id": self.stage_id,
+            "stage_semantic_id": self.stage_semantic_id,
             "category_id": self.category_id,
             "date_create": self.date_create,
             "date_modify": self.date_modify,
+            "closedate": self.closedate,
+            "closed": self.closed,
             "last_communication_time": self.last_communication_time,
+            "opportunity": self.opportunity,
+            "currency_id": self.currency_id,
+            "loss_reason_id": self.loss_reason_id,
+            "loss_comment": self.loss_comment,
+            "utm_source": self.utm_source,
+            "utm_medium": self.utm_medium,
+            "utm_campaign": self.utm_campaign,
             "timeline_source": self.timeline_source,
             "timeline_entity_type": self.timeline_entity_type,
             "timeline_entity_id": self.timeline_entity_id,

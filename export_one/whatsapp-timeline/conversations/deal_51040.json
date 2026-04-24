@@ -1,0 +1,233 @@
+{
+  "channel": "whatsapp",
+  "integration": "wazzup",
+  "deal_id": "51040",
+  "contact_id": "64046",
+  "company_id": "",
+  "deal_title": "хорошо - WhatsApp",
+  "source_id": "2|WZ_WHATSAPP_CB0C9F5C07DE8985B74A894B883C619C0",
+  "assigned_by_id": "9940",
+  "stage_id": "LOSE",
+  "stage_semantic_id": "F",
+  "category_id": "0",
+  "date_create": "2026-04-19T15:13:48+03:00",
+  "date_modify": "2026-04-20T10:55:53+03:00",
+  "closedate": "2026-04-20T03:00:00+03:00",
+  "closed": "Y",
+  "last_communication_time": "2026-04-19T17:13:48",
+  "opportunity": "0.00000000",
+  "currency_id": "KZT",
+  "loss_reason_id": "",
+  "loss_comment": "",
+  "utm_source": "",
+  "utm_medium": "",
+  "utm_campaign": "",
+  "timeline_source": "deal",
+  "timeline_entity_type": "deal",
+  "timeline_entity_id": "51040",
+  "chat_id": "64988",
+  "session_id": "26248",
+  "dialog_id": "chat64988",
+  "connector_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0",
+  "connector_title": "WAZZUP: WhatsApp",
+  "chat_name": "хорошо - WhatsApp",
+  "stats": {
+    "total_messages": 14,
+    "effective_messages": 7,
+    "manager_messages": 2,
+    "client_messages": 5,
+    "system_messages": 7,
+    "messages_with_files": 5,
+    "first_message_at": "2026-04-19T15:13:48+03:00",
+    "last_message_at": "2026-04-20T14:16:20+03:00",
+    "first_manager_response_time_sec": 91.0,
+    "avg_response_latency_sec": 1.0,
+    "conversation_duration_hours": 23.04222222222222
+  },
+  "messages": [
+    {
+      "timeline_comment_id": "1071636",
+      "created_at": "2026-04-19T15:13:48+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Начат новый диалог №26248",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "51040"
+    },
+    {
+      "timeline_comment_id": "1071640",
+      "created_at": "2026-04-19T15:13:49+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Создан новый контакт",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "хорошо",
+          "url": "/crm/contact/details/64046/"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "51040"
+    },
+    {
+      "timeline_comment_id": "1071642",
+      "created_at": "2026-04-19T15:13:49+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Создана новая сделка",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "хорошо - WhatsApp",
+          "url": "/crm/deal/details/51040/"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "51040"
+    },
+    {
+      "timeline_comment_id": "1071644",
+      "created_at": "2026-04-19T15:13:49+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Переданы дополнительные данные:\nСсылка на исходный пост: https://app.wazzup24.com/1826-6940/chat/whatsapp/77004461505/fc3e1d61-cd1c-4955-9345-b0f22b543020",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "Wazzup App",
+          "url": "https://app.wazzup24.com/1826-6940/chat/whatsapp/77004461505/fc3e1d61-cd1c-4955-9345-b0f22b543020"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "51040"
+    },
+    {
+      "timeline_comment_id": "1071646",
+      "created_at": "2026-04-19T15:13:49+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Обращение направлено на всех участников очереди",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "51040"
+    },
+    {
+      "timeline_comment_id": "1071650",
+      "created_at": "2026-04-19T15:13:49+03:00",
+      "author_id": "21406",
+      "sender_role": "client",
+      "sender_label": "хорошо",
+      "text": "Сәлеметсіз бе, мен Тараздағы терезелердің құнын есептегім келеді\nhttps://www.instagram.com/p/DW8ykmJgGaZ/",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "51040"
+    },
+    {
+      "timeline_comment_id": "1071652",
+      "created_at": "2026-04-19T15:15:11+03:00",
+      "author_id": "21406",
+      "sender_role": "client",
+      "sender_label": "хорошо",
+      "text": "DOC-20260419-WA0027.",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "51040"
+    },
+    {
+      "timeline_comment_id": "1071654",
+      "created_at": "2026-04-19T15:15:18+03:00",
+      "author_id": "21406",
+      "sender_role": "client",
+      "sender_label": "хорошо",
+      "text": "",
+      "attachments": [
+        {
+          "type": "image",
+          "label": "0759c661-14fb-4f1c-b1c9-6a9207896246.jpeg",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231588&exact=N&_esd=SVSGig81sKNSZZMdUcz3rYX1tgbyNQ-kAoDOhNWZBf_rL8_gd6NffRYOjh-hXOaQN0fpqTvF5_oFr43uTssU5ixy0LGEYvzGf07Ja8-LrN2h4f46HkUGqG3pSGGikW0CMNgv6d-LNBnUYkOawxTmyIJDOMn4-3EpVvehonk-N9U8DQlvOodSwmJdtCQ%3D&fileName=0759c661-14fb-4f1c-b1c9-6a9207896246.jpeg"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "51040"
+    },
+    {
+      "timeline_comment_id": "1071656",
+      "created_at": "2026-04-19T15:15:18+03:00",
+      "author_id": "21406",
+      "sender_role": "client",
+      "sender_label": "хорошо",
+      "text": "Теплый серия алюминий сложный открывание\nСтеклопакет прозрачный цвет золотой дуб",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "51040"
+    },
+    {
+      "timeline_comment_id": "1071658",
+      "created_at": "2026-04-19T15:15:19+03:00",
+      "author_id": "21406",
+      "sender_role": "client",
+      "sender_label": "хорошо",
+      "text": "Есептеп берынызшы",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "51040"
+    },
+    {
+      "timeline_comment_id": "1071660",
+      "created_at": "2026-04-19T15:15:20+03:00",
+      "author_id": "21406",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Сәлеметсіз бе! Сізге компания “SAPA PLAST” жазып отыр. Айтыңызшы, сізге терезелер керек пе?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "51040"
+    },
+    {
+      "timeline_comment_id": "1071958",
+      "created_at": "2026-04-20T06:58:32+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Обращение также направлено Жандос Менеджер Алматы",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "51040"
+    },
+    {
+      "timeline_comment_id": "1072160",
+      "created_at": "2026-04-20T07:59:17+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Обращение направлено на всех участников очереди",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "51040"
+    },
+    {
+      "timeline_comment_id": "1072938",
+      "created_at": "2026-04-20T14:16:20+03:00",
+      "author_id": "21406",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "ed7d7e27-d03b-455b-baa8-49bbf6905960.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231808&exact=N&fileName=ed7d7e27-d03b-455b-baa8-49bbf6905960.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "51040"
+    }
+  ]
+}

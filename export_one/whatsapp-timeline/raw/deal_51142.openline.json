@@ -1,0 +1,390 @@
+{
+  "binding": {
+    "timeline_source": "deal",
+    "timeline_entity_type": "deal",
+    "timeline_entity_id": "51142",
+    "chat_id": "65210",
+    "connector_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0",
+    "connector_title": "WAZZUP: WhatsApp"
+  },
+  "dialog": {
+    "id": 65210,
+    "parent_chat_id": 0,
+    "parent_message_id": 0,
+    "name": "Голд интерьер - WhatsApp",
+    "description": "Ссылка на исходный пост: https://app.wazzup24.com/1826-6940/chat/whatsapp/77477175151/fc3e1d61-cd1c-4955-9345-b0f22b543020",
+    "owner": 0,
+    "extranet": false,
+    "avatar": "",
+    "color": "#ab7761",
+    "type": "lines",
+    "counter": 0,
+    "user_counter": 1,
+    "message_count": 9,
+    "unread_id": 0,
+    "restrictions": {
+      "avatar": true,
+      "rename": true,
+      "extend": true,
+      "call": true,
+      "mute": true,
+      "leave": true,
+      "leave_owner": true,
+      "send": true,
+      "user_list": true
+    },
+    "last_message_id": 1074102,
+    "last_id": 0,
+    "marked_id": 0,
+    "disk_folder_id": 0,
+    "entity_type": "LINES",
+    "entity_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|49678aff-0030-4a48-ba6f-c7e3e9cb96c1|21470",
+    "entity_data_1": "Y|DEAL|51142|N|N|26324|1776771485|0|0|0",
+    "entity_data_2": "LEAD|0|COMPANY|0|CONTACT|64142|DEAL|51142",
+    "entity_data_3": "",
+    "mute_list": [],
+    "date_create": "2026-04-21T14:38:04+03:00",
+    "message_type": "L",
+    "public": "",
+    "role": "guest",
+    "entity_link": {
+      "type": "LINES",
+      "url": "",
+      "id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|49678aff-0030-4a48-ba6f-c7e3e9cb96c1|21470"
+    },
+    "text_field_enabled": true,
+    "background_id": null,
+    "permissions": {
+      "manage_users_add": "member",
+      "manage_users_delete": "manager",
+      "manage_ui": "member",
+      "manage_settings": "owner",
+      "manage_messages": "member",
+      "can_post": "member"
+    },
+    "is_new": false,
+    "readed_list": [
+      {
+        "user_id": 21470,
+        "user_name": "Голд интерьер",
+        "message_id": 1074022,
+        "date": null
+      }
+    ],
+    "manager_list": [],
+    "last_message_views": {
+      "message_id": 1074102,
+      "first_viewers": [],
+      "count_of_viewers": 0
+    },
+    "dialog_id": "chat65210"
+  },
+  "history": {
+    "chatId": 65210,
+    "canJoin": "Y",
+    "canVoteHead": "Y",
+    "sessionId": 26324,
+    "sessionVoteHead": 0,
+    "sessionCommentHead": null,
+    "userId": "chat65210",
+    "message": {
+      "1074102": {
+        "id": "1074102",
+        "chatid": "65210",
+        "senderid": "0",
+        "recipientid": "chat65210",
+        "date": "2026-04-21T18:50:42+03:00",
+        "text": "Обращение также направлено [USER=1 REPLACE]sapa.plast.bitrix@mail.ru[/USER]",
+        "textlegacy": "Обращение также направлено [USER=1 REPLACE]sapa.plast.bitrix@mail.ru[/USER]",
+        "params": {
+          "notify": "N"
+        }
+      },
+      "1074056": {
+        "id": "1074056",
+        "chatid": "65210",
+        "senderid": "0",
+        "recipientid": "chat65210",
+        "date": "2026-04-21T15:38:44+03:00",
+        "text": "Обращение также направлено [USER=18 REPLACE]\"\"Нурсултан\"\" Директор Алматы SP[/USER]",
+        "textlegacy": "Обращение также направлено [USER=18 REPLACE]\"\"Нурсултан\"\" Директор Алматы SP[/USER]",
+        "params": {
+          "notify": "N"
+        }
+      },
+      "1074024": {
+        "id": "1074024",
+        "chatid": "65210",
+        "senderid": "21470",
+        "recipientid": "chat65210",
+        "date": "2026-04-21T14:38:15+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nСізге тез арада менеджер жауап береді",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Сізге тез арада менеджер жауап береді",
+        "params": {
+          "connectorMid": [
+            "4b7083a8-1173-4ad0-b4f6-f4193c42203b"
+          ]
+        }
+      },
+      "1074022": {
+        "id": "1074022",
+        "chatid": "65210",
+        "senderid": "21470",
+        "recipientid": "chat65210",
+        "date": "2026-04-21T14:38:08+03:00",
+        "text": "Қайырлы күн!\nGolD Интерьер компаниясына хабарласқаныңыз үшін рахмет! Есимим САЯ\nСізді біздің өнімдеріміздің дилері болуға және серіктестікке шақырамыз.\n\nСеріктестікті талқылау сізге қызықты ма?",
+        "textlegacy": "Қайырлы күн!<br />GolD Интерьер компаниясына хабарласқаныңыз үшін рахмет! Есимим САЯ<br />Сізді біздің өнімдеріміздің дилері болуға және серіктестікке шақырамыз.<br /><br />Серіктестікті талқылау сізге қызықты ма?",
+        "params": {
+          "connectorMid": [
+            "c7bf3194-5934-4af7-96d1-c79e39b618c5"
+          ]
+        }
+      },
+      "1074020": {
+        "id": "1074020",
+        "chatid": "65210",
+        "senderid": "0",
+        "recipientid": "chat65210",
+        "date": "2026-04-21T14:38:08+03:00",
+        "text": "Обращение направлено на всех участников очереди",
+        "textlegacy": "Обращение направлено на всех участников очереди",
+        "params": []
+      },
+      "1074018": {
+        "id": "1074018",
+        "chatid": "65210",
+        "senderid": "0",
+        "recipientid": "chat65210",
+        "date": "2026-04-21T14:38:07+03:00",
+        "text": "[B]Переданы дополнительные данные:[/B]\n Ссылка на исходный пост: [URL]https://app.wazzup24.com/1826-6940/chat/whatsapp/77477175151/fc3e1d61-cd1c-4955-9345-b0f22b543020[/URL]",
+        "textlegacy": "<b>Переданы дополнительные данные:</b><br /> Ссылка на исходный пост: <a href=\"https://app.wazzup24.com/1826-6940/chat/whatsapp/77477175151/fc3e1d61-cd1c-4955-9345-b0f22b543020\" target=\"_blank\" >https://app.wazzup24.com/1826-6940/chat/whatsapp/77477175151/fc3e1d61-cd1c-4955-9345-b0f22b543020</a>",
+        "params": {
+          "class": "bx-messenger-content-item-system",
+          "componentId": "HiddenMessage",
+          "urlId": [
+            84912
+          ],
+          "attach": [
+            {
+              "id": "84912",
+              "blocks": [
+                {
+                  "richLink": [
+                    {
+                      "name": "Wazzup App",
+                      "link": "https://app.wazzup24.com/1826-6940/chat/whatsapp/77477175151/fc3e1d61-cd1c-4955-9345-b0f22b543020",
+                      "desc": "Communicate with clients in the application on the computer, and all correspondence will be saved in CRM.",
+                      "preview": "https://cdn.wazzup24.com/icons/icon_512x512.358b79.png",
+                      "previewSize": {
+                        "height": 512,
+                        "width": 512
+                      }
+                    }
+                  ]
+                }
+              ],
+              "description": "",
+              "color": "transparent"
+            }
+          ]
+        }
+      },
+      "1074016": {
+        "id": "1074016",
+        "chatid": "65210",
+        "senderid": "0",
+        "recipientid": "chat65210",
+        "date": "2026-04-21T14:38:07+03:00",
+        "text": "[b]Создана новая сделка[/b]",
+        "textlegacy": "<b>Создана новая сделка</b>",
+        "params": {
+          "attach": [
+            {
+              "id": 1776771487,
+              "blocks": [
+                {
+                  "link": [
+                    {
+                      "name": "Голд интерьер - WhatsApp",
+                      "link": "/crm/deal/details/51142/"
+                    }
+                  ]
+                }
+              ],
+              "description": "",
+              "color": "#8d51eb"
+            }
+          ]
+        }
+      },
+      "1074014": {
+        "id": "1074014",
+        "chatid": "65210",
+        "senderid": "0",
+        "recipientid": "chat65210",
+        "date": "2026-04-21T14:38:06+03:00",
+        "text": "[b]Создан новый контакт[/b]",
+        "textlegacy": "<b>Создан новый контакт</b>",
+        "params": {
+          "attach": [
+            {
+              "id": 1776771486,
+              "blocks": [
+                {
+                  "link": [
+                    {
+                      "name": "Голд интерьер",
+                      "link": "/crm/contact/details/64142/"
+                    }
+                  ]
+                },
+                {
+                  "grid": [
+                    {
+                      "display": "LINE",
+                      "name": "Телефон",
+                      "value": "+77477175151",
+                      "height": 20,
+                      "colorToken": "base"
+                    },
+                    {
+                      "display": "LINE",
+                      "name": "Email",
+                      "value": "77477175151@whatsapp.wazzup",
+                      "height": 20,
+                      "colorToken": "base"
+                    }
+                  ]
+                }
+              ],
+              "description": "",
+              "color": "#4ba984"
+            }
+          ]
+        }
+      },
+      "1074010": {
+        "id": "1074010",
+        "chatid": "65210",
+        "senderid": "0",
+        "recipientid": "chat65210",
+        "date": "2026-04-21T14:38:04+03:00",
+        "text": "Начат новый диалог №[URL=/online/?IM_HISTORY=imol|26324]26324[/URL]",
+        "textlegacy": "Начат новый диалог №<a href=\"/online/?IM_HISTORY=imol|26324\" target=\"_blank\" >26324</a>",
+        "params": {
+          "class": "bx-messenger-content-item-ol-start",
+          "componentId": "StartDialogMessage"
+        }
+      }
+    },
+    "usersMessage": {
+      "chat65210": [
+        "1074102",
+        "1074056",
+        "1074024",
+        "1074022",
+        "1074020",
+        "1074018",
+        "1074016",
+        "1074014",
+        "1074010"
+      ]
+    },
+    "users": {
+      "21470": {
+        "id": "21470",
+        "name": "Голд интерьер",
+        "active": true,
+        "firstName": "Голд",
+        "lastName": "интерьер",
+        "workPosition": null,
+        "color": "#ab7761",
+        "avatar": "/bitrix/js/im/images/blank.gif",
+        "avatarId": null,
+        "birthday": false,
+        "gender": "M",
+        "phoneDevice": false,
+        "phones": false,
+        "extranet": true,
+        "network": false,
+        "bot": false,
+        "connector": true,
+        "profile": "/company/personal/user/21470/",
+        "externalAuthId": "imconnector",
+        "status": "online",
+        "idle": false,
+        "lastActivityDate": false,
+        "mobileLastDate": false,
+        "desktopLastDate": false,
+        "departments": [],
+        "absent": false,
+        "type": "extranet",
+        "eventLog": "N",
+        "services": null,
+        "botData": null
+      }
+    },
+    "openlines": {
+      "canvoteashead": {
+        "2": true
+      }
+    },
+    "userInGroup": [],
+    "woUserInGroup": [],
+    "chat": {
+      "65210": {
+        "id": "65210",
+        "parentChatId": 0,
+        "parentMessageId": 0,
+        "name": "Голд интерьер - WhatsApp",
+        "owner": "0",
+        "color": "#ab7761",
+        "extranet": false,
+        "avatar": "/bitrix/js/im/images/blank.gif",
+        "call": "0",
+        "callNumber": "",
+        "entityType": "LINES",
+        "entityId": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|49678aff-0030-4a48-ba6f-c7e3e9cb96c1|21470",
+        "entityData1": "Y|DEAL|51142|N|N|26324|1776771485|0|0|0",
+        "entityData2": "LEAD|0|COMPANY|0|CONTACT|64142|DEAL|51142",
+        "entityData3": "",
+        "messageCount": 9,
+        "public": "",
+        "muteList": {
+          "21470": false
+        },
+        "managerList": [],
+        "dateCreate": "2026-04-21T16:38:04+03:00",
+        "type": "lines",
+        "entityLink": {
+          "type": "LINES",
+          "url": "",
+          "id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|49678aff-0030-4a48-ba6f-c7e3e9cb96c1|21470"
+        },
+        "permissions": {
+          "manageUsersAdd": "member",
+          "manageUsersDelete": "manager",
+          "manageUi": "member",
+          "manageSettings": "owner",
+          "manageMessages": "member",
+          "canPost": "member"
+        },
+        "textFieldEnabled": true,
+        "backgroundId": null,
+        "messageType": "L",
+        "isNew": false
+      }
+    },
+    "userBlockChat": {
+      "65210": {
+        "21470": false
+      }
+    },
+    "userInChat": {
+      "65210": [
+        21470
+      ]
+    },
+    "files": []
+  }
+}

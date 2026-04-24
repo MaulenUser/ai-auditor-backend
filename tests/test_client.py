@@ -1,12 +1,14 @@
 """Tests for BitrixClient: retries, pagination, URL normalisation."""
 from __future__ import annotations
 
+import json
 from unittest.mock import MagicMock, call, patch
 
 import pytest
 import requests
 
 from bitrix_ingest.domain.exceptions import BitrixError
+from bitrix_ingest.infrastructure.audit_trace import AuditTraceRecorder
 from bitrix_ingest.infrastructure.http import BitrixClient, WebhookUrl
 
 
@@ -74,6 +76,32 @@ class TestCall:
 
         _, kwargs = session.post.call_args
         assert kwargs["json"] == {"select": ["ID"], "start": 0}
+
+    def test_successful_call_writes_trace_event(self, tmp_path):
+        session = MagicMock()
+        session.post.return_value = _make_ok_response({"result": {"ID": "1"}})
+        trace = AuditTraceRecorder(
+            tmp_path / "client.trace.json",
+            run_name="test.bitrix",
+            request_details={},
+        )
+        client = BitrixClient(
+            "https://x.bitrix24.ru/rest/1/token/",
+            session=session,
+            trace=trace,
+            trace_name="bitrix.test",
+        )
+
+        try:
+            client.call("profile")
+        finally:
+            trace.finish(status="ok")
+
+        payload = json.loads((tmp_path / "client.trace.json").read_text(encoding="utf-8"))
+        bitrix_events = [event for event in payload["events"] if event["type"] == "bitrix_call"]
+        assert len(bitrix_events) == 1
+        assert bitrix_events[0]["name"] == "profile"
+        assert bitrix_events[0]["details"]["trace_name"] == "bitrix.test"
 
 
 # ---------------------------------------------------------------------------

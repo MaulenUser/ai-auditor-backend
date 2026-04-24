@@ -1,0 +1,586 @@
+{
+  "binding": {
+    "timeline_source": "deal",
+    "timeline_entity_type": "deal",
+    "timeline_entity_id": "50126",
+    "chat_id": "63392",
+    "connector_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0",
+    "connector_title": "WAZZUP: WhatsApp"
+  },
+  "dialog": {
+    "id": 63392,
+    "parent_chat_id": 0,
+    "parent_message_id": 0,
+    "name": "Алия - WhatsApp",
+    "description": "Ссылка на исходный пост: https://app.wazzup24.com/1826-6940/chat/whatsapp/77017103433/fc3e1d61-cd1c-4955-9345-b0f22b543020",
+    "owner": 0,
+    "extranet": false,
+    "avatar": "https://cdn-ru.bitrix24.kz/b29289878/resize_cache/211810/ff58db95aecdfa09ae61b51b5fd8f63f/main/b50/b50348295dbb832f2abb8add014097b6/3894766a20a90a9edc96b36857b5f411.jpg",
+    "color": "#728f7a",
+    "type": "lines",
+    "counter": 0,
+    "user_counter": 1,
+    "message_count": 13,
+    "unread_id": 0,
+    "restrictions": {
+      "avatar": true,
+      "rename": true,
+      "extend": true,
+      "call": true,
+      "mute": true,
+      "leave": true,
+      "leave_owner": true,
+      "send": true,
+      "user_list": true
+    },
+    "last_message_id": 1062576,
+    "last_id": 0,
+    "marked_id": 0,
+    "disk_folder_id": 229050,
+    "entity_type": "LINES",
+    "entity_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|d6de758c-709a-4803-b196-3b55ff18c260|21058",
+    "entity_data_1": "Y|DEAL|50126|N|N|25814|1775644135|0|0|0",
+    "entity_data_2": "LEAD|0|COMPANY|0|CONTACT|63188|DEAL|50126",
+    "entity_data_3": "",
+    "mute_list": [],
+    "date_create": "2026-04-08T13:28:52+03:00",
+    "message_type": "L",
+    "public": "",
+    "role": "guest",
+    "entity_link": {
+      "type": "LINES",
+      "url": "",
+      "id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|d6de758c-709a-4803-b196-3b55ff18c260|21058"
+    },
+    "text_field_enabled": true,
+    "background_id": null,
+    "permissions": {
+      "manage_users_add": "member",
+      "manage_users_delete": "manager",
+      "manage_ui": "member",
+      "manage_settings": "owner",
+      "manage_messages": "member",
+      "can_post": "member"
+    },
+    "is_new": false,
+    "readed_list": [
+      {
+        "user_id": 21058,
+        "user_name": "Алия",
+        "message_id": 1054728,
+        "date": null
+      }
+    ],
+    "manager_list": [],
+    "last_message_views": {
+      "message_id": 1062576,
+      "first_viewers": [],
+      "count_of_viewers": 0
+    },
+    "dialog_id": "chat63392"
+  },
+  "history": {
+    "chatId": 63392,
+    "canJoin": "Y",
+    "canVoteHead": "Y",
+    "sessionId": 25814,
+    "sessionVoteHead": 0,
+    "sessionCommentHead": null,
+    "userId": "chat63392",
+    "message": {
+      "1062576": {
+        "id": "1062576",
+        "chatid": "63392",
+        "senderid": "0",
+        "recipientid": "chat63392",
+        "date": "2026-04-13T16:26:26+03:00",
+        "text": "Обращение также направлено [USER=1 REPLACE]sapa.plast.bitrix@mail.ru[/USER]",
+        "textlegacy": "Обращение также направлено [USER=1 REPLACE]sapa.plast.bitrix@mail.ru[/USER]",
+        "params": {
+          "notify": "N"
+        }
+      },
+      "1060664": {
+        "id": "1060664",
+        "chatid": "63392",
+        "senderid": "0",
+        "recipientid": "chat63392",
+        "date": "2026-04-13T07:21:20+03:00",
+        "text": "Обращение также направлено [USER=20 REPLACE]Асет Шымкент менеджер SP[/USER]",
+        "textlegacy": "Обращение также направлено [USER=20 REPLACE]Асет Шымкент менеджер SP[/USER]",
+        "params": {
+          "notify": "N"
+        }
+      },
+      "1054766": {
+        "id": "1054766",
+        "chatid": "63392",
+        "senderid": "21058",
+        "recipientid": "chat63392",
+        "date": "2026-04-08T13:36:51+03:00",
+        "text": "=== Исходящее сообщение, автор: Битрикс24 (Жандос Менеджер Алматы) ===",
+        "textlegacy": "=== Исходящее сообщение, автор: Битрикс24 (Жандос Менеджер Алматы) ===",
+        "params": {
+          "connectorMid": [
+            "b559d580-a0c4-473f-b92d-42e7c7cd94c4"
+          ],
+          "fileId": [
+            229056
+          ]
+        }
+      },
+      "1054762": {
+        "id": "1054762",
+        "chatid": "63392",
+        "senderid": "21058",
+        "recipientid": "chat63392",
+        "date": "2026-04-08T13:36:40+03:00",
+        "text": "=== Исходящее сообщение, автор: Битрикс24 (Жандос Менеджер Алматы) ===\nСәлеметсіз бе?!🙂 Сізді Алматы қаласындағы Сапа Пласт Компаниясының ресми шорумында сізді күтетін боламыз. Бұл жерден сіз тек сапалы өнімдермен танысып кете аласыз. \nБіздің Инстаграм парақшамыздан бүкіл жұмыстарымызды шынай отзывтарды көре аласыздар\n[URL]https://www.instagram.com/sapaplast.kz[/URL]\n\nБізді 2Гис картасынан осылай таба аласыз; \nУлица Немировича-Данченко, 18а\n[URL]https://2gis.kz/almaty/geo/9430047374980723/76.868243,43.261476[/URL]\nЖәне де сізге местоположение жіберіп жатырмын.\n[URL=https://www.google.com/maps/place/43%C2%B015%2740.4%22N+76%C2%B052%2705.3%22E/@43.2612251,76.8655673,17z/data=!3m1!4b1!4m4!3m3!8m2!3d43.2612251!4d76.8681422?hl=ru&entry=ttu]https://www.google.com/maps/place/43%C2%B015'40.4%22N+76%C2%B052'05.3%22E/@43.2612251,76.8655673,17z/data=!3m1!4b1!4m4!3m3!8m2!3d43.2612251!4d76.8681422?hl=ru&entry=ttu[/URL]",
+        "textlegacy": "=== Исходящее сообщение, автор: Битрикс24 (Жандос Менеджер Алматы) ===<br />Сәлеметсіз бе?!🙂 Сізді Алматы қаласындағы Сапа Пласт Компаниясының ресми шорумында сізді күтетін боламыз. Бұл жерден сіз тек сапалы өнімдермен танысып кете аласыз. <br />Біздің Инстаграм парақшамыздан бүкіл жұмыстарымызды шынай отзывтарды көре аласыздар<br /><a href=\"https://www.instagram.com/sapaplast.kz\" target=\"_blank\" >https://www.instagram.com/sapaplast.kz</a><br /><br />Бізді 2Гис картасынан осылай таба аласыз; <br />Улица Немировича-Данченко, 18а<br /><a href=\"https://2gis.kz/almaty/geo/9430047374980723/76.868243,43.261476\" target=\"_blank\" >https://2gis.kz/almaty/geo/9430047374980723/76.868243,43.261476</a><br />Және де сізге местоположение жіберіп жатырмын.<br /><a href=\"https://www.google.com/maps/place/43%C2%B015%2740.4%22N+76%C2%B052%2705.3%22E/@43.2612251,76.8655673,17z/data=!3m1!4b1!4m4!3m3!8m2!3d43.2612251!4d76.8681422?hl=ru&amp;entry=ttu\" target=\"_blank\" >https://www.google.com/maps/place/43%C2%B015'40.4%22N+76%C2%B052'05.3%22E/@43.2612251,76.8655673,17z/data=!3m1!4b1!4m4!3m3!8m2!3d43.2612251!4d76.8681422?hl=ru&amp;entry=ttu</a>",
+        "params": {
+          "connectorMid": [
+            "2eee7a60-ff8b-4846-9f73-b4ab60e7ff23"
+          ]
+        }
+      },
+      "1054760": {
+        "id": "1054760",
+        "chatid": "63392",
+        "senderid": "21058",
+        "recipientid": "chat63392",
+        "date": "2026-04-08T13:36:39+03:00",
+        "text": "=== Исходящее сообщение, автор: Битрикс24 (Жандос Менеджер Алматы) ===",
+        "textlegacy": "=== Исходящее сообщение, автор: Битрикс24 (Жандос Менеджер Алматы) ===",
+        "params": {
+          "connectorMid": [
+            "26f8309d-4808-4582-855e-a24781cf423d"
+          ],
+          "fileId": [
+            229054
+          ]
+        }
+      },
+      "1054758": {
+        "id": "1054758",
+        "chatid": "63392",
+        "senderid": "21058",
+        "recipientid": "chat63392",
+        "date": "2026-04-08T13:36:37+03:00",
+        "text": "=== Исходящее сообщение, автор: Битрикс24 (Жандос Менеджер Алматы) ===",
+        "textlegacy": "=== Исходящее сообщение, автор: Битрикс24 (Жандос Менеджер Алматы) ===",
+        "params": {
+          "connectorMid": [
+            "834ab47c-45d8-4043-b8fe-c3b0f58f44b2"
+          ],
+          "fileId": [
+            229052
+          ]
+        }
+      },
+      "1054756": {
+        "id": "1054756",
+        "chatid": "63392",
+        "senderid": "21058",
+        "recipientid": "chat63392",
+        "date": "2026-04-08T13:36:33+03:00",
+        "text": "=== Исходящее сообщение, автор: Битрикс24 (Жандос Менеджер Алматы) ===\n🏭 Бұл видеода сіз Сапапласт компаниясының заманауи, автоматтандырылған станоктарда жасалатын сапалы құрастыру (Сборка) процесін көресіз.\n\n🛠 Біз адам факторын барынша азайтқан, Қабан бренді сияқты заманауи станоктарды қолданамыз.\n🔧 Бұл – адам қателіктерін болдырмайтын, нақты әрі сапалы терезе өндірісіне кепіл.\n\n✅ Терезенің сапасы тек профиль мен фурнитурада емес, құрастырудың дәлдігіне де байланысты.\nСондықтан бізде – жоғары дәлдіктегі автоматты станоктар, ал нәтиже – ұзақ қызмет ететін, мінсіз терезе.\n\n🎥 Видеоны толығымен көріп шығыңыз – біздің кәсібилігімізге өз көзіңізбен көз жеткізесіз.\nСапа – кездейсоқтық емес, жүйелі жұмыс нәтижесі!\nТолық шолуды Youtube осы ссылка арқылы көре аласыз [URL]https://youtu.be/6MxE2WNekF8?si=sju-Iv7ynXBNL4GZ[/URL]",
+        "textlegacy": "=== Исходящее сообщение, автор: Битрикс24 (Жандос Менеджер Алматы) ===<br />🏭 Бұл видеода сіз Сапапласт компаниясының заманауи, автоматтандырылған станоктарда жасалатын сапалы құрастыру (Сборка) процесін көресіз.<br /><br />🛠 Біз адам факторын барынша азайтқан, Қабан бренді сияқты заманауи станоктарды қолданамыз.<br />🔧 Бұл – адам қателіктерін болдырмайтын, нақты әрі сапалы терезе өндірісіне кепіл.<br /><br />✅ Терезенің сапасы тек профиль мен фурнитурада емес, құрастырудың дәлдігіне де байланысты.<br />Сондықтан бізде – жоғары дәлдіктегі автоматты станоктар, ал нәтиже – ұзақ қызмет ететін, мінсіз терезе.<br /><br />🎥 Видеоны толығымен көріп шығыңыз – біздің кәсібилігімізге өз көзіңізбен көз жеткізесіз.<br />Сапа – кездейсоқтық емес, жүйелі жұмыс нәтижесі!<br />Толық шолуды Youtube осы ссылка арқылы көре аласыз <a href=\"https://youtu.be/6MxE2WNekF8?si=sju-Iv7ynXBNL4GZ\" target=\"_blank\" >https://youtu.be/6MxE2WNekF8?si=sju-Iv7ynXBNL4GZ</a>",
+        "params": {
+          "connectorMid": [
+            "55fcc8e9-b88c-4eaa-8e45-a2af44f58595"
+          ],
+          "urlId": [
+            49834
+          ],
+          "attach": [
+            {
+              "id": "49834",
+              "blocks": [
+                {
+                  "richLink": [
+                    {
+                      "name": "- YouTube",
+                      "link": "https://youtu.be/6MxE2WNekF8?si=sju-Iv7ynXBNL4GZ",
+                      "desc": "Enjoy the videos and music you love, upload original content, and share it all with friends, family, and the world on YouTube."
+                    }
+                  ]
+                }
+              ],
+              "description": "",
+              "color": "transparent"
+            }
+          ]
+        }
+      },
+      "1054728": {
+        "id": "1054728",
+        "chatid": "63392",
+        "senderid": "21058",
+        "recipientid": "chat63392",
+        "date": "2026-04-08T13:28:56+03:00",
+        "text": "Я заинтересован в заказе окон",
+        "textlegacy": "Я заинтересован в заказе окон",
+        "params": {
+          "connectorMid": [
+            "33d4bf6a-75ad-4213-83b4-fb334f7acb4b"
+          ]
+        }
+      },
+      "1054726": {
+        "id": "1054726",
+        "chatid": "63392",
+        "senderid": "0",
+        "recipientid": "chat63392",
+        "date": "2026-04-08T13:28:56+03:00",
+        "text": "Обращение направлено на всех участников очереди",
+        "textlegacy": "Обращение направлено на всех участников очереди",
+        "params": []
+      },
+      "1054724": {
+        "id": "1054724",
+        "chatid": "63392",
+        "senderid": "0",
+        "recipientid": "chat63392",
+        "date": "2026-04-08T13:28:56+03:00",
+        "text": "[B]Переданы дополнительные данные:[/B]\n Ссылка на исходный пост: [URL]https://app.wazzup24.com/1826-6940/chat/whatsapp/77017103433/fc3e1d61-cd1c-4955-9345-b0f22b543020[/URL]",
+        "textlegacy": "<b>Переданы дополнительные данные:</b><br /> Ссылка на исходный пост: <a href=\"https://app.wazzup24.com/1826-6940/chat/whatsapp/77017103433/fc3e1d61-cd1c-4955-9345-b0f22b543020\" target=\"_blank\" >https://app.wazzup24.com/1826-6940/chat/whatsapp/77017103433/fc3e1d61-cd1c-4955-9345-b0f22b543020</a>",
+        "params": {
+          "class": "bx-messenger-content-item-system",
+          "componentId": "HiddenMessage",
+          "urlId": [
+            83026
+          ],
+          "attach": [
+            {
+              "id": "83026",
+              "blocks": [
+                {
+                  "richLink": [
+                    {
+                      "name": "Wazzup App",
+                      "link": "https://app.wazzup24.com/1826-6940/chat/whatsapp/77017103433/fc3e1d61-cd1c-4955-9345-b0f22b543020",
+                      "desc": "Communicate with clients in the application on the computer, and all correspondence will be saved in CRM.",
+                      "preview": "https://cdn.wazzup24.com/icons/icon_512x512.358b79.png",
+                      "previewSize": {
+                        "height": 512,
+                        "width": 512
+                      }
+                    }
+                  ]
+                }
+              ],
+              "description": "",
+              "color": "transparent"
+            }
+          ]
+        }
+      },
+      "1054722": {
+        "id": "1054722",
+        "chatid": "63392",
+        "senderid": "0",
+        "recipientid": "chat63392",
+        "date": "2026-04-08T13:28:56+03:00",
+        "text": "[b]Создана новая сделка[/b]",
+        "textlegacy": "<b>Создана новая сделка</b>",
+        "params": {
+          "attach": [
+            {
+              "id": 1775644136,
+              "blocks": [
+                {
+                  "link": [
+                    {
+                      "name": "Алия - WhatsApp",
+                      "link": "/crm/deal/details/50126/"
+                    }
+                  ]
+                }
+              ],
+              "description": "",
+              "color": "#8d51eb"
+            }
+          ]
+        }
+      },
+      "1054720": {
+        "id": "1054720",
+        "chatid": "63392",
+        "senderid": "0",
+        "recipientid": "chat63392",
+        "date": "2026-04-08T13:28:56+03:00",
+        "text": "[b]Создан новый контакт[/b]",
+        "textlegacy": "<b>Создан новый контакт</b>",
+        "params": {
+          "attach": [
+            {
+              "id": 1775644135,
+              "blocks": [
+                {
+                  "link": [
+                    {
+                      "name": "Алия",
+                      "link": "/crm/contact/details/63188/"
+                    }
+                  ]
+                },
+                {
+                  "grid": [
+                    {
+                      "display": "LINE",
+                      "name": "Телефон",
+                      "value": "+77017103433",
+                      "height": 20,
+                      "colorToken": "base"
+                    },
+                    {
+                      "display": "LINE",
+                      "name": "Email",
+                      "value": "77017103433@whatsapp.wazzup",
+                      "height": 20,
+                      "colorToken": "base"
+                    }
+                  ]
+                }
+              ],
+              "description": "",
+              "color": "#ab7761"
+            }
+          ]
+        }
+      },
+      "1054716": {
+        "id": "1054716",
+        "chatid": "63392",
+        "senderid": "0",
+        "recipientid": "chat63392",
+        "date": "2026-04-08T13:28:52+03:00",
+        "text": "Начат новый диалог №[URL=/online/?IM_HISTORY=imol|25814]25814[/URL]",
+        "textlegacy": "Начат новый диалог №<a href=\"/online/?IM_HISTORY=imol|25814\" target=\"_blank\" >25814</a>",
+        "params": {
+          "class": "bx-messenger-content-item-ol-start",
+          "componentId": "StartDialogMessage"
+        }
+      }
+    },
+    "usersMessage": {
+      "chat63392": [
+        "1062576",
+        "1060664",
+        "1054766",
+        "1054762",
+        "1054760",
+        "1054758",
+        "1054756",
+        "1054728",
+        "1054726",
+        "1054724",
+        "1054722",
+        "1054720",
+        "1054716"
+      ]
+    },
+    "users": {
+      "21058": {
+        "id": "21058",
+        "name": "Алия",
+        "active": true,
+        "firstName": "Алия",
+        "lastName": "",
+        "workPosition": null,
+        "color": "#f76187",
+        "avatar": "https://cdn-ru.bitrix24.kz/b29289878/resize_cache/211824/ff58db95aecdfa09ae61b51b5fd8f63f/main/ebd/ebd8b0ed815cc3653f1a29d54651e22b/5805deaec5438134aa8b7b2fcd341387ba26e797.jpg",
+        "avatarId": "211824",
+        "birthday": false,
+        "gender": "M",
+        "phoneDevice": false,
+        "phones": false,
+        "extranet": true,
+        "network": false,
+        "bot": false,
+        "connector": true,
+        "profile": "/company/personal/user/21058/",
+        "externalAuthId": "imconnector",
+        "status": "online",
+        "idle": false,
+        "lastActivityDate": false,
+        "mobileLastDate": false,
+        "desktopLastDate": false,
+        "departments": [],
+        "absent": false,
+        "type": "extranet",
+        "eventLog": "N",
+        "services": null,
+        "botData": null
+      }
+    },
+    "openlines": {
+      "canvoteashead": {
+        "2": true
+      }
+    },
+    "userInGroup": [],
+    "woUserInGroup": [],
+    "chat": {
+      "63392": {
+        "id": "63392",
+        "parentChatId": 0,
+        "parentMessageId": 0,
+        "name": "Алия - WhatsApp",
+        "owner": "0",
+        "color": "#728f7a",
+        "extranet": false,
+        "avatar": "https://cdn-ru.bitrix24.kz/b29289878/resize_cache/211810/ff58db95aecdfa09ae61b51b5fd8f63f/main/b50/b50348295dbb832f2abb8add014097b6/3894766a20a90a9edc96b36857b5f411.jpg",
+        "call": "0",
+        "callNumber": "",
+        "entityType": "LINES",
+        "entityId": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|d6de758c-709a-4803-b196-3b55ff18c260|21058",
+        "entityData1": "Y|DEAL|50126|N|N|25814|1775644135|0|0|0",
+        "entityData2": "LEAD|0|COMPANY|0|CONTACT|63188|DEAL|50126",
+        "entityData3": "",
+        "messageCount": 13,
+        "public": "",
+        "muteList": {
+          "21058": false
+        },
+        "managerList": [],
+        "dateCreate": "2026-04-08T15:28:52+03:00",
+        "type": "lines",
+        "entityLink": {
+          "type": "LINES",
+          "url": "",
+          "id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|d6de758c-709a-4803-b196-3b55ff18c260|21058"
+        },
+        "permissions": {
+          "manageUsersAdd": "member",
+          "manageUsersDelete": "manager",
+          "manageUi": "member",
+          "manageSettings": "owner",
+          "manageMessages": "member",
+          "canPost": "member"
+        },
+        "textFieldEnabled": true,
+        "backgroundId": null,
+        "messageType": "L",
+        "isNew": false
+      }
+    },
+    "userBlockChat": {
+      "63392": {
+        "21058": false
+      }
+    },
+    "userInChat": {
+      "63392": [
+        21058
+      ]
+    },
+    "files": {
+      "229052": {
+        "id": 229052,
+        "chatid": 63392,
+        "date": "2026-04-08T13:36:37+03:00",
+        "type": "video",
+        "name": "copy_FA755725-2E5A-45FD-AF61-F73F58163407.mp4",
+        "extension": "mp4",
+        "size": 7822357,
+        "image": false,
+        "status": "done",
+        "progress": 100,
+        "authorid": 0,
+        "authorname": "Аноним",
+        "urlpreview": "",
+        "urlshow": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=229052&exact=N&_esd=hpSRSEDy30NeVcuoK4P80sggF4lEtfeer8-QK3TXoSKzdXmX_c4QEfRYfY25gSSzA9XHqwckvS-aNxVEBCSgvCtrFVkjpZWIr9TCXG81vVNBvWKY8DZNu5Z8mwjVYE501Uwg29TwgVPkyuleRXkxj3SeWO2GTdQ7wQHCNjetNA-Uue12eX41yyVGDq9hQPh0&fileName=copy_FA755725-2E5A-45FD-AF61-F73F58163407.mp4",
+        "urldownload": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=229052&exact=N&_esd=hpSRSEDy30NeVcuoK4P80sggF4lEtfeer8-QK3TXoSKzdXmX_c4QEfRYfY25gSSzA9XHqwckvS-aNxVEBCSgvCtrFVkjpZWIr9TCXG81vVNBvWKY8DZNu5Z8mwjVYE501Uwg29TwgVPkyuleRXkxj3SeWO2GTdQ7wQHCNjetNA-Uue12eX41yyVGDq9hQPh0&fileName=copy_FA755725-2E5A-45FD-AF61-F73F58163407.mp4",
+        "viewerattrs": {
+          "viewer": "",
+          "viewertype": "video",
+          "src": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=229052&exact=N&_esd=hpSRSEDy30NeVcuoK4P80sggF4lEtfeer8-QK3TXoSKzdXmX_c4QEfRYfY25gSSzA9XHqwckvS-aNxVEBCSgvCtrFVkjpZWIr9TCXG81vVNBvWKY8DZNu5Z8mwjVYE501Uwg29TwgVPkyuleRXkxj3SeWO2GTdQ7wQHCNjetNA-Uue12eX41yyVGDq9hQPh0&fileName=copy_FA755725-2E5A-45FD-AF61-F73F58163407.mp4",
+          "objectid": "229052",
+          "viewergroupby": "63392",
+          "imchatid": 63392,
+          "title": "copy_FA755725-2E5A-45FD-AF61-F73F58163407.mp4",
+          "actions": "[{\"type\":\"download\"},{\"type\":\"copyToMe\",\"text\":\"Сохранить на Диск\",\"action\":\"BXIM.disk.saveToDiskAction\",\"params\":{\"fileId\":\"229052\"},\"extension\":\"disk.viewer.actions\",\"buttonIconClass\":\"ui-btn-icon-cloud\"}]"
+        },
+        "mediaurl": {
+          "preview": {
+            "250": ""
+          }
+        },
+        "istranscribable": false,
+        "isvideonote": false,
+        "isvoicenote": false
+      },
+      "229054": {
+        "id": 229054,
+        "chatid": 63392,
+        "date": "2026-04-08T13:36:38+03:00",
+        "type": "audio",
+        "name": "wazzup_audio.mp3",
+        "extension": "mp3",
+        "size": 80108,
+        "image": false,
+        "status": "done",
+        "progress": 100,
+        "authorid": 0,
+        "authorname": "Аноним",
+        "urlpreview": "",
+        "urlshow": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=229054&exact=N&fileName=wazzup_audio.mp3",
+        "urldownload": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=229054&exact=N&fileName=wazzup_audio.mp3",
+        "viewerattrs": {
+          "viewer": "",
+          "viewertype": "audio",
+          "src": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=229054&exact=N&fileName=wazzup_audio.mp3",
+          "objectid": "229054",
+          "viewergroupby": "63392",
+          "imchatid": 63392,
+          "title": "wazzup_audio.mp3",
+          "actions": "[{\"type\":\"download\"},{\"type\":\"copyToMe\",\"text\":\"Сохранить на Диск\",\"action\":\"BXIM.disk.saveToDiskAction\",\"params\":{\"fileId\":\"229054\"},\"extension\":\"disk.viewer.actions\",\"buttonIconClass\":\"ui-btn-icon-cloud\"}]"
+        },
+        "mediaurl": {
+          "preview": {
+            "250": ""
+          }
+        },
+        "istranscribable": false,
+        "isvideonote": false,
+        "isvoicenote": false
+      },
+      "229056": {
+        "id": 229056,
+        "chatid": 63392,
+        "date": "2026-04-08T13:36:51+03:00",
+        "type": "video",
+        "name": "WhatsApp_Video_2025-04-22_at_14.30.03.mp4",
+        "extension": "mp4",
+        "size": 21302189,
+        "image": false,
+        "status": "done",
+        "progress": 100,
+        "authorid": 0,
+        "authorname": "Аноним",
+        "urlpreview": "",
+        "urlshow": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=229056&exact=N&_esd=99Loq_mURBHY5uIZYDoBUQBNJR0eZdI9pc9gIKZMDFx1UKe5p2GO9YIGwm7ZRDDpbmkb01pMeyXEl5bJ2NqD7LgAOl-S2AS1VSlseb306U63z1dEbiP9RENd41IRfWZASdOX1SPfsEKVNelVZtxNrOxv6Lq-8B5gh6Rt8cMP9OmBLxG30-dVX4LQDP8%3D&fileName=WhatsApp_Video_2025-04-22_at_14.30.03.mp4",
+        "urldownload": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=229056&exact=N&_esd=99Loq_mURBHY5uIZYDoBUQBNJR0eZdI9pc9gIKZMDFx1UKe5p2GO9YIGwm7ZRDDpbmkb01pMeyXEl5bJ2NqD7LgAOl-S2AS1VSlseb306U63z1dEbiP9RENd41IRfWZASdOX1SPfsEKVNelVZtxNrOxv6Lq-8B5gh6Rt8cMP9OmBLxG30-dVX4LQDP8%3D&fileName=WhatsApp_Video_2025-04-22_at_14.30.03.mp4",
+        "viewerattrs": {
+          "viewer": "",
+          "viewertype": "video",
+          "src": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=229056&exact=N&_esd=99Loq_mURBHY5uIZYDoBUQBNJR0eZdI9pc9gIKZMDFx1UKe5p2GO9YIGwm7ZRDDpbmkb01pMeyXEl5bJ2NqD7LgAOl-S2AS1VSlseb306U63z1dEbiP9RENd41IRfWZASdOX1SPfsEKVNelVZtxNrOxv6Lq-8B5gh6Rt8cMP9OmBLxG30-dVX4LQDP8%3D&fileName=WhatsApp_Video_2025-04-22_at_14.30.03.mp4",
+          "objectid": "229056",
+          "viewergroupby": "63392",
+          "imchatid": 63392,
+          "title": "WhatsApp_Video_2025-04-22_at_14.30.03.mp4",
+          "actions": "[{\"type\":\"download\"},{\"type\":\"copyToMe\",\"text\":\"Сохранить на Диск\",\"action\":\"BXIM.disk.saveToDiskAction\",\"params\":{\"fileId\":\"229056\"},\"extension\":\"disk.viewer.actions\",\"buttonIconClass\":\"ui-btn-icon-cloud\"}]"
+        },
+        "mediaurl": {
+          "preview": {
+            "250": ""
+          }
+        },
+        "istranscribable": false,
+        "isvideonote": false,
+        "isvoicenote": false
+      }
+    }
+  }
+}

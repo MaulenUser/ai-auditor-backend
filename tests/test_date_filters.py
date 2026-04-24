@@ -212,7 +212,11 @@ def test_whatsapp_deal_scan_applies_date_range_to_deals(tmp_path):
     )
 
     assert [deal["ID"] for deal in deals] == ["51044"]
-    assert gateway.calls[0]["body"]["filter"] == {}
+    # DATE_MODIFY bounds are now pushed to Bitrix API to avoid scanning all 4000+ deals.
+    assert gateway.calls[0]["body"]["filter"] == {
+        ">=DATE_MODIFY": "2026-04-01T00:00:00",
+        "<=DATE_MODIFY": "2026-04-30T23:59:59",
+    }
 
 
 class _TimelineGateway:
@@ -284,7 +288,11 @@ def test_timeline_export_selects_deals_by_create_or_modify_date(tmp_path):
     )
 
     assert [deal["ID"] for deal in deals] == ["70001"]
-    assert gateway.list_calls[0]["filter"] == {}
+    # DATE_MODIFY bounds are now pushed to Bitrix API to avoid scanning all deals.
+    assert gateway.list_calls[0]["filter"] == {
+        ">=DATE_MODIFY": "2026-04-01T00:00:00",
+        "<=DATE_MODIFY": "2026-04-30T23:59:59",
+    }
 
 
 class _OpenlineGateway:

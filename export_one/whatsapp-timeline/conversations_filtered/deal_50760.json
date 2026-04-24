@@ -1,0 +1,414 @@
+{
+  "channel": "whatsapp",
+  "integration": "wazzup",
+  "deal_id": "50760",
+  "contact_id": "63778",
+  "company_id": "",
+  "deal_title": "Аскар Сиқым - WhatsApp",
+  "source_id": "2|WZ_WHATSAPP_CB0C9F5C07DE8985B74A894B883C619C0",
+  "assigned_by_id": "9940",
+  "stage_id": "LOSE",
+  "stage_semantic_id": "F",
+  "category_id": "0",
+  "date_create": "2026-04-16T07:07:09+03:00",
+  "date_modify": "2026-04-16T15:15:04+03:00",
+  "closedate": "2026-04-16T03:00:00+03:00",
+  "closed": "Y",
+  "last_communication_time": "2026-04-16T09:08:24",
+  "opportunity": "0.00000000",
+  "currency_id": "KZT",
+  "loss_reason_id": "",
+  "loss_comment": "",
+  "utm_source": "",
+  "utm_medium": "",
+  "utm_campaign": "",
+  "timeline_source": "deal",
+  "timeline_entity_type": "deal",
+  "timeline_entity_id": "50760",
+  "chat_id": "64582",
+  "session_id": "26144",
+  "dialog_id": "chat64582",
+  "connector_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0",
+  "connector_title": "WAZZUP: WhatsApp",
+  "chat_name": "Аскар Сиқым - WhatsApp",
+  "stats": {
+    "total_messages": 33,
+    "effective_messages": 25,
+    "manager_messages": 18,
+    "client_messages": 7,
+    "system_messages": 8,
+    "messages_with_files": 18,
+    "first_message_at": "2026-04-16T07:07:09+03:00",
+    "last_message_at": "2026-04-18T11:16:52+03:00",
+    "first_manager_response_time_sec": 71.0,
+    "avg_response_latency_sec": 1935.0,
+    "conversation_duration_hours": 52.161944444444444
+  },
+  "messages": [
+    {
+      "timeline_comment_id": "1067398",
+      "created_at": "2026-04-16T07:07:10+03:00",
+      "author_id": "21308",
+      "sender_role": "client",
+      "sender_label": "Аскар Сиқым",
+      "text": "https://www.instagram.com/p/DW8ykmJgGaZ/",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "7520f770-697d-40ad-a637-45ffca5cd0bd.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231038&exact=N&fileName=7520f770-697d-40ad-a637-45ffca5cd0bd.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50760"
+    },
+    {
+      "timeline_comment_id": "1067402",
+      "created_at": "2026-04-16T07:07:19+03:00",
+      "author_id": "21308",
+      "sender_role": "client",
+      "sender_label": "Аскар Сиқым",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "e77d4048-3046-4365-adcf-af566bc3944c.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231040&exact=N&fileName=e77d4048-3046-4365-adcf-af566bc3944c.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50760"
+    },
+    {
+      "timeline_comment_id": "1067404",
+      "created_at": "2026-04-16T07:08:21+03:00",
+      "author_id": "21308",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Сәлеметсіз бе! Сізге “SAPA PLAST” компаниясы жазып отыр. Терезелер керек пе? 🙂\nЕсіміңіз кім болады?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50760"
+    },
+    {
+      "timeline_comment_id": "1067424",
+      "created_at": "2026-04-16T07:15:48+03:00",
+      "author_id": "21308",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Саламатсыз ба",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50760"
+    },
+    {
+      "timeline_comment_id": "1067428",
+      "created_at": "2026-04-16T07:16:06+03:00",
+      "author_id": "21308",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Қай қалаға керек еді аға",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50760"
+    },
+    {
+      "timeline_comment_id": "1067432",
+      "created_at": "2026-04-16T07:17:00+03:00",
+      "author_id": "21308",
+      "sender_role": "client",
+      "sender_label": "Аскар Сиқым",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "892a6bac-1604-4589-837e-b2926d7bc49e.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231050&exact=N&fileName=892a6bac-1604-4589-837e-b2926d7bc49e.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50760"
+    },
+    {
+      "timeline_comment_id": "1067438",
+      "created_at": "2026-04-16T07:17:47+03:00",
+      "author_id": "21308",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "1,5*1,5 8шт терезе",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50760"
+    },
+    {
+      "timeline_comment_id": "1067440",
+      "created_at": "2026-04-16T07:17:48+03:00",
+      "author_id": "21308",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "қандай түсте болсын?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50760"
+    },
+    {
+      "timeline_comment_id": "1067442",
+      "created_at": "2026-04-16T07:18:04+03:00",
+      "author_id": "21308",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Қанша қабатты стекло болсын",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50760"
+    },
+    {
+      "timeline_comment_id": "1067444",
+      "created_at": "2026-04-16T07:19:19+03:00",
+      "author_id": "21308",
+      "sender_role": "client",
+      "sender_label": "Аскар Сиқым",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "7f4e4f19-637d-4501-8632-37ae2e518138.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231052&exact=N&fileName=7f4e4f19-637d-4501-8632-37ae2e518138.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50760"
+    },
+    {
+      "timeline_comment_id": "1067446",
+      "created_at": "2026-04-16T07:19:21+03:00",
+      "author_id": "21308",
+      "sender_role": "client",
+      "sender_label": "Аскар Сиқым",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "cf13a262-0092-431e-b530-7e84c7ee1851.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231054&exact=N&fileName=cf13a262-0092-431e-b530-7e84c7ee1851.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50760"
+    },
+    {
+      "timeline_comment_id": "1067672",
+      "created_at": "2026-04-16T09:08:25+03:00",
+      "author_id": "21308",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "",
+      "attachments": [
+        {
+          "type": "image",
+          "label": "6a207d66-00b8-41c5-9524-7317d44c6fe7.jpeg",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231106&exact=N&_esd=LWhICUhiWkesbtBwqKR664WAu8-RCW22UTNeJAVfgt6g5Zm7Si_emHqmBDGmseLtCa3Dzo8_XuwlheV-s4VVhkpQW052XaSRI9p2Vcm_fxz0KIk6zNYwTegpNM9I-pM2wDD0WdN7GAYgSHOqK4muUlYJQQEvwSER_quuUG9IXd4_y5wkEUNlSsFW5Xk%3D&fileName=6a207d66-00b8-41c5-9524-7317d44c6fe7.jpeg"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50760"
+    },
+    {
+      "timeline_comment_id": "1067676",
+      "created_at": "2026-04-16T09:08:27+03:00",
+      "author_id": "21308",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "",
+      "attachments": [
+        {
+          "type": "image",
+          "label": "331d29fa-3315-4f49-8089-4b44fb895130.jpeg",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231108&exact=N&_esd=_F82J05UBsPP8XetRbftglaHBbD2xQTqJ-m3yJYaygCD9UYyeoTgvxov3KEWqCMykBzMmVYm0y-GQWYiSOnQJko7q-CTS-CVsWMyiY8L_fbMSfkNd2l6o_FK_tfExOD-XA7s1Mr1dLwIlM-y-plMGpOtCGpgaXy0WCY6_YIPZHOG9POwp1CbGUWMgGo%3D&fileName=331d29fa-3315-4f49-8089-4b44fb895130.jpeg"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50760"
+    },
+    {
+      "timeline_comment_id": "1067678",
+      "created_at": "2026-04-16T09:08:29+03:00",
+      "author_id": "21308",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "",
+      "attachments": [
+        {
+          "type": "image",
+          "label": "4b103df2-c8f2-4760-b7df-273ab748eafd.jpeg",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231110&exact=N&_esd=7eq4wNDBk99y7jDXSIAGJgH5e2SUiMwNu8GMEdEdlrqzkg-RVzdEVA34XDEUKhcfeV2slzntp19QWJgN3vLQOdDT5iKAqa6qOu0i0tveeWquK80i6j5_EWXJpgq-Q7ugCRudpsXv51V4-WNgBf3zxBtCiVbbnq-iuNd-JTHm1K3JfGXSUDovBl_6H_A%3D&fileName=4b103df2-c8f2-4760-b7df-273ab748eafd.jpeg"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50760"
+    },
+    {
+      "timeline_comment_id": "1067680",
+      "created_at": "2026-04-16T09:08:41+03:00",
+      "author_id": "21308",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Бұл антрацит түс",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50760"
+    },
+    {
+      "timeline_comment_id": "1067682",
+      "created_at": "2026-04-16T09:09:35+03:00",
+      "author_id": "21308",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "",
+      "attachments": [
+        {
+          "type": "video",
+          "label": "3575a85c-2399-4d14-8cea-a4665a5dabfa.mp4",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231112&exact=N&_esd=YHDn6TVROrvvIJ1GMj2r3KB9HlS1GHH9PaGyu4NBvbD5qHEZvEtgahD-ljHVKyIPu7A-AkdeN9Unw8fTbrjN7q2XAAQUR8d--m6szZBC8yShRaa-SeOO_xfgvupgqHUVxU1k_upyjuXYXJmi7dVI4ESG9mjpFHaIcBINA_79BUtyHVAvI4spP3cdVA%3D%3D&fileName=3575a85c-2399-4d14-8cea-a4665a5dabfa.mp4"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50760"
+    },
+    {
+      "timeline_comment_id": "1067684",
+      "created_at": "2026-04-16T09:09:39+03:00",
+      "author_id": "21308",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Біз осы бір ғана профильмен жұмыс жасаймыз",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50760"
+    },
+    {
+      "timeline_comment_id": "1067686",
+      "created_at": "2026-04-16T09:10:07+03:00",
+      "author_id": "21308",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Премиум классқа жатады немецкий технологиямен Россияда шығарылатын Артек деген профиль",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50760"
+    },
+    {
+      "timeline_comment_id": "1067688",
+      "created_at": "2026-04-16T09:10:26+03:00",
+      "author_id": "21308",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "5 камералы бар және 3 камералы бар",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50760"
+    },
+    {
+      "timeline_comment_id": "1067690",
+      "created_at": "2026-04-16T09:14:28+03:00",
+      "author_id": "21308",
+      "sender_role": "client",
+      "sender_label": "Аскар Сиқым",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "59829bc8-7272-448b-9ed9-d58e0679c432.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231114&exact=N&fileName=59829bc8-7272-448b-9ed9-d58e0679c432.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50760"
+    },
+    {
+      "timeline_comment_id": "1067732",
+      "created_at": "2026-04-16T09:32:35+03:00",
+      "author_id": "21308",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "10674d71-1966-42f6-b76e-f5a988a0d945.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231128&exact=N&fileName=10674d71-1966-42f6-b76e-f5a988a0d945.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50760"
+    },
+    {
+      "timeline_comment_id": "1067734",
+      "created_at": "2026-04-16T09:32:43+03:00",
+      "author_id": "21308",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "880972f1-7907-43bd-a7a5-66c374dd8fa8.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231130&exact=N&fileName=880972f1-7907-43bd-a7a5-66c374dd8fa8.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50760"
+    },
+    {
+      "timeline_comment_id": "1067736",
+      "created_at": "2026-04-16T09:33:03+03:00",
+      "author_id": "21308",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "14fbd107-697f-4b54-b0e0-c550c8412e93.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231132&exact=N&fileName=14fbd107-697f-4b54-b0e0-c550c8412e93.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50760"
+    },
+    {
+      "timeline_comment_id": "1067744",
+      "created_at": "2026-04-16T09:34:00+03:00",
+      "author_id": "21308",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "2a936424-bbb2-417a-89ea-1b812228d9ca.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231134&exact=N&fileName=2a936424-bbb2-417a-89ea-1b812228d9ca.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50760"
+    },
+    {
+      "timeline_comment_id": "1067746",
+      "created_at": "2026-04-16T09:35:52+03:00",
+      "author_id": "21308",
+      "sender_role": "client",
+      "sender_label": "Аскар Сиқым",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "6889ffe2-4771-4076-ac39-2bb9b29344bb.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231136&exact=N&fileName=6889ffe2-4771-4076-ac39-2bb9b29344bb.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50760"
+    }
+  ]
+}

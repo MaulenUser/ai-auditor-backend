@@ -1,0 +1,749 @@
+{
+  "channel": "whatsapp",
+  "integration": "wazzup",
+  "deal_id": "50910",
+  "contact_id": "63924",
+  "company_id": "",
+  "deal_title": "G - WhatsApp",
+  "source_id": "2|WZ_WHATSAPP_CB0C9F5C07DE8985B74A894B883C619C0",
+  "assigned_by_id": "9940",
+  "stage_id": "UC_4933UP",
+  "stage_semantic_id": "P",
+  "category_id": "0",
+  "date_create": "2026-04-17T14:45:05+03:00",
+  "date_modify": "2026-04-18T06:59:44+03:00",
+  "closedate": "2026-04-24T03:00:00+03:00",
+  "closed": "N",
+  "last_communication_time": "2026-04-17T17:08:46",
+  "opportunity": "0.00000000",
+  "currency_id": "KZT",
+  "loss_reason_id": "",
+  "loss_comment": "",
+  "utm_source": "",
+  "utm_medium": "",
+  "utm_campaign": "",
+  "timeline_source": "deal",
+  "timeline_entity_type": "deal",
+  "timeline_entity_id": "50910",
+  "chat_id": "64816",
+  "session_id": "26200",
+  "dialog_id": "chat64816",
+  "connector_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0",
+  "connector_title": "WAZZUP: WhatsApp",
+  "chat_name": "G - WhatsApp",
+  "stats": {
+    "total_messages": 56,
+    "effective_messages": 49,
+    "manager_messages": 15,
+    "client_messages": 34,
+    "system_messages": 7,
+    "messages_with_files": 14,
+    "first_message_at": "2026-04-17T14:45:04+03:00",
+    "last_message_at": "2026-04-18T08:13:02+03:00",
+    "first_manager_response_time_sec": 35.0,
+    "avg_response_latency_sec": 37.583333333333336,
+    "conversation_duration_hours": 17.46611111111111
+  },
+  "messages": [
+    {
+      "timeline_comment_id": "1069662",
+      "created_at": "2026-04-17T14:45:04+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Начат новый диалог №26200",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069666",
+      "created_at": "2026-04-17T14:45:05+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Создан новый контакт",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "G",
+          "url": "/crm/contact/details/63924/"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069668",
+      "created_at": "2026-04-17T14:45:05+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Создана новая сделка",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "G - WhatsApp",
+          "url": "/crm/deal/details/50910/"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069670",
+      "created_at": "2026-04-17T14:45:05+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Переданы дополнительные данные:\nСсылка на исходный пост: https://app.wazzup24.com/1826-6940/chat/whatsapp/77787885597/fc3e1d61-cd1c-4955-9345-b0f22b543020",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "Wazzup App",
+          "url": "https://app.wazzup24.com/1826-6940/chat/whatsapp/77787885597/fc3e1d61-cd1c-4955-9345-b0f22b543020"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069672",
+      "created_at": "2026-04-17T14:45:06+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Обращение направлено на всех участников очереди",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069674",
+      "created_at": "2026-04-17T14:45:06+03:00",
+      "author_id": "21360",
+      "sender_role": "client",
+      "sender_label": "G",
+      "text": "",
+      "attachments": [
+        {
+          "type": "image",
+          "label": "408ac6e1-3c12-4b14-86e9-c6ff6a9f6215.webp",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231384&exact=N&_esd=65r3vGp2CZM1XCvU3tN_WwKUMcCsMf0wsRT2vjOYqmK7vc5VdyWLQOQlf8KgdXoKP1OqrLR50yBUI0WU2FgHuyDNOn64DLoXgIhlS-OTamoyQYFzDCsh4pISUhhDSHLbGTW7tzisG1_rl2a323GWS9WVcfW9crgNYPkRWogPuDPzaI1k4NZoJqigUlw%3D&fileName=408ac6e1-3c12-4b14-86e9-c6ff6a9f6215.webp"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069678",
+      "created_at": "2026-04-17T14:45:11+03:00",
+      "author_id": "21360",
+      "sender_role": "client",
+      "sender_label": "G",
+      "text": "Терезе салу керек еди",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069692",
+      "created_at": "2026-04-17T14:45:41+03:00",
+      "author_id": "21360",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Сәлеметсіз бе! Сізге компания “SAPA PLAST” жазып отыр. Айтыңызшы, сізге терезелер керек пе?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069696",
+      "created_at": "2026-04-17T14:48:49+03:00",
+      "author_id": "21360",
+      "sender_role": "client",
+      "sender_label": "G",
+      "text": "Аха",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069698",
+      "created_at": "2026-04-17T14:49:15+03:00",
+      "author_id": "21360",
+      "sender_role": "client",
+      "sender_label": "G",
+      "text": "",
+      "attachments": [
+        {
+          "type": "image",
+          "label": "2415a6ba-c503-4af1-9e38-b469ce39f3e7.jpeg",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231386&exact=N&_esd=3zggFp2wvdtruyQsrPQatPvhMGlz46wLkrvhw4tzBDszrQVemKUEy2ADOIBUZyvct0FSUdBLW_aXNTHkfjRNpcaxmu4M_6Ho7Apk8g3WGA9a9VIlYArmXJ3LyfH-G343YMhKd0IjZ9qlJbIBEh5ww8aChjbjd4xPc_QGJzoqlJMf5Z7jA1R56ZkPVBs%3D&fileName=2415a6ba-c503-4af1-9e38-b469ce39f3e7.jpeg"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069700",
+      "created_at": "2026-04-17T14:49:17+03:00",
+      "author_id": "21360",
+      "sender_role": "client",
+      "sender_label": "G",
+      "text": "",
+      "attachments": [
+        {
+          "type": "image",
+          "label": "69482ed0-8144-4ab0-a769-3cc21351b1c2.jpeg",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231388&exact=N&_esd=4DIDmtY6vk0Ttpt-RC8bdvceawNQbylvpoS-0hYol0lCRmZ6Ld6aWAyD_xaOIuHSW6hbHcuOyV3uRfWEPen_gpFNSS5qfKq2iiB4Vd0bqxmgCIwuTnguKESmARY-gjJDZ1hvCr1AbqnpYwWz_rfKl7QaWx76sOCP4Ulwdqz2wBkbQ8aWlxGgEFCsYWQ%3D&fileName=69482ed0-8144-4ab0-a769-3cc21351b1c2.jpeg"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069702",
+      "created_at": "2026-04-17T14:49:20+03:00",
+      "author_id": "21360",
+      "sender_role": "client",
+      "sender_label": "G",
+      "text": "",
+      "attachments": [
+        {
+          "type": "image",
+          "label": "eb40ecf3-58a4-4792-a637-6c4ce8a6b86b.jpeg",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231390&exact=N&_esd=jh6vtrHQxORB1rLbmulof3B2qQp_TCdcJwb0uFJiy-1zFftu742BNDVoao8vjqUEieEqxnVMcV3EW3MMh1AcD9rXQL8M_MZROrGU_f3IDKB8rWKHFADNnWzBDafsEBHxPIr9qDB5eha_YJUCyLpCddniKD3FEfYBF8h82wSRgctlhvqRa-9Po9juBR8%3D&fileName=eb40ecf3-58a4-4792-a637-6c4ce8a6b86b.jpeg"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069704",
+      "created_at": "2026-04-17T14:49:22+03:00",
+      "author_id": "21360",
+      "sender_role": "client",
+      "sender_label": "G",
+      "text": "",
+      "attachments": [
+        {
+          "type": "image",
+          "label": "a2ff0517-c188-448e-9c2e-2495bd27c291.jpeg",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231392&exact=N&_esd=dtdXwUkfP5nalk1Y2N0nO1NHIm0NjxQKMTvYFfo4BiklkNSwVP2CYl5IEijAFJaiLciFxBIGrzG0yu8LATxOSe2wCnHfSNk-h8AhmiF8CzjVilc_NYfsiZy5VudkQdrBXsGZ8X5mshIdRtv0DlxMi0Bh_iZbY45MV7pKwH4p2is2FP02LqlN7FEZi9g%3D&fileName=a2ff0517-c188-448e-9c2e-2495bd27c291.jpeg"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069706",
+      "created_at": "2026-04-17T14:49:24+03:00",
+      "author_id": "21360",
+      "sender_role": "client",
+      "sender_label": "G",
+      "text": "",
+      "attachments": [
+        {
+          "type": "image",
+          "label": "bec38a58-45ce-473f-8f57-cda25d1c9db5.jpeg",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231394&exact=N&_esd=o28Hq7Qj4QwvZ-DFXvbTBQP-EympLnP9pLys0j5uo43cmO-4kWK71HPUViXLt1NOP5OAbmac_CzOZBAdxY7JGVUasedj6cBBUKo-dxextFPUqnqwcV3utDvOd9abiBLCFzrZAtfEWPtEu9U2Nj0speJaZo1f32EuSXqQ4zCsdxF5rrJTZGAMu2i7niM%3D&fileName=bec38a58-45ce-473f-8f57-cda25d1c9db5.jpeg"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069708",
+      "created_at": "2026-04-17T14:49:25+03:00",
+      "author_id": "21360",
+      "sender_role": "client",
+      "sender_label": "G",
+      "text": "",
+      "attachments": [
+        {
+          "type": "image",
+          "label": "c3fe7862-0257-4e42-bc79-c723fb396e9f.jpeg",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231396&exact=N&_esd=Z8dN8ZA0KwVB48ie1059uawWnKPfGL_xw79SFat6Xdbb51erCYCQAzldN7rzM0EVQq_aCO07QQ_o0ABAOtwYI-jOAZZPC0DU9aiOFvsMzmuZEg1peeqcoxVexEwRn5lxlFPQBPPTEm26CASJqwA6qpxqMiCeiBrvIY1PrjVuAkZOq0vMWfuNtK2uInQ%3D&fileName=c3fe7862-0257-4e42-bc79-c723fb396e9f.jpeg"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069710",
+      "created_at": "2026-04-17T14:49:28+03:00",
+      "author_id": "21360",
+      "sender_role": "client",
+      "sender_label": "G",
+      "text": "",
+      "attachments": [
+        {
+          "type": "image",
+          "label": "d6d223c2-b33b-4958-b4b3-63c91bd931cf.jpeg",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231398&exact=N&_esd=vj5uLZztX3Mwt4uOfoGC7OyPENuji2gX2DUoR27avld4dK3JwkY7Zr752R0oFVSWC24XNGhC3gDpvjdrxGtjxLa3iUNQwDf8mG-a86AYIdxntOFu_QH3eM6iKm-A1-Z8pO2zYE6ckB4048KIiEBcvQqnqVFVoqpQ91RtfR3FV2BjbOZPgaAyfLQm3SY%3D&fileName=d6d223c2-b33b-4958-b4b3-63c91bd931cf.jpeg"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069712",
+      "created_at": "2026-04-17T14:49:29+03:00",
+      "author_id": "21360",
+      "sender_role": "client",
+      "sender_label": "G",
+      "text": "",
+      "attachments": [
+        {
+          "type": "image",
+          "label": "571c3bda-4375-4fd0-b057-bdd89899c712.jpeg",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231400&exact=N&_esd=nrlN4b8N7-2LqObp-j33Nl6bc91nO_RLmiV64H06wGn1reqpf5GtZLcAbIBguiAWh_Vheajyp9iVJjxnA0tuld8qrg67MJ1g2jB-rWzjSgwsN6Y-yjxssyUvQ5R3lNPQTPsgTYFbqIOTpIA1ZnIyTCdzBzkMPHZE3KyGZp7dB4zrR7WtXAfUZ9Y_b7w%3D&fileName=571c3bda-4375-4fd0-b057-bdd89899c712.jpeg"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069714",
+      "created_at": "2026-04-17T14:49:31+03:00",
+      "author_id": "21360",
+      "sender_role": "client",
+      "sender_label": "G",
+      "text": "",
+      "attachments": [
+        {
+          "type": "image",
+          "label": "746e131e-05c3-4aa8-a7b4-5203b2a715d9.jpeg",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231402&exact=N&_esd=KArZCsBw3mnIUTpNJqgCcSc586Q0FDAdd5hhANu_tFgj089_hfKZvMNLRXg1joFpuchEgawKqYYHoynJ2AgYTNzUUMb-i4V_vA0irxcgG60ajjDU1dNXx9LPUkz26lA_ELIWs6BnOQ5sUqxYOPW2vMcXqvFhZ1HFLzLvDmzgwvTqXJkozTVSsSKoXCA%3D&fileName=746e131e-05c3-4aa8-a7b4-5203b2a715d9.jpeg"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069716",
+      "created_at": "2026-04-17T14:49:32+03:00",
+      "author_id": "21360",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Қалай сізге жүгінсем болады? Есіміңіз қалай?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069718",
+      "created_at": "2026-04-17T14:49:48+03:00",
+      "author_id": "21360",
+      "sender_role": "client",
+      "sender_label": "G",
+      "text": "Даурен",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069720",
+      "created_at": "2026-04-17T14:50:05+03:00",
+      "author_id": "21360",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Рахмет, жобаларыңызды көрдім. Қалай атайын? Есіміңіз кім болады?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069722",
+      "created_at": "2026-04-17T14:50:22+03:00",
+      "author_id": "21360",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Даурен, қуаныштымын 🙂 Қай қаладансыз? Бізде Шымкент (Бозарық 261/1) және Алматы (Немировича-Данченко 18е) филиалдар бар.",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069724",
+      "created_at": "2026-04-17T14:52:47+03:00",
+      "author_id": "21360",
+      "sender_role": "client",
+      "sender_label": "G",
+      "text": "Алматы",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069726",
+      "created_at": "2026-04-17T14:53:29+03:00",
+      "author_id": "21360",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Түсіндім, Даурен. Шамамен қанша терезе керек болады?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069728",
+      "created_at": "2026-04-17T14:53:54+03:00",
+      "author_id": "21360",
+      "sender_role": "client",
+      "sender_label": "G",
+      "text": "Жибердим гой",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069730",
+      "created_at": "2026-04-17T14:53:56+03:00",
+      "author_id": "21360",
+      "sender_role": "client",
+      "sender_label": "G",
+      "text": "Мине",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069732",
+      "created_at": "2026-04-17T14:54:23+03:00",
+      "author_id": "21360",
+      "sender_role": "client",
+      "sender_label": "G",
+      "text": "Мына жерлери ашылмайды",
+      "attachments": [
+        {
+          "type": "image",
+          "label": "007f7f8f-2c7d-4dfb-a69a-67db7fb210f8.jpeg",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231404&exact=N&_esd=R3MAh0JZz9lyhmz5tg-0__DN_vxyvqrpNM-OaGUaoKudozCwkAq19OeNwbzMto3YfODqP3nT7fS_n11JdlSjaxwr47uez20LzbP6LYpXPddx67a3Z03y2hvYqPlyaC4vyeMxA5bNvg6XAB0Hfdx4NqouQBohg8yC6-l94xnn8dJDZFlrXBcpvBE9Hwk%3D&fileName=007f7f8f-2c7d-4dfb-a69a-67db7fb210f8.jpeg"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069738",
+      "created_at": "2026-04-17T14:55:53+03:00",
+      "author_id": "21360",
+      "sender_role": "client",
+      "sender_label": "G",
+      "text": "Канша болад",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069740",
+      "created_at": "2026-04-17T14:55:55+03:00",
+      "author_id": "21360",
+      "sender_role": "client",
+      "sender_label": "G",
+      "text": "Есептеп берсениз",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069742",
+      "created_at": "2026-04-17T14:56:28+03:00",
+      "author_id": "21360",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Түсіндім. Шамамен неше терезе керек болады?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069744",
+      "created_at": "2026-04-17T14:56:53+03:00",
+      "author_id": "21360",
+      "sender_role": "client",
+      "sender_label": "G",
+      "text": "25",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069746",
+      "created_at": "2026-04-17T14:56:55+03:00",
+      "author_id": "21360",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Алдын ала баға м² бойынша есептеледі:\n- Эконом-серия: 40 000–60 000 тг/м²\n- Премиум (неміс профилі): 70 000–95 000 тг/м²\n\nӨлшемдерін жібере аласыз ба? Әр терезенің ені×биіктігі және неше дана (мысалы: 1,6×1,5 м — 8 дана). Соған қарай шамамен есептеп берем.",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069748",
+      "created_at": "2026-04-17T14:57:35+03:00",
+      "author_id": "21360",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Жақсы, 25 терезе. Өлшемдерін жібересіз бе: ені × биіктігі және әр өлшемге неше дана?\nМысалы: 1,6×1,5 м — 8 дана; 1,3×2,1 м — 6 дана.\nСол бойынша м²-мен нақтылап есептеп берем.",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069760",
+      "created_at": "2026-04-17T15:03:59+03:00",
+      "author_id": "21360",
+      "sender_role": "client",
+      "sender_label": "G",
+      "text": "Мине жибердим гой",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069762",
+      "created_at": "2026-04-17T15:04:58+03:00",
+      "author_id": "21360",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Көрдім, рахмет. Дәл есеп шығару үшін нақты өлшем керек. Әр терезенің ені×биіктігін және неше дана екенін қысқаша тізіммен жібере аласыз ба?\nМысалы: 1,6×2,0 м — 12 дана; 1,3×2,2 м — 8 дана; 0,9×2,1 м — 5 дана.",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069764",
+      "created_at": "2026-04-17T15:06:14+03:00",
+      "author_id": "21360",
+      "sender_role": "client",
+      "sender_label": "G",
+      "text": "Олай есептей алмаймын",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069766",
+      "created_at": "2026-04-17T15:06:15+03:00",
+      "author_id": "21360",
+      "sender_role": "client",
+      "sender_label": "G",
+      "text": "Математика 0 менде",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069768",
+      "created_at": "2026-04-17T15:07:13+03:00",
+      "author_id": "21360",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Ештеңе етпейді, Даурен. Есепті өзім шығарайын.\nӨлшемдер анық көрінетін жобаның PDF-ын (немесе ең қажетті 2–3 бетін жоғары сапада) жібере аласыз ба? Соның негізінде м²-мен алдын ала смета дайындап берем.",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069770",
+      "created_at": "2026-04-17T15:08:03+03:00",
+      "author_id": "21360",
+      "sender_role": "client",
+      "sender_label": "G",
+      "text": "Осылар гана маган жибергени",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069772",
+      "created_at": "2026-04-17T15:08:19+03:00",
+      "author_id": "21360",
+      "sender_role": "client",
+      "sender_label": "G",
+      "text": "Осы аркылы баска компаниялар есептеп берген уже",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069774",
+      "created_at": "2026-04-17T15:08:28+03:00",
+      "author_id": "21360",
+      "sender_role": "client",
+      "sender_label": "G",
+      "text": "Просто аркайссыныки артурли бага",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069776",
+      "created_at": "2026-04-17T15:09:01+03:00",
+      "author_id": "21360",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Түсіндім, Даурен. Дәл смета үшін өлшем керек. Ең оңайы — бір терезенің енін және биіктігін шамамен өлшеп (мысалы, 160×210 см) жібере салыңыз, соның негізінде 25 терезеге алдын ала есеп шығарып берем.\n\nҚай түсті қарайсыз: ақ, комбинирленген әлде түсті?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069778",
+      "created_at": "2026-04-17T15:09:52+03:00",
+      "author_id": "21360",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Түсінемін. Бізде баға м² бойынша:\n- Эконом: 40 000–60 000 тг/м²\n- Премиум (неміс профилі): 70 000–95 000 тг/м²\nКачество полностью соответствует цене 🤍\n\nҚай серияны қарайсыз: эконом ба, әлде премиум ба?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069782",
+      "created_at": "2026-04-17T15:10:26+03:00",
+      "author_id": "21360",
+      "sender_role": "client",
+      "sender_label": "G",
+      "text": "Эконом",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069784",
+      "created_at": "2026-04-17T15:10:34+03:00",
+      "author_id": "21360",
+      "sender_role": "client",
+      "sender_label": "G",
+      "text": "Канша камерный",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069786",
+      "created_at": "2026-04-17T15:10:43+03:00",
+      "author_id": "21360",
+      "sender_role": "client",
+      "sender_label": "G",
+      "text": "Канша слойный",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069788",
+      "created_at": "2026-04-17T15:10:44+03:00",
+      "author_id": "21360",
+      "sender_role": "client",
+      "sender_label": "G",
+      "text": "Цвет орех",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069790",
+      "created_at": "2026-04-17T15:11:51+03:00",
+      "author_id": "21360",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Түсіндім. Эконом серия: 40 000–60 000 тг/м². Профиль — тек Артек (неміс сапасы). Орех түсі болады.\n\nСтеклопакет екікамерлі ме, әлде үшкамерлі ме?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069792",
+      "created_at": "2026-04-17T15:13:16+03:00",
+      "author_id": "21360",
+      "sender_role": "client",
+      "sender_label": "G",
+      "text": "2 канша болад 3 канша болад",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069794",
+      "created_at": "2026-04-17T15:13:17+03:00",
+      "author_id": "21360",
+      "sender_role": "client",
+      "sender_label": "G",
+      "text": "Корик есептеп",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069796",
+      "created_at": "2026-04-17T15:14:16+03:00",
+      "author_id": "21360",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Даурен, эконом серия бойынша:\n- 2 не 3 камера — 40 000–60 000 тг/м² (3 камера әдетте жоғарғы шекке жақын). Орех түсі бар.\nМысал үшін: орташа 1 терезе 2 м² деп алсақ → 1 терезе 80–120 мың, 25 терезе ≈ 2 000 000–3 000 000 тг. Нақтысы өлшемге қарай шығады.\n\nАлматылық шоурумда эскизбен бірге нақтылап есептеп берейік. Қай күн ыңғайлы: бүгін кешке не ертең?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069800",
+      "created_at": "2026-04-17T15:15:07+03:00",
+      "author_id": "21360",
+      "sender_role": "client",
+      "sender_label": "G",
+      "text": "Осымен есептеп жиберикши",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069802",
+      "created_at": "2026-04-17T15:15:08+03:00",
+      "author_id": "21360",
+      "sender_role": "client",
+      "sender_label": "G",
+      "text": "Предварительно",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1069804",
+      "created_at": "2026-04-17T15:15:58+03:00",
+      "author_id": "21360",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Жарайды, алдын ала есеп осылай болады. 25 терезені орташа 2 м² деп алсақ → жалпы 50 м².\n\nЭконом серия (Артек профиль, орех түсі):\n- 2-камерліге жақын төменгі шек: 50 м² × 40 000 = ≈ 2 000 000 тг\n- 3-камерліге жақын жоғарғы шек: 50 м² × 60 000 = ≈ 3 000 000 тг\n\nНақтысы өлшемге қарай шығады. Шоурумда тез нақтылап берем: Алматы, Немировича-Данченко 18е. Қай күн ыңғайлы — бүгін кешке әлде ертең?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1070150",
+      "created_at": "2026-04-17T22:42:52+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Обращение также направлено sapa.plast.bitrix@mail.ru",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "50910"
+    },
+    {
+      "timeline_comment_id": "1070480",
+      "created_at": "2026-04-18T08:13:02+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Обращение также направлено Аружан Шымкент менеджер SP",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "50910"
+    }
+  ]
+}

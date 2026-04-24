@@ -1,0 +1,177 @@
+{
+  "channel": "whatsapp",
+  "integration": "wazzup",
+  "deal_id": "50898",
+  "contact_id": "63912",
+  "company_id": "",
+  "deal_title": "Назира - WhatsApp",
+  "source_id": "2|WZ_WHATSAPP_CB0C9F5C07DE8985B74A894B883C619C0",
+  "assigned_by_id": "9940",
+  "stage_id": "LOSE",
+  "stage_semantic_id": "F",
+  "category_id": "0",
+  "date_create": "2026-04-17T12:34:35+03:00",
+  "date_modify": "2026-04-17T14:24:14+03:00",
+  "closedate": "2026-04-17T03:00:00+03:00",
+  "closed": "Y",
+  "last_communication_time": "2026-04-17T15:20:52",
+  "opportunity": "0.00000000",
+  "currency_id": "KZT",
+  "loss_reason_id": "",
+  "loss_comment": "",
+  "utm_source": "",
+  "utm_medium": "",
+  "utm_campaign": "",
+  "timeline_source": "deal",
+  "timeline_entity_type": "deal",
+  "timeline_entity_id": "50898",
+  "chat_id": "64790",
+  "session_id": "26198",
+  "dialog_id": "chat64790",
+  "connector_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0",
+  "connector_title": "WAZZUP: WhatsApp",
+  "chat_name": "Назира - WhatsApp",
+  "stats": {
+    "total_messages": 10,
+    "effective_messages": 4,
+    "manager_messages": 2,
+    "client_messages": 2,
+    "system_messages": 6,
+    "messages_with_files": 3,
+    "first_message_at": "2026-04-17T12:34:34+03:00",
+    "last_message_at": "2026-04-17T22:42:52+03:00",
+    "first_manager_response_time_sec": 45.0,
+    "avg_response_latency_sec": 35.5,
+    "conversation_duration_hours": 10.138333333333334
+  },
+  "messages": [
+    {
+      "timeline_comment_id": "1069480",
+      "created_at": "2026-04-17T12:34:34+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Начат новый диалог №26198",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "50898"
+    },
+    {
+      "timeline_comment_id": "1069484",
+      "created_at": "2026-04-17T12:34:36+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Создан новый контакт",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "Назира",
+          "url": "/crm/contact/details/63912/"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "50898"
+    },
+    {
+      "timeline_comment_id": "1069486",
+      "created_at": "2026-04-17T12:34:36+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Создана новая сделка",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "Назира - WhatsApp",
+          "url": "/crm/deal/details/50898/"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "50898"
+    },
+    {
+      "timeline_comment_id": "1069488",
+      "created_at": "2026-04-17T12:34:36+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Переданы дополнительные данные:\nСсылка на исходный пост: https://app.wazzup24.com/1826-6940/chat/whatsapp/77057372437/fc3e1d61-cd1c-4955-9345-b0f22b543020",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "Wazzup App",
+          "url": "https://app.wazzup24.com/1826-6940/chat/whatsapp/77057372437/fc3e1d61-cd1c-4955-9345-b0f22b543020"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "50898"
+    },
+    {
+      "timeline_comment_id": "1069490",
+      "created_at": "2026-04-17T12:34:37+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Обращение направлено на всех участников очереди",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "50898"
+    },
+    {
+      "timeline_comment_id": "1069492",
+      "created_at": "2026-04-17T12:34:37+03:00",
+      "author_id": "21358",
+      "sender_role": "client",
+      "sender_label": "Назира",
+      "text": "Сәлеметсіз бе, мен Тараздағы терезелердің құнын есептегім келеді\nhttps://www.instagram.com/p/DW18Q6WgNzm/",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50898"
+    },
+    {
+      "timeline_comment_id": "1069494",
+      "created_at": "2026-04-17T12:35:22+03:00",
+      "author_id": "21358",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Здравствуйте! Вам пишет компания “SAPA PLAST”. Подскажите, вам нужны окна?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50898"
+    },
+    {
+      "timeline_comment_id": "1069496",
+      "created_at": "2026-04-17T12:37:23+03:00",
+      "author_id": "21358",
+      "sender_role": "client",
+      "sender_label": "Назира",
+      "text": "Да",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50898"
+    },
+    {
+      "timeline_comment_id": "1069498",
+      "created_at": "2026-04-17T12:37:49+03:00",
+      "author_id": "21358",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Как я могу к вам обращаться?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50898"
+    },
+    {
+      "timeline_comment_id": "1070148",
+      "created_at": "2026-04-17T22:42:52+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Обращение также направлено sapa.plast.bitrix@mail.ru",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "50898"
+    }
+  ]
+}

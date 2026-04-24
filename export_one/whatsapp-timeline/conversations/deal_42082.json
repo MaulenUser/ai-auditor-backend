@@ -1,0 +1,150 @@
+{
+  "channel": "whatsapp",
+  "integration": "wazzup",
+  "deal_id": "42082",
+  "contact_id": "56084",
+  "company_id": "",
+  "deal_title": "Казбек - WhatsApp",
+  "source_id": "2|WZ_WHATSAPP_CB0C9F5C07DE8985B74A894B883C619C0",
+  "assigned_by_id": "26",
+  "stage_id": "UC_GVH3WU",
+  "stage_semantic_id": "P",
+  "category_id": "0",
+  "date_create": "2025-11-15T06:17:56+03:00",
+  "date_modify": "2026-04-14T11:35:05+03:00",
+  "closedate": "2025-11-22T03:00:00+03:00",
+  "closed": "N",
+  "last_communication_time": "2026-04-14T13:34:53",
+  "opportunity": "0.00000000",
+  "currency_id": "KZT",
+  "loss_reason_id": "",
+  "loss_comment": "",
+  "utm_source": "",
+  "utm_medium": "",
+  "utm_campaign": "",
+  "timeline_source": "deal",
+  "timeline_entity_type": "deal",
+  "timeline_entity_id": "42082",
+  "chat_id": "54528",
+  "session_id": "26064",
+  "dialog_id": "chat54528",
+  "connector_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0",
+  "connector_title": "WAZZUP: WhatsApp",
+  "chat_name": "Казбек - WhatsApp",
+  "stats": {
+    "total_messages": 7,
+    "effective_messages": 2,
+    "manager_messages": 2,
+    "client_messages": 0,
+    "system_messages": 5,
+    "messages_with_files": 4,
+    "first_message_at": "2026-04-14T11:34:52+03:00",
+    "last_message_at": "2026-04-14T11:35:09+03:00",
+    "first_manager_response_time_sec": null,
+    "avg_response_latency_sec": null,
+    "conversation_duration_hours": 0.004722222222222222
+  },
+  "messages": [
+    {
+      "timeline_comment_id": "1063754",
+      "created_at": "2026-04-14T11:34:52+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Начат новый диалог №26064",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "42082"
+    },
+    {
+      "timeline_comment_id": "1063756",
+      "created_at": "2026-04-14T11:34:53+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Сделка прикреплена к диалогу",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "Казбек - WhatsApp",
+          "url": "/crm/deal/details/42082/"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "42082"
+    },
+    {
+      "timeline_comment_id": "1063758",
+      "created_at": "2026-04-14T11:34:53+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Контактная информация сохранена в контакт",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "Казбек",
+          "url": "/crm/contact/details/56084/"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "42082"
+    },
+    {
+      "timeline_comment_id": "1063760",
+      "created_at": "2026-04-14T11:34:53+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Переданы дополнительные данные:\nСсылка на исходный пост: https://app.wazzup24.com/1826-6940/chat/whatsapp/77716982418/fc3e1d61-cd1c-4955-9345-b0f22b543020",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "Wazzup App",
+          "url": "https://app.wazzup24.com/1826-6940/chat/whatsapp/77716982418/fc3e1d61-cd1c-4955-9345-b0f22b543020"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "42082"
+    },
+    {
+      "timeline_comment_id": "1063762",
+      "created_at": "2026-04-14T11:34:54+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Обращение направлено на \"\"Нурсултан\"\" Директор Алматы SP (ответственного в CRM)",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "42082"
+    },
+    {
+      "timeline_comment_id": "1063764",
+      "created_at": "2026-04-14T11:34:54+03:00",
+      "author_id": "18006",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жасұлан Қуатұлы Шымкент менеджер SP)",
+      "text": "Сәлеметсіз бе?!🙂 Сізді Шымкент қаласындағы Сапа Пласт Компаниясының ресми шорумында сізді күтетін боламыз. Бұл жерден сіз тек сапалы өнімдермен танысып кете аласыз.\nБіздің Инстаграм парақшамыздан бүкіл жұмыстарымызды шынай отзывтарды көре аласыздар\nhttps://www.instagram.com/sapaplast.kz\n\nБізді 2Гис картасынан осылай таба аласыз;\nSapa Plast\nhttps://2gis.kz/shymkent/geo/70000001089875999\nЖәне де сізге местоположение жіберіп жатырмын.\nhttps://www.google.com/maps/place/42%C2%B025'15.8%22N+69%C2%B038'18.3%22E/@42.421233,69.636045,16.99z/data=!4m4!3m3!8m2!3d42.4210472!4d69.6384201?hl=ru&entry=ttu&g_ep=EgoyMDI1MDQxNi4xIKXMDSoASAFQAw%3D%3D",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "42082"
+    },
+    {
+      "timeline_comment_id": "1063766",
+      "created_at": "2026-04-14T11:35:09+03:00",
+      "author_id": "18006",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жасұлан Қуатұлы Шымкент менеджер SP)",
+      "text": "",
+      "attachments": [
+        {
+          "type": "video",
+          "label": "IMG_8103.mp4",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=230462&exact=N&_esd=ePNdbeaYaSZ_HtHxFgRbhaRjocVmT6GxsiPpjiLA-gB3t_O1K8CiMFrFV-yzMs1B1nOnHOl2LVesp8suUYFqJXJBu7UAGEh8Cgvd6HDJG6ZyxQwDrviotRLvHs3aLy84VaGy6M15s7idpyXyvjid&fileName=IMG_8103.mp4"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "42082"
+    }
+  ]
+}

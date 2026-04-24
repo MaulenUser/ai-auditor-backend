@@ -1,0 +1,437 @@
+{
+  "binding": {
+    "timeline_source": "deal",
+    "timeline_entity_type": "deal",
+    "timeline_entity_id": "50884",
+    "chat_id": "64786",
+    "connector_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0",
+    "connector_title": "WAZZUP: WhatsApp"
+  },
+  "dialog": {
+    "id": 64786,
+    "parent_chat_id": 0,
+    "parent_message_id": 0,
+    "name": "Talgat - WhatsApp",
+    "description": "Ссылка на исходный пост: https://app.wazzup24.com/1826-6940/chat/whatsapp/77772228000/fc3e1d61-cd1c-4955-9345-b0f22b543020",
+    "owner": 0,
+    "extranet": false,
+    "avatar": "https://cdn-ru.bitrix24.kz/b29289878/resize_cache/213882/ff58db95aecdfa09ae61b51b5fd8f63f/main/ced/ced027c889b68fbb134d7fcd73b1206f/d21681f87ea0f4bef01aff4b4614b3e3.jpg",
+    "color": "#8474c8",
+    "type": "lines",
+    "counter": 0,
+    "user_counter": 1,
+    "message_count": 12,
+    "unread_id": 0,
+    "restrictions": {
+      "avatar": true,
+      "rename": true,
+      "extend": true,
+      "call": true,
+      "mute": true,
+      "leave": true,
+      "leave_owner": true,
+      "send": true,
+      "user_list": true
+    },
+    "last_message_id": 1070144,
+    "last_id": 0,
+    "marked_id": 0,
+    "disk_folder_id": 0,
+    "entity_type": "LINES",
+    "entity_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|5a1b84e6-1cfc-4c24-b22c-dcccd172730b|21356",
+    "entity_data_1": "Y|DEAL|50884|N|N|26194|1776412130|0|0|0",
+    "entity_data_2": "LEAD|0|COMPANY|0|CONTACT|63900|DEAL|50884",
+    "entity_data_3": "",
+    "mute_list": [],
+    "date_create": "2026-04-17T10:48:49+03:00",
+    "message_type": "L",
+    "public": "",
+    "role": "guest",
+    "entity_link": {
+      "type": "LINES",
+      "url": "",
+      "id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|5a1b84e6-1cfc-4c24-b22c-dcccd172730b|21356"
+    },
+    "text_field_enabled": true,
+    "background_id": null,
+    "permissions": {
+      "manage_users_add": "member",
+      "manage_users_delete": "manager",
+      "manage_ui": "member",
+      "manage_settings": "owner",
+      "manage_messages": "member",
+      "can_post": "member"
+    },
+    "is_new": false,
+    "readed_list": [
+      {
+        "user_id": 21356,
+        "user_name": "Talgat",
+        "message_id": 1069318,
+        "date": null
+      }
+    ],
+    "manager_list": [],
+    "last_message_views": {
+      "message_id": 1070144,
+      "first_viewers": [],
+      "count_of_viewers": 0
+    },
+    "dialog_id": "chat64786"
+  },
+  "history": {
+    "chatId": 64786,
+    "canJoin": "Y",
+    "canVoteHead": "Y",
+    "sessionId": 26194,
+    "sessionVoteHead": 0,
+    "sessionCommentHead": null,
+    "userId": "chat64786",
+    "message": {
+      "1070144": {
+        "id": "1070144",
+        "chatid": "64786",
+        "senderid": "0",
+        "recipientid": "chat64786",
+        "date": "2026-04-17T22:42:51+03:00",
+        "text": "Обращение также направлено [USER=1 REPLACE]sapa.plast.bitrix@mail.ru[/USER]",
+        "textlegacy": "Обращение также направлено [USER=1 REPLACE]sapa.plast.bitrix@mail.ru[/USER]",
+        "params": {
+          "notify": "N"
+        }
+      },
+      "1069330": {
+        "id": "1069330",
+        "chatid": "64786",
+        "senderid": "21356",
+        "recipientid": "chat64786",
+        "date": "2026-04-17T10:52:46+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nТалғат, қай қаладансыз?",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Талғат, қай қаладансыз?",
+        "params": {
+          "connectorMid": [
+            "c7aaab33-074d-4a9e-81cc-226c546e646f"
+          ]
+        }
+      },
+      "1069328": {
+        "id": "1069328",
+        "chatid": "64786",
+        "senderid": "21356",
+        "recipientid": "chat64786",
+        "date": "2026-04-17T10:52:06+03:00",
+        "text": "Талғат",
+        "textlegacy": "Талғат",
+        "params": {
+          "connectorMid": [
+            "9486c3e1-6bea-410e-89e0-6a5b2b3d8345"
+          ]
+        }
+      },
+      "1069326": {
+        "id": "1069326",
+        "chatid": "64786",
+        "senderid": "21356",
+        "recipientid": "chat64786",
+        "date": "2026-04-17T10:51:50+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nЕсіміңіз кім болады?",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Есіміңіз кім болады?",
+        "params": {
+          "connectorMid": [
+            "ae0acccf-0a1b-46fc-a3eb-6201a2f46864"
+          ]
+        }
+      },
+      "1069324": {
+        "id": "1069324",
+        "chatid": "64786",
+        "senderid": "21356",
+        "recipientid": "chat64786",
+        "date": "2026-04-17T10:50:59+03:00",
+        "text": "175/246 см ортасы ашылмайды, шеттері сложное открывание . 3 қабатты терезе. Антрацит. 5 камерлі. \nБағасы?",
+        "textlegacy": "175/246 см ортасы ашылмайды, шеттері сложное открывание . 3 қабатты терезе. Антрацит. 5 камерлі. <br />Бағасы?",
+        "params": {
+          "connectorMid": [
+            "807116be-1a86-41d6-b488-8275dfcd136a"
+          ]
+        }
+      },
+      "1069320": {
+        "id": "1069320",
+        "chatid": "64786",
+        "senderid": "21356",
+        "recipientid": "chat64786",
+        "date": "2026-04-17T10:49:29+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nСәлеметсіз бе! Сізге компания “SAPA PLAST” жазып отыр. Айтыңызшы, сізге терезелер керек пе?",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Сәлеметсіз бе! Сізге компания “SAPA PLAST” жазып отыр. Айтыңызшы, сізге терезелер керек пе?",
+        "params": {
+          "connectorMid": [
+            "ed854006-a87c-40e4-aedc-078e7b953e63"
+          ]
+        }
+      },
+      "1069318": {
+        "id": "1069318",
+        "chatid": "64786",
+        "senderid": "21356",
+        "recipientid": "chat64786",
+        "date": "2026-04-17T10:48:52+03:00",
+        "text": "Сәлеметсіз бе, мен Алматыдағы терезелердің құнын есептегім келеді\n[URL]https://fb.me/4ipvH9JDB[/URL]",
+        "textlegacy": "Сәлеметсіз бе, мен Алматыдағы терезелердің құнын есептегім келеді<br /><a href=\"https://fb.me/4ipvH9JDB\" target=\"_blank\" >https://fb.me/4ipvH9JDB</a>",
+        "params": {
+          "connectorMid": [
+            "88ced43c-b4d8-452c-81e9-ab697ee7e0b5"
+          ]
+        }
+      },
+      "1069316": {
+        "id": "1069316",
+        "chatid": "64786",
+        "senderid": "0",
+        "recipientid": "chat64786",
+        "date": "2026-04-17T10:48:52+03:00",
+        "text": "Обращение направлено на всех участников очереди",
+        "textlegacy": "Обращение направлено на всех участников очереди",
+        "params": []
+      },
+      "1069314": {
+        "id": "1069314",
+        "chatid": "64786",
+        "senderid": "0",
+        "recipientid": "chat64786",
+        "date": "2026-04-17T10:48:51+03:00",
+        "text": "[B]Переданы дополнительные данные:[/B]\n Ссылка на исходный пост: [URL]https://app.wazzup24.com/1826-6940/chat/whatsapp/77772228000/fc3e1d61-cd1c-4955-9345-b0f22b543020[/URL]",
+        "textlegacy": "<b>Переданы дополнительные данные:</b><br /> Ссылка на исходный пост: <a href=\"https://app.wazzup24.com/1826-6940/chat/whatsapp/77772228000/fc3e1d61-cd1c-4955-9345-b0f22b543020\" target=\"_blank\" >https://app.wazzup24.com/1826-6940/chat/whatsapp/77772228000/fc3e1d61-cd1c-4955-9345-b0f22b543020</a>",
+        "params": {
+          "class": "bx-messenger-content-item-system",
+          "componentId": "HiddenMessage",
+          "urlId": [
+            84412
+          ],
+          "attach": [
+            {
+              "id": "84412",
+              "blocks": [
+                {
+                  "richLink": [
+                    {
+                      "name": "Wazzup App",
+                      "link": "https://app.wazzup24.com/1826-6940/chat/whatsapp/77772228000/fc3e1d61-cd1c-4955-9345-b0f22b543020",
+                      "desc": "Communicate with clients in the application on the computer, and all correspondence will be saved in CRM.",
+                      "preview": "https://cdn.wazzup24.com/icons/icon_512x512.358b79.png",
+                      "previewSize": {
+                        "height": 512,
+                        "width": 512
+                      }
+                    }
+                  ]
+                }
+              ],
+              "description": "",
+              "color": "transparent"
+            }
+          ]
+        }
+      },
+      "1069312": {
+        "id": "1069312",
+        "chatid": "64786",
+        "senderid": "0",
+        "recipientid": "chat64786",
+        "date": "2026-04-17T10:48:51+03:00",
+        "text": "[b]Создана новая сделка[/b]",
+        "textlegacy": "<b>Создана новая сделка</b>",
+        "params": {
+          "attach": [
+            {
+              "id": 1776412131,
+              "blocks": [
+                {
+                  "link": [
+                    {
+                      "name": "Talgat - WhatsApp",
+                      "link": "/crm/deal/details/50884/"
+                    }
+                  ]
+                }
+              ],
+              "description": "",
+              "color": "#29619b"
+            }
+          ]
+        }
+      },
+      "1069310": {
+        "id": "1069310",
+        "chatid": "64786",
+        "senderid": "0",
+        "recipientid": "chat64786",
+        "date": "2026-04-17T10:48:51+03:00",
+        "text": "[b]Создан новый контакт[/b]",
+        "textlegacy": "<b>Создан новый контакт</b>",
+        "params": {
+          "attach": [
+            {
+              "id": 1776412131,
+              "blocks": [
+                {
+                  "link": [
+                    {
+                      "name": "Talgat",
+                      "link": "/crm/contact/details/63900/"
+                    }
+                  ]
+                },
+                {
+                  "grid": [
+                    {
+                      "display": "LINE",
+                      "name": "Телефон",
+                      "value": "+77772228000",
+                      "height": 20,
+                      "colorToken": "base"
+                    },
+                    {
+                      "display": "LINE",
+                      "name": "Email",
+                      "value": "77772228000@whatsapp.wazzup",
+                      "height": 20,
+                      "colorToken": "base"
+                    }
+                  ]
+                }
+              ],
+              "description": "",
+              "color": "#e8a441"
+            }
+          ]
+        }
+      },
+      "1069306": {
+        "id": "1069306",
+        "chatid": "64786",
+        "senderid": "0",
+        "recipientid": "chat64786",
+        "date": "2026-04-17T10:48:50+03:00",
+        "text": "Начат новый диалог №[URL=/online/?IM_HISTORY=imol|26194]26194[/URL]",
+        "textlegacy": "Начат новый диалог №<a href=\"/online/?IM_HISTORY=imol|26194\" target=\"_blank\" >26194</a>",
+        "params": {
+          "class": "bx-messenger-content-item-ol-start",
+          "componentId": "StartDialogMessage"
+        }
+      }
+    },
+    "usersMessage": {
+      "chat64786": [
+        "1070144",
+        "1069330",
+        "1069328",
+        "1069326",
+        "1069324",
+        "1069320",
+        "1069318",
+        "1069316",
+        "1069314",
+        "1069312",
+        "1069310",
+        "1069306"
+      ]
+    },
+    "users": {
+      "21356": {
+        "id": "21356",
+        "name": "Talgat",
+        "active": true,
+        "firstName": "Talgat",
+        "lastName": "",
+        "workPosition": null,
+        "color": "#8474c8",
+        "avatar": "https://cdn-ru.bitrix24.kz/b29289878/resize_cache/213884/ff58db95aecdfa09ae61b51b5fd8f63f/main/b4b/b4bd3b0a5c49da876ca59a30247e7db3/64cdf338df9c651392547869a21b87415beebb4c.jpg",
+        "avatarId": "213884",
+        "birthday": false,
+        "gender": "M",
+        "phoneDevice": false,
+        "phones": false,
+        "extranet": true,
+        "network": false,
+        "bot": false,
+        "connector": true,
+        "profile": "/company/personal/user/21356/",
+        "externalAuthId": "imconnector",
+        "status": "online",
+        "idle": false,
+        "lastActivityDate": false,
+        "mobileLastDate": false,
+        "desktopLastDate": false,
+        "departments": [],
+        "absent": false,
+        "type": "extranet",
+        "eventLog": "N",
+        "services": null,
+        "botData": null
+      }
+    },
+    "openlines": {
+      "canvoteashead": {
+        "2": true
+      }
+    },
+    "userInGroup": [],
+    "woUserInGroup": [],
+    "chat": {
+      "64786": {
+        "id": "64786",
+        "parentChatId": 0,
+        "parentMessageId": 0,
+        "name": "Talgat - WhatsApp",
+        "owner": "0",
+        "color": "#8474c8",
+        "extranet": false,
+        "avatar": "https://cdn-ru.bitrix24.kz/b29289878/resize_cache/213882/ff58db95aecdfa09ae61b51b5fd8f63f/main/ced/ced027c889b68fbb134d7fcd73b1206f/d21681f87ea0f4bef01aff4b4614b3e3.jpg",
+        "call": "0",
+        "callNumber": "",
+        "entityType": "LINES",
+        "entityId": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|5a1b84e6-1cfc-4c24-b22c-dcccd172730b|21356",
+        "entityData1": "Y|DEAL|50884|N|N|26194|1776412130|0|0|0",
+        "entityData2": "LEAD|0|COMPANY|0|CONTACT|63900|DEAL|50884",
+        "entityData3": "",
+        "messageCount": 12,
+        "public": "",
+        "muteList": {
+          "21356": false
+        },
+        "managerList": [],
+        "dateCreate": "2026-04-17T12:48:49+03:00",
+        "type": "lines",
+        "entityLink": {
+          "type": "LINES",
+          "url": "",
+          "id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|5a1b84e6-1cfc-4c24-b22c-dcccd172730b|21356"
+        },
+        "permissions": {
+          "manageUsersAdd": "member",
+          "manageUsersDelete": "manager",
+          "manageUi": "member",
+          "manageSettings": "owner",
+          "manageMessages": "member",
+          "canPost": "member"
+        },
+        "textFieldEnabled": true,
+        "backgroundId": null,
+        "messageType": "L",
+        "isNew": false
+      }
+    },
+    "userBlockChat": {
+      "64786": {
+        "21356": false
+      }
+    },
+    "userInChat": {
+      "64786": [
+        21356
+      ]
+    },
+    "files": []
+  }
+}

@@ -1,0 +1,455 @@
+{
+  "channel": "whatsapp",
+  "integration": "wazzup",
+  "deal_id": "35006",
+  "contact_id": "49490",
+  "company_id": "",
+  "deal_title": "Серикжан - WhatsApp",
+  "source_id": "2|WZ_WHATSAPP_CB0C9F5C07DE8985B74A894B883C619C0",
+  "assigned_by_id": "28",
+  "stage_id": "LOSE",
+  "stage_semantic_id": "F",
+  "category_id": "0",
+  "date_create": "2025-08-22T05:15:57+03:00",
+  "date_modify": "2026-04-16T11:52:07+03:00",
+  "closedate": "2026-04-16T03:00:00+03:00",
+  "closed": "Y",
+  "last_communication_time": "2026-04-15T13:25:53",
+  "opportunity": "0.00000000",
+  "currency_id": "KZT",
+  "loss_reason_id": "",
+  "loss_comment": "",
+  "utm_source": "",
+  "utm_medium": "",
+  "utm_campaign": "",
+  "timeline_source": "deal",
+  "timeline_entity_type": "deal",
+  "timeline_entity_id": "35006",
+  "chat_id": "46890",
+  "session_id": "18536",
+  "dialog_id": "chat46890",
+  "connector_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0",
+  "connector_title": "WAZZUP: WhatsApp",
+  "chat_name": "Серикжан - WhatsApp",
+  "stats": {
+    "total_messages": 37,
+    "effective_messages": 27,
+    "manager_messages": 19,
+    "client_messages": 8,
+    "system_messages": 10,
+    "messages_with_files": 19,
+    "first_message_at": "2025-08-22T05:15:56+03:00",
+    "last_message_at": "2025-10-01T11:26:58+03:00",
+    "first_manager_response_time_sec": 6.0,
+    "avg_response_latency_sec": 186.4,
+    "conversation_duration_hours": 966.1838888888889
+  },
+  "messages": [
+    {
+      "timeline_comment_id": "793118",
+      "created_at": "2025-08-22T05:15:58+03:00",
+      "author_id": "15104",
+      "sender_role": "client",
+      "sender_label": "Серикжан",
+      "text": "Сәлеметсіз бе, мен Алматыдағы терезелердің бағасын білгім келеді\nhttps://fb.me/8l4s75xxD",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "35006"
+    },
+    {
+      "timeline_comment_id": "793120",
+      "created_at": "2025-08-22T05:16:04+03:00",
+      "author_id": "15104",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Сәлеметсіз бе! Өтінемін жазыңыз:\n- Терезелерді орнату қажет Қала\n- Өнімнің шамамен өлшемдері",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "35006"
+    },
+    {
+      "timeline_comment_id": "793710",
+      "created_at": "2025-08-22T08:54:23+03:00",
+      "author_id": "15104",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Бакытжан Каныбеков)",
+      "text": "Бакытжан сапа пласт",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "35006"
+    },
+    {
+      "timeline_comment_id": "793712",
+      "created_at": "2025-08-22T08:54:46+03:00",
+      "author_id": "15104",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Бакытжан Каныбеков)",
+      "text": "Аға размерлерін жіберсеңіз. Есептеп көрейік, қанша камера болсын, айнасы қандай болсын, үлкені простой ма, шеттері ақ па, сыртынан антрацит ішін ақ жасаймыз ба, соларын бір айтып көрсеңіз.",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "wazzup_audio.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=171748&exact=N&fileName=wazzup_audio.mp3",
+          "transcribed": true
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "35006"
+    },
+    {
+      "timeline_comment_id": "793714",
+      "created_at": "2025-08-22T08:55:04+03:00",
+      "author_id": "15104",
+      "sender_role": "client",
+      "sender_label": "Серикжан",
+      "text": "1800х2000 4шт\n1500х2000 2шт\n2200х2000 2шт\n600х 2000 6шт\n800х4200 1шт\n2600x1600 есик",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "35006"
+    },
+    {
+      "timeline_comment_id": "793718",
+      "created_at": "2025-08-22T08:55:24+03:00",
+      "author_id": "15104",
+      "sender_role": "client",
+      "sender_label": "Серикжан",
+      "text": "Антрацит болса",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "35006"
+    },
+    {
+      "timeline_comment_id": "793720",
+      "created_at": "2025-08-22T08:55:33+03:00",
+      "author_id": "15104",
+      "sender_role": "client",
+      "sender_label": "Серикжан",
+      "text": "Варианттармен есептесениз",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "35006"
+    },
+    {
+      "timeline_comment_id": "793848",
+      "created_at": "2025-08-22T09:05:24+03:00",
+      "author_id": "15104",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Бакытжан Каныбеков)",
+      "text": "Алматы қаласының өзінде сіз ба? Офистің адресін жіберсең бір көре алмайсың ба? Sapalar қандай, сапасы, светің, уақыт болы жатса, сотава скересенеме?",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "wazzup_audio (1).mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=171768&exact=N&fileName=wazzup_audio%20%281%29.mp3",
+          "transcribed": true
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "35006"
+    },
+    {
+      "timeline_comment_id": "793936",
+      "created_at": "2025-08-22T09:38:07+03:00",
+      "author_id": "15104",
+      "sender_role": "client",
+      "sender_label": "Серикжан",
+      "text": "Болды жиберип койыныз",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "35006"
+    },
+    {
+      "timeline_comment_id": "793938",
+      "created_at": "2025-08-22T09:38:08+03:00",
+      "author_id": "15104",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Сапа пласт компаниясына хабарласқаныңыз үшін рақмет!\nБізден үйіңіздің сәнін келтіретін сапалы терезелер мен есіктер тапсырыс бере аласыз. Сізбен біздің менеджер хабарласады.\n\nСпасибо за обращение в Компания Sapaplast Окна и Двери! У нас можете заказать качественные окна для вашего дома. С вами скоро свяжется менеджер, пока можете ознакомиться с нашим инстаграмом:\nhttps://www.instagram.com/sapaplast.kz",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "35006"
+    },
+    {
+      "timeline_comment_id": "794280",
+      "created_at": "2025-08-22T10:52:37+03:00",
+      "author_id": "15104",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Бакытжан Каныбеков)",
+      "text": "",
+      "attachments": [
+        {
+          "type": "file",
+          "label": "999_Серик_Алматы.pdf",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=171954&exact=N&fileName=999_%D0%A1%D0%B5%D1%80%D0%B8%D0%BA_%D0%90%D0%BB%D0%BC%D0%B0%D1%82%D1%8B.pdf"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "35006"
+    },
+    {
+      "timeline_comment_id": "794282",
+      "created_at": "2025-08-22T10:53:13+03:00",
+      "author_id": "15104",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Бакытжан Каныбеков)",
+      "text": "Немецкий 🇩🇪\n3-ти камерный профиль \"ARtec 60\"( 10 лет гарантии),\nЦвет- Цветной\n\n24мм стеклопакет\n(4-16-4)(два стекла)(1 год гарантии);\n\nМультифункциональный Прастой стекло\n\nФурнитура \"AXOR\" (россия пр-во)(2 год гарантии),\nОткрывание сложное\n\nРучки \"Roto Sambo\" цвет серебристый;\n\nНакладки на петли серебристые;\n\nПодоконник \"Home Line 350 mm белый в подарок\nМоскитные сетки в подарок\n\nАрмированное железо внутри профиля 1,5мм,\n\nЦена со скидкой 2,780.0000тг.; За наличный сумма\n\nСрок изготовления 15 рабочих дней.\n\n✅Доставка,\n✅Установка. Стандарный монтаж\n\nС уважением,\nменеджер Бакытжан\nТел.: 87073065555\n\nКомпания \"Sapaplast\"\n\nНаш instagram:// www.instagram.com/sapaplast.kz\n\n⚠Данная цена действительна в течении 5-ти дней!",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "35006"
+    },
+    {
+      "timeline_comment_id": "794284",
+      "created_at": "2025-08-22T10:53:24+03:00",
+      "author_id": "15104",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Бакытжан Каныбеков)",
+      "text": "",
+      "attachments": [
+        {
+          "type": "video",
+          "label": "copy_4D7492C4-F395-4A50-9CD7-A5F38CF40C0A.mp4",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=171956&exact=N&_esd=zSNwMBehxvaO5dvbB9WtTpYhX2JHC25dx9U-LhVF0YtAXsfNXdejR4J2z5VHqv7OaQvEAEnZ8-yufGJ1QZCRQQ6HcV0C0vipN2Skli2UK9VsKDdRFRs2Fdc_ISLH3_st42gZNzDNX7POMpe_AJcgjrFqECH4k459Gxwus2uok3FmvgjKBmlK3KzU-pjaUtx2&fileName=copy_4D7492C4-F395-4A50-9CD7-A5F38CF40C0A.mp4"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "35006"
+    },
+    {
+      "timeline_comment_id": "794288",
+      "created_at": "2025-08-22T10:53:33+03:00",
+      "author_id": "15104",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Бакытжан Каныбеков)",
+      "text": "Сәлеметсіз бе! Терезе өлшемдерін таба ма? Осы жерде прайсін жібер қойын, үш камера артық профильмен жасалған, екі қау секіл өтед. Стандартты монтаж, қазір монтаж жайында видео жібер қойын, бағасын жазып қойын. Көріп шықсаңыз, керек болсаңыз, байланыс айты көрсеңіз, құдай қаласа.",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "wazzup_audio (2).mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=171958&exact=N&fileName=wazzup_audio%20%282%29.mp3",
+          "transcribed": true
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "35006"
+    },
+    {
+      "timeline_comment_id": "794290",
+      "created_at": "2025-08-22T10:53:37+03:00",
+      "author_id": "15104",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Бакытжан Каныбеков)",
+      "text": "🛠 Бұл видеода сіз Sapaplast компаниясының заманауи монтаж әдістерін көресіз.\n\n❗ Есіңізде болсын:\nТерезенің сапасының 80%-ы – дұрыс монтажға байланысты.\nҚаншалықты қымбат, сапалы терезе алсаңыз да, егер дұрыс орнатылмаса – ол жұмыс істемейді.\n\n✅ Бізде – Гост стандартына сай, соңғы технологиямен жасалатын монтаж.\nСапалы монтаж – терезеңіздің жылу ұстап тұруы, тығыз жабылуы және ұзақ қызмет етуінің кепілі.\n\n🎥 Видеоны соңына дейін көріп шығыңыз – пайдалы ақпарат аласыз.",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "35006"
+    },
+    {
+      "timeline_comment_id": "794292",
+      "created_at": "2025-08-22T10:53:46+03:00",
+      "author_id": "15104",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Бакытжан Каныбеков)",
+      "text": "",
+      "attachments": [
+        {
+          "type": "video",
+          "label": "IMG_4011.mp4",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=171960&exact=N&_esd=SBjtKVqEA7msplYy44JSwYWXCdIW0UAk6ItXKC2vWwduXN8iFExKPT5T6xm6gbeYga32fwMLTmAvXgt9yzPNGk3GU_u6h1-HZP2xiwN2LLfu9yzsj6bqur72r3I9e_qeIsyC9kSS0Gqvsjt0rcJL&fileName=IMG_4011.mp4"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "35006"
+    },
+    {
+      "timeline_comment_id": "794294",
+      "created_at": "2025-08-22T10:53:51+03:00",
+      "author_id": "15104",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Бакытжан Каныбеков)",
+      "text": "Сәке монтаж әлі де видео жібер қойын, бір көршісіңіз міндеттірді. Сапалы монтаж қалай жасалнат, аяқ осы монтаж қалай жасалнат. Бәрліғын ақпарат бар. Көршісің міндеттірді. Тағыда түсінбеген жерлерін болса, сұрақтар қоя версеніз болды. Жауап берін айымыз болып.",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "wazzup_audio (3).mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=171962&exact=N&fileName=wazzup_audio%20%283%29.mp3",
+          "transcribed": true
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "35006"
+    },
+    {
+      "timeline_comment_id": "794342",
+      "created_at": "2025-08-22T11:00:59+03:00",
+      "author_id": "15104",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Бакытжан Каныбеков)",
+      "text": "Сөйе, бір уақыт арнап офисға кесес. Осы жерде отырып сапаларын түсіндіруік қандай терезелер, қандай сапада бәрліған көрсетіп, көріп шықсаныз. Өзіңізге ақпарат ұқпалы бұл. Саңсырған жағдайда да басқа жоңыз сапалар бар ма деген сияқты. Саңсыр ғол болады.",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "wazzup_audio (4).mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=171990&exact=N&fileName=wazzup_audio%20%284%29.mp3",
+          "transcribed": true
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "35006"
+    },
+    {
+      "timeline_comment_id": "794488",
+      "created_at": "2025-08-22T11:34:09+03:00",
+      "author_id": "15104",
+      "sender_role": "client",
+      "sender_label": "Серикжан",
+      "text": "Аха, жақсы, уақыт болғанда барга бізетіне, жаңа, нидеріңіз көруеміз ғо. Бірақ сіздерді кішкен қымбаттау ма үш камера болғанда 2 миллион 780 мын геуешетіңіз ба? 5 камера 32 миллиметр стекло пакеттіпен сондай сумаға санаватырет басқалар. Енді сіздің пропайлыңыз ерекшема?",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "b221215d-3c05-4984-8e08-8e5addec1bb9.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=172040&exact=N&fileName=b221215d-3c05-4984-8e08-8e5addec1bb9.mp3",
+          "transcribed": true
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "35006"
+    },
+    {
+      "timeline_comment_id": "794508",
+      "created_at": "2025-08-22T11:38:31+03:00",
+      "author_id": "15104",
+      "sender_role": "client",
+      "sender_label": "Серикжан",
+      "text": "Профилімен бес камера үш қабат стекло ма есептеп берші?",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "8012f5e6-c33a-4879-b378-37541b616fd0.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=172052&exact=N&fileName=8012f5e6-c33a-4879-b378-37541b616fd0.mp3",
+          "transcribed": true
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "35006"
+    },
+    {
+      "timeline_comment_id": "794520",
+      "created_at": "2025-08-22T11:41:14+03:00",
+      "author_id": "15104",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Бакытжан Каныбеков)",
+      "text": "Аға, бізде Функедеғен фонийдіра жоқ. Біз Артек деген профильменен, неміске технология, Ресейден келетін профиль. Сапасы өте жақсы, ол ауыш емес, қаға жүзінді де гарантия бар. Функедеғен ол өзіміздің Қазақстанда шығатын профиль ғо.",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "wazzup_audio (5).mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=172054&exact=N&fileName=wazzup_audio%20%285%29.mp3",
+          "transcribed": true
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "35006"
+    },
+    {
+      "timeline_comment_id": "794522",
+      "created_at": "2025-08-22T11:42:05+03:00",
+      "author_id": "15104",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Бакытжан Каныбеков)",
+      "text": "Өзіміздің Қазақстанда, Астанада өндіріледі ғой. Біз ол профилмен жұмыс жасып баймыз. Олар енді арзанды ұжыреді ғой бізден қарағанда. Сапаға қарай ғой негізі. Сол қайшысына заттар әрі қаша мұқты, әрі бағасы да мұқты болады. Сапа төмен деген сайын, баға да төмендей береді.",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "wazzup_audio (6).mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=172056&exact=N&fileName=wazzup_audio%20%286%29.mp3",
+          "transcribed": true
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "35006"
+    },
+    {
+      "timeline_comment_id": "794524",
+      "created_at": "2025-08-22T11:42:37+03:00",
+      "author_id": "15104",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Бакытжан Каныбеков)",
+      "text": "Біз әртүрлі профилімен жұмыс жасыз. Біз артеқ қой, тек қана артеқпен жұмыс жасазамыз. Себебі олардың сапасымы қыда, көзімнен жеткен, 11-15 жыл тұрған қайсыса дағы бар. Сонан кейін артеқ профилімен жұмыс жасаймыз.",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "wazzup_audio (7).mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=172058&exact=N&fileName=wazzup_audio%20%287%29.mp3",
+          "transcribed": true
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "35006"
+    },
+    {
+      "timeline_comment_id": "794528",
+      "created_at": "2025-08-22T11:43:18+03:00",
+      "author_id": "15104",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Бакытжан Каныбеков)",
+      "text": "Уақыт тауып офисқа келсеңіз, осы жерде отырып бәрін түсіндіріп көрсетейік. Осы аптама, әлде келесі аптаға ма, бірақ ыңғайластырып уақытын айтсаңыз. Күнде сізге звондап мазаңызды алмай қояйық деген ғой.",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "wazzup_audio (8).mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=172060&exact=N&fileName=wazzup_audio%20%288%29.mp3",
+          "transcribed": true
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "35006"
+    },
+    {
+      "timeline_comment_id": "795500",
+      "created_at": "2025-08-22T15:07:12+03:00",
+      "author_id": "15104",
+      "sender_role": "client",
+      "sender_label": "Серикжан",
+      "text": "Болды барайын воскресенье истейсиздер ма",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "35006"
+    },
+    {
+      "timeline_comment_id": "795504",
+      "created_at": "2025-08-22T15:10:03+03:00",
+      "author_id": "15104",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Бакытжан Каныбеков)",
+      "text": "Әәә, маскиресен жұмыс жасаймыз ғо, азанғы сағат 10-нан бастап кешкі жетіге шейін ғой",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "wazzup_audio (9).mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=172282&exact=N&fileName=wazzup_audio%20%289%29.mp3",
+          "transcribed": true
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "35006"
+    },
+    {
+      "timeline_comment_id": "811134",
+      "created_at": "2025-08-31T11:25:48+03:00",
+      "author_id": "15104",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Лайла Алматы менеджер SP)",
+      "text": "Серікжан саламатсыз ба, WhatsAppтан байланысқан хабарласып отырмын, терезе бойынша заказым сізден актуальды ма? Актуальды емес пе? Келем дегенсіз офисқа келе аласыз ба немесе келе алмайтын болдыңыз ба? Мүмкіндік болса бір жауап берсеңіз жақсы болар еді.",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "wazzup_audio (10).mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=176076&exact=N&fileName=wazzup_audio%20%2810%29.mp3",
+          "transcribed": true
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "35006"
+    }
+  ]
+}

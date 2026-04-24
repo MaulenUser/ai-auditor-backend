@@ -1,0 +1,586 @@
+{
+  "binding": {
+    "timeline_source": "deal",
+    "timeline_entity_type": "deal",
+    "timeline_entity_id": "50674",
+    "chat_id": "64236",
+    "connector_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0",
+    "connector_title": "WAZZUP: WhatsApp"
+  },
+  "dialog": {
+    "id": 64236,
+    "parent_chat_id": 0,
+    "parent_message_id": 0,
+    "name": "Акайша Мадияровна - WhatsApp",
+    "description": "Ссылка на исходный пост: https://app.wazzup24.com/1826-6940/chat/whatsapp/77075524397/fc3e1d61-cd1c-4955-9345-b0f22b543020",
+    "owner": 0,
+    "extranet": false,
+    "avatar": "",
+    "color": "#29619b",
+    "type": "lines",
+    "counter": 0,
+    "user_counter": 1,
+    "message_count": 19,
+    "unread_id": 0,
+    "restrictions": {
+      "avatar": true,
+      "rename": true,
+      "extend": true,
+      "call": true,
+      "mute": true,
+      "leave": true,
+      "leave_owner": true,
+      "send": true,
+      "user_list": true
+    },
+    "last_message_id": 1070096,
+    "last_id": 0,
+    "marked_id": 0,
+    "disk_folder_id": 0,
+    "entity_type": "LINES",
+    "entity_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|7aa7d0be-1e3d-4fbd-a4e1-d1073c2f38aa|21274",
+    "entity_data_1": "Y|DEAL|50674|N|N|26092|1776224640|0|0|0",
+    "entity_data_2": "LEAD|0|COMPANY|0|CONTACT|63698|DEAL|50674",
+    "entity_data_3": "",
+    "mute_list": [],
+    "date_create": "2026-04-15T06:44:00+03:00",
+    "message_type": "L",
+    "public": "",
+    "role": "guest",
+    "entity_link": {
+      "type": "LINES",
+      "url": "",
+      "id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|7aa7d0be-1e3d-4fbd-a4e1-d1073c2f38aa|21274"
+    },
+    "text_field_enabled": true,
+    "background_id": null,
+    "permissions": {
+      "manage_users_add": "member",
+      "manage_users_delete": "manager",
+      "manage_ui": "member",
+      "manage_settings": "owner",
+      "manage_messages": "member",
+      "can_post": "member"
+    },
+    "is_new": false,
+    "readed_list": [
+      {
+        "user_id": 21274,
+        "user_name": "Акайша Мадияровна",
+        "message_id": 1065004,
+        "date": null
+      }
+    ],
+    "manager_list": [],
+    "last_message_views": {
+      "message_id": 1070096,
+      "first_viewers": [],
+      "count_of_viewers": 0
+    },
+    "dialog_id": "chat64236"
+  },
+  "history": {
+    "chatId": 64236,
+    "canJoin": "Y",
+    "canVoteHead": "Y",
+    "sessionId": 26092,
+    "sessionVoteHead": 0,
+    "sessionCommentHead": null,
+    "userId": "chat64236",
+    "message": {
+      "1070096": {
+        "id": "1070096",
+        "chatid": "64236",
+        "senderid": "0",
+        "recipientid": "chat64236",
+        "date": "2026-04-17T22:42:49+03:00",
+        "text": "Обращение также направлено [USER=1 REPLACE]sapa.plast.bitrix@mail.ru[/USER]",
+        "textlegacy": "Обращение также направлено [USER=1 REPLACE]sapa.plast.bitrix@mail.ru[/USER]",
+        "params": {
+          "notify": "N"
+        }
+      },
+      "1065878": {
+        "id": "1065878",
+        "chatid": "64236",
+        "senderid": "0",
+        "recipientid": "chat64236",
+        "date": "2026-04-15T09:47:30+03:00",
+        "text": "Обращение также направлено [USER=5716 REPLACE]Ернур Исаков[/USER]",
+        "textlegacy": "Обращение также направлено [USER=5716 REPLACE]Ернур Исаков[/USER]",
+        "params": {
+          "notify": "N"
+        }
+      },
+      "1065440": {
+        "id": "1065440",
+        "chatid": "64236",
+        "senderid": "0",
+        "recipientid": "chat64236",
+        "date": "2026-04-15T08:46:24+03:00",
+        "text": "Обращение также направлено [USER=18 REPLACE]\"\"Нурсултан\"\" Директор Алматы SP[/USER]",
+        "textlegacy": "Обращение также направлено [USER=18 REPLACE]\"\"Нурсултан\"\" Директор Алматы SP[/USER]",
+        "params": {
+          "notify": "N"
+        }
+      },
+      "1065290": {
+        "id": "1065290",
+        "chatid": "64236",
+        "senderid": "0",
+        "recipientid": "chat64236",
+        "date": "2026-04-15T07:46:06+03:00",
+        "text": "Обращение направлено на всех участников очереди",
+        "textlegacy": "Обращение направлено на всех участников очереди",
+        "params": []
+      },
+      "1065168": {
+        "id": "1065168",
+        "chatid": "64236",
+        "senderid": "21274",
+        "recipientid": "chat64236",
+        "date": "2026-04-15T07:16:56+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nТүсіндім! Есіктер бойынша — 87710709494 нөміріне жазыңыз.\n\nЕгер терезе/витраж керек болса, көмектесеміз. Шоурумдарымыз:\n- Шымкент, Бозарық 261/1\n- Алматы, Немировича-Данченко 18е\n\nКеліп көре аласыз 🙂",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Түсіндім! Есіктер бойынша — 87710709494 нөміріне жазыңыз.<br /><br />Егер терезе/витраж керек болса, көмектесеміз. Шоурумдарымыз:<br />- Шымкент, Бозарық 261/1<br />- Алматы, Немировича-Данченко 18е<br /><br />Келіп көре аласыз 🙂",
+        "params": {
+          "connectorMid": [
+            "1091736a-11c6-4b92-a63c-faa094dbcd7c"
+          ]
+        }
+      },
+      "1065160": {
+        "id": "1065160",
+        "chatid": "64236",
+        "senderid": "0",
+        "recipientid": "chat64236",
+        "date": "2026-04-15T07:16:20+03:00",
+        "text": "[b]Контактная информация сохранена в контакт[/b]",
+        "textlegacy": "<b>Контактная информация сохранена в контакт</b>",
+        "params": {
+          "attach": [
+            {
+              "id": 1776226580,
+              "blocks": [
+                {
+                  "link": [
+                    {
+                      "name": "Акайша Мадияровна",
+                      "link": "/crm/contact/details/63698/"
+                    }
+                  ]
+                },
+                {
+                  "grid": [
+                    {
+                      "display": "LINE",
+                      "name": "Телефон",
+                      "value": "+77710709494[br]+77075524397",
+                      "height": 20,
+                      "colorToken": "base"
+                    }
+                  ]
+                }
+              ],
+              "description": "",
+              "color": "#5e5f5e"
+            }
+          ]
+        }
+      },
+      "1065156": {
+        "id": "1065156",
+        "chatid": "64236",
+        "senderid": "21274",
+        "recipientid": "chat64236",
+        "date": "2026-04-15T07:16:20+03:00",
+        "text": ">>Түсіндім 🙂 Есіктер бойынша: 87710709494 — WhatsApp-қа жазыңыз, бағасын және суреттерін жібереді.  \n>>Егер терезе/витраж керек болса, айтыңыз — көмектесеміз.\n \n \n👌",
+        "textlegacy": "&gt;&gt;Түсіндім 🙂 Есіктер бойынша: 87710709494 — WhatsApp-қа жазыңыз, бағасын және суреттерін жібереді. &nbsp;<br />&gt;&gt;Егер терезе/витраж керек болса, айтыңыз — көмектесеміз.<br /> <br /> <br />👌",
+        "params": {
+          "connectorMid": [
+            "2a806329-1d9b-4447-91f4-c242a7152354"
+          ]
+        }
+      },
+      "1065140": {
+        "id": "1065140",
+        "chatid": "64236",
+        "senderid": "21274",
+        "recipientid": "chat64236",
+        "date": "2026-04-15T07:15:37+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nТүсіндім 🙂 Есіктер бойынша: 87710709494 — WhatsApp-қа жазыңыз, бағасын және суреттерін жібереді.  \nЕгер терезе/витраж керек болса, айтыңыз — көмектесеміз.",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Түсіндім 🙂 Есіктер бойынша: 87710709494 — WhatsApp-қа жазыңыз, бағасын және суреттерін жібереді. &nbsp;<br />Егер терезе/витраж керек болса, айтыңыз — көмектесеміз.",
+        "params": {
+          "connectorMid": [
+            "edbd3e13-acd0-4683-abc0-bd9498060e91"
+          ]
+        }
+      },
+      "1065118": {
+        "id": "1065118",
+        "chatid": "64236",
+        "senderid": "0",
+        "recipientid": "chat64236",
+        "date": "2026-04-15T07:14:52+03:00",
+        "text": "[b]Контактная информация сохранена в контакт[/b]",
+        "textlegacy": "<b>Контактная информация сохранена в контакт</b>",
+        "params": {
+          "attach": [
+            {
+              "id": 1776226492,
+              "blocks": [
+                {
+                  "link": [
+                    {
+                      "name": "Акайша Мадияровна",
+                      "link": "/crm/contact/details/63698/"
+                    }
+                  ]
+                },
+                {
+                  "grid": [
+                    {
+                      "display": "LINE",
+                      "name": "Телефон",
+                      "value": "+77710709494[br]+77075524397",
+                      "height": 20,
+                      "colorToken": "base"
+                    }
+                  ]
+                }
+              ],
+              "description": "",
+              "color": "#4ba984"
+            }
+          ]
+        }
+      },
+      "1065116": {
+        "id": "1065116",
+        "chatid": "64236",
+        "senderid": "21274",
+        "recipientid": "chat64236",
+        "date": "2026-04-15T07:14:52+03:00",
+        "text": ">>Сәлеметсіз бе! Кіреберіс (ағаш/темір) есік бойынша бөлек менеджерлер жұмыс істейді. Осы нөмірге жазыңыз: 87710709494 — бағасын және суреттерін жіберіп береді 🙂\n \n \n👌",
+        "textlegacy": "&gt;&gt;Сәлеметсіз бе! Кіреберіс (ағаш/темір) есік бойынша бөлек менеджерлер жұмыс істейді. Осы нөмірге жазыңыз: 87710709494 — бағасын және суреттерін жіберіп береді 🙂<br /> <br /> <br />👌",
+        "params": {
+          "connectorMid": [
+            "f6eaa640-3819-41cb-87f1-51d1260e73c0"
+          ]
+        }
+      },
+      "1065072": {
+        "id": "1065072",
+        "chatid": "64236",
+        "senderid": "21274",
+        "recipientid": "chat64236",
+        "date": "2026-04-15T07:06:09+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nСәлеметсіз бе! Кіреберіс (ағаш/темір) есік бойынша бөлек менеджерлер жұмыс істейді. Осы нөмірге жазыңыз: 87710709494 — бағасын және суреттерін жіберіп береді 🙂",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Сәлеметсіз бе! Кіреберіс (ағаш/темір) есік бойынша бөлек менеджерлер жұмыс істейді. Осы нөмірге жазыңыз: 87710709494 — бағасын және суреттерін жіберіп береді 🙂",
+        "params": {
+          "connectorMid": [
+            "cd30c459-dcad-412e-882c-abba08130323"
+          ]
+        }
+      },
+      "1065066": {
+        "id": "1065066",
+        "chatid": "64236",
+        "senderid": "21274",
+        "recipientid": "chat64236",
+        "date": "2026-04-15T07:04:51+03:00",
+        "text": "Входной есік керек",
+        "textlegacy": "Входной есік керек",
+        "params": {
+          "connectorMid": [
+            "5131f540-0a4c-4c84-ba34-0423efc19756"
+          ]
+        }
+      },
+      "1065012": {
+        "id": "1065012",
+        "chatid": "64236",
+        "senderid": "21274",
+        "recipientid": "chat64236",
+        "date": "2026-04-15T06:44:52+03:00",
+        "text": "=== Исходящее сообщение, автор: Телефон ===\nЗдравствуйте! Вам пишет компания “SAPA PLAST”. Подскажите, вам нужны окна?",
+        "textlegacy": "=== Исходящее сообщение, автор: Телефон ===<br />Здравствуйте! Вам пишет компания “SAPA PLAST”. Подскажите, вам нужны окна?",
+        "params": {
+          "connectorMid": [
+            "683f6454-f5e5-4260-84bc-4eb22363329e"
+          ]
+        }
+      },
+      "1065008": {
+        "id": "1065008",
+        "chatid": "64236",
+        "senderid": "0",
+        "recipientid": "chat64236",
+        "date": "2026-04-15T06:44:31+03:00",
+        "text": "Обращение также направлено [USER=28 REPLACE]Жандос Менеджер Алматы[/USER]",
+        "textlegacy": "Обращение также направлено [USER=28 REPLACE]Жандос Менеджер Алматы[/USER]",
+        "params": {
+          "notify": "N"
+        }
+      },
+      "1065004": {
+        "id": "1065004",
+        "chatid": "64236",
+        "senderid": "21274",
+        "recipientid": "chat64236",
+        "date": "2026-04-15T06:44:02+03:00",
+        "text": "Ссылка:\n\n\nПривет! Можно узнать об этом подробнее?",
+        "textlegacy": "Ссылка:<br /><br /><br />Привет! Можно узнать об этом подробнее?",
+        "params": {
+          "connectorMid": [
+            "24115f5d-dff1-4f5d-8124-0511dd654724"
+          ]
+        }
+      },
+      "1065002": {
+        "id": "1065002",
+        "chatid": "64236",
+        "senderid": "0",
+        "recipientid": "chat64236",
+        "date": "2026-04-15T06:44:01+03:00",
+        "text": "[B]Переданы дополнительные данные:[/B]\n Ссылка на исходный пост: [URL]https://app.wazzup24.com/1826-6940/chat/whatsapp/77075524397/fc3e1d61-cd1c-4955-9345-b0f22b543020[/URL]",
+        "textlegacy": "<b>Переданы дополнительные данные:</b><br /> Ссылка на исходный пост: <a href=\"https://app.wazzup24.com/1826-6940/chat/whatsapp/77075524397/fc3e1d61-cd1c-4955-9345-b0f22b543020\" target=\"_blank\" >https://app.wazzup24.com/1826-6940/chat/whatsapp/77075524397/fc3e1d61-cd1c-4955-9345-b0f22b543020</a>",
+        "params": {
+          "class": "bx-messenger-content-item-system",
+          "componentId": "HiddenMessage",
+          "urlId": [
+            83952
+          ],
+          "attach": [
+            {
+              "id": "83952",
+              "blocks": [
+                {
+                  "richLink": [
+                    {
+                      "name": "Wazzup App",
+                      "link": "https://app.wazzup24.com/1826-6940/chat/whatsapp/77075524397/fc3e1d61-cd1c-4955-9345-b0f22b543020",
+                      "desc": "Communicate with clients in the application on the computer, and all correspondence will be saved in CRM.",
+                      "preview": "https://cdn.wazzup24.com/icons/icon_512x512.358b79.png",
+                      "previewSize": {
+                        "height": 512,
+                        "width": 512
+                      }
+                    }
+                  ]
+                }
+              ],
+              "description": "",
+              "color": "transparent"
+            }
+          ]
+        }
+      },
+      "1065000": {
+        "id": "1065000",
+        "chatid": "64236",
+        "senderid": "0",
+        "recipientid": "chat64236",
+        "date": "2026-04-15T06:44:01+03:00",
+        "text": "[b]Создана новая сделка[/b]",
+        "textlegacy": "<b>Создана новая сделка</b>",
+        "params": {
+          "attach": [
+            {
+              "id": 1776224641,
+              "blocks": [
+                {
+                  "link": [
+                    {
+                      "name": "Акайша Мадияровна - WhatsApp",
+                      "link": "/crm/deal/details/50674/"
+                    }
+                  ]
+                }
+              ],
+              "description": "",
+              "color": "#ab7761"
+            }
+          ]
+        }
+      },
+      "1064998": {
+        "id": "1064998",
+        "chatid": "64236",
+        "senderid": "0",
+        "recipientid": "chat64236",
+        "date": "2026-04-15T06:44:01+03:00",
+        "text": "[b]Создан новый контакт[/b]",
+        "textlegacy": "<b>Создан новый контакт</b>",
+        "params": {
+          "attach": [
+            {
+              "id": 1776224641,
+              "blocks": [
+                {
+                  "link": [
+                    {
+                      "name": "Акайша Мадияровна",
+                      "link": "/crm/contact/details/63698/"
+                    }
+                  ]
+                },
+                {
+                  "grid": [
+                    {
+                      "display": "LINE",
+                      "name": "Телефон",
+                      "value": "+77075524397",
+                      "height": 20,
+                      "colorToken": "base"
+                    },
+                    {
+                      "display": "LINE",
+                      "name": "Email",
+                      "value": "77075524397@whatsapp.wazzup",
+                      "height": 20,
+                      "colorToken": "base"
+                    }
+                  ]
+                }
+              ],
+              "description": "",
+              "color": "#df532d"
+            }
+          ]
+        }
+      },
+      "1064994": {
+        "id": "1064994",
+        "chatid": "64236",
+        "senderid": "0",
+        "recipientid": "chat64236",
+        "date": "2026-04-15T06:44:00+03:00",
+        "text": "Начат новый диалог №[URL=/online/?IM_HISTORY=imol|26092]26092[/URL]",
+        "textlegacy": "Начат новый диалог №<a href=\"/online/?IM_HISTORY=imol|26092\" target=\"_blank\" >26092</a>",
+        "params": {
+          "class": "bx-messenger-content-item-ol-start",
+          "componentId": "StartDialogMessage"
+        }
+      }
+    },
+    "usersMessage": {
+      "chat64236": [
+        "1070096",
+        "1065878",
+        "1065440",
+        "1065290",
+        "1065168",
+        "1065160",
+        "1065156",
+        "1065140",
+        "1065118",
+        "1065116",
+        "1065072",
+        "1065066",
+        "1065012",
+        "1065008",
+        "1065004",
+        "1065002",
+        "1065000",
+        "1064998",
+        "1064994"
+      ]
+    },
+    "users": {
+      "21274": {
+        "id": "21274",
+        "name": "Акайша Мадияровна",
+        "active": true,
+        "firstName": "Акайша",
+        "lastName": "Мадияровна",
+        "workPosition": null,
+        "color": "#4ba5c3",
+        "avatar": "/bitrix/js/im/images/blank.gif",
+        "avatarId": null,
+        "birthday": false,
+        "gender": "M",
+        "phoneDevice": false,
+        "phones": false,
+        "extranet": true,
+        "network": false,
+        "bot": false,
+        "connector": true,
+        "profile": "/company/personal/user/21274/",
+        "externalAuthId": "imconnector",
+        "status": "online",
+        "idle": false,
+        "lastActivityDate": false,
+        "mobileLastDate": false,
+        "desktopLastDate": false,
+        "departments": [],
+        "absent": false,
+        "type": "extranet",
+        "eventLog": "N",
+        "services": null,
+        "botData": null
+      }
+    },
+    "openlines": {
+      "canvoteashead": {
+        "2": true
+      }
+    },
+    "userInGroup": [],
+    "woUserInGroup": [],
+    "chat": {
+      "64236": {
+        "id": "64236",
+        "parentChatId": 0,
+        "parentMessageId": 0,
+        "name": "Акайша Мадияровна - WhatsApp",
+        "owner": "0",
+        "color": "#29619b",
+        "extranet": false,
+        "avatar": "/bitrix/js/im/images/blank.gif",
+        "call": "0",
+        "callNumber": "",
+        "entityType": "LINES",
+        "entityId": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|7aa7d0be-1e3d-4fbd-a4e1-d1073c2f38aa|21274",
+        "entityData1": "Y|DEAL|50674|N|N|26092|1776224640|0|0|0",
+        "entityData2": "LEAD|0|COMPANY|0|CONTACT|63698|DEAL|50674",
+        "entityData3": "",
+        "messageCount": 19,
+        "public": "",
+        "muteList": {
+          "21274": false
+        },
+        "managerList": [],
+        "dateCreate": "2026-04-15T08:44:00+03:00",
+        "type": "lines",
+        "entityLink": {
+          "type": "LINES",
+          "url": "",
+          "id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0|2|7aa7d0be-1e3d-4fbd-a4e1-d1073c2f38aa|21274"
+        },
+        "permissions": {
+          "manageUsersAdd": "member",
+          "manageUsersDelete": "manager",
+          "manageUi": "member",
+          "manageSettings": "owner",
+          "manageMessages": "member",
+          "canPost": "member"
+        },
+        "textFieldEnabled": true,
+        "backgroundId": null,
+        "messageType": "L",
+        "isNew": false
+      }
+    },
+    "userBlockChat": {
+      "64236": {
+        "21274": false
+      }
+    },
+    "userInChat": {
+      "64236": [
+        21274
+      ]
+    },
+    "files": []
+  }
+}

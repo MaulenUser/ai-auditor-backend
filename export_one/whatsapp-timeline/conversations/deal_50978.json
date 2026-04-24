@@ -1,0 +1,144 @@
+{
+  "channel": "whatsapp",
+  "integration": "wazzup",
+  "deal_id": "50978",
+  "contact_id": "63984",
+  "company_id": "",
+  "deal_title": "77057722255 - WhatsApp",
+  "source_id": "2|WZ_WHATSAPP_CB0C9F5C07DE8985B74A894B883C619C0",
+  "assigned_by_id": "9940",
+  "stage_id": "LOSE",
+  "stage_semantic_id": "F",
+  "category_id": "0",
+  "date_create": "2026-04-18T15:11:38+03:00",
+  "date_modify": "2026-04-20T10:08:50+03:00",
+  "closedate": "2026-04-20T03:00:00+03:00",
+  "closed": "Y",
+  "last_communication_time": "2026-04-20T09:43:38",
+  "opportunity": "0.00000000",
+  "currency_id": "KZT",
+  "loss_reason_id": "",
+  "loss_comment": "",
+  "utm_source": "",
+  "utm_medium": "",
+  "utm_campaign": "",
+  "timeline_source": "deal",
+  "timeline_entity_type": "deal",
+  "timeline_entity_id": "50978",
+  "chat_id": "64970",
+  "session_id": "26234",
+  "dialog_id": "chat64970",
+  "connector_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0",
+  "connector_title": "WAZZUP: WhatsApp",
+  "chat_name": "77057722255 - WhatsApp",
+  "stats": {
+    "total_messages": 7,
+    "effective_messages": 1,
+    "manager_messages": 0,
+    "client_messages": 1,
+    "system_messages": 6,
+    "messages_with_files": 3,
+    "first_message_at": "2026-04-18T15:11:38+03:00",
+    "last_message_at": "2026-04-20T07:59:00+03:00",
+    "first_manager_response_time_sec": null,
+    "avg_response_latency_sec": null,
+    "conversation_duration_hours": 40.78944444444444
+  },
+  "messages": [
+    {
+      "timeline_comment_id": "1071152",
+      "created_at": "2026-04-18T15:11:38+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Начат новый диалог №26234",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "50978"
+    },
+    {
+      "timeline_comment_id": "1071156",
+      "created_at": "2026-04-18T15:11:38+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Создан новый контакт",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "77057722255",
+          "url": "/crm/contact/details/63984/"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "50978"
+    },
+    {
+      "timeline_comment_id": "1071158",
+      "created_at": "2026-04-18T15:11:38+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Создана новая сделка",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "77057722255 - WhatsApp",
+          "url": "/crm/deal/details/50978/"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "50978"
+    },
+    {
+      "timeline_comment_id": "1071160",
+      "created_at": "2026-04-18T15:11:38+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Переданы дополнительные данные:\nСсылка на исходный пост: https://app.wazzup24.com/1826-6940/chat/whatsapp/77057722255/fc3e1d61-cd1c-4955-9345-b0f22b543020",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "Wazzup App",
+          "url": "https://app.wazzup24.com/1826-6940/chat/whatsapp/77057722255/fc3e1d61-cd1c-4955-9345-b0f22b543020"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "50978"
+    },
+    {
+      "timeline_comment_id": "1071162",
+      "created_at": "2026-04-18T15:11:39+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Обращение направлено на всех участников очереди",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "50978"
+    },
+    {
+      "timeline_comment_id": "1071164",
+      "created_at": "2026-04-18T15:11:39+03:00",
+      "author_id": "21394",
+      "sender_role": "client",
+      "sender_label": "77057722255",
+      "text": "=== SYSTEM WZ ===\nCheck this message on your device",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50978"
+    },
+    {
+      "timeline_comment_id": "1072152",
+      "created_at": "2026-04-20T07:59:00+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Обращение также направлено \"\"Нурсултан\"\" Директор Алматы SP",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "50978"
+    }
+  ]
+}

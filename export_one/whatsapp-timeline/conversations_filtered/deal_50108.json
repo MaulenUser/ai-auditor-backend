@@ -1,0 +1,311 @@
+{
+  "channel": "whatsapp",
+  "integration": "wazzup",
+  "deal_id": "50108",
+  "contact_id": "63172",
+  "company_id": "",
+  "deal_title": "Бахтишат Шукратович - WhatsApp",
+  "source_id": "2|WZ_WHATSAPP_CB0C9F5C07DE8985B74A894B883C619C0",
+  "assigned_by_id": "28",
+  "stage_id": "EXECUTING",
+  "stage_semantic_id": "P",
+  "category_id": "0",
+  "date_create": "2026-04-08T09:25:20+03:00",
+  "date_modify": "2026-04-21T10:00:08+03:00",
+  "closedate": "2026-04-15T03:00:00+03:00",
+  "closed": "N",
+  "last_communication_time": "2026-04-14T11:09:19",
+  "opportunity": "0.00000000",
+  "currency_id": "KZT",
+  "loss_reason_id": "",
+  "loss_comment": "",
+  "utm_source": "",
+  "utm_medium": "",
+  "utm_campaign": "",
+  "timeline_source": "deal",
+  "timeline_entity_type": "deal",
+  "timeline_entity_id": "50108",
+  "chat_id": "63258",
+  "session_id": "25778",
+  "dialog_id": "chat63258",
+  "connector_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0",
+  "connector_title": "WAZZUP: WhatsApp",
+  "chat_name": "Бахтишат Шукратович - WhatsApp",
+  "stats": {
+    "total_messages": 28,
+    "effective_messages": 20,
+    "manager_messages": 12,
+    "client_messages": 8,
+    "system_messages": 8,
+    "messages_with_files": 10,
+    "first_message_at": "2026-04-08T09:25:19+03:00",
+    "last_message_at": "2026-04-13T16:26:23+03:00",
+    "first_manager_response_time_sec": 326.0,
+    "avg_response_latency_sec": 150.8,
+    "conversation_duration_hours": 127.01777777777778
+  },
+  "messages": [
+    {
+      "timeline_comment_id": "1053734",
+      "created_at": "2026-04-08T09:25:21+03:00",
+      "author_id": "21032",
+      "sender_role": "client",
+      "sender_label": "Бахтишат Шукратович",
+      "text": "Добрый день\nhttps://www.instagram.com/p/DW18QmrAFow/",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50108"
+    },
+    {
+      "timeline_comment_id": "1053740",
+      "created_at": "2026-04-08T09:25:57+03:00",
+      "author_id": "21032",
+      "sender_role": "client",
+      "sender_label": "Бахтишат Шукратович",
+      "text": "Нужно витражное окно из алюминия , размер 600х300",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50108"
+    },
+    {
+      "timeline_comment_id": "1053770",
+      "created_at": "2026-04-08T09:30:47+03:00",
+      "author_id": "21032",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Ернур Исаков)",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "wazzup_audio.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=228776&exact=N&fileName=wazzup_audio.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50108"
+    },
+    {
+      "timeline_comment_id": "1053784",
+      "created_at": "2026-04-08T09:32:41+03:00",
+      "author_id": "21032",
+      "sender_role": "client",
+      "sender_label": "Бахтишат Шукратович",
+      "text": "1 витражное окно размерами в длину 6 метров в высоту 3 метра",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50108"
+    },
+    {
+      "timeline_comment_id": "1053786",
+      "created_at": "2026-04-08T09:32:42+03:00",
+      "author_id": "21032",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жандос Менеджер Алматы)",
+      "text": "Сәлеметсіз бе?!🙂 Сізді Алматы қаласындағы Сапа Пласт Компаниясының ресми шорумында сізді күтетін боламыз. Бұл жерден сіз тек сапалы өнімдермен танысып кете аласыз.\nБіздің Инстаграм парақшамыздан бүкіл жұмыстарымызды шынай отзывтарды көре аласыздар\nhttps://www.instagram.com/sapaplast.kz\n\nБізді 2Гис картасынан осылай таба аласыз;\nУлица Немировича-Данченко, 18а\nhttps://2gis.kz/almaty/geo/9430047374980723/76.868243,43.261476\nЖәне де сізге местоположение жіберіп жатырмын.\nhttps://www.google.com/maps/place/43%C2%B015'40.4%22N+76%C2%B052'05.3%22E/@43.2612251,76.8655673,17z/data=!3m1!4b1!4m4!3m3!8m2!3d43.2612251!4d76.8681422?hl=ru&entry=ttu",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50108"
+    },
+    {
+      "timeline_comment_id": "1053788",
+      "created_at": "2026-04-08T09:32:54+03:00",
+      "author_id": "21032",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жандос Менеджер Алматы)",
+      "text": "",
+      "attachments": [
+        {
+          "type": "video",
+          "label": "WhatsApp_Video_2025-04-22_at_14.30.03.mp4",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=228782&exact=N&_esd=96_L9JVfuR7owkpVcx7xUVwCCHFu8nFYhntFNZIvRraYvShFDgejzO4LyC1P3czbeUJHbfyNvXV80rHmdJACmDgM88T3LcOMdxIhRm-AjYCFJDKrCY934yR8e0LtLQD4Kpl0_i5zLFoOzSz3xg33gckUv6FmMuqiICdiW8Z2-VEcAinG5YyyU5mChTw%3D&fileName=WhatsApp_Video_2025-04-22_at_14.30.03.mp4"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50108"
+    },
+    {
+      "timeline_comment_id": "1053790",
+      "created_at": "2026-04-08T09:32:56+03:00",
+      "author_id": "21032",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жандос Менеджер Алматы)",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "wazzup_audio (1).mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=228784&exact=N&fileName=wazzup_audio%20%281%29.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50108"
+    },
+    {
+      "timeline_comment_id": "1053796",
+      "created_at": "2026-04-08T09:34:23+03:00",
+      "author_id": "21032",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жандос Менеджер Алматы)",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "wazzup_audio (2).mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=228788&exact=N&fileName=wazzup_audio%20%282%29.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50108"
+    },
+    {
+      "timeline_comment_id": "1053810",
+      "created_at": "2026-04-08T09:36:41+03:00",
+      "author_id": "21032",
+      "sender_role": "client",
+      "sender_label": "Бахтишат Шукратович",
+      "text": "",
+      "attachments": [
+        {
+          "type": "image",
+          "label": "957010c0-28e8-434e-b061-d8a846fca1c1.jpeg",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=228792&exact=N&_esd=nFyTTQYT20JjhvBsY5TxUrdPBAVDS3jVK7wjceMga3RWMDoudjRbuEXnPmotUFtg3NbBGwDl9pYuZWVkQa8fh9mbkpylcb6vfqJtz409YV67PXCChbHcXEcrmFuzRr3e58FJchy83tj1vSPACAsbotMIn5nHVhVe2-pS15Prbs4HTIQakjk8hI7z3Ow%3D&fileName=957010c0-28e8-434e-b061-d8a846fca1c1.jpeg"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50108"
+    },
+    {
+      "timeline_comment_id": "1053814",
+      "created_at": "2026-04-08T09:36:58+03:00",
+      "author_id": "21032",
+      "sender_role": "client",
+      "sender_label": "Бахтишат Шукратович",
+      "text": "",
+      "attachments": [
+        {
+          "type": "image",
+          "label": "b210b137-f81e-4f3a-8c5f-755e347efb4e.jpeg",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=228794&exact=N&_esd=hU7ZP06Z8EbS8smT94fCcOkW3VvHSrCGaFbDB1W2ga1yAcieM9nBgr_cQxUrJRCPN-ws7fLQVzxVSLGF34C6zXqCb67uqBhgHDYYemTUK7S8870t3YjC0ozxO6UGYfYPj_yMUwytYWNMjuF_NVTdUb_1gSdNsBYONvKggGe3d7mB_S6QK2i3s240Efk%3D&fileName=b210b137-f81e-4f3a-8c5f-755e347efb4e.jpeg"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50108"
+    },
+    {
+      "timeline_comment_id": "1053850",
+      "created_at": "2026-04-08T09:43:24+03:00",
+      "author_id": "21032",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жандос Менеджер Алматы)",
+      "text": "Хорошо",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50108"
+    },
+    {
+      "timeline_comment_id": "1053884",
+      "created_at": "2026-04-08T09:48:02+03:00",
+      "author_id": "21032",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жандос Менеджер Алматы)",
+      "text": "Из алюминия 55 серия -2700 000 под ключ примерная цена..Если всё ок, то можем выехать на контрольный замер",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50108"
+    },
+    {
+      "timeline_comment_id": "1053888",
+      "created_at": "2026-04-08T09:48:20+03:00",
+      "author_id": "21032",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жандос Менеджер Алматы)",
+      "text": "Дайте обр связь",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50108"
+    },
+    {
+      "timeline_comment_id": "1053910",
+      "created_at": "2026-04-08T09:49:44+03:00",
+      "author_id": "21032",
+      "sender_role": "client",
+      "sender_label": "Бахтишат Шукратович",
+      "text": "55 серия это самый дешевый да?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50108"
+    },
+    {
+      "timeline_comment_id": "1053916",
+      "created_at": "2026-04-08T09:49:47+03:00",
+      "author_id": "21032",
+      "sender_role": "client",
+      "sender_label": "Бахтишат Шукратович",
+      "text": "а как будет примерно выглядеть витраж? интересует открывание может есть примерно похожий готовый который вы устанавливали?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50108"
+    },
+    {
+      "timeline_comment_id": "1053918",
+      "created_at": "2026-04-08T09:49:47+03:00",
+      "author_id": "21032",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жандос Менеджер Алматы)",
+      "text": "Бахтишат Шукратович",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50108"
+    },
+    {
+      "timeline_comment_id": "1053930",
+      "created_at": "2026-04-08T09:51:08+03:00",
+      "author_id": "21032",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жандос Менеджер Алматы)",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "wazzup_audio (3).mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=228818&exact=N&fileName=wazzup_audio%20%283%29.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50108"
+    },
+    {
+      "timeline_comment_id": "1053936",
+      "created_at": "2026-04-08T09:51:34+03:00",
+      "author_id": "21032",
+      "sender_role": "client",
+      "sender_label": "Бахтишат Шукратович",
+      "text": "Все хорошо спасибо , на следующей неделе наверное",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50108"
+    },
+    {
+      "timeline_comment_id": "1053952",
+      "created_at": "2026-04-08T09:52:51+03:00",
+      "author_id": "21032",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жандос Менеджер Алматы)",
+      "text": "ОК",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50108"
+    },
+    {
+      "timeline_comment_id": "1053954",
+      "created_at": "2026-04-08T09:53:00+03:00",
+      "author_id": "21032",
+      "sender_role": "manager",
+      "sender_label": "Битрикс24 (Жандос Менеджер Алматы)",
+      "text": "Я вам сейчас напишу с личного будем на связи",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50108"
+    }
+  ]
+}

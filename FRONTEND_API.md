@@ -164,6 +164,64 @@ const { managers } = await res.json();
 
 ---
 
+### GET `/catalog/funnels-with-managers`
+
+Заголовок: `X-Webhook-Url`
+
+Параметры query string:
+
+| Параметр | Тип | Обязателен | Описание |
+|---|---|---|---|
+| `date_from` | `string` | нет | Начало периода. Если передан, менеджеры определяются по сделкам в этом диапазоне |
+| `date_to` | `string` | нет | Конец периода. Если передан, менеджеры определяются по сделкам в этом диапазоне |
+| `active_only` | `boolean` | нет | Вернуть только активных менеджеров |
+
+Запрос:
+```js
+const params = new URLSearchParams();
+params.set("active_only", "true");
+// params.set("date_from", "2026-01-01");
+// params.set("date_to",   "2026-03-31");
+
+const res = await fetch(`http://localhost:8000/catalog/funnels-with-managers?${params}`, {
+  headers: { "X-Webhook-Url": WEBHOOK_URL },
+});
+const { funnels } = await res.json();
+```
+
+Ответ:
+```json
+{
+  "funnels": [
+    {
+      "id": "2",
+      "name": "Окна Шымкент",
+      "sort": 10,
+      "manager_count": 2,
+      "managers": [
+        { "id": "20", "name": "Асет Сапар", "email": "a@example.com", "active": true },
+        { "id": "30", "name": "Раушан Сапар", "email": "r@example.com", "active": true }
+      ]
+    },
+    {
+      "id": "4",
+      "name": "Есиктер Агаш Темир Шымкент",
+      "sort": 20,
+      "manager_count": 1,
+      "managers": [
+        { "id": "20", "name": "Асет Сапар", "email": "a@example.com", "active": true }
+      ]
+    }
+  ]
+}
+```
+
+Примечание:
+- Bitrix24 webhook не отдаёт прямую связь `воронка -> менеджеры`, поэтому API строит её по фактическим `ASSIGNED_BY_ID` в сделках этой воронки.
+- Воронки без сделок тоже возвращаются, но с пустым `managers`.
+
+---
+
 ## 6. AI Аудит
 
 ### GET `/audit/preview`

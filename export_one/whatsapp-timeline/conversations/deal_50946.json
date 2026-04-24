@@ -1,0 +1,205 @@
+{
+  "channel": "whatsapp",
+  "integration": "wazzup",
+  "deal_id": "50946",
+  "contact_id": "63954",
+  "company_id": "",
+  "deal_title": "өмір өтер - WhatsApp",
+  "source_id": "2|WZ_WHATSAPP_CB0C9F5C07DE8985B74A894B883C619C0",
+  "assigned_by_id": "9940",
+  "stage_id": "LOSE",
+  "stage_semantic_id": "F",
+  "category_id": "0",
+  "date_create": "2026-04-18T02:52:19+03:00",
+  "date_modify": "2026-04-18T09:23:39+03:00",
+  "closedate": "2026-04-18T03:00:00+03:00",
+  "closed": "Y",
+  "last_communication_time": "2026-04-18T04:52:20",
+  "opportunity": "0.00000000",
+  "currency_id": "KZT",
+  "loss_reason_id": "",
+  "loss_comment": "",
+  "utm_source": "",
+  "utm_medium": "",
+  "utm_campaign": "",
+  "timeline_source": "deal",
+  "timeline_entity_type": "deal",
+  "timeline_entity_id": "50946",
+  "chat_id": "64840",
+  "session_id": "26216",
+  "dialog_id": "chat64840",
+  "connector_id": "wz_whatsapp_cb0c9f5c07de8985b74a894b883c619c0",
+  "connector_title": "WAZZUP: WhatsApp",
+  "chat_name": "өмір өтер - WhatsApp",
+  "stats": {
+    "total_messages": 12,
+    "effective_messages": 5,
+    "manager_messages": 2,
+    "client_messages": 3,
+    "system_messages": 7,
+    "messages_with_files": 4,
+    "first_message_at": "2026-04-18T02:52:19+03:00",
+    "last_message_at": "2026-04-18T14:19:56+03:00",
+    "first_manager_response_time_sec": 30.0,
+    "avg_response_latency_sec": 30.0,
+    "conversation_duration_hours": 11.460277777777778
+  },
+  "messages": [
+    {
+      "timeline_comment_id": "1070168",
+      "created_at": "2026-04-18T02:52:19+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Начат новый диалог №26216",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "50946"
+    },
+    {
+      "timeline_comment_id": "1070172",
+      "created_at": "2026-04-18T02:52:20+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Создан новый контакт",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "өмір өтер",
+          "url": "/crm/contact/details/63954/"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "50946"
+    },
+    {
+      "timeline_comment_id": "1070174",
+      "created_at": "2026-04-18T02:52:20+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Создана новая сделка",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "өмір өтер - WhatsApp",
+          "url": "/crm/deal/details/50946/"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "50946"
+    },
+    {
+      "timeline_comment_id": "1070176",
+      "created_at": "2026-04-18T02:52:20+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Переданы дополнительные данные:\nСсылка на исходный пост: https://app.wazzup24.com/1826-6940/chat/whatsapp/77073961818/fc3e1d61-cd1c-4955-9345-b0f22b543020",
+      "attachments": [
+        {
+          "type": "link",
+          "label": "Wazzup App",
+          "url": "https://app.wazzup24.com/1826-6940/chat/whatsapp/77073961818/fc3e1d61-cd1c-4955-9345-b0f22b543020"
+        }
+      ],
+      "is_system_message": true,
+      "deal_id": "50946"
+    },
+    {
+      "timeline_comment_id": "1070178",
+      "created_at": "2026-04-18T02:52:21+03:00",
+      "author_id": "21376",
+      "sender_role": "client",
+      "sender_label": "өмір өтер",
+      "text": "Сәлеметсіз бе, мен Шымкенттегі терезелердің құнын есептегім келеді\nhttps://www.instagram.com/p/DW18Q6WgNzm/",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50946"
+    },
+    {
+      "timeline_comment_id": "1070180",
+      "created_at": "2026-04-18T02:52:51+03:00",
+      "author_id": "21376",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "Сәлеметсіз бе! Сізге “SAPA PLAST” компаниясы жазып отыр. Айтыңызшы, сізге терезелер керек пе?",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50946"
+    },
+    {
+      "timeline_comment_id": "1070372",
+      "created_at": "2026-04-18T07:10:22+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Обращение также направлено Жандос Менеджер Алматы",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "50946"
+    },
+    {
+      "timeline_comment_id": "1070494",
+      "created_at": "2026-04-18T08:13:02+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Обращение направлено на всех участников очереди",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "50946"
+    },
+    {
+      "timeline_comment_id": "1070862",
+      "created_at": "2026-04-18T11:17:08+03:00",
+      "author_id": "0",
+      "sender_role": "system",
+      "sender_label": "system",
+      "text": "Обращение направлено на всех участников очереди",
+      "attachments": [],
+      "is_system_message": true,
+      "deal_id": "50946"
+    },
+    {
+      "timeline_comment_id": "1070924",
+      "created_at": "2026-04-18T13:16:12+03:00",
+      "author_id": "21376",
+      "sender_role": "manager",
+      "sender_label": "Телефон",
+      "text": "",
+      "attachments": [
+        {
+          "type": "audio",
+          "label": "9f69ec24-b23c-4eea-981f-34c009b82cfd.mp3",
+          "url": "https://sapaplast.bitrix24.kz/bitrix/services/main/ajax.php?action=disk.api.file.download&SITE_ID=s1&humanRE=1&fileId=231498&exact=N&fileName=9f69ec24-b23c-4eea-981f-34c009b82cfd.mp3"
+        }
+      ],
+      "is_system_message": false,
+      "deal_id": "50946"
+    },
+    {
+      "timeline_comment_id": "1071116",
+      "created_at": "2026-04-18T14:19:55+03:00",
+      "author_id": "21376",
+      "sender_role": "client",
+      "sender_label": "өмір өтер",
+      "text": "5 штук",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50946"
+    },
+    {
+      "timeline_comment_id": "1071118",
+      "created_at": "2026-04-18T14:19:56+03:00",
+      "author_id": "21376",
+      "sender_role": "client",
+      "sender_label": "өмір өтер",
+      "text": "Салеметсізбе",
+      "attachments": [],
+      "is_system_message": false,
+      "deal_id": "50946"
+    }
+  ]
+}
