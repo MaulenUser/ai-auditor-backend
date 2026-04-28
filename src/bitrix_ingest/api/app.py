@@ -1,11 +1,16 @@
 """FastAPI application exposing the Bitrix exporters and OpenAI pipelines as HTTP endpoints."""
 from __future__ import annotations
 
+import os
 from pathlib import Path
 from typing import Any, List, Optional
 
 from fastapi import FastAPI, Form, HTTPException, Query, Security
 from fastapi.security import APIKeyHeader
+from pydantic import BaseModel
+
+from ..domain.business_profile import BusinessProfile
+from ..infrastructure.database import BusinessProfileRepository
 
 from ..application.analytics import (
     AggregateFeatureRequest,
@@ -19,6 +24,7 @@ from ..application.call_records import CallRecordsScanRequest, CallRecordsScanSe
 from ..application.catalog import GetCatalogService
 from ..application.crm import CrmExportRequest, CrmExportService, StageHistoryRequest, StageHistoryService
 from ..application.recordings import DownloadRecordingsRequest, DownloadRecordingsService
+from ..application.sales_quality import AnalyzeSalesQualityRequest, AnalyzeSalesQualityService
 from ..application.transcribe import TranscribeRecordingsRequest, TranscribeRecordingsService
 from ..application.whatsapp import WhatsAppExportRequest, WhatsAppExportService
 from ..application.whatsapp_features import (
@@ -82,6 +88,12 @@ _CRM_DIR = Path("export")
 _CALLS_DIR = Path("export/call-records-scan")
 _WA_DIR = Path("export/whatsapp-timeline")
 
+_DB_PATH = Path(os.environ.get("BITRIX_DB_PATH", "data/app.db"))
+
+
+def _profile_repo() -> BusinessProfileRepository:
+    return BusinessProfileRepository(_DB_PATH)
+
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
@@ -129,6 +141,48 @@ def _run_service(fn: Any, mem: InMemoryJsonSink) -> dict[str, Any]:
 @app.get("/health")
 def health() -> dict[str, str]:
     return {"status": "ok"}
+
+
+# ---------------------------------------------------------------------------
+# App state & business profile — persisted in SQLite
+# ---------------------------------------------------------------------------
+
+
+@app.get("/api/app-state", tags=["Settings"])
+def get_app_state() -> dict[str, Any]:
+    """Returns the current app state including business profile from SQLite."""
+    profile = _profile_repo().get()
+    return {
+        "setup": {
+            "business_profile": profile.to_dict() if profile else {},
+            "integrations": [],
+        }
+    }
+
+
+class _BusinessProfilePayload(BaseModel):
+    company_name: str = ""
+    website_url: str = ""
+    instagram_url: str = ""
+    price_list: str = ""
+    average_ticket_kzt: float | None = None
+    advantages: str = ""
+    promotions: str = ""
+
+
+@app.post("/api/setup-profile", tags=["Settings"])
+def setup_profile(payload: _BusinessProfilePayload) -> dict[str, Any]:
+    """Save business profile to SQLite and return updated app state."""
+    profile = BusinessProfile.from_dict(payload.model_dump())
+    _profile_repo().save(profile)
+    return {
+        "app_state": {
+            "setup": {
+                "business_profile": profile.to_dict(),
+                "integrations": [],
+            }
+        }
+    }
 
 
 # ---------------------------------------------------------------------------
@@ -746,6 +800,77 @@ def extract_whatsapp_features(
                 conversation_report_path=Path(conversation_report),
                 conversation_dir=Path(conversation_dir),
                 model=model, limit=limit, skip_existing=skip_existing,
+            )
+        ),
+        mem,
+    )
+
+
+@app.post("/sales-quality/analyze")
+def analyze_sales_quality(
+    call_transcript_manifest: str = Form(
+        "export/recordings/transcripts/transcripts_manifest.json",
+        description="Path to call transcripts manifest; use '-' to skip calls",
+    ),
+    call_metadata: str = Form(
+        "export/call-records-scan/recording-candidates.json",
+        description="Path to recording-candidates.json; use '-' if unavailable",
+    ),
+    activity_metadata: str = Form(
+        "export/call-records-scan/activities.source.json",
+        description="Path to call activities.source.json; use '-' if unavailable",
+    ),
+    whatsapp_conversation_dir: str = Form(
+        "export/whatsapp-timeline/conversations_filtered",
+        description="Directory with filtered WhatsApp conversations; use '-' to skip WhatsApp",
+    ),
+    users_path: str = Form("", description="Optional users.json for manager names"),
+    output_dir: str = Form("export/sales-quality", description="Output directory"),
+    model: str = Form("gpt-4o-mini", description="OpenAI model"),
+    limit: int = Form(0, description="Max interactions (0 = all)"),
+    skip_existing: bool = Form(False, description="Skip already processed interactions"),
+    slow_response_threshold_sec: int = Form(
+        900,
+        description="Slow first-response threshold in seconds",
+    ),
+    max_chars_per_item: int = Form(
+        24000,
+        description="Max interaction text chars sent to OpenAI",
+    ),
+    openai_key: str | None = Security(_openai_key_header),
+) -> dict[str, Any]:
+    """Analyze sales-quality signals across calls and WhatsApp.
+
+    Writes per-interaction features, top problems, stage funnel, and manager heatmap
+    to ``export/sales-quality`` by default.
+    """
+    key = _require_openai_key(openai_key)
+    sink, mem = _tee()
+    return _run_service(
+        lambda: AnalyzeSalesQualityService(
+            gateway=OpenAiResponsesClient(key),
+            sink=sink,
+        ).execute(
+            AnalyzeSalesQualityRequest(
+                output_dir=Path(output_dir),
+                call_transcript_manifest_path=Path(call_transcript_manifest)
+                if _none(call_transcript_manifest) not in ("-", None)
+                else None,
+                call_metadata_path=Path(call_metadata)
+                if _none(call_metadata) not in ("-", None)
+                else None,
+                activity_metadata_path=Path(activity_metadata)
+                if _none(activity_metadata) not in ("-", None)
+                else None,
+                whatsapp_conversation_dir=Path(whatsapp_conversation_dir)
+                if _none(whatsapp_conversation_dir) not in ("-", None)
+                else None,
+                users_path=Path(users_path) if _none(users_path) else None,
+                model=model,
+                limit=limit,
+                skip_existing=skip_existing,
+                slow_response_threshold_sec=slow_response_threshold_sec,
+                max_chars_per_item=max_chars_per_item,
             )
         ),
         mem,

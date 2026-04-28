@@ -135,6 +135,15 @@ def main() -> None:
         help="Audio language hint, e.g. 'kk' or 'ru'. Omit to auto-detect (recommended for mixed speech)",
     )
     parser.add_argument(
+        "--company-name",
+        metavar="NAME",
+        default=None,
+        help=(
+            "Название компании — добавляется в начало prompt чтобы Whisper "
+            "правильно распознал его. Пример: 'Сапаплас'"
+        ),
+    )
+    parser.add_argument(
         "--prompt",
         default=(
             "Бұл WhatsApp арқылы жүргізілген сату әңгімесі. "
@@ -149,6 +158,10 @@ def main() -> None:
     )
     parser.add_argument("--openai-api-key", metavar="KEY", help="Override OpenAI API key")
     args = parser.parse_args()
+
+    prompt = args.prompt
+    if args.company_name:
+        prompt = f"{args.company_name}. {prompt}"
 
     api_key = args.openai_api_key or _load_env_key("open-ai")
     if not api_key:
@@ -180,7 +193,7 @@ def main() -> None:
             continue
 
         print(f"{deal_json.name}: {len(audio_attachments)} audio attachment(s)")
-        t, s = transcribe_deal(deal_json, client, args.model, args.language, args.prompt, args.overwrite)
+        t, s = transcribe_deal(deal_json, client, args.model, args.language, prompt, args.overwrite)
         total_transcribed += t
         total_skipped += s
 

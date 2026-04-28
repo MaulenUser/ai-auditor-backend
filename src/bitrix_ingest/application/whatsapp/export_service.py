@@ -379,6 +379,8 @@ class WhatsAppExportService:
         paths: "_DealPaths",
         *,
         include_system_messages: bool,
+        date_from: str | None = None,
+        date_to: str | None = None,
     ) -> WhatsAppConversation:
         deal_conversation = self._fetch_openline_conversation(
             deal=deal,
@@ -386,6 +388,8 @@ class WhatsAppExportService:
             entity_id=deal_id,
             raw_destination=paths.deal_openline_raw,
             include_system_messages=include_system_messages,
+            date_from=date_from,
+            date_to=date_to,
         )
         if deal_conversation is not None:
             return deal_conversation
@@ -410,6 +414,8 @@ class WhatsAppExportService:
             entity_id=contact_id,
             raw_destination=paths.contact_openline_raw,
             include_system_messages=include_system_messages,
+            date_from=date_from,
+            date_to=date_to,
         )
         if contact_conversation is not None:
             logger.info(
@@ -434,6 +440,8 @@ class WhatsAppExportService:
         entity_id: str,
         raw_destination: Path,
         include_system_messages: bool,
+        date_from: str | None = None,
+        date_to: str | None = None,
     ) -> WhatsAppConversation | None:
         binding = self._find_chat_binding(entity_type=entity_type, entity_id=entity_id)
         raw_payload: dict[str, Any] = {
@@ -460,6 +468,8 @@ class WhatsAppExportService:
             dialog=dialog,
             history=history,
             include_system_messages=include_system_messages,
+            date_from=date_from,
+            date_to=date_to,
         )
 
     def _find_chat_binding(
@@ -526,6 +536,8 @@ class WhatsAppExportService:
         dialog: dict[str, Any],
         history: dict[str, Any],
         include_system_messages: bool,
+        date_from: str | None = None,
+        date_to: str | None = None,
     ) -> WhatsAppConversation:
         users = history.get("users") or {}
         files_index = self._index_files(history.get("files"))
@@ -540,6 +552,16 @@ class WhatsAppExportService:
         ]
         if not include_system_messages:
             messages = [message for message in messages if not message.is_system_message]
+        if date_from or date_to:
+            messages = [
+                message for message in messages
+                if within_any_record_datetime_range(
+                    {"created_at": message.created_at},
+                    fields=("created_at",),
+                    date_from=date_from,
+                    date_to=date_to,
+                )
+            ]
         stats = ConversationStats.from_messages(messages)
         session_id = str(history.get("sessionId") or self._extract_session_id(dialog))
         return WhatsAppConversation(

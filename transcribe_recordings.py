@@ -70,6 +70,15 @@ def main() -> None:
         help="Language hint, e.g. 'ru' or 'kk'. Omit to auto-detect (recommended for mixed speech)",
     )
     parser.add_argument(
+        "--company-name",
+        metavar="NAME",
+        default=None,
+        help=(
+            "Название компании — добавляется в начало prompt чтобы Whisper "
+            "правильно распознал его. Пример: 'Сапаплас'"
+        ),
+    )
+    parser.add_argument(
         "--prompt",
         default=(
             "Бұл сату телефон қоңырауы. "
@@ -88,6 +97,10 @@ def main() -> None:
         help="Override OpenAI API key (fallback: 'open-ai' in .env)",
     )
     args = parser.parse_args()
+
+    prompt = args.prompt
+    if args.company_name:
+        prompt = f"{args.company_name}. {prompt}"
 
     api_key = args.openai_api_key or _load_env_key("open-ai")
     if not api_key:
@@ -163,7 +176,7 @@ def main() -> None:
                 file_path=audio_path,
                 model=args.model,
                 language=args.language,
-                prompt=args.prompt,
+                prompt=prompt,
             )
             text = (response.get("text") or "").strip()
             if text:

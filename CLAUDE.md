@@ -11,11 +11,13 @@ This repository contains a Python port of several Bitrix24 export scripts. It is
 - Test runner: `pytest`
 - Shell environment in this workspace is typically PowerShell on Windows
 
-The project exports data from Bitrix24:
+The project exports data from Bitrix24 and exposes an HTTP API for the frontend:
 
 1. CRM base snapshot
 2. Call-record scan via VoxImplant statistics
 3. WhatsApp timeline export
+4. AI audit pipeline (WhatsApp → OpenAI features → recommendations)
+5. Business profile settings persisted in SQLite
 
 ## Current Architecture
 
@@ -24,10 +26,15 @@ The codebase intentionally uses a layered structure. Do not reintroduce top-leve
 ```text
 src/bitrix_ingest/
   __init__.py
+  api/
   application/
   cli/
   domain/
   infrastructure/
+    database/
+    http/
+    openai/
+    persistence/
 ```
 
 ### Layer responsibilities
@@ -40,9 +47,13 @@ src/bitrix_ingest/
 
 - `infrastructure/`
   Concrete adapters: HTTP client, retry policy, paginator, filesystem JSON writer, logging config.
+  - `infrastructure/database/` — SQLite repository for persistent settings (BusinessProfile).
 
 - `cli/`
   Thin command-line entry points. Parse args, wire adapters, call application services.
+
+- `api/`
+  FastAPI application (`app.py`). Thin HTTP layer — parses requests, wires infrastructure, calls application services. Also exposes `GET /api/app-state` and `POST /api/setup-profile` for the frontend settings page.
 
 ## Architectural Rules
 
@@ -68,12 +79,17 @@ Follow these rules unless the user explicitly asks for a different architecture:
    - New Bitrix HTTP behavior -> `infrastructure/http/`
    - New value objects/entities -> `domain/`
    - New command-line command -> `cli/`
+   - New HTTP endpoint -> `api/app.py`
+   - New persistent settings -> `domain/` entity + `infrastructure/database/` repository
 
 ## Important Files
 
 - Project config: `pyproject.toml`
 - Migration notes / preserved behaviors: `MIGRATION.md`
 - Ports: `src/bitrix_ingest/application/ports.py`
+- **FastAPI app**: `src/bitrix_ingest/api/app.py`
+- **Business profile entity**: `src/bitrix_ingest/domain/business_profile.py`
+- **SQLite repository**: `src/bitrix_ingest/infrastructure/database/repository.py`
 - CRM export service: `src/bitrix_ingest/application/crm/export_service.py`
 - Call records scan service: `src/bitrix_ingest/application/call_records/scan_service.py`
 - WhatsApp export service: `src/bitrix_ingest/application/whatsapp/export_service.py`
@@ -104,6 +120,20 @@ python -m pip install -e ".[dev]"
 ```powershell
 pytest -q
 ```
+
+### Run the FastAPI server
+
+```powershell
+uvicorn bitrix_ingest.api.app:app --reload
+```
+
+The server exposes Swagger UI at `http://localhost:8000/docs`.
+
+Environment variables:
+
+| Variable | Default | Description |
+|---|---|---|
+| `BITRIX_DB_PATH` | `data/app.db` | Path to the SQLite database file |
 
 ### Run exporters via installed console scripts
 
@@ -174,7 +204,16 @@ The logic lives in `application/whatsapp/deal_filter.py`.
 
 Do not silently flatten it unless the user explicitly wants a contract change.
 
-### 5. JSON output formatting is stable
+### 5. Business profile is a singleton row in SQLite
+
+`GET /api/app-state` returns `{"setup": {"business_profile": {...}, "integrations": []}}`.
+`POST /api/setup-profile` upserts the single row (id=1, enforced by `CHECK (id = 1)`).
+
+The response shape of these endpoints is the contract the frontend (`ai-auditor-front-main`) depends on. Do not rename keys without updating the frontend.
+
+DB path is configurable via `BITRIX_DB_PATH` env var (default `data/app.db`).
+
+### 6. JSON output formatting is stable
 
 - UTF-8
 - no BOM
@@ -203,6 +242,7 @@ Current tests are written against the new layered architecture, not against dele
 These paths are local/runtime artifacts and should usually stay untracked:
 
 - `export/`
+- `data/`          ← SQLite database (`data/app.db`)
 - `.pytest_cache/`
 - `__pycache__/`
 - `.claude/`
@@ -234,6 +274,20 @@ Work in:
 - `infrastructure/http/paginator.py`
 
 Be careful: HTTP behavior affects all exporters.
+
+### Add a new HTTP endpoint
+
+1. Add the route in `src/bitrix_ingest/api/app.py` under the relevant tag
+2. Keep the handler thin — delegate to an application service
+3. Use `Security(_webhook_header)` / `Security(_openai_key_header)` for credentials
+4. Return `{"status": "ok", "data": ...}` for consistency with existing endpoints
+
+### Add persistent settings (SQLite)
+
+1. Add a domain entity in `domain/` (pure dataclass, `to_dict()` / `from_dict()`)
+2. Add a repository in `infrastructure/database/` using stdlib `sqlite3`
+3. Wire the repository in `api/app.py` via a factory function (see `_profile_repo()` pattern)
+4. Do **not** add SQLAlchemy or other ORM — keep it stdlib for now
 
 ### Change output schemas
 

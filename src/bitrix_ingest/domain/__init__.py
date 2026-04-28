@@ -1,4 +1,5 @@
 """Domain layer — pure entities and business rules. No I/O, no framework deps."""
+from .business_profile import BusinessProfile
 from .call_records import CallScanError, CallScanRow
 from .exceptions import BitrixError, DomainError
 from .whatsapp import (
@@ -12,6 +13,7 @@ from .whatsapp import (
 
 __all__ = [
     "BitrixError",
+    "BusinessProfile",
     "CallScanError",
     "CallScanRow",
     "ConversationStats",
