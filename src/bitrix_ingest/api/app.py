@@ -1,6 +1,7 @@
 """FastAPI application exposing the Bitrix exporters and OpenAI pipelines as HTTP endpoints."""
 from __future__ import annotations
 
+import json
 import os
 from pathlib import Path
 from typing import Any, List, Optional
@@ -23,6 +24,7 @@ from ..application.call_features import ExtractCallFeaturesRequest, ExtractCallF
 from ..application.call_records import CallRecordsScanRequest, CallRecordsScanService
 from ..application.catalog import GetCatalogService
 from ..application.crm import CrmExportRequest, CrmExportService, StageHistoryRequest, StageHistoryService
+from ..application.executive_report import BuildExecutiveReportRequest, BuildExecutiveReportService
 from ..application.recordings import DownloadRecordingsRequest, DownloadRecordingsService
 from ..application.sales_quality import AnalyzeSalesQualityRequest, AnalyzeSalesQualityService
 from ..application.transcribe import TranscribeRecordingsRequest, TranscribeRecordingsService
@@ -141,6 +143,71 @@ def _run_service(fn: Any, mem: InMemoryJsonSink) -> dict[str, Any]:
 @app.get("/health")
 def health() -> dict[str, str]:
     return {"status": "ok"}
+
+
+@app.get("/executive-report/latest", tags=["Executive Report"])
+def get_latest_executive_report(
+    report_path: str = Query(
+        "export/executive-report/executive-report.json",
+        description="Path to executive-report.json",
+    ),
+) -> dict[str, Any]:
+    path = Path(report_path)
+    if not path.exists():
+        raise HTTPException(status_code=404, detail=f"Report not found: {path}")
+    if not path.is_file():
+        raise HTTPException(status_code=422, detail=f"Report path is not a file: {path}")
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        raise HTTPException(status_code=422, detail=f"Invalid JSON report: {path}") from exc
+
+
+@app.post("/executive-report/build", tags=["Executive Report"])
+def build_executive_report(
+    sales_quality_dir: str = Form("export/sales-quality", description="Directory with sales-quality report.json and features"),
+    output_dir: str = Form("export/executive-report", description="Output directory"),
+    scope: str = Form("analyzed", description="analyzed or bitrix"),
+    date_from: Optional[str] = Form(None, description="Start date for Bitrix scope"),
+    date_to: Optional[str] = Form(None, description="End date for Bitrix scope"),
+    category_id: Optional[List[str]] = Form(None, description="Deal category IDs"),
+    responsible_id: Optional[str] = Form(None, description="ASSIGNED_BY_ID"),
+    deal_id: Optional[List[str]] = Form(None, description="Specific deal IDs"),
+    limit: int = Form(0, description="Max deals, 0 = all"),
+    average_ticket_kzt: Optional[float] = Form(None, description="Average ticket for lost revenue formula"),
+    expected_conversion_pct: Optional[float] = Form(None, description="Expected conversion percent for lost revenue formula"),
+    portal_base_url: str = Form("https://sapaplast.bitrix24.kz", description="Bitrix portal URL for CRM links"),
+    max_reanimation_cards: int = Form(100, description="Max failed deal cards"),
+    webhook_url: str | None = Security(_webhook_header),
+) -> dict[str, Any]:
+    """Build the executive report from sales-quality outputs and Bitrix CRM."""
+    url = _require_webhook(webhook_url)
+    clean_categories = [item for item in (category_id or []) if _none(item)] or None
+    clean_deals = [item for item in (deal_id or []) if _none(item)] or None
+    sink, mem = _tee()
+    return _run_service(
+        lambda: BuildExecutiveReportService(
+            gateway=BitrixClient(url, call_delay=0.2),
+            sink=sink,
+        ).execute(
+            BuildExecutiveReportRequest(
+                output_dir=Path(output_dir),
+                sales_quality_dir=Path(sales_quality_dir),
+                scope=scope,
+                date_from=_none(date_from),
+                date_to=_none(date_to),
+                category_ids=clean_categories,
+                responsible_id=_none(responsible_id),
+                deal_ids=clean_deals,
+                limit=limit,
+                average_ticket_kzt=average_ticket_kzt,
+                expected_conversion_pct=expected_conversion_pct,
+                portal_base_url=portal_base_url,
+                max_reanimation_cards=max_reanimation_cards,
+            )
+        ),
+        mem,
+    )
 
 
 # ---------------------------------------------------------------------------

@@ -32,6 +32,7 @@ bitrix-extract-whatsapp-features = "bitrix_ingest.cli.extract_whatsapp_features:
 bitrix-aggregate-features        = "bitrix_ingest.cli.aggregate_features:main"
 bitrix-generate-recommendations  = "bitrix_ingest.cli.generate_recommendations:main"
 bitrix-analyze-sales-quality     = "bitrix_ingest.cli.analyze_sales_quality:main"
+bitrix-build-executive-report    = "bitrix_ingest.cli.build_executive_report:main"
 bitrix-export-stage-history      = "bitrix_ingest.cli.export_stage_history:main"
 bitrix-serve                     = "bitrix_ingest.cli.serve:main"
 
