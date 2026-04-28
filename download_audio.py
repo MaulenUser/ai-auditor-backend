@@ -107,9 +107,11 @@ def download_audio(deal_json: Path, output_dir: Path, webhook_base_url: list[str
                     else:
                         print(f"  WARN {filename}: could not resolve via REST, trying original URL")
 
+            print(f"  GET {download_url[:120]}")
             try:
                 resp = requests.get(download_url, timeout=120, stream=True)
                 resp.raise_for_status()
+                print(f"  HTTP {resp.status_code}  content-type={resp.headers.get('content-type', '?')}  content-length={resp.headers.get('content-length', '?')}")
                 # sanity check: reject HTML responses
                 content_type = resp.headers.get("content-type", "")
                 if "text/html" in content_type:
