@@ -65,6 +65,7 @@ class BuildExecutiveReportRequest:
     date_to: str | None = None
     category_ids: list[str] | None = None
     responsible_id: str | None = None
+    responsible_ids: list[str] | None = None
     deal_ids: list[str] | None = None
     limit: int = 0
     average_ticket_kzt: float | None = None
@@ -122,6 +123,13 @@ def _chunked(values: list[str], size: int) -> list[list[str]]:
     return [values[i : i + size] for i in range(0, len(values), size)]
 
 
+def _responsible_ids(request: BuildExecutiveReportRequest) -> list[str]:
+    ids = [str(v).strip() for v in (request.responsible_ids or []) if str(v).strip()]
+    if not ids and request.responsible_id:
+        ids = [str(request.responsible_id).strip()]
+    return ids
+
+
 class BuildExecutiveReportService:
     def __init__(self, gateway: BitrixGateway, sink: JsonSink) -> None:
         self._gateway = gateway
@@ -135,7 +143,10 @@ class BuildExecutiveReportService:
         features = self._load_sales_quality_features(request.sales_quality_dir)
         feature_deal_ids = self._collect_feature_deal_ids(features)
         explicit_deal_ids = [str(v) for v in (request.deal_ids or []) if str(v).strip()]
-        deal_ids = explicit_deal_ids or feature_deal_ids
+        if request.scope == "analyzed":
+            deal_ids = explicit_deal_ids or feature_deal_ids
+        else:
+            deal_ids = explicit_deal_ids
 
         users = self._load_users()
         deals = self._load_deals(request, deal_ids=deal_ids)
@@ -180,7 +191,9 @@ class BuildExecutiveReportService:
                 "date_to": request.date_to,
                 "category_ids": request.category_ids or [],
                 "responsible_id": request.responsible_id or "",
+                "responsible_ids": _responsible_ids(request),
                 "requested_deal_ids_count": len(deal_ids),
+                "sales_quality_deal_ids_count": len(feature_deal_ids),
                 "deals_loaded": len(deals),
                 "sales_quality_features": len(features),
             },
@@ -279,8 +292,11 @@ class BuildExecutiveReportService:
             deal_filter["CATEGORY_ID"] = (
                 clean_categories if len(clean_categories) > 1 else clean_categories[0]
             )
-        if request.responsible_id:
-            deal_filter["ASSIGNED_BY_ID"] = request.responsible_id
+        responsible_ids = _responsible_ids(request)
+        if responsible_ids:
+            deal_filter["ASSIGNED_BY_ID"] = (
+                responsible_ids if len(responsible_ids) > 1 else responsible_ids[0]
+            )
 
         rows = self._gateway.list_all(
             "crm.deal.list",
@@ -291,9 +307,8 @@ class BuildExecutiveReportService:
             limit=request.limit if request.limit > 0 else None,
         )
         rows = self._filter_deals(rows, request)
-        if deal_ids:
-            allow = set(deal_ids)
-            rows = [row for row in rows if str(row.get("ID") or "") in allow]
+        if explicit_allow := set(deal_ids):
+            rows = [row for row in rows if str(row.get("ID") or "") in explicit_allow]
         return rows[: request.limit] if request.limit > 0 else rows
 
     def _filter_deals(
@@ -313,11 +328,13 @@ class BuildExecutiveReportService:
                     date_to=request.date_to,
                 )
             ]
-        if request.responsible_id:
+        responsible_ids = _responsible_ids(request)
+        if responsible_ids:
+            allow_responsible = set(responsible_ids)
             rows = [
                 deal
                 for deal in rows
-                if str(deal.get("ASSIGNED_BY_ID") or "") == str(request.responsible_id)
+                if str(deal.get("ASSIGNED_BY_ID") or "") in allow_responsible
             ]
         clean_categories = [str(v) for v in (request.category_ids or []) if str(v).strip()]
         if clean_categories:
@@ -369,19 +386,26 @@ class BuildExecutiveReportService:
 
     def _load_task_activities(self, deal_ids: Any) -> dict[str, list[dict[str, Any]]]:
         tasks: dict[str, list[dict[str, Any]]] = defaultdict(list)
-        for deal_id in sorted(str(v) for v in deal_ids if str(v).strip()):
+        clean_ids = sorted(
+            {str(v) for v in deal_ids if str(v).strip()},
+            key=lambda v: int(v) if v.isdigit() else v,
+        )
+        for chunk in _chunked(clean_ids, 50):
             rows = self._gateway.list_all(
                 "crm.activity.list",
                 select=_TASK_ACTIVITY_SELECT,
                 filter={
                     "OWNER_TYPE_ID": 2,
-                    "OWNER_ID": deal_id,
+                    "OWNER_ID": chunk,
                     "PROVIDER_ID": "CRM_TASKS_TASK",
                 },
                 order={"DEADLINE": "ASC"},
-                context=f"executive report deal {deal_id} task activities",
+                context="executive report task activities",
             )
-            tasks[deal_id].extend(rows)
+            for row in rows:
+                owner_id = str(row.get("OWNER_ID") or "")
+                if owner_id:
+                    tasks[owner_id].append(row)
         return dict(tasks)
 
     # ------------------------------------------------------------------
@@ -400,7 +424,9 @@ class BuildExecutiveReportService:
             closed = won + failed
             return {
                 "total_deals": len(rows),
+                "total_amount": round(sum(_money(d.get("OPPORTUNITY")) for d in rows), 2),
                 "in_work_count": len(in_work),
+                "in_work_amount": round(sum(_money(d.get("OPPORTUNITY")) for d in in_work), 2),
                 "won_count": len(won),
                 "won_amount": round(sum(_money(d.get("OPPORTUNITY")) for d in won), 2),
                 "failed_count": len(failed),
@@ -549,11 +575,12 @@ class BuildExecutiveReportService:
         features: list[dict[str, Any]],
         users: dict[str, dict[str, Any]],
     ) -> dict[str, Any]:
-        failed_ids = {
-            str(deal.get("ID") or "")
+        failed_deals = [
+            deal
             for deal in deals
             if str(deal.get("STAGE_SEMANTIC_ID") or "") == "F"
-        }
+        ]
+        failed_ids = {str(deal.get("ID") or "") for deal in failed_deals}
         by_deal = self._features_by_deal(features)
         failed_features = [
             feature
@@ -580,20 +607,28 @@ class BuildExecutiveReportService:
                 for key, count in counts.most_common()
             ]
 
+        manager_failed_deals: dict[str, list[dict[str, Any]]] = defaultdict(list)
         manager_features: dict[str, list[dict[str, Any]]] = defaultdict(list)
-        deal_by_id = {str(deal.get("ID") or ""): deal for deal in deals}
-        for deal_id in failed_ids:
-            manager_id = str((deal_by_id.get(deal_id) or {}).get("ASSIGNED_BY_ID") or "unknown")
+        for deal in failed_deals:
+            deal_id = str(deal.get("ID") or "")
+            manager_id = str(deal.get("ASSIGNED_BY_ID") or "unknown")
+            manager_failed_deals[manager_id].append(deal)
             manager_features[manager_id].extend(by_deal.get(deal_id, []))
 
         per_manager = []
-        for manager_id, rows in sorted(manager_features.items()):
+        for manager_id, failed_rows in sorted(manager_failed_deals.items()):
+            feature_rows = manager_features.get(manager_id, [])
             per_manager.append(
                 {
                     "manager_id": manager_id,
                     "manager_name": _manager_name(users.get(manager_id), manager_id),
-                    "failed_interactions_analyzed": len(rows),
-                    "top_reasons": problem_rows(rows)[:5],
+                    "failed_deals_count": len(failed_rows),
+                    "failed_amount": round(
+                        sum(_money(deal.get("OPPORTUNITY")) for deal in failed_rows),
+                        2,
+                    ),
+                    "failed_interactions_analyzed": len(feature_rows),
+                    "top_reasons": problem_rows(feature_rows)[:5],
                 }
             )
         return {

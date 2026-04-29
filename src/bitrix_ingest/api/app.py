@@ -171,7 +171,7 @@ def build_executive_report(
     date_from: Optional[str] = Form(None, description="Start date for Bitrix scope"),
     date_to: Optional[str] = Form(None, description="End date for Bitrix scope"),
     category_id: Optional[List[str]] = Form(None, description="Deal category IDs"),
-    responsible_id: Optional[str] = Form(None, description="ASSIGNED_BY_ID"),
+    responsible_id: Optional[List[str]] = Form(None, description="ASSIGNED_BY_ID; may be repeated"),
     deal_id: Optional[List[str]] = Form(None, description="Specific deal IDs"),
     limit: int = Form(0, description="Max deals, 0 = all"),
     average_ticket_kzt: Optional[float] = Form(None, description="Average ticket for lost revenue formula"),
@@ -183,6 +183,7 @@ def build_executive_report(
     """Build the executive report from sales-quality outputs and Bitrix CRM."""
     url = _require_webhook(webhook_url)
     clean_categories = [item for item in (category_id or []) if _none(item)] or None
+    clean_responsible = [item for item in (responsible_id or []) if _none(item)] or None
     clean_deals = [item for item in (deal_id or []) if _none(item)] or None
     sink, mem = _tee()
     return _run_service(
@@ -197,7 +198,8 @@ def build_executive_report(
                 date_from=_none(date_from),
                 date_to=_none(date_to),
                 category_ids=clean_categories,
-                responsible_id=_none(responsible_id),
+                responsible_id=clean_responsible[0] if clean_responsible else None,
+                responsible_ids=clean_responsible,
                 deal_ids=clean_deals,
                 limit=limit,
                 average_ticket_kzt=average_ticket_kzt,

@@ -113,8 +113,12 @@ class FakeGateway:
                 for cid in allow
             ]
         if method == "crm.activity.list":
-            deal_id = str(filter.get("OWNER_ID") or "")
-            return self.tasks.get(deal_id, [])
+            owner_ids = filter.get("OWNER_ID")
+            ids = owner_ids if isinstance(owner_ids, list) else [owner_ids]
+            rows = []
+            for deal_id in ids:
+                rows.extend(self.tasks.get(str(deal_id), []))
+            return rows
         raise AssertionError(method)
 
 
@@ -194,9 +198,32 @@ def test_executive_report_builds_dashboard_tasks_and_lost_revenue(tmp_path):
 
     report = json.loads((out / "executive-report.json").read_text(encoding="utf-8"))
     assert report["deal_dashboard"]["department"]["in_work_count"] == 1
+    assert report["deal_dashboard"]["department"]["total_amount"] == 150000
     assert report["deal_dashboard"]["department"]["won_amount"] == 100000
+    assert report["deal_dashboard"]["department"]["failed_amount"] == 50000
     assert report["deal_dashboard"]["department"]["failed_count"] == 1
     assert report["task_status"]["department"]["with_overdue_tasks"] == 1
     assert report["lost_revenue"]["estimated_lost_revenue_kzt"] == 50000
     assert report["failed_deal_reanimation"]["cards"][0]["deal_id"] == "3"
     assert report["data_readiness"][1]["status"] == "ready"
+
+
+def test_bitrix_scope_uses_crm_filter_not_sales_quality_deal_ids(tmp_path):
+    sq = _write_sales_quality(tmp_path)
+    out = tmp_path / "executive-bitrix"
+    BuildExecutiveReportService(gateway=FakeGateway(), sink=FileSink()).execute(
+        BuildExecutiveReportRequest(
+            output_dir=out,
+            sales_quality_dir=sq,
+            scope="bitrix",
+            date_from="2026-04-01",
+            date_to="2026-04-30",
+        )
+    )
+
+    report = json.loads((out / "executive-report.json").read_text(encoding="utf-8"))
+    assert report["scope"]["mode"] == "bitrix"
+    assert report["scope"]["sales_quality_deal_ids_count"] == 3
+    assert report["scope"]["requested_deal_ids_count"] == 0
+    assert report["deal_dashboard"]["department"]["total_deals"] == 3
+    assert report["deal_dashboard"]["department"]["won_amount"] == 100000

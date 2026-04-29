@@ -46,6 +46,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--date-to", default=None)
     parser.add_argument("--category-ids", default=None, help="Comma-separated funnel IDs")
     parser.add_argument("--responsible-id", default=None)
+    parser.add_argument("--responsible-ids", default=None, help="Comma-separated manager IDs")
     parser.add_argument("--deal-ids", default=None, help="Comma-separated explicit deal IDs")
     parser.add_argument("--limit", type=int, default=0)
     parser.add_argument("--average-ticket-kzt", type=float, default=None)
@@ -75,6 +76,7 @@ def main(argv: Sequence[str] | None = None) -> None:
             date_to=args.date_to,
             category_ids=_split_csv(args.category_ids),
             responsible_id=args.responsible_id,
+            responsible_ids=_split_csv(args.responsible_ids),
             deal_ids=_split_csv(args.deal_ids),
             limit=args.limit,
             average_ticket_kzt=args.average_ticket_kzt,
