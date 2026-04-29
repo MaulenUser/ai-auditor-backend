@@ -81,6 +81,7 @@ class WhatsAppExportRequest:
     include_system_messages: bool = True
     category_ids: list[str] | None = None  # None = all; list = OR across funnels
     responsible_id: str | None = None
+    deal_rows: list[dict[str, Any]] | None = None
 
 
 @dataclass
@@ -232,6 +233,20 @@ class WhatsAppExportService:
         request: WhatsAppExportRequest,
         output_dir: Path,
     ) -> list[dict[str, Any]]:
+        if request.deal_rows is not None:
+            whatsapp = self._deal_filter.select_whatsapp_deals(request.deal_rows)
+            if request.deal_ids:
+                whatsapp = self._deal_filter.restrict_to_allowlist(whatsapp, request.deal_ids)
+            whatsapp = self._deal_filter.sort_by_modified_desc(whatsapp)
+            whatsapp = self._deal_filter.apply_limit(whatsapp, request.limit)
+            self._sink.write(output_dir / "deals.source.json", whatsapp)
+            logger.info(
+                "WhatsApp deals selected from provided CRM scope (after limit=%d): %d",
+                request.limit,
+                len(whatsapp),
+            )
+            return whatsapp
+
         deal_filter: dict[str, Any] = {}
         clean = [f for f in (request.category_ids or []) if f]
         if clean:

@@ -3,10 +3,14 @@ from __future__ import annotations
 
 import json
 import os
+import logging
+import threading
+import uuid
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, List, Optional
 
-from fastapi import FastAPI, Form, HTTPException, Query, Security
+from fastapi import BackgroundTasks, FastAPI, Form, HTTPException, Query, Security
 from fastapi.security import APIKeyHeader
 from pydantic import BaseModel
 
@@ -25,6 +29,7 @@ from ..application.call_records import CallRecordsScanRequest, CallRecordsScanSe
 from ..application.catalog import GetCatalogService
 from ..application.crm import CrmExportRequest, CrmExportService, StageHistoryRequest, StageHistoryService
 from ..application.executive_report import BuildExecutiveReportRequest, BuildExecutiveReportService
+from ..application.executive_pipeline import RunExecutivePipelineRequest, RunExecutivePipelineService
 from ..application.recordings import DownloadRecordingsRequest, DownloadRecordingsService
 from ..application.sales_quality import AnalyzeSalesQualityRequest, AnalyzeSalesQualityService
 from ..application.transcribe import TranscribeRecordingsRequest, TranscribeRecordingsService
@@ -44,6 +49,8 @@ from ..infrastructure.openai import OpenAiResponsesClient, OpenAiTranscriptionCl
 from ..infrastructure.audit_trace import AuditTraceRecorder, TracedJsonSink
 from ..infrastructure.persistence import FileSystemJsonWriter
 from ..infrastructure.persistence.memory_writer import InMemoryJsonSink, TeeJsonSink
+
+logger = logging.getLogger(__name__)
 
 # ---------------------------------------------------------------------------
 # Security schemes — shown in the Swagger "Authorize" dialog
@@ -92,6 +99,9 @@ _WA_DIR = Path("export/whatsapp-timeline")
 
 _DB_PATH = Path(os.environ.get("BITRIX_DB_PATH", "data/app.db"))
 
+_EXECUTIVE_REPORT_JOBS: dict[str, dict[str, Any]] = {}
+_EXECUTIVE_REPORT_JOBS_LOCK = threading.Lock()
+
 
 def _profile_repo() -> BusinessProfileRepository:
     return BusinessProfileRepository(_DB_PATH)
@@ -133,6 +143,99 @@ def _run_service(fn: Any, mem: InMemoryJsonSink) -> dict[str, Any]:
     except DomainError as exc:
         raise HTTPException(status_code=502, detail=str(exc)) from exc
     return {"status": "ok", "data": mem.data}
+
+
+def _now_iso() -> str:
+    return datetime.now(tz=timezone.utc).isoformat()
+
+
+def _clean_form_list(values: list[str] | None) -> list[str] | None:
+    clean = [item for item in (values or []) if _none(item)]
+    return clean or None
+
+
+def _set_executive_report_job(job_id: str, **updates: Any) -> None:
+    with _EXECUTIVE_REPORT_JOBS_LOCK:
+        job = _EXECUTIVE_REPORT_JOBS.setdefault(job_id, {"job_id": job_id})
+        job.update(updates)
+        job["updated_at"] = _now_iso()
+
+
+def _get_executive_report_job(job_id: str) -> dict[str, Any] | None:
+    with _EXECUTIVE_REPORT_JOBS_LOCK:
+        job = _EXECUTIVE_REPORT_JOBS.get(job_id)
+        return dict(job) if job else None
+
+
+def _load_json_if_exists(path: Path) -> Any | None:
+    if not path.exists() or not path.is_file():
+        return None
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _redact_error_message(message: object, *secrets: str | None) -> str:
+    text = str(message)
+    for secret in secrets:
+        if secret:
+            text = text.replace(secret, "[redacted]")
+    return text
+
+
+def _execute_executive_pipeline(
+    *,
+    request: RunExecutivePipelineRequest,
+    crm_url: str,
+    whatsapp_url: str,
+    openai_key: str,
+    sink: Any,
+) -> None:
+    RunExecutivePipelineService(
+        crm_gateway=BitrixClient(crm_url, call_delay=0.2, page_delay=0.2),
+        whatsapp_gateway=BitrixClient(whatsapp_url, call_delay=0.2, page_delay=0.2),
+        responses_gateway=OpenAiResponsesClient(openai_key),
+        transcription_gateway=OpenAiTranscriptionClient(openai_key),
+        file_downloader=RequestsFileDownloader(),
+        sink=sink,
+    ).execute(request)
+
+
+def _run_executive_report_background_job(
+    *,
+    job_id: str,
+    request: RunExecutivePipelineRequest,
+    crm_url: str,
+    whatsapp_url: str,
+    openai_key: str,
+) -> None:
+    _set_executive_report_job(job_id, status="running", started_at=_now_iso())
+    try:
+        _execute_executive_pipeline(
+            request=request,
+            crm_url=crm_url,
+            whatsapp_url=whatsapp_url,
+            openai_key=openai_key,
+            sink=FileSystemJsonWriter(),
+        )
+        report_path = request.executive_report_dir / "executive-report.json"
+        summary_path = request.executive_report_dir / "pipeline-summary.json"
+        _set_executive_report_job(
+            job_id,
+            status="completed",
+            completed_at=_now_iso(),
+            report_path=str(report_path),
+            summary_path=str(summary_path),
+            executive_report=_load_json_if_exists(report_path),
+            pipeline_summary=_load_json_if_exists(summary_path),
+        )
+    except Exception as exc:  # noqa: BLE001
+        logger.exception("Executive report job failed: %s", job_id)
+        _set_executive_report_job(
+            job_id,
+            status="error",
+            completed_at=_now_iso(),
+            error=_redact_error_message(exc, crm_url, whatsapp_url, openai_key),
+            error_type=type(exc).__name__,
+        )
 
 
 # ---------------------------------------------------------------------------
@@ -210,6 +313,119 @@ def build_executive_report(
         ),
         mem,
     )
+
+
+@app.post("/executive-report/run", tags=["Executive Report"])
+def run_executive_report_pipeline(
+    background_tasks: BackgroundTasks,
+    sales_quality_dir: str = Form("export/sales-quality", description="Directory for sales-quality outputs"),
+    output_dir: str = Form("export/executive-report", description="Executive report output directory"),
+    whatsapp_dir: str = Form("export/whatsapp-timeline", description="WhatsApp export directory"),
+    call_scan_dir: str = Form("export/call-records-scan", description="Call scan directory"),
+    recordings_dir: str = Form("export/recordings", description="Call recordings directory"),
+    date_from: Optional[str] = Form(None, description="Start date"),
+    date_to: Optional[str] = Form(None, description="End date"),
+    category_id: Optional[List[str]] = Form(None, description="Deal category IDs"),
+    responsible_id: Optional[List[str]] = Form(None, description="ASSIGNED_BY_ID; may be repeated"),
+    deal_id: Optional[List[str]] = Form(None, description="Specific deal IDs"),
+    limit: int = Form(0, description="Max CRM deals, 0 = all"),
+    model: str = Form("gpt-4o-mini", description="OpenAI model for sales-quality analysis"),
+    transcription_model: str = Form("gpt-4o-transcribe", description="OpenAI transcription model"),
+    average_ticket_kzt: Optional[float] = Form(None, description="Average ticket for lost revenue formula"),
+    expected_conversion_pct: Optional[float] = Form(None, description="Expected conversion percent"),
+    portal_base_url: str = Form("https://sapaplast.bitrix24.kz", description="Bitrix portal URL for CRM links"),
+    max_reanimation_cards: int = Form(100, description="Max failed deal cards"),
+    reset_outputs: bool = Form(True, description="Clear output directories before running"),
+    include_whatsapp_audio: bool = Form(False, description="Download and transcribe WhatsApp audio messages"),
+    wait: bool = Form(False, description="Run synchronously and wait for completion"),
+    crm_webhook_url: str | None = Security(_webhook_header),
+    whatsapp_webhook_url: str | None = Security(_whatsapp_webhook_header),
+    openai_key: str | None = Security(_openai_key_header),
+) -> dict[str, Any]:
+    """Run source refresh, sales-quality analysis, and executive report in one scope."""
+    crm_url = _require_webhook(crm_webhook_url)
+    whatsapp_url = whatsapp_webhook_url or crm_url
+    key = _require_openai_key(openai_key)
+    clean_categories = _clean_form_list(category_id)
+    clean_responsible = _clean_form_list(responsible_id)
+    clean_deals = _clean_form_list(deal_id)
+    request = RunExecutivePipelineRequest(
+        sales_quality_dir=Path(sales_quality_dir),
+        executive_report_dir=Path(output_dir),
+        whatsapp_dir=Path(whatsapp_dir),
+        call_scan_dir=Path(call_scan_dir),
+        recordings_dir=Path(recordings_dir),
+        date_from=_none(date_from),
+        date_to=_none(date_to),
+        category_ids=clean_categories,
+        responsible_ids=clean_responsible,
+        deal_ids=clean_deals,
+        limit=limit,
+        model=model,
+        transcription_model=transcription_model,
+        average_ticket_kzt=average_ticket_kzt,
+        expected_conversion_pct=expected_conversion_pct,
+        portal_base_url=portal_base_url,
+        max_reanimation_cards=max_reanimation_cards,
+        include_whatsapp_audio=include_whatsapp_audio,
+        reset_outputs=reset_outputs,
+    )
+
+    if wait:
+        sink, mem = _tee()
+        result = _run_service(
+            lambda: _execute_executive_pipeline(
+                request=request,
+                crm_url=crm_url,
+                whatsapp_url=whatsapp_url,
+                openai_key=key,
+                sink=sink,
+            ),
+            mem,
+        )
+        report_path = Path(output_dir) / "executive-report.json"
+        if report_path.exists():
+            result["executive_report"] = json.loads(report_path.read_text(encoding="utf-8"))
+        return result
+
+    job_id = uuid.uuid4().hex
+    _set_executive_report_job(
+        job_id,
+        status="queued",
+        queued_at=_now_iso(),
+        output_dir=str(request.executive_report_dir),
+        scope={
+            "date_from": request.date_from,
+            "date_to": request.date_to,
+            "category_ids": request.category_ids or [],
+            "responsible_ids": request.responsible_ids or [],
+            "deal_ids": request.deal_ids or [],
+            "limit": request.limit,
+            "include_whatsapp_audio": request.include_whatsapp_audio,
+        },
+    )
+    background_tasks.add_task(
+        _run_executive_report_background_job,
+        job_id=job_id,
+        request=request,
+        crm_url=crm_url,
+        whatsapp_url=whatsapp_url,
+        openai_key=key,
+    )
+    return {
+        "status": "started",
+        "job_id": job_id,
+        "status_url": f"/executive-report/jobs/{job_id}",
+    }
+
+
+@app.get("/executive-report/jobs/{job_id}", tags=["Executive Report"])
+def get_executive_report_job(job_id: str) -> dict[str, Any]:
+    """Return status for a background executive report run."""
+    job = _get_executive_report_job(job_id)
+    if not job:
+        raise HTTPException(status_code=404, detail=f"Job not found: {job_id}")
+    return job
 
 
 # ---------------------------------------------------------------------------

@@ -26,6 +26,23 @@ _ACTIVITY_SELECT: list[str] = [
 ]
 
 
+def _chunked(values: list[str], size: int) -> list[list[str]]:
+    return [values[i : i + size] for i in range(0, len(values), size)]
+
+
+def _dedupe_rows(rows: list[dict[str, Any]], *, key: str) -> list[dict[str, Any]]:
+    seen: set[str] = set()
+    unique: list[dict[str, Any]] = []
+    for row in rows:
+        value = str(row.get(key) or "")
+        if value and value in seen:
+            continue
+        if value:
+            seen.add(value)
+        unique.append(row)
+    return unique
+
+
 @dataclass(frozen=True)
 class CallRecordsScanRequest:
     output_dir: Path
@@ -33,6 +50,7 @@ class CallRecordsScanRequest:
     date_from: str | None = None
     date_to: str | None = None
     responsible_id: str | None = None
+    deal_ids: list[str] | None = None
 
 
 @dataclass
@@ -68,6 +86,7 @@ class CallRecordsScanService:
             date_from=request.date_from,
             date_to=request.date_to,
             responsible_id=request.responsible_id,
+            deal_ids=request.deal_ids,
         )
         self._sink.write(output_dir / "activities.source.json", activities)
 
@@ -89,9 +108,10 @@ class CallRecordsScanService:
         date_from: str | None,
         date_to: str | None,
         responsible_id: str | None = None,
+        deal_ids: list[str] | None = None,
     ) -> list[dict[str, Any]]:
-        filter_ = dict(_ACTIVITY_FILTER)
-        filter_.update(
+        base_filter = dict(_ACTIVITY_FILTER)
+        base_filter.update(
             build_closed_filter(
                 "START_TIME",
                 date_from=date_from,
@@ -99,7 +119,50 @@ class CallRecordsScanService:
             )
         )
         if responsible_id:
-            filter_["RESPONSIBLE_ID"] = responsible_id
+            base_filter["RESPONSIBLE_ID"] = responsible_id
+
+        clean_deal_ids = [str(v).strip() for v in (deal_ids or []) if str(v).strip()]
+        if clean_deal_ids:
+            activities: list[dict[str, Any]] = []
+            for chunk in _chunked(clean_deal_ids, 50):
+                filter_ = {
+                    **base_filter,
+                    "OWNER_TYPE_ID": "2",
+                    "OWNER_ID": chunk if len(chunk) > 1 else chunk[0],
+                }
+                activities.extend(self._fetch_activity_rows(filter_))
+            activities = _dedupe_rows(activities, key="ID")
+            activities = sorted(
+                activities,
+                key=lambda row: str(row.get("START_TIME") or ""),
+                reverse=True,
+            )
+            if limit > 0:
+                activities = activities[:limit]
+            logger.info(
+                "Loaded call activities: %d (deal_ids=%d, limit=%d)",
+                len(activities),
+                len(clean_deal_ids),
+                limit,
+            )
+            return activities
+
+        activities = self._fetch_activity_rows(base_filter)
+        activities = activities[:limit] if limit > 0 else activities
+        logger.info("Loaded call activities: %d (limit=%d)", len(activities), limit)
+        return activities
+
+    def _fetch_activity_rows(self, filter_: dict[str, Any]) -> list[dict[str, Any]]:
+        list_all = getattr(self._gateway, "list_all", None)
+        if callable(list_all):
+            return list_all(
+                "crm.activity.list",
+                select=_ACTIVITY_SELECT,
+                filter=filter_,
+                order={"START_TIME": "DESC"},
+                context="call records scan activities",
+            )
+
         response = self._gateway.call(
             "crm.activity.list",
             body={
@@ -111,14 +174,8 @@ class CallRecordsScanService:
             label="crm.activity.list page 1 (start=0)",
         )
         raw_result: list[dict[str, Any]] = response.get("result") or []
-        activities = raw_result[:limit] if limit > 0 else raw_result
-        logger.info(
-            "Loaded call activities: %d (page returned %d, limit=%d)",
-            len(activities),
-            len(raw_result),
-            limit,
-        )
-        return activities
+        logger.info("Loaded call activities page: %d", len(raw_result))
+        return raw_result
 
     def _scan_activity(self, activity: dict[str, Any], *, into: _ScanResult) -> None:
         activity_id = coerce_str(activity.get("ID"))
