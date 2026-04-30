@@ -17,7 +17,11 @@ dev = [
 ]
 api = [
     "fastapi>=0.100",
+    "python-multipart>=0.0.9",
     "uvicorn[standard]>=0.20",
+]
+postgres = [
+    "psycopg[binary]>=3.1",
 ]
 
 [project.scripts]

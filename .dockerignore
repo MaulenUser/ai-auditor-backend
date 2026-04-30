@@ -1,0 +1,11 @@
+.git
+.pytest_cache
+.tmp-pytest
+.tmp-pytest-base2
+__pycache__
+*.pyc
+data
+export
+storage
+backend-server*.log
+*.zip

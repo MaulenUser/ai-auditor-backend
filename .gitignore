@@ -25,6 +25,10 @@ env/
 
 # Runtime output
 export/
+storage/
+data/
+backend-server*.log
+vite-server*.log
 
 # Local tool state
 .claude/
