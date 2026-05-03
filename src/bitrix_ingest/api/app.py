@@ -31,6 +31,7 @@ from ..infrastructure.database import (
     AnalysisRunRepository,
     BusinessProfileRepository,
     IntegrationsRepository,
+    SalesAnalyticsRepository,
     TenantRepository,
     UserRepository,
 )
@@ -49,6 +50,8 @@ from ..application.crm import CrmExportRequest, CrmExportService, StageHistoryRe
 from ..application.executive_report import BuildExecutiveReportRequest, BuildExecutiveReportService
 from ..application.executive_pipeline import RunExecutivePipelineRequest, RunExecutivePipelineService
 from ..application.recordings import DownloadRecordingsRequest, DownloadRecordingsService
+from ..application.sales_analytics import ExportSalesAnalyticsRequest, ExportSalesAnalyticsService
+from ..application.sales_audit import build_sales_audit_report
 from ..application.sales_quality import AnalyzeSalesQualityRequest, AnalyzeSalesQualityService
 from ..application.transcribe import TranscribeRecordingsRequest, TranscribeRecordingsService
 from ..application.whatsapp import WhatsAppExportRequest, WhatsAppExportService
@@ -130,6 +133,10 @@ _DB_PATH = Path(os.environ.get("BITRIX_DB_PATH", "data/app.db"))
 
 _EXECUTIVE_REPORT_JOBS: dict[str, dict[str, Any]] = {}
 _EXECUTIVE_REPORT_JOBS_LOCK = threading.Lock()
+_SALES_ANALYTICS_JOBS: dict[str, dict[str, Any]] = {}
+_SALES_ANALYTICS_JOBS_LOCK = threading.Lock()
+_SALES_AUDIT_JOBS: dict[str, dict[str, Any]] = {}
+_SALES_AUDIT_JOBS_LOCK = threading.Lock()
 _TENANT_ID_RE = re.compile(r"^[A-Za-z0-9_-]{1,64}$")
 _USERNAME_RE = re.compile(r"^[A-Za-z0-9_.@-]{3,128}$")
 _ROLE_VALUES = {"admin", "client"}
@@ -158,6 +165,13 @@ def _integrations_repo(tenant_id: str = "default") -> IntegrationsRepository:
 
 def _runs_repo() -> AnalysisRunRepository:
     return AnalysisRunRepository(_DB_PATH)
+
+
+def _sales_repo() -> SalesAnalyticsRepository:
+    try:
+        return SalesAnalyticsRepository(_DB_PATH)
+    except RuntimeError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
 
 
 def _user_repo() -> UserRepository:
@@ -472,12 +486,58 @@ def _set_executive_report_job(job_id: str, **updates: Any) -> None:
                 error=updates.get("error"),
             )
         except Exception:
-            logger.warning("Failed to persist run status to SQLite: %s", job_id)
+            logger.warning("Failed to persist run status to database: %s", job_id)
 
 
 def _get_executive_report_job(job_id: str) -> dict[str, Any] | None:
     with _EXECUTIVE_REPORT_JOBS_LOCK:
         job = _EXECUTIVE_REPORT_JOBS.get(job_id)
+        return dict(job) if job else None
+
+
+def _set_sales_analytics_job(job_id: str, **updates: Any) -> None:
+    with _SALES_ANALYTICS_JOBS_LOCK:
+        job = _SALES_ANALYTICS_JOBS.setdefault(job_id, {"job_id": job_id})
+        job.update(updates)
+        job["updated_at"] = _now_iso()
+    if "status" in updates:
+        try:
+            _runs_repo().update_status(
+                run_id=job_id,
+                status=updates["status"],
+                completed_at=updates.get("completed_at"),
+                error=updates.get("error"),
+            )
+        except Exception:
+            logger.warning("Failed to persist sales analytics run status: %s", job_id)
+
+
+def _get_sales_analytics_job(job_id: str) -> dict[str, Any] | None:
+    with _SALES_ANALYTICS_JOBS_LOCK:
+        job = _SALES_ANALYTICS_JOBS.get(job_id)
+        return dict(job) if job else None
+
+
+def _set_sales_audit_job(job_id: str, **updates: Any) -> None:
+    with _SALES_AUDIT_JOBS_LOCK:
+        job = _SALES_AUDIT_JOBS.setdefault(job_id, {"job_id": job_id})
+        job.update(updates)
+        job["updated_at"] = _now_iso()
+    if "status" in updates:
+        try:
+            _runs_repo().update_status(
+                run_id=job_id,
+                status=updates["status"],
+                completed_at=updates.get("completed_at"),
+                error=updates.get("error"),
+            )
+        except Exception:
+            logger.warning("Failed to persist sales audit run status: %s", job_id)
+
+
+def _get_sales_audit_job(job_id: str) -> dict[str, Any] | None:
+    with _SALES_AUDIT_JOBS_LOCK:
+        job = _SALES_AUDIT_JOBS.get(job_id)
         return dict(job) if job else None
 
 
@@ -544,6 +604,288 @@ def _run_executive_report_background_job(
     except Exception as exc:  # noqa: BLE001
         logger.exception("Executive report job failed: %s", job_id)
         _set_executive_report_job(
+            job_id,
+            status="error",
+            completed_at=_now_iso(),
+            error=_redact_error_message(exc, crm_url, whatsapp_url, openai_key),
+            error_type=type(exc).__name__,
+        )
+
+
+def _sales_analytics_report(tenant_id: str, run_id: str) -> dict[str, Any]:
+    report = _sales_repo().build_report(tenant_id=tenant_id, run_id=run_id)
+    return {
+        **report,
+        "storage": "postgres",
+        "summary": {
+            "meta": report.get("meta") or {},
+            "deal_dashboard": report.get("deal_dashboard") or {},
+            "task_status": report.get("task_status") or {},
+            "lead_status": report.get("lead_status") or {},
+            "revenue_summary": report.get("revenue_summary") or {},
+            "failure_reasons": report.get("failure_reasons") or {},
+        },
+    }
+
+
+def _execute_sales_analytics_pipeline(
+    *,
+    tenant_id: str,
+    run_id: str,
+    webhook_url: str,
+    date_from: str,
+    date_to: str,
+    include_pipeline_reports: bool,
+    include_tasks: bool,
+    include_leads: bool,
+    include_revenue: bool,
+    category_ids: list[str] | None = None,
+    responsible_ids: list[str] | None = None,
+    limit: int = 0,
+) -> dict[str, Any]:
+    report = ExportSalesAnalyticsService(
+        gateway=BitrixClient(webhook_url, call_delay=0.2, page_delay=0.2),
+        repository=_sales_repo(),
+    ).execute(
+        ExportSalesAnalyticsRequest(
+            tenant_id=tenant_id,
+            run_id=run_id,
+            date_from=date_from,
+            date_to=date_to,
+            category_ids=category_ids,
+            responsible_ids=responsible_ids,
+            include_tasks=include_tasks,
+            include_leads=include_leads,
+            include_revenue=include_revenue,
+            limit=limit,
+        )
+    )
+    report["storage"] = "postgres"
+    report["options"] = {
+        "include_pipeline_reports": include_pipeline_reports,
+        "include_tasks": include_tasks,
+        "include_leads": include_leads,
+        "include_revenue": include_revenue,
+        "note": "Analytics snapshots are stored in Postgres; legacy file reports are not generated by this endpoint.",
+    }
+    return report
+
+
+def _run_sales_analytics_background_job(
+    *,
+    job_id: str,
+    tenant_id: str,
+    webhook_url: str,
+    date_from: str,
+    date_to: str,
+    include_pipeline_reports: bool,
+    include_tasks: bool,
+    include_leads: bool,
+    include_revenue: bool,
+    category_ids: list[str] | None = None,
+    responsible_ids: list[str] | None = None,
+    limit: int = 0,
+) -> None:
+    _set_sales_analytics_job(job_id, status="running", started_at=_now_iso())
+    try:
+        report = _execute_sales_analytics_pipeline(
+            tenant_id=tenant_id,
+            run_id=job_id,
+            webhook_url=webhook_url,
+            date_from=date_from,
+            date_to=date_to,
+            include_pipeline_reports=include_pipeline_reports,
+            include_tasks=include_tasks,
+            include_leads=include_leads,
+            include_revenue=include_revenue,
+            category_ids=category_ids,
+            responsible_ids=responsible_ids,
+            limit=limit,
+        )
+        _set_sales_analytics_job(
+            job_id,
+            status="completed",
+            completed_at=_now_iso(),
+            report=report,
+        )
+    except Exception as exc:  # noqa: BLE001
+        logger.exception("Sales analytics job failed: %s", job_id)
+        _set_sales_analytics_job(
+            job_id,
+            status="error",
+            completed_at=_now_iso(),
+            error=_redact_error_message(exc, webhook_url),
+            error_type=type(exc).__name__,
+        )
+
+
+def _execute_sales_audit_pipeline(
+    *,
+    tenant_id: str,
+    run_id: str,
+    crm_url: str,
+    whatsapp_url: str,
+    openai_key: str,
+    base_dir: Path,
+    date_from: str,
+    date_to: str,
+    category_ids: list[str] | None,
+    responsible_ids: list[str] | None,
+    deal_ids: list[str] | None,
+    limit: int,
+    model: str,
+    transcription_model: str,
+    average_ticket_kzt: float | None,
+    expected_conversion_pct: float | None,
+    portal_base_url: str,
+    max_reanimation_cards: int,
+    include_whatsapp_audio: bool,
+    include_tasks: bool,
+    include_leads: bool,
+    include_revenue: bool,
+    reset_outputs: bool,
+) -> dict[str, Any]:
+    executive_dir = base_dir / "executive-report"
+    sales_quality_dir = base_dir / "sales-quality"
+    whatsapp_dir = base_dir / "whatsapp-timeline"
+    call_scan_dir = base_dir / "call-records-scan"
+    recordings_dir = base_dir / "recordings"
+    final_dir = base_dir / "sales-audit"
+
+    request = RunExecutivePipelineRequest(
+        sales_quality_dir=sales_quality_dir,
+        executive_report_dir=executive_dir,
+        whatsapp_dir=whatsapp_dir,
+        call_scan_dir=call_scan_dir,
+        recordings_dir=recordings_dir,
+        date_from=date_from,
+        date_to=date_to,
+        category_ids=category_ids,
+        responsible_ids=responsible_ids,
+        deal_ids=deal_ids,
+        limit=limit,
+        model=model,
+        transcription_model=transcription_model,
+        average_ticket_kzt=average_ticket_kzt,
+        expected_conversion_pct=expected_conversion_pct,
+        portal_base_url=portal_base_url,
+        max_reanimation_cards=max_reanimation_cards,
+        include_whatsapp_audio=include_whatsapp_audio,
+        reset_outputs=reset_outputs,
+    )
+    _execute_executive_pipeline(
+        request=request,
+        crm_url=crm_url,
+        whatsapp_url=whatsapp_url,
+        openai_key=openai_key,
+        sink=FileSystemJsonWriter(),
+    )
+
+    sales_report = _execute_sales_analytics_pipeline(
+        tenant_id=tenant_id,
+        run_id=run_id,
+        webhook_url=crm_url,
+        date_from=date_from,
+        date_to=date_to,
+        include_pipeline_reports=False,
+        include_tasks=include_tasks,
+        include_leads=include_leads,
+        include_revenue=include_revenue,
+        category_ids=category_ids,
+        responsible_ids=responsible_ids,
+        limit=limit,
+    )
+    executive_report = _load_json_if_exists(executive_dir / "executive-report.json") or {}
+    final_report = build_sales_audit_report(
+        executive_report=executive_report,
+        sales_report=sales_report,
+        output_dir=final_dir,
+        average_ticket_kzt=average_ticket_kzt,
+        expected_conversion_pct=expected_conversion_pct,
+    )
+    _sales_repo().save_sales_audit_report(
+        tenant_id=tenant_id,
+        run_id=run_id,
+        report=final_report,
+    )
+    return {
+        "status": "completed",
+        "job_id": run_id,
+        "tenant_id": tenant_id,
+        "storage": "postgres",
+        "output_dir": str(final_dir),
+        "executive_output_dir": str(executive_dir),
+        "report": final_report,
+        "sales_report": sales_report,
+    }
+
+
+def _run_sales_audit_background_job(
+    *,
+    job_id: str,
+    run_id: str | None = None,
+    tenant_id: str,
+    crm_url: str,
+    whatsapp_url: str,
+    openai_key: str,
+    base_dir: Path,
+    date_from: str,
+    date_to: str,
+    category_ids: list[str] | None,
+    responsible_ids: list[str] | None,
+    deal_ids: list[str] | None,
+    limit: int,
+    model: str,
+    transcription_model: str,
+    average_ticket_kzt: float | None,
+    expected_conversion_pct: float | None,
+    portal_base_url: str,
+    max_reanimation_cards: int,
+    include_whatsapp_audio: bool,
+    include_tasks: bool,
+    include_leads: bool,
+    include_revenue: bool,
+    reset_outputs: bool,
+) -> None:
+    del run_id
+    _set_sales_audit_job(job_id, status="running", started_at=_now_iso())
+    try:
+        result = _execute_sales_audit_pipeline(
+            tenant_id=tenant_id,
+            run_id=job_id,
+            crm_url=crm_url,
+            whatsapp_url=whatsapp_url,
+            openai_key=openai_key,
+            base_dir=base_dir,
+            date_from=date_from,
+            date_to=date_to,
+            category_ids=category_ids,
+            responsible_ids=responsible_ids,
+            deal_ids=deal_ids,
+            limit=limit,
+            model=model,
+            transcription_model=transcription_model,
+            average_ticket_kzt=average_ticket_kzt,
+            expected_conversion_pct=expected_conversion_pct,
+            portal_base_url=portal_base_url,
+            max_reanimation_cards=max_reanimation_cards,
+            include_whatsapp_audio=include_whatsapp_audio,
+            include_tasks=include_tasks,
+            include_leads=include_leads,
+            include_revenue=include_revenue,
+            reset_outputs=reset_outputs,
+        )
+        _set_sales_audit_job(
+            job_id,
+            status="completed",
+            completed_at=_now_iso(),
+            output_dir=str(base_dir / "sales-audit"),
+            report=result.get("report"),
+            executive_report=result.get("report"),
+        )
+    except Exception as exc:  # noqa: BLE001
+        logger.exception("Sales audit job failed: %s", job_id)
+        _set_sales_audit_job(
             job_id,
             status="error",
             completed_at=_now_iso(),
@@ -918,7 +1260,7 @@ def run_executive_report_pipeline(
             output_dir=str(resolved_output),
         ))
     except Exception:
-        logger.warning("Failed to persist new run to SQLite: %s", job_id)
+        logger.warning("Failed to persist new run to database: %s", job_id)
 
     background_tasks.add_task(
         _run_executive_report_background_job,
@@ -946,7 +1288,7 @@ def get_executive_report_job(
     tid = _resolve_tenant_id(x_tenant_id)
     job = _get_executive_report_job(job_id)
     if not job:
-        # Fall back to SQLite for runs from previous server sessions.
+        # Fall back to persisted runs from previous server sessions.
         run = _runs_repo().get(job_id)
         if not run:
             raise HTTPException(status_code=404, detail=f"Job not found: {job_id}")
@@ -959,7 +1301,7 @@ def get_executive_report_job(
 
 
 # ---------------------------------------------------------------------------
-# App state, tenants, and settings — persisted in SQLite
+# App state, tenants, and settings — persisted in the configured database
 # ---------------------------------------------------------------------------
 
 
@@ -993,7 +1335,7 @@ def setup_profile(
     payload: _BusinessProfilePayload,
     x_tenant_id: str | None = Header(None),
 ) -> dict[str, Any]:
-    """Save business profile to SQLite and return updated app state."""
+    """Save business profile to the configured database and return updated app state."""
     tid = _resolve_tenant_id(x_tenant_id)
     profile = BusinessProfile.from_dict(payload.model_dump())
     _profile_repo(tid).save(profile)
@@ -1029,7 +1371,7 @@ def setup_integrations(
     x_tenant_id: str | None = Header(None),
     setup_token: str | None = Security(_setup_token_header),
 ) -> dict[str, Any]:
-    """Save Bitrix webhook URLs and OpenAI API key to SQLite."""
+    """Save Bitrix webhook URLs and OpenAI API key to the configured database."""
     _require_setup_token(setup_token)
     tid = _resolve_tenant_id(x_tenant_id)
     current = _get_integrations(tid)
@@ -1115,6 +1457,375 @@ def list_analysis_runs(x_tenant_id: str | None = Header(None)) -> dict[str, Any]
 # ---------------------------------------------------------------------------
 # Catalog endpoints — for UI dropdowns (funnels, managers)
 # ---------------------------------------------------------------------------
+
+
+@app.post("/sales-analytics/run", tags=["Sales Analytics"])
+def run_sales_analytics(
+    background_tasks: BackgroundTasks,
+    date_from: str = Form(..., description="Start date, e.g. 2026-04-01"),
+    date_to: str = Form(..., description="End date, e.g. 2026-05-03"),
+    output_dir: str = Form("", description="Legacy field; analytics are stored in Postgres"),
+    category_id: Optional[List[str]] = Form(None, description="Deal category IDs"),
+    responsible_id: Optional[List[str]] = Form(None, description="ASSIGNED_BY_ID; may be repeated"),
+    limit: int = Form(0, description="Max CRM deals per source query, 0 = all"),
+    include_pipeline_reports: bool = Form(True, description="Build per-pipeline reports"),
+    include_tasks: bool = Form(True, description="Export tasks and task coverage"),
+    include_leads: bool = Form(True, description="Export leads and lead loss report"),
+    include_revenue: bool = Form(True, description="Export invoices, sale orders, and payments"),
+    wait: bool = Form(False, description="Run synchronously and return report"),
+    webhook_url: str | None = Security(_webhook_header),
+    x_tenant_id: str | None = Header(None),
+) -> dict[str, Any]:
+    """Run the SQL analytics snapshot pipeline used by the management reports."""
+    tid = _resolve_tenant_id(x_tenant_id)
+    url = _resolve_webhook(webhook_url, tid)
+    resolved_from = _none(date_from)
+    resolved_to = _none(date_to)
+    if not resolved_from or not resolved_to:
+        raise HTTPException(status_code=422, detail="date_from and date_to are required.")
+    clean_categories = _clean_form_list(category_id)
+    clean_responsible = _clean_form_list(responsible_id)
+    _sales_repo()
+
+    job_id = uuid.uuid4().hex
+    resolved_output = (
+        Path(output_dir)
+        if _none(output_dir)
+        else _tenant_storage(tid, job_id) / "sales-analytics"
+    )
+    try:
+        _runs_repo().create(AnalysisRun(
+            run_id=job_id,
+            tenant_id=tid,
+            status="running" if wait else "queued",
+            date_from=resolved_from,
+            date_to=resolved_to,
+            output_dir=str(resolved_output),
+        ))
+    except Exception:
+        logger.warning("Failed to persist sales analytics run to database: %s", job_id)
+
+    if wait:
+        try:
+            report = _execute_sales_analytics_pipeline(
+                tenant_id=tid,
+                run_id=job_id,
+                webhook_url=url,
+                date_from=resolved_from,
+                date_to=resolved_to,
+                include_pipeline_reports=include_pipeline_reports,
+                include_tasks=include_tasks,
+                include_leads=include_leads,
+                include_revenue=include_revenue,
+                category_ids=clean_categories,
+                responsible_ids=clean_responsible,
+                limit=limit,
+            )
+            _runs_repo().update_status(job_id, "completed", completed_at=_now_iso())
+            return {
+                "status": "completed",
+                "job_id": job_id,
+                "tenant_id": tid,
+                "storage": "postgres",
+                "output_dir": str(resolved_output),
+                "report": report,
+            }
+        except HTTPException:
+            raise
+        except Exception as exc:  # noqa: BLE001
+            error = _redact_error_message(exc, url)
+            _runs_repo().update_status(job_id, "error", completed_at=_now_iso(), error=error)
+            raise HTTPException(status_code=502, detail=error) from exc
+
+    _set_sales_analytics_job(
+        job_id,
+        tenant_id=tid,
+        status="queued",
+        queued_at=_now_iso(),
+        output_dir=str(resolved_output),
+        scope={
+            "date_from": resolved_from,
+            "date_to": resolved_to,
+            "category_ids": clean_categories or [],
+            "responsible_ids": clean_responsible or [],
+            "include_pipeline_reports": include_pipeline_reports,
+            "include_tasks": include_tasks,
+            "include_leads": include_leads,
+            "include_revenue": include_revenue,
+            "storage": "postgres",
+        },
+    )
+    background_tasks.add_task(
+        _run_sales_analytics_background_job,
+        job_id=job_id,
+        tenant_id=tid,
+        webhook_url=url,
+        date_from=resolved_from,
+        date_to=resolved_to,
+        include_pipeline_reports=include_pipeline_reports,
+        include_tasks=include_tasks,
+        include_leads=include_leads,
+        include_revenue=include_revenue,
+        category_ids=clean_categories,
+        responsible_ids=clean_responsible,
+        limit=limit,
+    )
+    return {
+        "status": "started",
+        "job_id": job_id,
+        "tenant_id": tid,
+        "storage": "postgres",
+        "output_dir": str(resolved_output),
+        "status_url": f"/sales-analytics/jobs/{job_id}",
+        "report_url": f"/sales-analytics/report?run_id={job_id}",
+    }
+
+
+@app.get("/sales-analytics/jobs/{job_id}", tags=["Sales Analytics"])
+def get_sales_analytics_job(
+    job_id: str,
+    x_tenant_id: str | None = Header(None),
+) -> dict[str, Any]:
+    """Return status for a background SQL analytics run."""
+    tid = _resolve_tenant_id(x_tenant_id)
+    _sales_repo()
+    job = _get_sales_analytics_job(job_id)
+    if not job:
+        run = _runs_repo().get(job_id)
+        if not run or run.tenant_id != tid:
+            raise HTTPException(status_code=404, detail=f"Job not found: {job_id}")
+        result = run.to_dict()
+        if run.status == "completed":
+            result["report"] = _sales_analytics_report(tid, job_id)
+        return result
+    if job.get("tenant_id") and job.get("tenant_id") != tid:
+        raise HTTPException(status_code=404, detail=f"Job not found: {job_id}")
+    return job
+
+
+@app.get("/sales-analytics/report", tags=["Sales Analytics"])
+def get_sales_analytics_report(
+    run_id: str = Query("", description="Analysis run ID"),
+    output_dir: str = Query("", description="Legacy field; ignored for Postgres reports"),
+    x_tenant_id: str | None = Header(None),
+) -> dict[str, Any]:
+    """Read Postgres reports produced by /sales-analytics/run."""
+    tid = _resolve_tenant_id(x_tenant_id)
+    _sales_repo()
+    del output_dir
+    if _none(run_id):
+        run = _runs_repo().get(run_id)
+        if not run or run.tenant_id != tid:
+            raise HTTPException(status_code=404, detail=f"Run not found: {run_id}")
+        return _sales_analytics_report(tid, run_id)
+
+    runs = _runs_repo().list_by_tenant(tid)
+    completed = [
+        run for run in runs
+        if run.status == "completed" and "sales-analytics" in (run.output_dir or "")
+    ]
+    if completed:
+        return _sales_analytics_report(tid, completed[0].run_id)
+    raise HTTPException(
+        status_code=404,
+        detail=f"No completed sales analytics runs found for tenant '{tid}'.",
+    )
+
+
+@app.post("/sales-audit/run", tags=["Sales Audit"])
+def run_sales_audit(
+    background_tasks: BackgroundTasks,
+    output_dir: str = Form("", description="Output directory mirror; analytics are stored in Postgres"),
+    date_from: str = Form(..., description="Start date"),
+    date_to: str = Form(..., description="End date"),
+    category_id: Optional[List[str]] = Form(None, description="Deal category IDs"),
+    responsible_id: Optional[List[str]] = Form(None, description="ASSIGNED_BY_ID; may be repeated"),
+    deal_id: Optional[List[str]] = Form(None, description="Specific deal IDs"),
+    limit: int = Form(0, description="Max CRM deals per source query, 0 = all"),
+    model: str = Form("gpt-4o-mini", description="OpenAI model for sales-quality analysis"),
+    transcription_model: str = Form("gpt-4o-transcribe", description="OpenAI transcription model"),
+    average_ticket_kzt: Optional[float] = Form(None, description="Average ticket for missed revenue formula"),
+    expected_conversion_pct: Optional[float] = Form(None, description="Expected conversion percent"),
+    portal_base_url: str = Form("https://sapaplast.bitrix24.kz", description="Bitrix portal URL for CRM links"),
+    max_reanimation_cards: int = Form(100, description="Max failed deal cards"),
+    reset_outputs: bool = Form(True, description="Clear output directories before running"),
+    include_whatsapp_audio: bool = Form(False, description="Download and transcribe WhatsApp audio messages"),
+    include_tasks: bool = Form(True, description="Export CRM-linked tasks into Postgres"),
+    include_leads: bool = Form(True, description="Export leads into Postgres"),
+    include_revenue: bool = Form(True, description="Export sale orders, payments, and invoices into Postgres"),
+    wait: bool = Form(False, description="Run synchronously and return report"),
+    crm_webhook_url: str | None = Security(_webhook_header),
+    whatsapp_webhook_url: str | None = Security(_whatsapp_webhook_header),
+    openai_key: str | None = Security(_openai_key_header),
+    x_tenant_id: str | None = Header(None),
+) -> dict[str, Any]:
+    """Run the unified AI + Postgres sales audit report."""
+    tid = _resolve_tenant_id(x_tenant_id)
+    crm_url = _resolve_webhook(crm_webhook_url, tid)
+    whatsapp_url = _resolve_whatsapp_webhook(whatsapp_webhook_url, crm_url, tid)
+    key = _resolve_openai_key(openai_key, tid)
+    resolved_from = _none(date_from)
+    resolved_to = _none(date_to)
+    if not resolved_from or not resolved_to:
+        raise HTTPException(status_code=422, detail="date_from and date_to are required.")
+
+    clean_categories = _clean_form_list(category_id)
+    clean_responsible = _clean_form_list(responsible_id)
+    clean_deals = _clean_form_list(deal_id)
+    _sales_repo()
+    profile = _profile_repo(tid).get()
+    resolved_average_ticket = (
+        average_ticket_kzt
+        if average_ticket_kzt is not None
+        else (profile.average_ticket_kzt if profile else None)
+    )
+
+    job_id = uuid.uuid4().hex
+    base_dir = Path(output_dir) if _none(output_dir) else _tenant_storage(tid, job_id)
+    final_dir = base_dir / "sales-audit"
+    try:
+        _runs_repo().create(AnalysisRun(
+            run_id=job_id,
+            tenant_id=tid,
+            status="running" if wait else "queued",
+            date_from=resolved_from,
+            date_to=resolved_to,
+            category_ids=clean_categories or [],
+            responsible_ids=clean_responsible or [],
+            output_dir=str(final_dir),
+        ))
+    except Exception:
+        logger.warning("Failed to persist sales audit run to database: %s", job_id)
+
+    common_kwargs = {
+        "tenant_id": tid,
+        "run_id": job_id,
+        "crm_url": crm_url,
+        "whatsapp_url": whatsapp_url,
+        "openai_key": key,
+        "base_dir": base_dir,
+        "date_from": resolved_from,
+        "date_to": resolved_to,
+        "category_ids": clean_categories,
+        "responsible_ids": clean_responsible,
+        "deal_ids": clean_deals,
+        "limit": limit,
+        "model": model,
+        "transcription_model": transcription_model,
+        "average_ticket_kzt": resolved_average_ticket,
+        "expected_conversion_pct": expected_conversion_pct,
+        "portal_base_url": portal_base_url,
+        "max_reanimation_cards": max_reanimation_cards,
+        "include_whatsapp_audio": include_whatsapp_audio,
+        "include_tasks": include_tasks,
+        "include_leads": include_leads,
+        "include_revenue": include_revenue,
+        "reset_outputs": reset_outputs,
+    }
+
+    if wait:
+        try:
+            result = _execute_sales_audit_pipeline(**common_kwargs)
+            _runs_repo().update_status(job_id, "completed", completed_at=_now_iso())
+            return {
+                "status": "completed",
+                "job_id": job_id,
+                "tenant_id": tid,
+                "storage": "postgres",
+                "output_dir": str(final_dir),
+                "report": result.get("report"),
+                "executive_report": result.get("report"),
+            }
+        except HTTPException:
+            raise
+        except Exception as exc:  # noqa: BLE001
+            error = _redact_error_message(exc, crm_url, whatsapp_url, key)
+            _runs_repo().update_status(job_id, "error", completed_at=_now_iso(), error=error)
+            raise HTTPException(status_code=502, detail=error) from exc
+
+    _set_sales_audit_job(
+        job_id,
+        tenant_id=tid,
+        status="queued",
+        queued_at=_now_iso(),
+        output_dir=str(final_dir),
+        scope={
+            "date_from": resolved_from,
+            "date_to": resolved_to,
+            "category_ids": clean_categories or [],
+            "responsible_ids": clean_responsible or [],
+            "deal_ids": clean_deals or [],
+            "include_tasks": include_tasks,
+            "include_leads": include_leads,
+            "include_revenue": include_revenue,
+            "storage": "postgres",
+        },
+    )
+    background_tasks.add_task(
+        _run_sales_audit_background_job,
+        job_id=job_id,
+        **common_kwargs,
+    )
+    return {
+        "status": "started",
+        "job_id": job_id,
+        "tenant_id": tid,
+        "storage": "postgres",
+        "output_dir": str(final_dir),
+        "status_url": f"/sales-audit/jobs/{job_id}",
+        "report_url": f"/sales-audit/report?run_id={job_id}",
+    }
+
+
+@app.get("/sales-audit/jobs/{job_id}", tags=["Sales Audit"])
+def get_sales_audit_job(
+    job_id: str,
+    x_tenant_id: str | None = Header(None),
+) -> dict[str, Any]:
+    """Return status for a unified sales audit run."""
+    tid = _resolve_tenant_id(x_tenant_id)
+    _sales_repo()
+    job = _get_sales_audit_job(job_id)
+    if job:
+        if job.get("tenant_id") and job.get("tenant_id") != tid:
+            raise HTTPException(status_code=404, detail=f"Job not found: {job_id}")
+        return job
+    run = _runs_repo().get(job_id)
+    if not run or run.tenant_id != tid:
+        raise HTTPException(status_code=404, detail=f"Job not found: {job_id}")
+    result = run.to_dict()
+    if run.status == "completed":
+        report = _sales_repo().get_sales_audit_report(tenant_id=tid, run_id=job_id)
+        if report:
+            result["report"] = report
+            result["executive_report"] = report
+    return result
+
+
+@app.get("/sales-audit/report", tags=["Sales Audit"])
+def get_sales_audit_report(
+    run_id: str = Query("", description="Analysis run ID; empty = latest completed sales audit"),
+    x_tenant_id: str | None = Header(None),
+) -> dict[str, Any]:
+    """Return the final unified report JSON."""
+    tid = _resolve_tenant_id(x_tenant_id)
+    _sales_repo()
+    resolved_run_id = _none(run_id)
+    if not resolved_run_id:
+        completed = [
+            run for run in _runs_repo().list_by_tenant(tid)
+            if run.status == "completed" and "sales-audit" in (run.output_dir or "")
+        ]
+        if not completed:
+            raise HTTPException(
+                status_code=404,
+                detail=f"No completed sales audit runs found for tenant '{tid}'.",
+            )
+        resolved_run_id = completed[0].run_id
+    report = _sales_repo().get_sales_audit_report(tenant_id=tid, run_id=resolved_run_id)
+    if not report:
+        raise HTTPException(status_code=404, detail=f"Sales audit report not found: {resolved_run_id}")
+    return report
 
 
 @app.get(
