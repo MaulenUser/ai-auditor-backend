@@ -46,6 +46,18 @@ class FakeGateway:
             rows = response.get("result") or []
             if not isinstance(rows, list):
                 return response
+            if "ID" in payload:
+                response = self._calls.get("user.get.by_id", response)
+                rows = response.get("result") or []
+                if not isinstance(rows, list):
+                    return response
+                wanted_id = str(payload.get("ID") or "")
+                return {
+                    "result": [
+                        row for row in rows
+                        if str(row.get("ID") or "") == wanted_id
+                    ]
+                }
             start = int(payload.get("start") or 0)
             page = rows[start:start + 50]
             paginated: dict[str, Any] = {"result": page}
@@ -543,3 +555,57 @@ def test_get_funnels_with_managers_resolves_users_from_later_pages() -> None:
         },
     ]
     assert [request["start"] for request in gateway.user_requests] == [0, 50]
+
+
+def test_audit_preview_resolves_missing_manager_by_direct_user_lookup() -> None:
+    gateway = FakeGateway(
+        deals=[
+            {
+                "ID": "1",
+                "TITLE": "Manager missing from user list",
+                "SOURCE_ID": "WZ001",
+                "ASSIGNED_BY_ID": "5",
+                "CATEGORY_ID": "4",
+                "DATE_CREATE": "2026-02-01T10:00:00+03:00",
+                "DATE_MODIFY": "2026-02-01T10:00:00+03:00",
+            },
+        ],
+        calls={
+            "user.get": {
+                "result": [
+                    {"ID": "20", "NAME": "Aset", "LAST_NAME": "SP", "EMAIL": "20@example.com", "ACTIVE": True},
+                ],
+            },
+            "user.get.by_id": {
+                "result": [
+                    {
+                        "ID": "5",
+                        "NAME": "Alla",
+                        "LAST_NAME": "Shevchenko",
+                        "EMAIL": "5@example.com",
+                        "ACTIVE": True,
+                    },
+                ],
+            },
+            "crm.category.list": {
+                "result": {
+                    "categories": [
+                        {"id": 4, "name": "Doors", "sort": 20, "entityTypeId": 2, "isDefault": "N"},
+                    ],
+                },
+            },
+        },
+    )
+    service = GetCatalogService(gateway=gateway)
+
+    preview = service.get_audit_preview(funnel_ids=["4"])
+
+    assert preview["scope_managers"] == [
+        {
+            "id": "5",
+            "name": "Alla Shevchenko",
+            "email": "5@example.com",
+            "active": True,
+        },
+    ]
+    assert {"ID": 5} in gateway.user_requests

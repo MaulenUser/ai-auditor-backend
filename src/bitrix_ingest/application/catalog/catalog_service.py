@@ -104,18 +104,7 @@ class GetCatalogService:
         for row in rows:
             if not isinstance(row, dict):
                 continue
-            name_parts = [
-                str(row.get("NAME") or "").strip(),
-                str(row.get("LAST_NAME") or "").strip(),
-                str(row.get("SECOND_NAME") or "").strip(),
-            ]
-            full_name = " ".join(p for p in name_parts if p) or f"User {row.get('ID')}"
-            managers.append({
-                "id": str(row.get("ID") or ""),
-                "name": full_name,
-                "email": str(row.get("EMAIL") or ""),
-                "active": row.get("ACTIVE") in (True, "Y", "1", 1),
-            })
+            managers.append(self._normalize_manager(row))
         logger.info("Managers loaded: %d", len(managers))
         return managers
 
@@ -229,6 +218,9 @@ class GetCatalogService:
         manager_index = self._build_manager_index()
         scope_manager_ids = self._collect_manager_ids(scope_wa_deals)
         manager_ids = self._collect_manager_ids(wa_deals)
+        manager_index.update(
+            self._load_missing_manager_index(scope_manager_ids | manager_ids, manager_index)
+        )
         dates = self._collect_scope_dates(
             wa_deals,
             date_from=date_from,
@@ -514,6 +506,57 @@ class GetCatalogService:
     def _build_manager_index(self) -> dict[str, dict[str, str]]:
         managers = self.get_managers()
         return {m["id"]: m for m in managers}
+
+    def _load_missing_manager_index(
+        self,
+        manager_ids: set[str],
+        current_index: dict[str, dict[str, str]],
+    ) -> dict[str, dict[str, str]]:
+        missing_ids = sorted(
+            manager_id
+            for manager_id in manager_ids
+            if manager_id and manager_id not in current_index
+        )
+        if not missing_ids:
+            return {}
+
+        resolved: dict[str, dict[str, str]] = {}
+        for manager_id in missing_ids:
+            try:
+                rows = self._load_user_by_id(manager_id)
+            except Exception:  # noqa: BLE001
+                logger.warning("Could not load Bitrix user by ID: %s", manager_id, exc_info=True)
+                rows = []
+            for row in rows:
+                manager = self._normalize_manager(row)
+                if manager["id"]:
+                    resolved[manager["id"]] = manager
+        return resolved
+
+    def _load_user_by_id(self, manager_id: str) -> list[dict[str, Any]]:
+        response = self._gateway.call(
+            "user.get",
+            body={"ID": self._coerce_numeric_id(manager_id)},
+            label=f"user.get manager {manager_id}",
+        )
+        items = response.get("result") or []
+        rows = items if isinstance(items, list) else [items]
+        return [row for row in rows if isinstance(row, dict)]
+
+    @staticmethod
+    def _normalize_manager(row: dict[str, Any]) -> dict[str, Any]:
+        name_parts = [
+            str(row.get("NAME") or "").strip(),
+            str(row.get("LAST_NAME") or "").strip(),
+            str(row.get("SECOND_NAME") or "").strip(),
+        ]
+        full_name = " ".join(p for p in name_parts if p) or f"User {row.get('ID')}"
+        return {
+            "id": str(row.get("ID") or ""),
+            "name": full_name,
+            "email": str(row.get("EMAIL") or ""),
+            "active": row.get("ACTIVE") in (True, "Y", "1", 1),
+        }
 
     @staticmethod
     def _collect_manager_ids(deals: list[dict[str, Any]]) -> set[str]:
