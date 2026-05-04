@@ -16,6 +16,7 @@ class FakeGateway:
         self._calls = calls or {}
         self._deals = deals or []
         self.item_requests: list[dict[str, Any]] = []
+        self.user_requests: list[dict[str, Any]] = []
 
     def call(
         self,
@@ -38,6 +39,19 @@ class FakeGateway:
             if start + 50 < len(rows):
                 response["next"] = start + 50
             return response
+        if method == "user.get":
+            payload = body or {}
+            self.user_requests.append(payload)
+            response = self._calls[method]
+            rows = response.get("result") or []
+            if not isinstance(rows, list):
+                return response
+            start = int(payload.get("start") or 0)
+            page = rows[start:start + 50]
+            paginated: dict[str, Any] = {"result": page}
+            if start + 50 < len(rows):
+                paginated["next"] = start + 50
+            return paginated
         return self._calls[method]
 
     def list_all(
@@ -479,3 +493,53 @@ def test_get_funnels_with_managers_loads_all_item_pages() -> None:
         },
     ]
     assert [request["start"] for request in gateway.item_requests] == [0, 50]
+
+
+def test_get_funnels_with_managers_resolves_users_from_later_pages() -> None:
+    users = [
+        {
+            "ID": str(index),
+            "NAME": f"User{index}",
+            "LAST_NAME": "SP",
+            "EMAIL": f"{index}@example.com",
+            "ACTIVE": True,
+        }
+        for index in range(1, 55)
+    ]
+    users.append({
+        "ID": "70",
+        "NAME": "Aziza",
+        "LAST_NAME": "Kurbanbay",
+        "SECOND_NAME": "Zairkyzy",
+        "EMAIL": "70@example.com",
+        "ACTIVE": True,
+    })
+    service, gateway = _service_with_custom_catalog(
+        [
+            {
+                "ID": "1",
+                "TITLE": "Later page manager",
+                "SOURCE_ID": "CALL",
+                "ASSIGNED_BY_ID": "70",
+                "CATEGORY_ID": "4",
+                "DATE_CREATE": "2026-02-01T10:00:00+03:00",
+                "DATE_MODIFY": "2026-02-01T10:00:00+03:00",
+            },
+        ],
+        users=users,
+        funnels=[
+            {"id": 4, "name": "Doors", "sort": 20, "entityTypeId": 2, "isDefault": "N"},
+        ],
+    )
+
+    funnels = service.get_funnels_with_managers()
+
+    assert funnels[0]["managers"] == [
+        {
+            "id": "70",
+            "name": "Aziza Kurbanbay Zairkyzy",
+            "email": "70@example.com",
+            "active": True,
+        },
+    ]
+    assert [request["start"] for request in gateway.user_requests] == [0, 50]

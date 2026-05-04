@@ -99,9 +99,7 @@ class GetCatalogService:
         return stages
 
     def get_managers(self) -> list[dict[str, Any]]:
-        response = self._gateway.call("user.get")
-        items = response.get("result") or []
-        rows = items if isinstance(items, list) else [items]
+        rows = self._list_user_rows()
         managers = []
         for row in rows:
             if not isinstance(row, dict):
@@ -109,6 +107,7 @@ class GetCatalogService:
             name_parts = [
                 str(row.get("NAME") or "").strip(),
                 str(row.get("LAST_NAME") or "").strip(),
+                str(row.get("SECOND_NAME") or "").strip(),
             ]
             full_name = " ".join(p for p in name_parts if p) or f"User {row.get('ID')}"
             managers.append({
@@ -119,6 +118,40 @@ class GetCatalogService:
             })
         logger.info("Managers loaded: %d", len(managers))
         return managers
+
+    def _list_user_rows(self) -> list[dict[str, Any]]:
+        rows_acc: list[dict[str, Any]] = []
+        start = 0
+        page_num = 1
+
+        while True:
+            label = f"user.get managers page {page_num} (start={start})"
+            response = self._gateway.call(
+                "user.get",
+                body={"start": start},
+                label=label,
+            )
+            items = response.get("result") or []
+            page_rows = items if isinstance(items, list) else [items]
+            rows_acc.extend(row for row in page_rows if isinstance(row, dict))
+            logger.info(
+                "%s: loaded %d rows, total %d",
+                label,
+                len(page_rows),
+                len(rows_acc),
+            )
+
+            next_start = response.get("next")
+            if next_start is None:
+                logger.info(
+                    "user.get managers pagination completed on page %d. Total rows: %d",
+                    page_num,
+                    len(rows_acc),
+                )
+                return rows_acc
+
+            start = int(next_start)
+            page_num += 1
 
     def get_funnels_with_managers(
         self,
