@@ -628,6 +628,57 @@ def _sales_analytics_report(tenant_id: str, run_id: str) -> dict[str, Any]:
     }
 
 
+def _sales_audit_history_run(
+    row: dict[str, Any],
+    tenant_id: str,
+    run: AnalysisRun | None = None,
+) -> dict[str, Any]:
+    run_id = str(row.get("run_id") or "")
+    summary = row.get("summary") or {}
+    scope = summary.get("scope") or {}
+    dashboard = (summary.get("deal_dashboard") or {}).get("department") or {}
+    task_status = (summary.get("task_status") or {}).get("department") or {}
+    rating = summary.get("integral_rating") or {}
+    created_at = (
+        run.created_at if run else None
+    ) or summary.get("generated_at") or row.get("updated_at") or ""
+    completed_at = (
+        run.completed_at if run else None
+    ) or row.get("updated_at") or summary.get("generated_at") or ""
+    filters = {
+        "period_from": scope.get("date_from") or (run.date_from if run else "") or "",
+        "period_to": scope.get("date_to") or (run.date_to if run else "") or "",
+        "category_ids": scope.get("category_ids") or (run.category_ids if run else []) or [],
+        "responsible_id": scope.get("responsible_id") or "",
+        "responsible_ids": scope.get("responsible_ids") or (run.responsible_ids if run else []) or [],
+        "channels": ["call", "whatsapp"],
+    }
+    return {
+        "id": run_id,
+        "run_id": run_id,
+        "tenant_id": run.tenant_id if run else tenant_id,
+        "title": "Sales audit report",
+        "created_at": created_at,
+        "completed_at": completed_at,
+        "updated_at": row.get("updated_at") or "",
+        "source": "sales_audit_report",
+        "scope_label": "AI + Postgres sales audit",
+        "filters": filters,
+        "status": run.status if run else "completed",
+        "report_url": f"/sales-audit/report?run_id={run_id}",
+        "metric_snapshot": {
+            "score_10": rating.get("score_10"),
+            "score_pct": rating.get("score_pct"),
+            "total_deals": dashboard.get("total_deals"),
+            "in_work_deals": dashboard.get("in_work_count"),
+            "won_deals": dashboard.get("won_count"),
+            "lost_deals": dashboard.get("failed_count"),
+            "deals_without_tasks": task_status.get("without_open_tasks"),
+            "deals_with_overdue_tasks": task_status.get("with_overdue_tasks"),
+        },
+    }
+
+
 def _execute_sales_analytics_pipeline(
     *,
     tenant_id: str,
@@ -1825,7 +1876,37 @@ def get_sales_audit_report(
     report = _sales_repo().get_sales_audit_report(tenant_id=tid, run_id=resolved_run_id)
     if not report:
         raise HTTPException(status_code=404, detail=f"Sales audit report not found: {resolved_run_id}")
-    return report
+    return {
+        **report,
+        "run_id": resolved_run_id,
+        "tenant_id": tid,
+    }
+
+
+@app.get("/sales-audit/history", tags=["Sales Audit"])
+def get_sales_audit_history(
+    limit: int = Query(50, ge=1, le=200, description="Max completed reports to return"),
+    x_tenant_id: str | None = Header(None),
+) -> dict[str, Any]:
+    """Return completed sales audit reports for the current tenant, newest first."""
+    tid = _resolve_tenant_id(x_tenant_id)
+    repo = _sales_repo()
+    reports = repo.list_sales_audit_reports(tenant_id=tid, limit=limit)
+    runs_by_id = {run.run_id: run for run in _runs_repo().list_by_tenant(tid)}
+    runs = [
+        _sales_audit_history_run(row, tid, runs_by_id.get(str(row.get("run_id") or "")))
+        for row in reports
+    ]
+    return {
+        "tenant_id": tid,
+        "latest_run_id": runs[0]["id"] if runs else None,
+        "runs": runs,
+        "summary": {
+            "total_runs": len(runs),
+            "latest_run_id": runs[0]["id"] if runs else None,
+            "source": "postgres:sales_audit_reports",
+        },
+    }
 
 
 @app.get(

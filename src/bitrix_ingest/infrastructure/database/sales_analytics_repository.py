@@ -428,6 +428,33 @@ class SalesAnalyticsRepository:
             return None
         return json.loads(row["report_json"])
 
+    def list_sales_audit_reports(self, *, tenant_id: str, limit: int = 50) -> list[dict[str, Any]]:
+        p = self._p
+        safe_limit = max(1, min(int(limit or 50), 200))
+        with self._connect() as conn:
+            rows = conn.execute(
+                f"""
+                SELECT run_id, summary_json, updated_at
+                FROM sales_audit_reports
+                WHERE tenant_id = {p}
+                ORDER BY updated_at DESC
+                LIMIT {p}
+                """,
+                (tenant_id, safe_limit),
+            ).fetchall()
+        result: list[dict[str, Any]] = []
+        for row in rows:
+            try:
+                summary = json.loads(row["summary_json"] or "{}")
+            except json.JSONDecodeError:
+                summary = {}
+            result.append({
+                "run_id": row["run_id"],
+                "updated_at": row["updated_at"],
+                "summary": summary,
+            })
+        return result
+
     def _deal_dashboard(self, conn: Any, tenant_id: str, run_id: str) -> dict[str, Any]:
         p = self._p
         where = f"tenant_id = {p} AND run_id = {p}"
