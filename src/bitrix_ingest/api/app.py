@@ -218,6 +218,15 @@ def _token_ttl_seconds() -> int:
     return max(300, ttl)
 
 
+def _job_stale_seconds() -> int:
+    raw = os.environ.get("AI_AUDITOR_JOB_STALE_SECONDS", "").strip()
+    try:
+        ttl = int(raw or "7200")
+    except ValueError:
+        ttl = 7200
+    return max(300, ttl)
+
+
 def _b64_encode(data: bytes) -> str:
     return base64.urlsafe_b64encode(data).rstrip(b"=").decode("ascii")
 
@@ -465,6 +474,110 @@ def _run_service(fn: Any, mem: InMemoryJsonSink) -> dict[str, Any]:
 
 def _now_iso() -> str:
     return datetime.now(tz=timezone.utc).isoformat()
+
+
+def _parse_datetime(value: object) -> datetime | None:
+    text = str(value or "").strip()
+    if not text:
+        return None
+    if text.endswith("Z"):
+        text = f"{text[:-1]}+00:00"
+    try:
+        parsed = datetime.fromisoformat(text)
+    except ValueError:
+        return None
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    return parsed.astimezone(timezone.utc)
+
+
+def _is_stale_timestamp(value: object) -> bool:
+    parsed = _parse_datetime(value)
+    if parsed is None:
+        return False
+    age_seconds = (datetime.now(tz=timezone.utc) - parsed).total_seconds()
+    return age_seconds > _job_stale_seconds()
+
+
+def _job_reference_time(job: dict[str, Any]) -> object:
+    return (
+        job.get("started_at")
+        or job.get("queued_at")
+        or job.get("created_at")
+        or job.get("updated_at")
+    )
+
+
+def _stale_job_error(job_kind: str) -> str:
+    minutes = round(_job_stale_seconds() / 60)
+    return (
+        f"{job_kind} did not finish within {minutes} minutes. "
+        "It was marked as failed so a new report can be started."
+    )
+
+
+def _maybe_expire_memory_job(
+    job: dict[str, Any],
+    *,
+    job_kind: str,
+    set_job: Any,
+) -> dict[str, Any]:
+    if str(job.get("status") or "").lower() not in {"queued", "running", "started"}:
+        return job
+    if not _is_stale_timestamp(_job_reference_time(job)):
+        return job
+
+    error = _stale_job_error(job_kind)
+    set_job(
+        str(job.get("job_id") or ""),
+        status="error",
+        completed_at=_now_iso(),
+        error=error,
+        error_type="StaleJobTimeout",
+    )
+    expired = {
+        **job,
+        "status": "error",
+        "completed_at": _now_iso(),
+        "error": error,
+        "error_type": "StaleJobTimeout",
+    }
+    logger.warning("Marked stale %s job as error: %s", job_kind, job.get("job_id"))
+    return expired
+
+
+def _maybe_expire_persisted_run(
+    run: AnalysisRun,
+    *,
+    job_kind: str,
+    set_job: Any,
+) -> dict[str, Any]:
+    if run.status.lower() not in {"queued", "running", "started"}:
+        return run.to_dict()
+    if not _is_stale_timestamp(run.created_at):
+        return run.to_dict()
+
+    error = _stale_job_error(job_kind)
+    set_job(
+        run.run_id,
+        tenant_id=run.tenant_id,
+        output_dir=run.output_dir,
+        status="error",
+        completed_at=_now_iso(),
+        error=error,
+        error_type="StaleJobTimeout",
+    )
+    result = run.to_dict()
+    result.update(
+        {
+            "status": "error",
+            "completed_at": _now_iso(),
+            "error": error,
+            "error_type": "StaleJobTimeout",
+        }
+    )
+    logger.warning("Marked stale persisted %s run as error: %s", job_kind, run.run_id)
+    return result
 
 
 def _clean_form_list(values: list[str] | None) -> list[str] | None:
@@ -1345,10 +1458,18 @@ def get_executive_report_job(
             raise HTTPException(status_code=404, detail=f"Job not found: {job_id}")
         if run.tenant_id != tid:
             raise HTTPException(status_code=404, detail=f"Job not found: {job_id}")
-        return run.to_dict()
+        return _maybe_expire_persisted_run(
+            run,
+            job_kind="executive report",
+            set_job=_set_executive_report_job,
+        )
     if job.get("tenant_id") and job.get("tenant_id") != tid:
         raise HTTPException(status_code=404, detail=f"Job not found: {job_id}")
-    return job
+    return _maybe_expire_memory_job(
+        job,
+        job_kind="executive report",
+        set_job=_set_executive_report_job,
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -1645,13 +1766,24 @@ def get_sales_analytics_job(
         run = _runs_repo().get(job_id)
         if not run or run.tenant_id != tid:
             raise HTTPException(status_code=404, detail=f"Job not found: {job_id}")
+        stale_result = _maybe_expire_persisted_run(
+            run,
+            job_kind="sales analytics",
+            set_job=_set_sales_analytics_job,
+        )
+        if stale_result.get("status") == "error":
+            return stale_result
         result = run.to_dict()
         if run.status == "completed":
             result["report"] = _sales_analytics_report(tid, job_id)
         return result
     if job.get("tenant_id") and job.get("tenant_id") != tid:
         raise HTTPException(status_code=404, detail=f"Job not found: {job_id}")
-    return job
+    return _maybe_expire_memory_job(
+        job,
+        job_kind="sales analytics",
+        set_job=_set_sales_analytics_job,
+    )
 
 
 @app.get("/sales-analytics/report", tags=["Sales Analytics"])
@@ -1840,10 +1972,21 @@ def get_sales_audit_job(
     if job:
         if job.get("tenant_id") and job.get("tenant_id") != tid:
             raise HTTPException(status_code=404, detail=f"Job not found: {job_id}")
-        return job
+        return _maybe_expire_memory_job(
+            job,
+            job_kind="sales audit",
+            set_job=_set_sales_audit_job,
+        )
     run = _runs_repo().get(job_id)
     if not run or run.tenant_id != tid:
         raise HTTPException(status_code=404, detail=f"Job not found: {job_id}")
+    stale_result = _maybe_expire_persisted_run(
+        run,
+        job_kind="sales audit",
+        set_job=_set_sales_audit_job,
+    )
+    if stale_result.get("status") == "error":
+        return stale_result
     result = run.to_dict()
     if run.status == "completed":
         report = _sales_repo().get_sales_audit_report(tenant_id=tid, run_id=job_id)

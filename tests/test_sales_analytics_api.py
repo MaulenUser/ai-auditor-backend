@@ -1,8 +1,11 @@
 from __future__ import annotations
 
+import sqlite3
+
 from fastapi.testclient import TestClient
 
 from bitrix_ingest.api import app as app_module
+from bitrix_ingest.domain.analysis_run import AnalysisRun
 
 
 class _FakeSalesRepo:
@@ -31,6 +34,7 @@ def _client(tmp_path, monkeypatch) -> TestClient:
     monkeypatch.setattr(app_module, "_sales_repo", lambda: _FakeSalesRepo())
     monkeypatch.delenv("AI_AUDITOR_AUTH_REQUIRED", raising=False)
     monkeypatch.delenv("AUTH_REQUIRED", raising=False)
+    app_module._SALES_AUDIT_JOBS.clear()
     return TestClient(app_module.app)
 
 
@@ -181,3 +185,33 @@ def test_sales_audit_history_returns_postgres_report_runs(tmp_path, monkeypatch)
     assert payload["runs"][0]["filters"]["period_from"] == "2026-03-01"
     assert payload["runs"][0]["filters"]["responsible_ids"] == ["8"]
     assert payload["runs"][0]["metric_snapshot"]["total_deals"] == 12
+
+
+def test_sales_audit_job_marks_stale_persisted_run_as_error(tmp_path, monkeypatch):
+    client = _client(tmp_path, monkeypatch)
+    monkeypatch.setenv("AI_AUDITOR_JOB_STALE_SECONDS", "300")
+
+    app_module._runs_repo().create(
+        AnalysisRun(
+            run_id="stale-audit-1",
+            tenant_id="default",
+            status="running",
+            date_from="2026-04-01",
+            date_to="2026-05-03",
+            output_dir="storage/default/stale-audit-1/sales-audit",
+        )
+    )
+    with sqlite3.connect(tmp_path / "app.db") as conn:
+        conn.execute(
+            "UPDATE analysis_runs SET created_at = ? WHERE run_id = ?",
+            ("2000-01-01T00:00:00+00:00", "stale-audit-1"),
+        )
+
+    response = client.get("/sales-audit/jobs/stale-audit-1")
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["status"] == "error"
+    assert payload["error_type"] == "StaleJobTimeout"
+    assert "new report can be started" in payload["error"]
+    assert app_module._runs_repo().get("stale-audit-1").status == "error"
