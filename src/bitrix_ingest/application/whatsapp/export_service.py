@@ -5,7 +5,7 @@ import html
 import logging
 import re
 import time
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -13,6 +13,7 @@ from typing import Any
 from ...domain.whatsapp import (
     ConversationStats,
     SenderRole,
+    TimelineSource,
     WhatsAppAttachment,
     WhatsAppConversation,
     WhatsAppMessage,
@@ -20,6 +21,7 @@ from ...domain.whatsapp import (
 from ..date_range import build_closed_filter, within_any_record_datetime_range
 from ..ports import BitrixGateway, JsonSink
 from .bbcode import BBCodeStripper
+from .conversation_assembler import ConversationAssembler
 from .deal_filter import WhatsAppDealFilter
 from .text import WhitespaceNormalizer
 
@@ -50,6 +52,7 @@ _DEAL_SELECT: list[str] = [
     "UTM_CAMPAIGN",
 ]
 _DEAL_ORDER: dict[str, str] = {"DATE_MODIFY": "DESC"}
+_TIMELINE_SELECT = ["ID", "CREATED", "ENTITY_ID", "ENTITY_TYPE", "AUTHOR_ID", "COMMENT", "FILES"]
 _WHATSAPP_CONNECTOR = re.compile(r"whatsapp|wazzup", re.IGNORECASE)
 _PLACEHOLDER_LABEL = re.compile(r"^[\s.\-]+$")
 _GENERIC_BBCODE_TAG = re.compile(r"\[/?[a-z]+(?:=[^\]]+)?(?: [^\]]+)?\]", re.IGNORECASE)
@@ -106,6 +109,10 @@ class _ExportAccumulator:
                 "client_messages": 0,
                 "system_messages": 0,
                 "messages_with_files": 0,
+                "imopenlines_conversations": 0,
+                "timeline_conversations": 0,
+                "mixed_conversations": 0,
+                "empty_conversations": 0,
             },
         )
 
@@ -122,6 +129,9 @@ class _ExportAccumulator:
         self.totals["client_messages"] += stats.client_messages
         self.totals["system_messages"] += stats.system_messages
         self.totals["messages_with_files"] += stats.messages_with_files
+        source = conversation.source or "empty"
+        if source in {"imopenlines", "timeline", "mixed", "empty"}:
+            self.totals[f"{source}_conversations"] += 1
         self.report_rows.append(
             {
                 "deal_id": str(deal.get("ID", "")),
@@ -145,6 +155,7 @@ class _ExportAccumulator:
                 "messages_with_files": stats.messages_with_files,
                 "first_message_at": stats.first_message_at,
                 "last_message_at": stats.last_message_at,
+                "source": source,
                 "timeline_source": conversation.timeline_source,
                 "timeline_entity_type": conversation.timeline_entity_type,
                 "timeline_entity_id": conversation.timeline_entity_id,
@@ -186,12 +197,14 @@ class WhatsAppExportService:
         deal_filter: WhatsAppDealFilter | None = None,
         whitespace: WhitespaceNormalizer | None = None,
         bbcode_stripper: BBCodeStripper | None = None,
+        timeline_assembler: ConversationAssembler | None = None,
     ) -> None:
         self._gateway = gateway
         self._sink = sink
         self._deal_filter = deal_filter or WhatsAppDealFilter()
         self._whitespace = whitespace or WhitespaceNormalizer()
         self._bbcode_stripper = bbcode_stripper or BBCodeStripper()
+        self._timeline_assembler = timeline_assembler or ConversationAssembler()
 
     # ------------------------------------------------------------------
     # Public API
@@ -378,9 +391,9 @@ class WhatsAppExportService:
             self._sink.write(paths.conversation, conversation.to_dict())
             accumulator.record_conversation(deal, conversation, paths.conversation)
             logger.info(
-                "Exported WhatsApp history for deal ID=%s from %s binding: %d messages",
+                "Exported WhatsApp history for deal ID=%s from %s source: %d messages",
                 deal_id,
-                conversation.timeline_source,
+                conversation.source,
                 conversation.stats.total_messages,
             )
         except Exception as exc:  # noqa: BLE001 - per-deal isolation is intentional
@@ -397,6 +410,40 @@ class WhatsAppExportService:
         date_from: str | None = None,
         date_to: str | None = None,
     ) -> WhatsAppConversation:
+        openline_conversation = self._build_openline_conversation(
+            deal=deal,
+            deal_id=deal_id,
+            paths=paths,
+            include_system_messages=include_system_messages,
+            date_from=date_from,
+            date_to=date_to,
+        )
+        timeline_conversation = self._build_timeline_conversation(
+            deal=deal,
+            deal_id=deal_id,
+            paths=paths,
+            include_system_messages=include_system_messages,
+            date_from=date_from,
+            date_to=date_to,
+        )
+        return self._merge_conversations(
+            deal=deal,
+            conversations=[openline_conversation, timeline_conversation],
+            fallback_timeline_source="deal",
+            fallback_timeline_entity_type="deal",
+            fallback_timeline_entity_id=deal_id,
+        )
+
+    def _build_openline_conversation(
+        self,
+        *,
+        deal: dict[str, Any],
+        deal_id: str,
+        paths: "_DealPaths",
+        include_system_messages: bool,
+        date_from: str | None = None,
+        date_to: str | None = None,
+    ) -> WhatsAppConversation | None:
         deal_conversation = self._fetch_openline_conversation(
             deal=deal,
             entity_type="deal",
@@ -406,20 +453,15 @@ class WhatsAppExportService:
             date_from=date_from,
             date_to=date_to,
         )
-        if deal_conversation is not None:
+        if deal_conversation is not None and deal_conversation.stats.total_messages > 0:
             return deal_conversation
 
         contact_id = str(deal.get("CONTACT_ID") or "")
         if not contact_id or contact_id == "0":
-            return self._empty_conversation(
-                deal,
-                timeline_source="deal",
-                timeline_entity_type="deal",
-                timeline_entity_id=deal_id,
-            )
+            return deal_conversation
 
         logger.info(
-            "No Open Lines chat bound to deal ID=%s. Trying contact ID=%s",
+            "No message-bearing Open Lines chat bound to deal ID=%s. Trying contact ID=%s",
             deal_id,
             contact_id,
         )
@@ -432,7 +474,7 @@ class WhatsAppExportService:
             date_from=date_from,
             date_to=date_to,
         )
-        if contact_conversation is not None:
+        if contact_conversation is not None and contact_conversation.stats.total_messages > 0:
             logger.info(
                 "Using contact Open Lines chat for deal ID=%s: %d messages",
                 deal_id,
@@ -440,11 +482,156 @@ class WhatsAppExportService:
             )
             return contact_conversation
 
-        return self._empty_conversation(
-            deal,
-            timeline_source="deal",
-            timeline_entity_type="deal",
-            timeline_entity_id=deal_id,
+        return deal_conversation or contact_conversation
+
+    def _build_timeline_conversation(
+        self,
+        *,
+        deal: dict[str, Any],
+        deal_id: str,
+        paths: "_DealPaths",
+        include_system_messages: bool,
+        date_from: str | None = None,
+        date_to: str | None = None,
+    ) -> WhatsAppConversation | None:
+        if not hasattr(self._gateway, "list_all"):
+            return None
+
+        conversations: list[WhatsAppConversation] = []
+        deal_conversation = self._fetch_timeline_conversation(
+            deal=deal,
+            entity_type="deal",
+            entity_id=deal_id,
+            timeline_source=TimelineSource.DEAL,
+            raw_destination=paths.deal_timeline_raw,
+            include_system_messages=include_system_messages,
+            date_from=date_from,
+            date_to=date_to,
+        )
+        if deal_conversation is not None:
+            conversations.append(deal_conversation)
+
+        contact_id = str(deal.get("CONTACT_ID") or "")
+        if contact_id and contact_id != "0":
+            contact_conversation = self._fetch_timeline_conversation(
+                deal=deal,
+                entity_type="contact",
+                entity_id=contact_id,
+                timeline_source=TimelineSource.CONTACT,
+                raw_destination=paths.contact_timeline_raw,
+                include_system_messages=include_system_messages,
+                date_from=date_from,
+                date_to=date_to,
+            )
+            if contact_conversation is not None:
+                conversations.append(contact_conversation)
+
+        if not conversations:
+            return None
+
+        return self._merge_conversations(
+            deal=deal,
+            conversations=conversations,
+            fallback_timeline_source="deal",
+            fallback_timeline_entity_type="deal",
+            fallback_timeline_entity_id=deal_id,
+        )
+
+    def _fetch_timeline_conversation(
+        self,
+        *,
+        deal: dict[str, Any],
+        entity_type: str,
+        entity_id: str,
+        timeline_source: TimelineSource,
+        raw_destination: Path,
+        include_system_messages: bool,
+        date_from: str | None = None,
+        date_to: str | None = None,
+    ) -> WhatsAppConversation | None:
+        timeline_comments = self._gateway.list_all(
+            "crm.timeline.comment.list",
+            select=_TIMELINE_SELECT,
+            filter={"ENTITY_ID": self._coerce_bitrix_id(entity_id), "ENTITY_TYPE": entity_type},
+            order={"CREATED": "ASC"},
+            context=f"{entity_type} ID={entity_id} timeline",
+        )
+        self._sink.write(raw_destination, timeline_comments)
+
+        conversation = self._timeline_assembler.assemble(
+            deal=deal,
+            timeline_comments=timeline_comments,
+            timeline_source=timeline_source,
+            timeline_entity_type=entity_type,
+            timeline_entity_id=entity_id,
+        )
+        messages = conversation.messages
+        if not include_system_messages:
+            messages = [message for message in messages if not message.is_system_message]
+        if date_from or date_to:
+            messages = [
+                message for message in messages
+                if within_any_record_datetime_range(
+                    {"created_at": message.created_at},
+                    fields=("created_at",),
+                    date_from=date_from,
+                    date_to=date_to,
+                )
+            ]
+        if messages is conversation.messages:
+            return conversation
+        return replace(
+            conversation,
+            messages=messages,
+            stats=ConversationStats.from_messages(messages),
+            source="timeline" if messages else "empty",
+        )
+
+    def _merge_conversations(
+        self,
+        *,
+        deal: dict[str, Any],
+        conversations: list[WhatsAppConversation | None],
+        fallback_timeline_source: str,
+        fallback_timeline_entity_type: str,
+        fallback_timeline_entity_id: str,
+    ) -> WhatsAppConversation:
+        available = [conversation for conversation in conversations if conversation is not None]
+        messages = self._dedupe_messages([
+            message
+            for conversation in available
+            for message in conversation.messages
+        ])
+        message_bearing = [
+            conversation for conversation in available
+            if conversation.stats.total_messages > 0
+        ]
+        if not messages:
+            base = available[0] if available else None
+            if base is not None:
+                return replace(
+                    base,
+                    messages=[],
+                    stats=ConversationStats.from_messages([]),
+                    source="empty",
+                )
+            return self._empty_conversation(
+                deal,
+                timeline_source=fallback_timeline_source,
+                timeline_entity_type=fallback_timeline_entity_type,
+                timeline_entity_id=fallback_timeline_entity_id,
+            )
+
+        base = self._select_conversation_base(message_bearing or available)
+        return replace(
+            base,
+            integration=self._merged_integration(messages, base),
+            timeline_source=self._merged_entity_field(message_bearing, "timeline_source"),
+            timeline_entity_type=self._merged_entity_field(message_bearing, "timeline_entity_type"),
+            timeline_entity_id=self._merged_entity_field(message_bearing, "timeline_entity_id"),
+            stats=ConversationStats.from_messages(messages),
+            source=self._conversation_source(messages),
+            messages=messages,
         )
 
     def _fetch_openline_conversation(
@@ -605,6 +792,7 @@ class WhatsAppExportService:
             connector_title=binding.connector_title,
             chat_name=str(dialog.get("name") or ""),
             stats=stats,
+            source="imopenlines" if stats.total_messages > 0 else "empty",
             messages=messages,
             opportunity=str(deal.get("OPPORTUNITY", "") or ""),
             currency_id=str(deal.get("CURRENCY_ID", "") or ""),
@@ -646,6 +834,7 @@ class WhatsAppExportService:
             timeline_entity_type=timeline_entity_type,
             timeline_entity_id=timeline_entity_id,
             stats=ConversationStats.from_messages([]),
+            source="empty",
             opportunity=str(deal.get("OPPORTUNITY", "") or ""),
             currency_id=str(deal.get("CURRENCY_ID", "") or ""),
             closedate=str(deal.get("CLOSEDATE", "") or ""),
@@ -695,6 +884,7 @@ class WhatsAppExportService:
             is_system_message=(role is SenderRole.SYSTEM),
             raw_comment=raw_text,
             deal_id=str(deal.get("ID", "")),
+            source="imopenlines",
         )
 
     def _classify_sender(
@@ -913,6 +1103,140 @@ class WhatsAppExportService:
         return {}
 
     # ------------------------------------------------------------------
+    # Hybrid source merge
+    # ------------------------------------------------------------------
+
+    def _dedupe_messages(
+        self,
+        messages: list[WhatsAppMessage],
+    ) -> list[WhatsAppMessage]:
+        by_key: dict[tuple[str, str, str, tuple[str, ...]], WhatsAppMessage] = {}
+        ordered_keys: list[tuple[str, str, str, tuple[str, ...]]] = []
+        for message in self._sort_messages(messages):
+            key = self._message_dedupe_key(message)
+            existing = by_key.get(key)
+            if existing is None:
+                by_key[key] = message
+                ordered_keys.append(key)
+                continue
+            self._merge_duplicate_message(existing, message)
+        return [by_key[key] for key in ordered_keys]
+
+    def _merge_duplicate_message(
+        self,
+        existing: WhatsAppMessage,
+        duplicate: WhatsAppMessage,
+    ) -> None:
+        existing.source = self._merge_source_labels(existing.source, duplicate.source)
+        if not existing.sender_label and duplicate.sender_label:
+            existing.sender_label = duplicate.sender_label
+        if not existing.text and duplicate.text:
+            existing.text = duplicate.text
+        existing.attachments = self._dedupe_attachments(
+            [*existing.attachments, *duplicate.attachments]
+        )
+
+    def _message_dedupe_key(
+        self,
+        message: WhatsAppMessage,
+    ) -> tuple[str, str, str, tuple[str, ...]]:
+        timestamp = self._normalise_message_timestamp(message.created_at)
+        text = self._whitespace.normalize(message.text).casefold()
+        attachments = tuple(sorted(attachment.url for attachment in message.attachments))
+        return (timestamp, message.sender_role, text, attachments)
+
+    def _sort_messages(self, messages: list[WhatsAppMessage]) -> list[WhatsAppMessage]:
+        return sorted(messages, key=self._message_sort_key)
+
+    def _message_sort_key(self, message: WhatsAppMessage) -> tuple[datetime, str, str]:
+        raw_date = str(message.created_at or "")
+        try:
+            parsed = datetime.fromisoformat(raw_date.replace("Z", "+00:00"))
+        except ValueError:
+            parsed = datetime.min.replace(tzinfo=timezone.utc)
+        return parsed, str(message.timeline_comment_id or ""), str(message.source or "")
+
+    @staticmethod
+    def _normalise_message_timestamp(raw: str) -> str:
+        if not raw:
+            return ""
+        try:
+            parsed = datetime.fromisoformat(str(raw).replace("Z", "+00:00"))
+        except ValueError:
+            return str(raw)
+        if parsed.tzinfo is None:
+            return parsed.isoformat()
+        return parsed.astimezone(timezone.utc).replace(microsecond=0).isoformat()
+
+    @staticmethod
+    def _select_conversation_base(
+        conversations: list[WhatsAppConversation],
+    ) -> WhatsAppConversation:
+        for conversation in conversations:
+            if conversation.chat_id:
+                return conversation
+        return conversations[0]
+
+    @staticmethod
+    def _conversation_source(messages: list[WhatsAppMessage]) -> str:
+        sources = {
+            source
+            for message in messages
+            for source in str(message.source or "").split("+")
+            if source and source != "empty"
+        }
+        if "mixed" in sources or len(sources) > 1:
+            return "mixed"
+        if sources == {"imopenlines"}:
+            return "imopenlines"
+        if sources == {"timeline"}:
+            return "timeline"
+        return "empty"
+
+    @staticmethod
+    def _merge_source_labels(first: str, second: str) -> str:
+        sources = {
+            source
+            for value in (first, second)
+            for source in str(value or "").split("+")
+            if source and source != "empty"
+        }
+        if "mixed" in sources or len(sources) > 1:
+            return "mixed"
+        return next(iter(sources), "empty")
+
+    @staticmethod
+    def _merged_entity_field(
+        conversations: list[WhatsAppConversation],
+        field_name: str,
+    ) -> str:
+        values = [
+            str(getattr(conversation, field_name) or "")
+            for conversation in conversations
+            if getattr(conversation, field_name)
+        ]
+        unique = list(dict.fromkeys(values))
+        if not unique:
+            return ""
+        if len(unique) == 1:
+            return unique[0]
+        if field_name in {"timeline_source", "timeline_entity_type"}:
+            return "mixed"
+        return ",".join(unique)
+
+    def _merged_integration(
+        self,
+        messages: list[WhatsAppMessage],
+        base: WhatsAppConversation,
+    ) -> str:
+        source = self._conversation_source(messages)
+        if source == "mixed":
+            return "mixed"
+        if source == "timeline":
+            return "wazzup"
+        return base.integration or "openlines"
+
+    # ------------------------------------------------------------------
     # Reports
     # ------------------------------------------------------------------
 
@@ -1013,6 +1337,8 @@ class _DealPaths:
     conversation: Path
     deal_openline_raw: Path
     contact_openline_raw: Path
+    deal_timeline_raw: Path
+    contact_timeline_raw: Path
 
 
 @dataclass(frozen=True)
@@ -1034,4 +1360,6 @@ class _OutputDirectories:
             conversation=self.conversations / f"deal_{deal_id}.json",
             deal_openline_raw=self.raw / f"deal_{deal_id}.openline.json",
             contact_openline_raw=self.raw / f"deal_{deal_id}.contact.openline.json",
+            deal_timeline_raw=self.raw / f"deal_{deal_id}.timeline.json",
+            contact_timeline_raw=self.raw / f"deal_{deal_id}.contact.timeline.json",
         )

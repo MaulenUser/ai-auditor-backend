@@ -66,6 +66,7 @@ class CommentParser:
             is_system_message=(role is SenderRole.SYSTEM),
             raw_comment=raw_comment,
             deal_id=str(deal.get("ID", "")),
+            source="timeline",
         )
 
     def _prepare_text(self, raw_comment: str) -> str:

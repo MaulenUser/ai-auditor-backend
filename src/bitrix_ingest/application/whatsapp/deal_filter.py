@@ -10,15 +10,16 @@ from datetime import datetime, timezone
 from typing import Any
 
 
-_WHATSAPP_TITLE = re.compile(r"whatsapp", re.IGNORECASE)
+_CHAT_TITLE = re.compile(r"whatsapp|instagram\s+direct", re.IGNORECASE)
 
 
 class WhatsAppDealFilter:
     """Picks WhatsApp deals from a pool and sorts them by last modification.
 
-    A deal is considered WhatsApp when either:
+    A deal is considered chat-backed when either:
       - ``SOURCE_ID`` starts with ``"WZ"`` (Wazzup prefix), or
-      - ``TITLE`` contains ``"whatsapp"`` (case-insensitive).
+      - ``SOURCE_ID`` is a known Open Lines connector source, or
+      - ``TITLE`` contains a known chat marker.
     """
 
     def select_whatsapp_deals(self, deals: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -49,8 +50,13 @@ class WhatsAppDealFilter:
     @staticmethod
     def _is_whatsapp(deal: dict[str, Any]) -> bool:
         source = str(deal.get("SOURCE_ID", ""))
+        source_lower = source.lower()
         title = str(deal.get("TITLE", ""))
-        return source.startswith("WZ") or bool(_WHATSAPP_TITLE.search(title))
+        return (
+            source.startswith("WZ")
+            or "fbinstagramdirect" in source_lower
+            or bool(_CHAT_TITLE.search(title))
+        )
 
     @staticmethod
     def _sort_key(deal: dict[str, Any]) -> tuple[datetime, int]:

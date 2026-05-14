@@ -132,6 +132,7 @@ class WhatsAppTimelineExportService:
                     "messages_with_files": stats.messages_with_files,
                     "first_message_at": stats.first_message_at,
                     "last_message_at": stats.last_message_at,
+                    "source": conversation.source,
                     "timeline_source": conversation.timeline_source,
                     "timeline_entity_type": conversation.timeline_entity_type,
                     "timeline_entity_id": conversation.timeline_entity_id,

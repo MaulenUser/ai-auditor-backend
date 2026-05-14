@@ -134,3 +134,27 @@ def test_load_whatsapp_deals_with_zero_limit_scans_all_pages(tmp_path):
 
     assert [deal["ID"] for deal in deals] == ["105", "104", "103"]
     assert len(gateway.calls) == 3
+
+
+def test_load_whatsapp_deals_includes_instagram_direct_openline_source(tmp_path):
+    gateway = _FakeGateway(
+        {
+            0: {
+                "result": [
+                    _deal(
+                        "201",
+                        date_modify="2026-04-19T10:00:00+00:00",
+                        source_id="1|FBINSTAGRAMDIRECT",
+                        title="Deal from social channel",
+                    ),
+                    _deal("202", date_modify="2026-04-18T10:00:00+00:00"),
+                ],
+            },
+        }
+    )
+    sink = MagicMock()
+    service = WhatsAppExportService(gateway=gateway, sink=sink)
+
+    deals = service._load_whatsapp_deals(WhatsAppExportRequest(output_dir=tmp_path, limit=0), tmp_path)
+
+    assert [deal["ID"] for deal in deals] == ["201"]

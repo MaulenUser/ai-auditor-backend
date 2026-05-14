@@ -82,6 +82,7 @@ class ConversationAssembler:
             timeline_entity_type=timeline_entity_type,
             timeline_entity_id=timeline_entity_id,
             stats=stats,
+            source="timeline" if stats.total_messages > 0 else "empty",
             messages=messages,
             opportunity=str(deal.get("OPPORTUNITY", "") or ""),
             currency_id=str(deal.get("CURRENCY_ID", "") or ""),

@@ -45,6 +45,41 @@ class _Sink:
         self.documents[str(path)] = data
 
 
+class _HybridGateway(_Gateway):
+    def __init__(
+        self,
+        responses: dict[str, list[dict[str, object]]],
+        timeline: dict[tuple[str, str], list[dict[str, object]]],
+    ) -> None:
+        super().__init__(responses)
+        self.timeline = timeline
+        self.list_calls: list[dict[str, object]] = []
+
+    def list_all(
+        self,
+        method: str,
+        select: list[str],
+        filter: dict | None = None,
+        order: dict | None = None,
+        context: str = "",
+        limit: int | None = None,
+    ) -> list[dict[str, object]]:
+        assert method == "crm.timeline.comment.list"
+        self.list_calls.append(
+            {
+                "method": method,
+                "select": select,
+                "filter": filter,
+                "order": order,
+                "context": context,
+                "limit": limit,
+            }
+        )
+        filter = filter or {}
+        key = (str(filter.get("ENTITY_TYPE") or ""), str(filter.get("ENTITY_ID") or ""))
+        return list(self.timeline.get(key, []))
+
+
 def test_build_conversation_reads_deal_openline_history(tmp_path):
     gateway = _Gateway(
         {
@@ -154,6 +189,94 @@ def test_build_conversation_reads_deal_openline_history(tmp_path):
     raw_payload = sink.documents[str(dirs.paths_for("51044").deal_openline_raw)]
     assert raw_payload["binding"]["chat_id"] == "64990"
     assert raw_payload["history"]["sessionId"] == 26250
+
+
+def test_execute_merges_openlines_and_timeline_messages_with_dedupe(tmp_path):
+    deal = _deal("51044") | {"TITLE": "Client"}
+    gateway = _HybridGateway(
+        {
+            "profile": [{"result": {"ID": 1, "NAME": "", "LAST_NAME": ""}}],
+            "crm.deal.list": [{"result": [deal]}],
+            "imopenlines.crm.chat.get": [
+                {
+                    "result": [
+                        {
+                            "CHAT_ID": "64990",
+                            "CONNECTOR_ID": "fbinstagramdirect",
+                            "CONNECTOR_TITLE": "Instagram Direct",
+                        }
+                    ]
+                }
+            ],
+            "imopenlines.dialog.get": [
+                {
+                    "result": {
+                        "id": 64990,
+                        "name": "Client - Instagram",
+                        "dialog_id": "chat64990",
+                        "entity_data_1": "Y|DEAL|51044|N|N|26250|1776605548|0|0|0",
+                    }
+                }
+            ],
+            "imopenlines.session.history.get": [
+                {
+                    "result": {
+                        "sessionId": 26250,
+                        "message": {
+                            "1071674": {
+                                "id": "1071674",
+                                "senderid": "21408",
+                                "date": "2026-04-19T16:32:30+03:00",
+                                "text": "Hello",
+                                "params": {},
+                            }
+                        },
+                        "users": {
+                            "21408": {
+                                "id": "21408",
+                                "name": "Client",
+                                "connector": True,
+                                "externalAuthId": "imconnector",
+                            }
+                        },
+                        "files": [],
+                    }
+                }
+            ],
+        },
+        {
+            ("deal", "51044"): [
+                {
+                    "ID": "9001",
+                    "CREATED": "2026-04-19T16:32:30+03:00",
+                    "AUTHOR_ID": "5",
+                    "COMMENT": "[img]https://cdn.wazzup24.com/whatsapp.png[/img]\nClient:\nHello",
+                },
+                {
+                    "ID": "9002",
+                    "CREATED": "2026-04-19T16:33:00+03:00",
+                    "AUTHOR_ID": "5",
+                    "COMMENT": "[img]https://cdn.wazzup24.com/whatsapp.png[/img]\nManager:\nOffer",
+                },
+            ],
+            ("contact", "64050"): [],
+        },
+    )
+    sink = _Sink()
+    service = WhatsAppExportService(gateway=gateway, sink=sink)
+
+    service.execute(WhatsAppExportRequest(output_dir=tmp_path, limit=1))
+
+    conversation = sink.documents[str(tmp_path / "conversations" / "deal_51044.json")]
+    assert conversation["source"] == "mixed"
+    assert [message["text"] for message in conversation["messages"]] == ["Hello", "Offer"]
+    assert [message["source"] for message in conversation["messages"]] == ["mixed", "timeline"]
+    assert conversation["stats"]["total_messages"] == 2
+
+    report = sink.documents[str(tmp_path / "report.json")]
+    assert report["rows"][0]["source"] == "mixed"
+    assert report["totals"]["mixed_conversations"] == 1
+    assert report["totals"]["total_messages"] == 2
 
 
 def test_build_conversation_falls_back_to_contact_openline_history(tmp_path):

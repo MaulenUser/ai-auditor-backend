@@ -50,6 +50,7 @@ class WhatsAppMessage:
     raw_comment: str
     deal_id: str
     message_id: str = ""
+    source: str = ""
 
     def has_attachments(self) -> bool:
         return bool(self.attachments)
@@ -67,6 +68,7 @@ class WhatsAppMessage:
             "attachments": [a.to_dict() for a in self.attachments],
             "is_system_message": self.is_system_message,
             "deal_id": self.deal_id,
+            "source": self.source,
         }
 
 
@@ -234,6 +236,7 @@ class WhatsAppConversation:
     timeline_entity_type: str
     timeline_entity_id: str
     stats: ConversationStats
+    source: str = ""
     messages: list[WhatsAppMessage] = field(default_factory=list)
     chat_id: str = ""
     session_id: str = ""
@@ -285,6 +288,7 @@ class WhatsAppConversation:
             "timeline_source": self.timeline_source,
             "timeline_entity_type": self.timeline_entity_type,
             "timeline_entity_id": self.timeline_entity_id,
+            "source": self.source,
             "chat_id": self.chat_id,
             "session_id": self.session_id,
             "dialog_id": self.dialog_id,
