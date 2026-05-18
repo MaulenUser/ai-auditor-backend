@@ -1,0 +1,269 @@
+from __future__ import annotations
+
+import time
+from urllib.parse import parse_qs, urlparse
+
+from fastapi.testclient import TestClient
+
+from bitrix_ingest.api import app as app_module
+from bitrix_ingest.domain.integrations import Integrations
+from bitrix_ingest.infrastructure.database import BitrixOAuthRepository, TenantRepository
+from bitrix_ingest.infrastructure.http import BitrixClient, BitrixOAuthClient
+
+
+def _client(tmp_path, monkeypatch, *, auth_required: bool = True) -> TestClient:
+    monkeypatch.setattr(app_module, "_DB_PATH", tmp_path / "app.db")
+    monkeypatch.setenv("AI_AUDITOR_AUTH_REQUIRED", "true" if auth_required else "false")
+    monkeypatch.setenv("AI_AUDITOR_AUTH_SECRET", "test-auth-secret")
+    return TestClient(app_module.app)
+
+
+def test_bitrix_install_callback_saves_oauth_token_and_creates_tenant(tmp_path, monkeypatch):
+    client = _client(tmp_path, monkeypatch, auth_required=True)
+    monkeypatch.setenv("BITRIX_APPLICATION_TOKEN", "app-token")
+
+    response = client.post(
+        "/api/bitrix/install",
+        data={
+            "event": "ONAPPINSTALL",
+            "auth[access_token]": "access-token",
+            "auth[refresh_token]": "refresh-token",
+            "auth[expires_in]": "3600",
+            "auth[scope]": "crm,user_basic,task",
+            "auth[domain]": "client.bitrix24.kz",
+            "auth[client_endpoint]": "https://client.bitrix24.kz/rest/",
+            "auth[member_id]": "member-123",
+            "auth[application_token]": "app-token",
+        },
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["status"] == "ok"
+    assert body["tenant_id"] == "member-123"
+    assert body["bitrix_oauth"]["configured"] is True
+    assert "access_token" not in body["bitrix_oauth"]
+    assert "refresh_token" not in body["bitrix_oauth"]
+
+    token = BitrixOAuthRepository(tmp_path / "app.db").get_by_tenant("member-123")
+    assert token is not None
+    assert token.access_token == "access-token"
+    assert token.refresh_token == "refresh-token"
+    assert token.bitrix_domain == "client.bitrix24.kz"
+    assert token.client_endpoint == "https://client.bitrix24.kz/rest/"
+    assert token.scope == "crm,user_basic,task"
+    assert token.expires_at > int(time.time())
+    assert TenantRepository(tmp_path / "app.db").get("member-123").name == "client.bitrix24.kz"
+
+
+def test_bitrix_install_rejects_invalid_application_token(tmp_path, monkeypatch):
+    client = _client(tmp_path, monkeypatch, auth_required=True)
+    monkeypatch.setenv("BITRIX_APPLICATION_TOKEN", "expected-token")
+
+    response = client.post(
+        "/api/bitrix/install",
+        json={
+            "auth": {
+                "access_token": "access-token",
+                "refresh_token": "refresh-token",
+                "member_id": "member-123",
+                "domain": "client.bitrix24.kz",
+                "client_endpoint": "https://client.bitrix24.kz/rest/",
+                "application_token": "wrong-token",
+            }
+        },
+    )
+
+    assert response.status_code == 403
+
+
+def test_bitrix_oauth_start_redirects_to_portal_with_signed_state(tmp_path, monkeypatch):
+    client = _client(tmp_path, monkeypatch, auth_required=True)
+    monkeypatch.setenv("BITRIX_OAUTH_CLIENT_ID", "client-id")
+
+    response = client.get(
+        "/api/bitrix/oauth/start",
+        params={"portal": "https://client.bitrix24.kz/", "return_url": "/app/#/settings"},
+        follow_redirects=False,
+    )
+
+    assert response.status_code == 307
+    location = response.headers["location"]
+    parsed = urlparse(location)
+    assert parsed.scheme == "https"
+    assert parsed.netloc == "client.bitrix24.kz"
+    assert parsed.path == "/oauth/authorize/"
+    query = parse_qs(parsed.query)
+    assert query["client_id"] == ["client-id"]
+    assert query["response_type"] == ["code"]
+    state = app_module._decode_bitrix_oauth_state(query["state"][0])
+    assert state["portal"] == "client.bitrix24.kz"
+    assert state["return_url"] == "/app/#/settings"
+
+
+def test_bitrix_oauth_callback_exchanges_code_and_saves_token(tmp_path, monkeypatch):
+    client = _client(tmp_path, monkeypatch, auth_required=True)
+    monkeypatch.setenv("BITRIX_OAUTH_CLIENT_ID", "client-id")
+    monkeypatch.setenv("BITRIX_OAUTH_CLIENT_SECRET", "client-secret")
+    state = app_module._create_bitrix_oauth_state("client.bitrix24.kz")
+
+    calls = {}
+
+    def fake_exchange(params):
+        calls.update(params)
+        return {
+            "access_token": "access-token",
+            "refresh_token": "refresh-token",
+            "expires_in": 3600,
+            "scope": "crm,user_basic,task",
+            "domain": "client.bitrix24.kz",
+            "client_endpoint": "https://client.bitrix24.kz/rest/",
+            "member_id": "member-123",
+        }
+
+    monkeypatch.setattr(app_module, "_request_bitrix_oauth_token", fake_exchange)
+
+    response = client.get(
+        "/api/bitrix/oauth/callback",
+        params={"code": "auth-code", "state": state, "domain": "client.bitrix24.kz"},
+    )
+
+    assert response.status_code == 200
+    assert calls == {
+        "grant_type": "authorization_code",
+        "client_id": "client-id",
+        "client_secret": "client-secret",
+        "code": "auth-code",
+    }
+    body = response.json()
+    assert body["tenant_id"] == "member-123"
+    assert body["bitrix_oauth"]["configured"] is True
+    assert BitrixOAuthRepository(tmp_path / "app.db").get_by_member_id("member-123") is not None
+
+
+def test_bitrix_uninstall_marks_token_revoked(tmp_path, monkeypatch):
+    client = _client(tmp_path, monkeypatch, auth_required=True)
+    repo = BitrixOAuthRepository(tmp_path / "app.db")
+    repo.save(
+        app_module.BitrixOAuthToken(
+            tenant_id="member-123",
+            bitrix_member_id="member-123",
+            bitrix_domain="client.bitrix24.kz",
+            client_endpoint="https://client.bitrix24.kz/rest/",
+            access_token="access-token",
+            refresh_token="refresh-token",
+            status="active",
+        )
+    )
+
+    response = client.post(
+        "/api/bitrix/uninstall",
+        json={"auth": {"member_id": "member-123"}},
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["tenant_id"] == "member-123"
+    assert body["bitrix_oauth"]["status"] == "revoked"
+    assert repo.get_by_tenant("member-123").status == "revoked"
+
+
+def test_get_integrations_includes_bitrix_oauth_status_without_secrets(tmp_path, monkeypatch):
+    client = _client(tmp_path, monkeypatch, auth_required=False)
+    repo = BitrixOAuthRepository(tmp_path / "app.db")
+    repo.save(
+        app_module.BitrixOAuthToken(
+            tenant_id="member-123",
+            bitrix_member_id="member-123",
+            bitrix_domain="client.bitrix24.kz",
+            client_endpoint="https://client.bitrix24.kz/rest/",
+            access_token="access-token",
+            refresh_token="refresh-token",
+            status="active",
+        )
+    )
+
+    response = client.get("/api/integrations", headers={"X-Tenant-Id": "member-123"})
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["bitrix_oauth"]["configured"] is True
+    assert body["bitrix_oauth"]["bitrix_member_id"] == "member-123"
+    assert "access_token" not in body["bitrix_oauth"]
+    assert "refresh_token" not in body["bitrix_oauth"]
+
+
+def test_bitrix_gateway_prefers_request_webhook_over_oauth(tmp_path, monkeypatch):
+    _client(tmp_path, monkeypatch, auth_required=False)
+    BitrixOAuthRepository(tmp_path / "app.db").save(
+        app_module.BitrixOAuthToken(
+            tenant_id="member-123",
+            bitrix_member_id="member-123",
+            bitrix_domain="client.bitrix24.kz",
+            client_endpoint="https://client.bitrix24.kz/rest/",
+            access_token="access-token",
+            refresh_token="refresh-token",
+            status="active",
+        )
+    )
+
+    gateway = app_module._resolve_bitrix_gateway(
+        "https://override.bitrix24.kz/rest/1/webhook/",
+        "member-123",
+    )
+
+    assert isinstance(gateway, BitrixClient)
+    assert gateway.base_url == "https://override.bitrix24.kz/rest/1/webhook/"
+
+
+def test_bitrix_gateway_uses_oauth_before_stored_webhook(tmp_path, monkeypatch):
+    _client(tmp_path, monkeypatch, auth_required=False)
+    app_module._integrations_repo("member-123").save(
+        Integrations(bitrix_webhook_url="https://legacy.bitrix24.kz/rest/1/webhook/")
+    )
+    BitrixOAuthRepository(tmp_path / "app.db").save(
+        app_module.BitrixOAuthToken(
+            tenant_id="member-123",
+            bitrix_member_id="member-123",
+            bitrix_domain="client.bitrix24.kz",
+            client_endpoint="https://client.bitrix24.kz/rest/",
+            access_token="access-token",
+            refresh_token="refresh-token",
+            status="active",
+        )
+    )
+
+    gateway = app_module._resolve_bitrix_gateway(None, "member-123")
+
+    assert isinstance(gateway, BitrixOAuthClient)
+
+
+def test_bitrix_gateway_falls_back_to_stored_webhook(tmp_path, monkeypatch):
+    _client(tmp_path, monkeypatch, auth_required=False)
+    app_module._integrations_repo("legacy").save(
+        Integrations(bitrix_webhook_url="https://legacy.bitrix24.kz/rest/1/webhook/")
+    )
+
+    gateway = app_module._resolve_bitrix_gateway(None, "legacy")
+
+    assert isinstance(gateway, BitrixClient)
+    assert gateway.base_url == "https://legacy.bitrix24.kz/rest/1/webhook/"
+
+
+def test_whatsapp_gateway_uses_oauth_when_no_whatsapp_webhook(tmp_path, monkeypatch):
+    _client(tmp_path, monkeypatch, auth_required=False)
+    BitrixOAuthRepository(tmp_path / "app.db").save(
+        app_module.BitrixOAuthToken(
+            tenant_id="member-123",
+            bitrix_member_id="member-123",
+            bitrix_domain="client.bitrix24.kz",
+            client_endpoint="https://client.bitrix24.kz/rest/",
+            access_token="access-token",
+            refresh_token="refresh-token",
+            status="active",
+        )
+    )
+
+    gateway = app_module._resolve_whatsapp_gateway(None, "member-123")
+
+    assert isinstance(gateway, BitrixOAuthClient)

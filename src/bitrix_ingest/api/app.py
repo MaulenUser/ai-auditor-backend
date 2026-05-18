@@ -16,19 +16,23 @@ import time
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, List, Optional
+from urllib.parse import parse_qsl, urlencode, urlparse, urlsplit, urlunsplit
 
+import requests
 from fastapi import BackgroundTasks, FastAPI, Form, Header, HTTPException, Query, Request, Security
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, RedirectResponse
 from fastapi.security import APIKeyHeader
 from pydantic import BaseModel
 
 from ..domain.analysis_run import AnalysisRun
+from ..domain.bitrix_oauth import BitrixOAuthToken
 from ..domain.business_profile import BusinessProfile
 from ..domain.integrations import Integrations
 from ..domain.tenant import Tenant
 from ..domain.user import User
 from ..infrastructure.database import (
     AnalysisRunRepository,
+    BitrixOAuthRepository,
     BusinessProfileRepository,
     IntegrationsRepository,
     SalesAnalyticsRepository,
@@ -64,7 +68,7 @@ from ..application.whatsapp_timeline import (
     WhatsAppTimelineExportService,
 )
 from ..domain.exceptions import DomainError
-from ..infrastructure.http import BitrixClient
+from ..infrastructure.http import BitrixClient, BitrixOAuthClient
 from ..infrastructure.http.file_downloader import RequestsFileDownloader
 from ..infrastructure.openai import OpenAiResponsesClient, OpenAiTranscriptionClient
 from ..infrastructure.audit_trace import AuditTraceRecorder, TracedJsonSink
@@ -139,6 +143,7 @@ _SALES_AUDIT_JOBS: dict[str, dict[str, Any]] = {}
 _SALES_AUDIT_JOBS_LOCK = threading.Lock()
 _TENANT_ID_RE = re.compile(r"^[A-Za-z0-9_-]{1,64}$")
 _USERNAME_RE = re.compile(r"^[A-Za-z0-9_.@-]{3,128}$")
+_BITRIX_DOMAIN_RE = re.compile(r"^[A-Za-z0-9.-]+(?::[0-9]{1,5})?$")
 _ROLE_VALUES = {"admin", "client"}
 _AUTH_CONTEXT: contextvars.ContextVar[User | None] = contextvars.ContextVar(
     "auth_user",
@@ -161,6 +166,10 @@ def _profile_repo(tenant_id: str = "default") -> BusinessProfileRepository:
 
 def _integrations_repo(tenant_id: str = "default") -> IntegrationsRepository:
     return IntegrationsRepository(_DB_PATH, tenant_id)
+
+
+def _bitrix_oauth_repo() -> BitrixOAuthRepository:
+    return BitrixOAuthRepository(_DB_PATH)
 
 
 def _runs_repo() -> AnalysisRunRepository:
@@ -216,6 +225,34 @@ def _token_ttl_seconds() -> int:
     except ValueError:
         ttl = 86400
     return max(300, ttl)
+
+
+def _bitrix_oauth_client_id() -> str:
+    return os.environ.get("BITRIX_OAUTH_CLIENT_ID", "").strip()
+
+
+def _bitrix_oauth_client_secret() -> str:
+    return os.environ.get("BITRIX_OAUTH_CLIENT_SECRET", "").strip()
+
+
+def _bitrix_oauth_token_endpoint() -> str:
+    return (
+        os.environ.get("BITRIX_OAUTH_TOKEN_ENDPOINT", "").strip()
+        or "https://oauth.bitrix.info/oauth/token/"
+    )
+
+
+def _bitrix_oauth_default_return_url() -> str:
+    return os.environ.get("BITRIX_OAUTH_SUCCESS_RETURN_URL", "").strip()
+
+
+def _bitrix_oauth_state_ttl_seconds() -> int:
+    raw = os.environ.get("BITRIX_OAUTH_STATE_TTL_SECONDS", "").strip()
+    try:
+        ttl = int(raw or "1200")
+    except ValueError:
+        ttl = 1200
+    return max(60, ttl)
 
 
 def _job_stale_seconds() -> int:
@@ -347,6 +384,7 @@ def _require_admin_or_dev() -> User | None:
 def _public_auth_path(path: str) -> bool:
     return (
         path in {"/health", "/openapi.json", "/api/auth/login", "/api/auth/status", "/api/auth/bootstrap"}
+        or path.startswith("/api/bitrix/")
         or path.startswith("/docs")
         or path.startswith("/redoc")
     )
@@ -435,6 +473,129 @@ def _resolve_whatsapp_webhook(
     return url
 
 
+def _active_bitrix_oauth_token(tenant_id: str) -> BitrixOAuthToken | None:
+    token = _bitrix_oauth_repo().get_by_tenant(tenant_id)
+    if token and token.status == "active":
+        return token
+    return None
+
+
+def _bitrix_oauth_client(
+    tenant_id: str,
+    *,
+    call_delay: float = 0.0,
+    page_delay: float = 0.0,
+    trace: AuditTraceRecorder | None = None,
+    trace_name: str = "bitrix.oauth",
+) -> BitrixOAuthClient:
+    return BitrixOAuthClient(
+        tenant_id,
+        _bitrix_oauth_repo(),
+        call_delay=call_delay,
+        page_delay=page_delay,
+        trace=trace,
+        trace_name=trace_name,
+    )
+
+
+def _resolve_bitrix_gateway(
+    header_url: str | None,
+    tenant_id: str = "default",
+    *,
+    call_delay: float = 0.0,
+    page_delay: float = 0.0,
+    trace: AuditTraceRecorder | None = None,
+    trace_name: str = "bitrix",
+) -> Any:
+    """Resolve CRM Bitrix gateway: request webhook -> OAuth -> stored webhook."""
+    if header_url:
+        return BitrixClient(
+            header_url,
+            call_delay=call_delay,
+            page_delay=page_delay,
+            trace=trace,
+            trace_name=trace_name,
+        )
+    if _active_bitrix_oauth_token(tenant_id):
+        return _bitrix_oauth_client(
+            tenant_id,
+            call_delay=call_delay,
+            page_delay=page_delay,
+            trace=trace,
+            trace_name=f"{trace_name}.oauth" if not trace_name.endswith(".oauth") else trace_name,
+        )
+    webhook_url = _get_integrations(tenant_id).bitrix_webhook_url
+    if webhook_url:
+        return BitrixClient(
+            webhook_url,
+            call_delay=call_delay,
+            page_delay=page_delay,
+            trace=trace,
+            trace_name=trace_name,
+        )
+    raise HTTPException(
+        status_code=422,
+        detail=(
+            "Bitrix integration is not configured. Connect Bitrix24 via OAuth "
+            "or configure a Bitrix webhook for this tenant."
+        ),
+    )
+
+
+def _resolve_whatsapp_gateway(
+    header_url: str | None,
+    tenant_id: str = "default",
+    *,
+    crm_fallback: str | None = None,
+    call_delay: float = 0.0,
+    page_delay: float = 0.0,
+    trace: AuditTraceRecorder | None = None,
+    trace_name: str = "bitrix.whatsapp",
+) -> Any:
+    """Resolve WhatsApp/Open Lines gateway: request webhook -> stored WhatsApp webhook -> OAuth -> CRM webhook."""
+    if header_url:
+        return BitrixClient(
+            header_url,
+            call_delay=call_delay,
+            page_delay=page_delay,
+            trace=trace,
+            trace_name=trace_name,
+        )
+    ints = _get_integrations(tenant_id)
+    if ints.whatsapp_webhook_url:
+        return BitrixClient(
+            ints.whatsapp_webhook_url,
+            call_delay=call_delay,
+            page_delay=page_delay,
+            trace=trace,
+            trace_name=trace_name,
+        )
+    if _active_bitrix_oauth_token(tenant_id):
+        return _bitrix_oauth_client(
+            tenant_id,
+            call_delay=call_delay,
+            page_delay=page_delay,
+            trace=trace,
+            trace_name=f"{trace_name}.oauth" if not trace_name.endswith(".oauth") else trace_name,
+        )
+    fallback_url = ints.bitrix_webhook_url or crm_fallback
+    if fallback_url:
+        return BitrixClient(
+            fallback_url,
+            call_delay=call_delay,
+            page_delay=page_delay,
+            trace=trace,
+            trace_name=trace_name,
+        )
+    raise HTTPException(
+        status_code=422,
+        detail=(
+            "Bitrix WhatsApp integration is not configured. Connect Bitrix24 via OAuth "
+            "or configure a WhatsApp/CRM webhook for this tenant."
+        ),
+    )
+
+
 def _resolve_openai_key(header_key: str | None, tenant_id: str = "default") -> str:
     """Header takes priority; falls back to DB openai_api_key for the tenant."""
     key = header_key or _get_integrations(tenant_id).openai_api_key
@@ -455,6 +616,232 @@ def _require_setup_token(header_token: str | None) -> None:
         )
     if header_token != expected:
         raise HTTPException(status_code=403, detail="Invalid setup token.")
+
+
+def _normalize_bitrix_domain(portal: str) -> str:
+    value = (portal or "").strip()
+    if not value:
+        raise HTTPException(status_code=422, detail="Bitrix portal domain is required.")
+    parsed = urlparse(value if "://" in value else f"https://{value}")
+    domain = (parsed.netloc or parsed.path).split("/", 1)[0].strip().lower()
+    if not domain or not _BITRIX_DOMAIN_RE.fullmatch(domain):
+        raise HTTPException(status_code=422, detail="Invalid Bitrix portal domain.")
+    return domain
+
+
+def _safe_relative_return_url(value: str | None) -> str:
+    url = (value or "").strip() or _bitrix_oauth_default_return_url()
+    if not url:
+        return ""
+    if not url.startswith("/") or url.startswith("//"):
+        raise HTTPException(status_code=422, detail="OAuth return_url must be a relative URL.")
+    return url
+
+
+def _create_bitrix_oauth_state(portal: str, return_url: str = "") -> str:
+    payload = {
+        "portal": portal,
+        "return_url": return_url,
+        "iat": int(time.time()),
+        "nonce": secrets.token_urlsafe(16),
+    }
+    body = _b64_encode(json.dumps(payload, separators=(",", ":")).encode("utf-8"))
+    signature = hmac.new(_auth_secret().encode("utf-8"), body.encode("ascii"), hashlib.sha256).digest()
+    return f"{body}.{_b64_encode(signature)}"
+
+
+def _decode_bitrix_oauth_state(state: str | None) -> dict[str, Any]:
+    if not state:
+        raise HTTPException(status_code=400, detail="OAuth state is required.")
+    try:
+        body, signature = state.split(".", 1)
+        expected = hmac.new(_auth_secret().encode("utf-8"), body.encode("ascii"), hashlib.sha256).digest()
+        if not hmac.compare_digest(_b64_encode(expected), signature):
+            raise HTTPException(status_code=400, detail="Invalid OAuth state.")
+        payload = json.loads(_b64_decode(body).decode("utf-8"))
+    except HTTPException:
+        raise
+    except Exception as exc:
+        raise HTTPException(status_code=400, detail="Invalid OAuth state.") from exc
+
+    issued_at = int(payload.get("iat") or 0)
+    if issued_at <= 0 or issued_at + _bitrix_oauth_state_ttl_seconds() < int(time.time()):
+        raise HTTPException(status_code=400, detail="OAuth state has expired.")
+    return payload
+
+
+def _append_query_params(url: str, params: dict[str, str]) -> str:
+    split = urlsplit(url)
+    query = dict(parse_qsl(split.query, keep_blank_values=True))
+    query.update(params)
+    return urlunsplit((split.scheme, split.netloc, split.path, urlencode(query), split.fragment))
+
+
+async def _bitrix_request_payload(request: Request) -> dict[str, Any]:
+    content_type = request.headers.get("content-type", "").lower()
+    if "application/json" in content_type:
+        try:
+            data = await request.json()
+        except Exception as exc:
+            raise HTTPException(status_code=400, detail="Invalid JSON payload.") from exc
+        if not isinstance(data, dict):
+            raise HTTPException(status_code=422, detail="Bitrix payload must be an object.")
+        return data
+
+    form = await request.form()
+    data: dict[str, Any] = {}
+    for key, value in form.multi_items():
+        str_value = str(value)
+        match = re.fullmatch(r"([A-Za-z0-9_]+)\[([A-Za-z0-9_]+)\]", str(key))
+        if match:
+            group, nested_key = match.groups()
+            nested = data.setdefault(group, {})
+            if isinstance(nested, dict):
+                nested[nested_key] = str_value
+        else:
+            data[str(key)] = str_value
+    return data
+
+
+def _extract_bitrix_auth_payload(payload: dict[str, Any]) -> dict[str, Any]:
+    auth = payload.get("auth")
+    if isinstance(auth, dict):
+        merged = {
+            key: payload[key]
+            for key in (
+                "DOMAIN",
+                "PROTOCOL",
+                "member_id",
+                "scope",
+                "application_token",
+            )
+            if key in payload
+        }
+        merged.update(auth)
+        return merged
+    if any(key in payload for key in ("AUTH_ID", "REFRESH_ID", "access_token", "refresh_token")):
+        return payload
+    raise HTTPException(status_code=422, detail="Bitrix auth payload is missing.")
+
+
+def _tenant_id_from_bitrix_member_id(member_id: str) -> str:
+    tenant_id = re.sub(r"[^A-Za-z0-9_-]+", "-", member_id.strip()).strip("-_")[:64]
+    if not tenant_id:
+        raise HTTPException(status_code=422, detail="Bitrix member_id is invalid.")
+    _validate_tenant_id(tenant_id)
+    return tenant_id
+
+
+def _oauth_expires_at(auth: dict[str, Any]) -> int:
+    expires = auth.get("expires")
+    if expires not in (None, ""):
+        return int(expires)
+    expires_in = auth.get("expires_in") or auth.get("AUTH_EXPIRES")
+    if expires_in not in (None, ""):
+        return int(time.time()) + int(expires_in)
+    return 0
+
+
+def _client_endpoint_from_auth(auth: dict[str, Any], domain: str) -> str:
+    endpoint = str(auth.get("client_endpoint") or "").strip()
+    if endpoint:
+        return endpoint if endpoint.endswith("/") else f"{endpoint}/"
+    protocol = str(auth.get("PROTOCOL") or "1").strip()
+    scheme = "http" if protocol == "0" else "https"
+    return f"{scheme}://{domain}/rest/"
+
+
+def _domain_from_auth(auth: dict[str, Any], fallback_domain: str = "") -> str:
+    raw_domain = str(auth.get("DOMAIN") or auth.get("domain") or fallback_domain or "").strip()
+    if raw_domain and not raw_domain.startswith("oauth."):
+        return _normalize_bitrix_domain(raw_domain)
+    endpoint = str(auth.get("client_endpoint") or "").strip()
+    if endpoint:
+        parsed = urlparse(endpoint)
+        if parsed.netloc:
+            return _normalize_bitrix_domain(parsed.netloc)
+    return _normalize_bitrix_domain(fallback_domain)
+
+
+def _verify_bitrix_application_token(auth: dict[str, Any]) -> None:
+    expected = os.environ.get("BITRIX_APPLICATION_TOKEN", "").strip()
+    if not expected:
+        return
+    actual = str(auth.get("application_token") or "").strip()
+    if not hmac.compare_digest(actual, expected):
+        raise HTTPException(status_code=403, detail="Invalid Bitrix application token.")
+
+
+def _save_bitrix_oauth_token(
+    auth: dict[str, Any],
+    *,
+    fallback_domain: str = "",
+    fallback_scope: str = "",
+) -> BitrixOAuthToken:
+    access_token = str(auth.get("access_token") or auth.get("AUTH_ID") or "").strip()
+    refresh_token = str(auth.get("refresh_token") or auth.get("REFRESH_ID") or "").strip()
+    member_id = str(auth.get("member_id") or "").strip()
+    if not access_token or not refresh_token or not member_id:
+        raise HTTPException(
+            status_code=422,
+            detail="Bitrix OAuth payload must include access_token, refresh_token, and member_id.",
+        )
+
+    domain = _domain_from_auth(auth, fallback_domain=fallback_domain)
+    tenant_id = _tenant_id_from_bitrix_member_id(member_id)
+    _tenant_repo().save(Tenant(id=tenant_id, name=domain or tenant_id))
+    token = BitrixOAuthToken(
+        tenant_id=tenant_id,
+        bitrix_member_id=member_id,
+        bitrix_domain=domain,
+        client_endpoint=_client_endpoint_from_auth(auth, domain),
+        access_token=access_token,
+        refresh_token=refresh_token,
+        expires_at=_oauth_expires_at(auth),
+        scope=str(auth.get("scope") or fallback_scope or ""),
+        status="active",
+    )
+    _bitrix_oauth_repo().save(token)
+    return token
+
+
+def _request_bitrix_oauth_token(params: dict[str, str]) -> dict[str, Any]:
+    try:
+        response = requests.get(
+            _bitrix_oauth_token_endpoint(),
+            params=params,
+            timeout=60,
+        )
+        response.raise_for_status()
+        data = response.json()
+    except requests.HTTPError as exc:
+        status_code = exc.response.status_code if exc.response is not None else None
+        body = exc.response.text if exc.response is not None else None
+        raise HTTPException(
+            status_code=502,
+            detail={
+                "message": "Bitrix OAuth token exchange failed.",
+                "status_code": status_code,
+                "response_body": body,
+            },
+        ) from exc
+    except requests.RequestException as exc:
+        raise HTTPException(status_code=502, detail=f"Bitrix OAuth token exchange failed: {exc}") from exc
+    except ValueError as exc:
+        raise HTTPException(status_code=502, detail="Bitrix OAuth token response is not valid JSON.") from exc
+
+    if not isinstance(data, dict):
+        raise HTTPException(status_code=502, detail="Bitrix OAuth token response must be an object.")
+    if data.get("error"):
+        raise HTTPException(
+            status_code=400,
+            detail={
+                "message": "Bitrix OAuth authorization failed.",
+                "error": data.get("error"),
+                "error_description": data.get("error_description"),
+            },
+        )
+    return data
 
 
 def _tee() -> tuple[TeeJsonSink, InMemoryJsonSink]:
@@ -670,15 +1057,29 @@ def _redact_error_message(message: object, *secrets: str | None) -> str:
 
 def _execute_executive_pipeline(
     *,
+    tenant_id: str,
     request: RunExecutivePipelineRequest,
-    crm_url: str,
-    whatsapp_url: str,
+    crm_webhook_url: str | None,
+    whatsapp_webhook_url: str | None,
     openai_key: str,
     sink: Any,
 ) -> None:
     RunExecutivePipelineService(
-        crm_gateway=BitrixClient(crm_url, call_delay=0.2, page_delay=0.2),
-        whatsapp_gateway=BitrixClient(whatsapp_url, call_delay=0.2, page_delay=0.2),
+        crm_gateway=_resolve_bitrix_gateway(
+            crm_webhook_url,
+            tenant_id,
+            call_delay=0.2,
+            page_delay=0.2,
+            trace_name="bitrix.crm",
+        ),
+        whatsapp_gateway=_resolve_whatsapp_gateway(
+            whatsapp_webhook_url,
+            tenant_id,
+            crm_fallback=crm_webhook_url,
+            call_delay=0.2,
+            page_delay=0.2,
+            trace_name="bitrix.whatsapp",
+        ),
         responses_gateway=OpenAiResponsesClient(openai_key),
         transcription_gateway=OpenAiTranscriptionClient(openai_key),
         file_downloader=RequestsFileDownloader(),
@@ -689,17 +1090,19 @@ def _execute_executive_pipeline(
 def _run_executive_report_background_job(
     *,
     job_id: str,
+    tenant_id: str,
     request: RunExecutivePipelineRequest,
-    crm_url: str,
-    whatsapp_url: str,
+    crm_webhook_url: str | None,
+    whatsapp_webhook_url: str | None,
     openai_key: str,
 ) -> None:
     _set_executive_report_job(job_id, status="running", started_at=_now_iso())
     try:
         _execute_executive_pipeline(
+            tenant_id=tenant_id,
             request=request,
-            crm_url=crm_url,
-            whatsapp_url=whatsapp_url,
+            crm_webhook_url=crm_webhook_url,
+            whatsapp_webhook_url=whatsapp_webhook_url,
             openai_key=openai_key,
             sink=FileSystemJsonWriter(),
         )
@@ -720,7 +1123,7 @@ def _run_executive_report_background_job(
             job_id,
             status="error",
             completed_at=_now_iso(),
-            error=_redact_error_message(exc, crm_url, whatsapp_url, openai_key),
+            error=_redact_error_message(exc, crm_webhook_url, whatsapp_webhook_url, openai_key),
             error_type=type(exc).__name__,
         )
 
@@ -796,7 +1199,7 @@ def _execute_sales_analytics_pipeline(
     *,
     tenant_id: str,
     run_id: str,
-    webhook_url: str,
+    crm_webhook_url: str | None,
     date_from: str,
     date_to: str,
     include_pipeline_reports: bool,
@@ -808,7 +1211,13 @@ def _execute_sales_analytics_pipeline(
     limit: int = 0,
 ) -> dict[str, Any]:
     report = ExportSalesAnalyticsService(
-        gateway=BitrixClient(webhook_url, call_delay=0.2, page_delay=0.2),
+        gateway=_resolve_bitrix_gateway(
+            crm_webhook_url,
+            tenant_id,
+            call_delay=0.2,
+            page_delay=0.2,
+            trace_name="bitrix.sales_analytics",
+        ),
         repository=_sales_repo(),
     ).execute(
         ExportSalesAnalyticsRequest(
@@ -839,7 +1248,7 @@ def _run_sales_analytics_background_job(
     *,
     job_id: str,
     tenant_id: str,
-    webhook_url: str,
+    crm_webhook_url: str | None,
     date_from: str,
     date_to: str,
     include_pipeline_reports: bool,
@@ -855,7 +1264,7 @@ def _run_sales_analytics_background_job(
         report = _execute_sales_analytics_pipeline(
             tenant_id=tenant_id,
             run_id=job_id,
-            webhook_url=webhook_url,
+            crm_webhook_url=crm_webhook_url,
             date_from=date_from,
             date_to=date_to,
             include_pipeline_reports=include_pipeline_reports,
@@ -878,7 +1287,7 @@ def _run_sales_analytics_background_job(
             job_id,
             status="error",
             completed_at=_now_iso(),
-            error=_redact_error_message(exc, webhook_url),
+            error=_redact_error_message(exc, crm_webhook_url),
             error_type=type(exc).__name__,
         )
 
@@ -887,8 +1296,8 @@ def _execute_sales_audit_pipeline(
     *,
     tenant_id: str,
     run_id: str,
-    crm_url: str,
-    whatsapp_url: str,
+    crm_webhook_url: str | None,
+    whatsapp_webhook_url: str | None,
     openai_key: str,
     base_dir: Path,
     date_from: str,
@@ -938,9 +1347,10 @@ def _execute_sales_audit_pipeline(
         reset_outputs=reset_outputs,
     )
     _execute_executive_pipeline(
+        tenant_id=tenant_id,
         request=request,
-        crm_url=crm_url,
-        whatsapp_url=whatsapp_url,
+        crm_webhook_url=crm_webhook_url,
+        whatsapp_webhook_url=whatsapp_webhook_url,
         openai_key=openai_key,
         sink=FileSystemJsonWriter(),
     )
@@ -948,7 +1358,7 @@ def _execute_sales_audit_pipeline(
     sales_report = _execute_sales_analytics_pipeline(
         tenant_id=tenant_id,
         run_id=run_id,
-        webhook_url=crm_url,
+        crm_webhook_url=crm_webhook_url,
         date_from=date_from,
         date_to=date_to,
         include_pipeline_reports=False,
@@ -989,8 +1399,8 @@ def _run_sales_audit_background_job(
     job_id: str,
     run_id: str | None = None,
     tenant_id: str,
-    crm_url: str,
-    whatsapp_url: str,
+    crm_webhook_url: str | None,
+    whatsapp_webhook_url: str | None,
     openai_key: str,
     base_dir: Path,
     date_from: str,
@@ -1017,8 +1427,8 @@ def _run_sales_audit_background_job(
         result = _execute_sales_audit_pipeline(
             tenant_id=tenant_id,
             run_id=job_id,
-            crm_url=crm_url,
-            whatsapp_url=whatsapp_url,
+            crm_webhook_url=crm_webhook_url,
+            whatsapp_webhook_url=whatsapp_webhook_url,
             openai_key=openai_key,
             base_dir=base_dir,
             date_from=date_from,
@@ -1053,7 +1463,7 @@ def _run_sales_audit_background_job(
             job_id,
             status="error",
             completed_at=_now_iso(),
-            error=_redact_error_message(exc, crm_url, whatsapp_url, openai_key),
+            error=_redact_error_message(exc, crm_webhook_url, whatsapp_webhook_url, openai_key),
             error_type=type(exc).__name__,
         )
 
@@ -1214,6 +1624,125 @@ def create_user(
 
 
 # ---------------------------------------------------------------------------
+# Bitrix24 OAuth installation endpoints
+# ---------------------------------------------------------------------------
+
+
+@app.get("/api/bitrix/oauth/start", tags=["Bitrix OAuth"])
+def start_bitrix_oauth(
+    portal: str = Query(..., description="Bitrix24 portal domain, e.g. client.bitrix24.kz"),
+    return_url: str = Query("", description="Relative frontend URL to return to after callback"),
+) -> RedirectResponse:
+    client_id = _bitrix_oauth_client_id()
+    if not client_id:
+        raise HTTPException(status_code=503, detail="BITRIX_OAUTH_CLIENT_ID is not configured.")
+    domain = _normalize_bitrix_domain(portal)
+    safe_return_url = _safe_relative_return_url(return_url)
+    state = _create_bitrix_oauth_state(domain, safe_return_url)
+    authorize_url = f"https://{domain}/oauth/authorize/?" + urlencode(
+        {
+            "client_id": client_id,
+            "response_type": "code",
+            "state": state,
+        }
+    )
+    return RedirectResponse(authorize_url, status_code=307)
+
+
+@app.get("/api/bitrix/oauth/callback", tags=["Bitrix OAuth"], response_model=None)
+def bitrix_oauth_callback(
+    code: str | None = Query(None),
+    state: str | None = Query(None),
+    domain: str | None = Query(None),
+    scope: str | None = Query(None),
+    error: str | None = Query(None),
+    error_description: str | None = Query(None),
+) -> Any:
+    if error:
+        raise HTTPException(
+            status_code=400,
+            detail={"error": error, "error_description": error_description or ""},
+        )
+    if not code:
+        raise HTTPException(status_code=422, detail="OAuth code is required.")
+
+    state_payload = _decode_bitrix_oauth_state(state)
+    callback_domain = _normalize_bitrix_domain(domain or state_payload.get("portal") or "")
+    client_id = _bitrix_oauth_client_id()
+    client_secret = _bitrix_oauth_client_secret()
+    if not client_id or not client_secret:
+        raise HTTPException(status_code=503, detail="Bitrix OAuth client credentials are not configured.")
+
+    token_payload = _request_bitrix_oauth_token(
+        {
+            "grant_type": "authorization_code",
+            "client_id": client_id,
+            "client_secret": client_secret,
+            "code": code,
+        }
+    )
+    token = _save_bitrix_oauth_token(
+        token_payload,
+        fallback_domain=callback_domain,
+        fallback_scope=scope or "",
+    )
+    body = {
+        "status": "ok",
+        "tenant_id": token.tenant_id,
+        "bitrix_oauth": token.to_status_dict(),
+    }
+
+    return_url = str(state_payload.get("return_url") or "")
+    if return_url:
+        return RedirectResponse(
+            _append_query_params(
+                return_url,
+                {
+                    "bitrix_oauth": "connected",
+                    "tenant_id": token.tenant_id,
+                },
+            ),
+            status_code=307,
+        )
+    return body
+
+
+@app.post("/api/bitrix/install", tags=["Bitrix OAuth"])
+async def bitrix_install_callback(request: Request) -> dict[str, Any]:
+    payload = await _bitrix_request_payload(request)
+    auth = _extract_bitrix_auth_payload(payload)
+    _verify_bitrix_application_token(auth)
+    token = _save_bitrix_oauth_token(auth)
+    return {
+        "status": "ok",
+        "tenant_id": token.tenant_id,
+        "bitrix_oauth": token.to_status_dict(),
+    }
+
+
+@app.post("/api/bitrix/uninstall", tags=["Bitrix OAuth"])
+async def bitrix_uninstall_callback(request: Request) -> dict[str, Any]:
+    payload = await _bitrix_request_payload(request)
+    auth = _extract_bitrix_auth_payload(payload)
+    _verify_bitrix_application_token(auth)
+    member_id = str(auth.get("member_id") or "").strip()
+    if not member_id:
+        raise HTTPException(status_code=422, detail="Bitrix member_id is required.")
+
+    repo = _bitrix_oauth_repo()
+    token = repo.get_by_member_id(member_id)
+    if token is None:
+        return {"status": "ok", "tenant_id": "", "bitrix_oauth": {"configured": False}}
+    repo.update_status(token.tenant_id, "revoked")
+    revoked = repo.get_by_tenant(token.tenant_id)
+    return {
+        "status": "ok",
+        "tenant_id": token.tenant_id,
+        "bitrix_oauth": revoked.to_status_dict() if revoked else {"configured": False},
+    }
+
+
+# ---------------------------------------------------------------------------
 # Executive Report endpoints
 # ---------------------------------------------------------------------------
 
@@ -1280,14 +1809,18 @@ def build_executive_report(
 ) -> dict[str, Any]:
     """Build the executive report from sales-quality outputs and Bitrix CRM."""
     tid = _resolve_tenant_id(x_tenant_id)
-    url = _resolve_webhook(webhook_url, tid)
     clean_categories = [item for item in (category_id or []) if _none(item)] or None
     clean_responsible = [item for item in (responsible_id or []) if _none(item)] or None
     clean_deals = [item for item in (deal_id or []) if _none(item)] or None
     sink, mem = _tee()
     return _run_service(
         lambda: BuildExecutiveReportService(
-            gateway=BitrixClient(url, call_delay=0.2),
+            gateway=_resolve_bitrix_gateway(
+                webhook_url,
+                tid,
+                call_delay=0.2,
+                trace_name="bitrix.executive_report",
+            ),
             sink=sink,
         ).execute(
             BuildExecutiveReportRequest(
@@ -1341,8 +1874,8 @@ def run_executive_report_pipeline(
 ) -> dict[str, Any]:
     """Run source refresh, sales-quality analysis, and executive report in one scope."""
     tid = _resolve_tenant_id(x_tenant_id)
-    crm_url = _resolve_webhook(crm_webhook_url, tid)
-    whatsapp_url = _resolve_whatsapp_webhook(whatsapp_webhook_url, crm_url, tid)
+    _resolve_bitrix_gateway(crm_webhook_url, tid)
+    _resolve_whatsapp_gateway(whatsapp_webhook_url, tid, crm_fallback=crm_webhook_url)
     key = _resolve_openai_key(openai_key, tid)
     clean_categories = _clean_form_list(category_id)
     clean_responsible = _clean_form_list(responsible_id)
@@ -1383,9 +1916,10 @@ def run_executive_report_pipeline(
         sink, mem = _tee()
         result = _run_service(
             lambda: _execute_executive_pipeline(
+                tenant_id=tid,
                 request=request,
-                crm_url=crm_url,
-                whatsapp_url=whatsapp_url,
+                crm_webhook_url=crm_webhook_url,
+                whatsapp_webhook_url=whatsapp_webhook_url,
                 openai_key=key,
                 sink=sink,
             ),
@@ -1429,9 +1963,10 @@ def run_executive_report_pipeline(
     background_tasks.add_task(
         _run_executive_report_background_job,
         job_id=job_id,
+        tenant_id=tid,
         request=request,
-        crm_url=crm_url,
-        whatsapp_url=whatsapp_url,
+        crm_webhook_url=crm_webhook_url,
+        whatsapp_webhook_url=whatsapp_webhook_url,
         openai_key=key,
     )
     return {
@@ -1483,11 +2018,13 @@ def get_app_state(x_tenant_id: str | None = Header(None)) -> dict[str, Any]:
     tid = _resolve_tenant_id(x_tenant_id)
     profile = _profile_repo(tid).get()
     integrations = _get_integrations(tid)
+    bitrix_oauth = _bitrix_oauth_repo().get_by_tenant(tid)
     return {
         "tenant_id": tid,
         "setup": {
             "business_profile": profile.to_dict() if profile else {},
             "integrations": integrations.to_status_dict(),
+            "bitrix_oauth": bitrix_oauth.to_status_dict() if bitrix_oauth else {"configured": False},
         },
     }
 
@@ -1512,12 +2049,14 @@ def setup_profile(
     profile = BusinessProfile.from_dict(payload.model_dump())
     _profile_repo(tid).save(profile)
     integrations = _get_integrations(tid)
+    bitrix_oauth = _bitrix_oauth_repo().get_by_tenant(tid)
     return {
         "app_state": {
             "tenant_id": tid,
             "setup": {
                 "business_profile": profile.to_dict(),
                 "integrations": integrations.to_status_dict(),
+                "bitrix_oauth": bitrix_oauth.to_status_dict() if bitrix_oauth else {"configured": False},
             },
         }
     }
@@ -1534,7 +2073,12 @@ def get_integrations(x_tenant_id: str | None = Header(None)) -> dict[str, Any]:
     """Returns current integration configuration status (no raw secrets)."""
     tid = _resolve_tenant_id(x_tenant_id)
     ints = _get_integrations(tid)
-    return {"tenant_id": tid, "integrations": ints.to_status_dict()}
+    bitrix_oauth = _bitrix_oauth_repo().get_by_tenant(tid)
+    return {
+        "tenant_id": tid,
+        "integrations": ints.to_status_dict(),
+        "bitrix_oauth": bitrix_oauth.to_status_dict() if bitrix_oauth else {"configured": False},
+    }
 
 
 @app.post("/api/setup-integrations", tags=["Settings"])
@@ -1554,10 +2098,12 @@ def setup_integrations(
         openai_api_key=incoming.openai_api_key or current.openai_api_key,
     )
     _integrations_repo(tid).save(ints)
+    bitrix_oauth = _bitrix_oauth_repo().get_by_tenant(tid)
     return {
         "status": "ok",
         "tenant_id": tid,
         "integrations": ints.to_status_dict(),
+        "bitrix_oauth": bitrix_oauth.to_status_dict() if bitrix_oauth else {"configured": False},
     }
 
 
@@ -1650,7 +2196,7 @@ def run_sales_analytics(
 ) -> dict[str, Any]:
     """Run the SQL analytics snapshot pipeline used by the management reports."""
     tid = _resolve_tenant_id(x_tenant_id)
-    url = _resolve_webhook(webhook_url, tid)
+    _resolve_bitrix_gateway(webhook_url, tid)
     resolved_from = _none(date_from)
     resolved_to = _none(date_to)
     if not resolved_from or not resolved_to:
@@ -1682,7 +2228,7 @@ def run_sales_analytics(
             report = _execute_sales_analytics_pipeline(
                 tenant_id=tid,
                 run_id=job_id,
-                webhook_url=url,
+                crm_webhook_url=webhook_url,
                 date_from=resolved_from,
                 date_to=resolved_to,
                 include_pipeline_reports=include_pipeline_reports,
@@ -1705,7 +2251,7 @@ def run_sales_analytics(
         except HTTPException:
             raise
         except Exception as exc:  # noqa: BLE001
-            error = _redact_error_message(exc, url)
+            error = _redact_error_message(exc, webhook_url)
             _runs_repo().update_status(job_id, "error", completed_at=_now_iso(), error=error)
             raise HTTPException(status_code=502, detail=error) from exc
 
@@ -1731,7 +2277,7 @@ def run_sales_analytics(
         _run_sales_analytics_background_job,
         job_id=job_id,
         tenant_id=tid,
-        webhook_url=url,
+        crm_webhook_url=webhook_url,
         date_from=resolved_from,
         date_to=resolved_to,
         include_pipeline_reports=include_pipeline_reports,
@@ -1844,8 +2390,8 @@ def run_sales_audit(
 ) -> dict[str, Any]:
     """Run the unified AI + Postgres sales audit report."""
     tid = _resolve_tenant_id(x_tenant_id)
-    crm_url = _resolve_webhook(crm_webhook_url, tid)
-    whatsapp_url = _resolve_whatsapp_webhook(whatsapp_webhook_url, crm_url, tid)
+    _resolve_bitrix_gateway(crm_webhook_url, tid)
+    _resolve_whatsapp_gateway(whatsapp_webhook_url, tid, crm_fallback=crm_webhook_url)
     key = _resolve_openai_key(openai_key, tid)
     resolved_from = _none(date_from)
     resolved_to = _none(date_to)
@@ -1883,8 +2429,8 @@ def run_sales_audit(
     common_kwargs = {
         "tenant_id": tid,
         "run_id": job_id,
-        "crm_url": crm_url,
-        "whatsapp_url": whatsapp_url,
+        "crm_webhook_url": crm_webhook_url,
+        "whatsapp_webhook_url": whatsapp_webhook_url,
         "openai_key": key,
         "base_dir": base_dir,
         "date_from": resolved_from,
@@ -1922,7 +2468,7 @@ def run_sales_audit(
         except HTTPException:
             raise
         except Exception as exc:  # noqa: BLE001
-            error = _redact_error_message(exc, crm_url, whatsapp_url, key)
+            error = _redact_error_message(exc, crm_webhook_url, whatsapp_webhook_url, key)
             _runs_repo().update_status(job_id, "error", completed_at=_now_iso(), error=error)
             raise HTTPException(status_code=502, detail=error) from exc
 
@@ -2063,9 +2609,9 @@ def get_funnels(
 ) -> dict[str, Any]:
     """Возвращает список воронок (crm.dealcategory.list) для выбора в UI."""
     tid = _resolve_tenant_id(x_tenant_id)
-    url = _resolve_webhook(webhook_url, tid)
     try:
-        funnels = GetCatalogService(gateway=BitrixClient(url)).get_funnels()
+        gateway = _resolve_bitrix_gateway(webhook_url, tid, trace_name="bitrix.catalog")
+        funnels = GetCatalogService(gateway=gateway).get_funnels()
     except DomainError as exc:
         raise HTTPException(status_code=502, detail=str(exc)) from exc
     return {"funnels": funnels}
@@ -2082,9 +2628,9 @@ def get_managers(
 ) -> dict[str, Any]:
     """Возвращает список пользователей портала (user.get) для выбора менеджера."""
     tid = _resolve_tenant_id(x_tenant_id)
-    url = _resolve_webhook(webhook_url, tid)
     try:
-        managers = GetCatalogService(gateway=BitrixClient(url)).get_managers()
+        gateway = _resolve_bitrix_gateway(webhook_url, tid, trace_name="bitrix.catalog")
+        managers = GetCatalogService(gateway=gateway).get_managers()
     except DomainError as exc:
         raise HTTPException(status_code=502, detail=str(exc)) from exc
     return {"managers": managers}
@@ -2121,9 +2667,9 @@ def get_funnels_with_managers(
 ) -> dict[str, Any]:
     """Возвращает воронки и менеджеров по сделкам в каждой воронке."""
     tid = _resolve_tenant_id(x_tenant_id)
-    url = _resolve_webhook(webhook_url, tid)
     try:
-        funnels = GetCatalogService(gateway=BitrixClient(url)).get_funnels_with_managers(
+        gateway = _resolve_bitrix_gateway(webhook_url, tid, trace_name="bitrix.catalog")
+        funnels = GetCatalogService(gateway=gateway).get_funnels_with_managers(
             date_from=_none(date_from),
             date_to=_none(date_to),
             active_only=active_only,
@@ -2148,9 +2694,9 @@ def preview_audit(
 ) -> dict[str, Any]:
     """Считает сколько обращений, сотрудников и сделок попадёт в аудит **без** запуска экспорта."""
     tid = _resolve_tenant_id(x_tenant_id)
-    url = _resolve_whatsapp_webhook(webhook_url, tenant_id=tid)
     try:
-        preview = GetCatalogService(gateway=BitrixClient(url)).get_audit_preview(
+        gateway = _resolve_whatsapp_gateway(webhook_url, tid, trace_name="bitrix.audit_preview")
+        preview = GetCatalogService(gateway=gateway).get_audit_preview(
             funnel_ids=funnel_id or None,
             date_from=_none(date_from),
             date_to=_none(date_to),
@@ -2188,7 +2734,11 @@ def run_audit(
 ) -> dict[str, Any]:
     """Полный AI-аудит: WhatsApp-переписки → фичи → агрегат → рекомендации."""
     tid = _resolve_tenant_id(x_tenant_id)
-    bitrix_url = _resolve_whatsapp_webhook(whatsapp_webhook_url, tenant_id=tid)
+    crm_available = bool(
+        crm_webhook_url
+        or _active_bitrix_oauth_token(tid)
+        or _get_integrations(tid).bitrix_webhook_url
+    )
     key = _resolve_openai_key(openai_key, tid)
 
     clean_funnels = [f for f in (funnel_id or []) if _none(f)] or None
@@ -2214,7 +2764,7 @@ def run_audit(
             "recommendations_model": recommendations_model,
             "source_label": _none(source_label) or "",
             "output_dir": resolved_output,
-            "call_audit_enabled": bool(crm_webhook_url),
+            "call_audit_enabled": crm_available,
         },
     )
     traced_sink = TracedJsonSink(sink, trace)
@@ -2231,8 +2781,10 @@ def run_audit(
     )
     try:
         RunAuditService(
-            bitrix_gateway=BitrixClient(
-                bitrix_url,
+            bitrix_gateway=_resolve_whatsapp_gateway(
+                whatsapp_webhook_url,
+                tid,
+                crm_fallback=crm_webhook_url,
                 call_delay=_CALL_DELAY,
                 trace=trace,
                 trace_name="bitrix.whatsapp",
@@ -2243,21 +2795,22 @@ def run_audit(
                 trace_name="openai.responses",
             ),
             sink=traced_sink,
-            call_gateway=BitrixClient(
+            call_gateway=_resolve_bitrix_gateway(
                 crm_webhook_url,
+                tid,
                 call_delay=_CALL_DELAY,
                 trace=trace,
                 trace_name="bitrix.crm",
-            ) if crm_webhook_url else None,
+            ) if crm_available else None,
             transcription_gateway=OpenAiTranscriptionClient(
                 key,
                 trace=trace,
                 trace_name="openai.transcription",
-            ) if crm_webhook_url else None,
+            ) if crm_available else None,
             file_downloader=RequestsFileDownloader(
                 trace=trace,
                 trace_name="recording.download",
-            ) if crm_webhook_url else None,
+            ) if crm_available else None,
             trace=trace,
         ).execute(request_payload)
     except (FileNotFoundError, ValueError) as exc:
@@ -2291,10 +2844,12 @@ def export_crm(
 ) -> dict[str, Any]:
     """Экспорт CRM-снапшота → ``export/``."""
     tid = _resolve_tenant_id(x_tenant_id)
-    url = _resolve_webhook(webhook_url, tid)
     sink, mem = _tee()
     return _run_service(
-        lambda: CrmExportService(gateway=BitrixClient(url), sink=sink).execute(
+        lambda: CrmExportService(
+            gateway=_resolve_bitrix_gateway(webhook_url, tid),
+            sink=sink,
+        ).execute(
             CrmExportRequest(
                 output_dir=Path("export"),
                 date_from=_none(date_from), date_to=_none(date_to),
@@ -2317,10 +2872,12 @@ def scan_call_records(
 ) -> dict[str, Any]:
     """Сканирование записей звонков → ``export/call-records-scan/``."""
     tid = _resolve_tenant_id(x_tenant_id)
-    url = _resolve_webhook(webhook_url, tid)
     sink, mem = _tee()
     return _run_service(
-        lambda: CallRecordsScanService(gateway=BitrixClient(url), sink=sink).execute(
+        lambda: CallRecordsScanService(
+            gateway=_resolve_bitrix_gateway(webhook_url, tid),
+            sink=sink,
+        ).execute(
             CallRecordsScanRequest(
                 output_dir=Path("export/call-records-scan"), limit=limit,
                 date_from=_none(date_from), date_to=_none(date_to),
@@ -2377,12 +2934,12 @@ def export_stage_history(
 ) -> dict[str, Any]:
     """Экспортирует историю переходов по стадиям воронки для каждой сделки."""
     tid = _resolve_tenant_id(x_tenant_id)
-    url = _resolve_webhook(webhook_url, tid)
     clean_funnels = [f for f in (funnel_id or []) if _none(f)] or None
     sink, mem = _tee()
     return _run_service(
         lambda: StageHistoryService(
-            gateway=BitrixClient(url, page_delay=page_delay), sink=sink,
+            gateway=_resolve_bitrix_gateway(webhook_url, tid, page_delay=page_delay),
+            sink=sink,
         ).execute(
             StageHistoryRequest(
                 output_dir=Path(output_dir),
@@ -2415,12 +2972,12 @@ def export_whatsapp(
 ) -> dict[str, Any]:
     """Экспорт WhatsApp через Open Lines API → ``export/whatsapp-timeline/``."""
     tid = _resolve_tenant_id(x_tenant_id)
-    url = _resolve_whatsapp_webhook(webhook_url, tenant_id=tid)
     clean_funnels = [f for f in (funnel_id or []) if _none(f)] or None
     sink, mem = _tee()
     return _run_service(
         lambda: WhatsAppExportService(
-            gateway=BitrixClient(url, page_delay=page_delay), sink=sink,
+            gateway=_resolve_whatsapp_gateway(webhook_url, tid, page_delay=page_delay),
+            sink=sink,
         ).execute(
             WhatsAppExportRequest(
                 output_dir=Path("export/whatsapp-timeline"), limit=limit,
@@ -2451,12 +3008,12 @@ def export_whatsapp_timeline(
 ) -> dict[str, Any]:
     """Экспорт WhatsApp через timeline-комментарии (Wazzup-маркеры) → ``export/whatsapp-timeline/``."""
     tid = _resolve_tenant_id(x_tenant_id)
-    url = _resolve_whatsapp_webhook(webhook_url, tenant_id=tid)
     clean_funnels = [f for f in (funnel_id or []) if _none(f)] or None
     sink, mem = _tee()
     return _run_service(
         lambda: WhatsAppTimelineExportService(
-            gateway=BitrixClient(url, page_delay=page_delay), sink=sink,
+            gateway=_resolve_whatsapp_gateway(webhook_url, tid, page_delay=page_delay),
+            sink=sink,
         ).execute(
             WhatsAppTimelineExportRequest(
                 output_dir=Path(output_dir), limit=limit,
