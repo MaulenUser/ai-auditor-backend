@@ -175,6 +175,39 @@ def test_bitrix_oauth_start_redirects_to_portal_with_signed_state(tmp_path, monk
     assert state["tenant_id"] == "client-tenant"
 
 
+def test_bitrix_connect_start_returns_authorize_url_for_frontend(tmp_path, monkeypatch):
+    client = _client(tmp_path, monkeypatch, auth_required=True)
+    monkeypatch.setenv("BITRIX_OAUTH_CLIENT_ID", "client-id")
+    _save_user(tmp_path, "client@example.com", "client-tenant")
+    token = _login(client, "client@example.com")
+
+    response = client.post(
+        "/api/bitrix/connect/start",
+        json={"portal": "https://client.bitrix24.kz/", "return_url": "/app/#/settings"},
+        headers={"Authorization": f"Bearer {token}"},
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["status"] == "ok"
+    assert body["tenant_id"] == "client-tenant"
+    assert body["portal"] == "client.bitrix24.kz"
+    assert body["return_url"] == "/app/#/settings"
+    assert body["bitrix_oauth"]["configured"] is False
+
+    parsed = urlparse(body["authorize_url"])
+    assert parsed.scheme == "https"
+    assert parsed.netloc == "client.bitrix24.kz"
+    assert parsed.path == "/oauth/authorize/"
+    query = parse_qs(parsed.query)
+    assert query["client_id"] == ["client-id"]
+    assert query["response_type"] == ["code"]
+    state = app_module._decode_bitrix_oauth_state(query["state"][0])
+    assert state["portal"] == "client.bitrix24.kz"
+    assert state["return_url"] == "/app/#/settings"
+    assert state["tenant_id"] == "client-tenant"
+
+
 def test_bitrix_oauth_start_requires_login(tmp_path, monkeypatch):
     client = _client(tmp_path, monkeypatch, auth_required=True)
     monkeypatch.setenv("BITRIX_OAUTH_CLIENT_ID", "client-id")
@@ -183,6 +216,18 @@ def test_bitrix_oauth_start_requires_login(tmp_path, monkeypatch):
         "/api/bitrix/oauth/start",
         params={"portal": "client.bitrix24.kz"},
         follow_redirects=False,
+    )
+
+    assert response.status_code == 401
+
+
+def test_bitrix_connect_start_requires_login(tmp_path, monkeypatch):
+    client = _client(tmp_path, monkeypatch, auth_required=True)
+    monkeypatch.setenv("BITRIX_OAUTH_CLIENT_ID", "client-id")
+
+    response = client.post(
+        "/api/bitrix/connect/start",
+        json={"portal": "client.bitrix24.kz"},
     )
 
     assert response.status_code == 401

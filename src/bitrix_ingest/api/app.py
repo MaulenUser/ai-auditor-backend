@@ -749,6 +749,32 @@ def _append_query_params(url: str, params: dict[str, str]) -> str:
     return urlunsplit((split.scheme, split.netloc, split.path, urlencode(query), split.fragment))
 
 
+def _build_bitrix_oauth_authorize_url(
+    *,
+    portal: str,
+    return_url: str,
+    tenant_id: str,
+) -> dict[str, str]:
+    client_id = _bitrix_oauth_client_id()
+    if not client_id:
+        raise HTTPException(status_code=503, detail="BITRIX_OAUTH_CLIENT_ID is not configured.")
+    domain = _normalize_bitrix_domain(portal)
+    safe_return_url = _safe_relative_return_url(return_url)
+    state = _create_bitrix_oauth_state(domain, safe_return_url, tenant_id=tenant_id)
+    authorize_url = f"https://{domain}/oauth/authorize/?" + urlencode(
+        {
+            "client_id": client_id,
+            "response_type": "code",
+            "state": state,
+        }
+    )
+    return {
+        "authorize_url": authorize_url,
+        "portal": domain,
+        "return_url": safe_return_url,
+    }
+
+
 async def _bitrix_request_payload(request: Request) -> dict[str, Any]:
     content_type = request.headers.get("content-type", "").lower()
     if "application/json" in content_type:
@@ -1716,6 +1742,35 @@ def create_user(
 # ---------------------------------------------------------------------------
 
 
+class _BitrixConnectStartPayload(BaseModel):
+    portal: str
+    return_url: str = ""
+
+
+@app.post("/api/bitrix/connect/start", tags=["Bitrix OAuth"])
+def start_bitrix_connect(
+    payload: _BitrixConnectStartPayload,
+    authorization: str | None = Security(_authorization_header),
+    x_tenant_id: str | None = Header(None),
+) -> dict[str, Any]:
+    """Return a Bitrix OAuth authorization URL for frontend onboarding."""
+    del authorization
+    _require_user()
+    tenant_id = _resolve_tenant_id(x_tenant_id)
+    oauth = _build_bitrix_oauth_authorize_url(
+        portal=payload.portal,
+        return_url=payload.return_url,
+        tenant_id=tenant_id,
+    )
+    bitrix_oauth = _bitrix_oauth_repo().get_by_tenant(tenant_id)
+    return {
+        "status": "ok",
+        "tenant_id": tenant_id,
+        **oauth,
+        "bitrix_oauth": _bitrix_oauth_status(bitrix_oauth),
+    }
+
+
 @app.get("/api/bitrix/oauth/start", tags=["Bitrix OAuth"])
 def start_bitrix_oauth(
     portal: str = Query(..., description="Bitrix24 portal domain, e.g. client.bitrix24.kz"),
@@ -1725,21 +1780,13 @@ def start_bitrix_oauth(
 ) -> RedirectResponse:
     del authorization
     _require_user()
-    client_id = _bitrix_oauth_client_id()
-    if not client_id:
-        raise HTTPException(status_code=503, detail="BITRIX_OAUTH_CLIENT_ID is not configured.")
     tenant_id = _resolve_tenant_id(x_tenant_id)
-    domain = _normalize_bitrix_domain(portal)
-    safe_return_url = _safe_relative_return_url(return_url)
-    state = _create_bitrix_oauth_state(domain, safe_return_url, tenant_id=tenant_id)
-    authorize_url = f"https://{domain}/oauth/authorize/?" + urlencode(
-        {
-            "client_id": client_id,
-            "response_type": "code",
-            "state": state,
-        }
+    oauth = _build_bitrix_oauth_authorize_url(
+        portal=portal,
+        return_url=return_url,
+        tenant_id=tenant_id,
     )
-    return RedirectResponse(authorize_url, status_code=307)
+    return RedirectResponse(oauth["authorize_url"], status_code=307)
 
 
 @app.get("/api/bitrix/oauth/callback", tags=["Bitrix OAuth"], response_model=None)
