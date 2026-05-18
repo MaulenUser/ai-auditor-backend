@@ -317,6 +317,45 @@ def test_bitrix_oauth_callback_binds_token_to_state_tenant(tmp_path, monkeypatch
     assert TenantRepository(tmp_path / "app.db").get("client-tenant").name == "Client Tenant"
 
 
+def test_bitrix_oauth_callback_prefers_callback_scope_when_token_scope_is_app(tmp_path, monkeypatch):
+    client = _client(tmp_path, monkeypatch, auth_required=True)
+    monkeypatch.setenv("BITRIX_OAUTH_CLIENT_ID", "client-id")
+    monkeypatch.setenv("BITRIX_OAUTH_CLIENT_SECRET", "client-secret")
+    TenantRepository(tmp_path / "app.db").save(Tenant(id="client-tenant", name="Client Tenant"))
+    state = app_module._create_bitrix_oauth_state("client.bitrix24.kz", tenant_id="client-tenant")
+
+    def fake_exchange(params):
+        return {
+            "access_token": "access-token",
+            "refresh_token": "refresh-token",
+            "expires_in": 3600,
+            "scope": "app",
+            "domain": "client.bitrix24.kz",
+            "client_endpoint": "https://client.bitrix24.kz/rest/",
+            "member_id": "member-123",
+        }
+
+    monkeypatch.setattr(app_module, "_request_bitrix_oauth_token", fake_exchange)
+
+    response = client.get(
+        "/api/bitrix/oauth/callback",
+        params={
+            "code": "auth-code",
+            "state": state,
+            "domain": "client.bitrix24.kz",
+            "scope": REQUIRED_SCOPES,
+        },
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["bitrix_oauth"]["scope"] == REQUIRED_SCOPES
+    assert body["bitrix_oauth"]["missing_scopes"] == []
+    assert body["bitrix_oauth"]["has_required_scopes"] is True
+    token = BitrixOAuthRepository(tmp_path / "app.db").get_by_tenant("client-tenant")
+    assert token.scope == REQUIRED_SCOPES
+
+
 def test_bitrix_oauth_callback_rebinds_existing_member_token_to_state_tenant(tmp_path, monkeypatch):
     client = _client(tmp_path, monkeypatch, auth_required=True)
     monkeypatch.setenv("BITRIX_OAUTH_CLIENT_ID", "client-id")

@@ -870,6 +870,14 @@ def _verify_bitrix_application_token(auth: dict[str, Any]) -> None:
         raise HTTPException(status_code=403, detail="Invalid Bitrix application token.")
 
 
+def _resolve_bitrix_oauth_scope(auth: dict[str, Any], fallback_scope: str = "") -> str:
+    scope = str(auth.get("scope") or "").strip()
+    fallback = str(fallback_scope or "").strip()
+    if fallback and (not scope or scope.lower() == "app"):
+        return fallback
+    return scope or fallback
+
+
 def _save_bitrix_oauth_token(
     auth: dict[str, Any],
     *,
@@ -912,7 +920,7 @@ def _save_bitrix_oauth_token(
         access_token=access_token,
         refresh_token=refresh_token,
         expires_at=_oauth_expires_at(auth),
-        scope=str(auth.get("scope") or fallback_scope or ""),
+        scope=_resolve_bitrix_oauth_scope(auth, fallback_scope=fallback_scope),
         status="active",
     )
     repo.save(token)
