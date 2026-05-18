@@ -3,6 +3,7 @@ from __future__ import annotations
 import time
 from urllib.parse import parse_qs, urlparse
 
+import pytest
 from fastapi.testclient import TestClient
 
 from bitrix_ingest.api import app as app_module
@@ -11,6 +12,8 @@ from bitrix_ingest.domain.tenant import Tenant
 from bitrix_ingest.domain.user import User
 from bitrix_ingest.infrastructure.database import BitrixOAuthRepository, TenantRepository, UserRepository
 from bitrix_ingest.infrastructure.http import BitrixClient, BitrixOAuthClient
+
+REQUIRED_SCOPES = ",".join(app_module._REQUIRED_BITRIX_OAUTH_SCOPES)
 
 
 def _client(tmp_path, monkeypatch, *, auth_required: bool = True) -> TestClient:
@@ -328,6 +331,7 @@ def test_bitrix_uninstall_marks_token_revoked(tmp_path, monkeypatch):
             client_endpoint="https://client.bitrix24.kz/rest/",
             access_token="access-token",
             refresh_token="refresh-token",
+            scope=REQUIRED_SCOPES,
             status="active",
         )
     )
@@ -365,6 +369,10 @@ def test_get_integrations_includes_bitrix_oauth_status_without_secrets(tmp_path,
     body = response.json()
     assert body["bitrix_oauth"]["configured"] is True
     assert body["bitrix_oauth"]["bitrix_member_id"] == "member-123"
+    assert body["bitrix_oauth"]["required_scopes"] == list(app_module._REQUIRED_BITRIX_OAUTH_SCOPES)
+    assert body["bitrix_oauth"]["missing_scopes"] == list(app_module._REQUIRED_BITRIX_OAUTH_SCOPES)
+    assert body["bitrix_oauth"]["has_required_scopes"] is False
+    assert body["bitrix_oauth"]["configuration_error"].startswith("Недостаточно прав Bitrix")
     assert "access_token" not in body["bitrix_oauth"]
     assert "refresh_token" not in body["bitrix_oauth"]
 
@@ -379,6 +387,7 @@ def test_bitrix_gateway_prefers_request_webhook_over_oauth(tmp_path, monkeypatch
             client_endpoint="https://client.bitrix24.kz/rest/",
             access_token="access-token",
             refresh_token="refresh-token",
+            scope=REQUIRED_SCOPES,
             status="active",
         )
     )
@@ -405,6 +414,7 @@ def test_bitrix_gateway_uses_oauth_before_stored_webhook(tmp_path, monkeypatch):
             client_endpoint="https://client.bitrix24.kz/rest/",
             access_token="access-token",
             refresh_token="refresh-token",
+            scope=REQUIRED_SCOPES,
             status="active",
         )
     )
@@ -412,6 +422,29 @@ def test_bitrix_gateway_uses_oauth_before_stored_webhook(tmp_path, monkeypatch):
     gateway = app_module._resolve_bitrix_gateway(None, "member-123")
 
     assert isinstance(gateway, BitrixOAuthClient)
+
+
+def test_bitrix_gateway_rejects_oauth_missing_required_scopes(tmp_path, monkeypatch):
+    _client(tmp_path, monkeypatch, auth_required=False)
+    BitrixOAuthRepository(tmp_path / "app.db").save(
+        app_module.BitrixOAuthToken(
+            tenant_id="member-123",
+            bitrix_member_id="member-123",
+            bitrix_domain="client.bitrix24.kz",
+            client_endpoint="https://client.bitrix24.kz/rest/",
+            access_token="access-token",
+            refresh_token="refresh-token",
+            scope="crm,task,user_basic,user,imopenlines,telephony,disk",
+            status="active",
+        )
+    )
+
+    with pytest.raises(app_module.HTTPException) as exc:
+        app_module._resolve_bitrix_gateway(None, "member-123")
+
+    assert exc.value.status_code == 422
+    assert exc.value.detail["missing_scopes"] == ["department"]
+    assert exc.value.detail["message"] == "Недостаточно прав Bitrix: отсутствует department"
 
 
 def test_bitrix_gateway_falls_back_to_stored_webhook(tmp_path, monkeypatch):
@@ -436,6 +469,7 @@ def test_whatsapp_gateway_uses_oauth_when_no_whatsapp_webhook(tmp_path, monkeypa
             client_endpoint="https://client.bitrix24.kz/rest/",
             access_token="access-token",
             refresh_token="refresh-token",
+            scope=REQUIRED_SCOPES,
             status="active",
         )
     )

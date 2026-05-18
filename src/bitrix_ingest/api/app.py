@@ -77,6 +77,17 @@ from ..infrastructure.persistence.memory_writer import InMemoryJsonSink, TeeJson
 
 logger = logging.getLogger(__name__)
 
+_REQUIRED_BITRIX_OAUTH_SCOPES = (
+    "crm",
+    "task",
+    "user_basic",
+    "user",
+    "imopenlines",
+    "telephony",
+    "disk",
+    "department",
+)
+
 # ---------------------------------------------------------------------------
 # Security schemes — shown in the Swagger "Authorize" dialog
 # ---------------------------------------------------------------------------
@@ -480,6 +491,60 @@ def _active_bitrix_oauth_token(tenant_id: str) -> BitrixOAuthToken | None:
     return None
 
 
+def _parse_bitrix_oauth_scopes(scope: str) -> set[str]:
+    return {
+        item.strip().lower()
+        for item in re.split(r"[,\s]+", scope or "")
+        if item.strip()
+    }
+
+
+def _missing_bitrix_oauth_scopes(scope: str) -> list[str]:
+    granted = _parse_bitrix_oauth_scopes(scope)
+    return [item for item in _REQUIRED_BITRIX_OAUTH_SCOPES if item not in granted]
+
+
+def _bitrix_oauth_scope_error(missing_scopes: list[str]) -> str:
+    return "Недостаточно прав Bitrix: отсутствует " + ", ".join(missing_scopes)
+
+
+def _bitrix_oauth_status(token: BitrixOAuthToken | None) -> dict[str, Any]:
+    if token is None:
+        return {
+            "configured": False,
+            "required_scopes": list(_REQUIRED_BITRIX_OAUTH_SCOPES),
+            "missing_scopes": list(_REQUIRED_BITRIX_OAUTH_SCOPES),
+            "has_required_scopes": False,
+        }
+    status = token.to_status_dict()
+    missing = _missing_bitrix_oauth_scopes(token.scope)
+    status.update(
+        {
+            "required_scopes": list(_REQUIRED_BITRIX_OAUTH_SCOPES),
+            "missing_scopes": missing,
+            "has_required_scopes": not missing,
+        }
+    )
+    if missing:
+        status["configuration_error"] = _bitrix_oauth_scope_error(missing)
+    return status
+
+
+def _ensure_bitrix_oauth_required_scopes(token: BitrixOAuthToken) -> None:
+    missing = _missing_bitrix_oauth_scopes(token.scope)
+    if not missing:
+        return
+    raise HTTPException(
+        status_code=422,
+        detail={
+            "message": _bitrix_oauth_scope_error(missing),
+            "missing_scopes": missing,
+            "required_scopes": list(_REQUIRED_BITRIX_OAUTH_SCOPES),
+            "bitrix_domain": token.bitrix_domain,
+        },
+    )
+
+
 def _bitrix_oauth_client(
     tenant_id: str,
     *,
@@ -516,7 +581,9 @@ def _resolve_bitrix_gateway(
             trace=trace,
             trace_name=trace_name,
         )
-    if _active_bitrix_oauth_token(tenant_id):
+    oauth_token = _active_bitrix_oauth_token(tenant_id)
+    if oauth_token:
+        _ensure_bitrix_oauth_required_scopes(oauth_token)
         return _bitrix_oauth_client(
             tenant_id,
             call_delay=call_delay,
@@ -570,7 +637,9 @@ def _resolve_whatsapp_gateway(
             trace=trace,
             trace_name=trace_name,
         )
-    if _active_bitrix_oauth_token(tenant_id):
+    oauth_token = _active_bitrix_oauth_token(tenant_id)
+    if oauth_token:
+        _ensure_bitrix_oauth_required_scopes(oauth_token)
         return _bitrix_oauth_client(
             tenant_id,
             call_delay=call_delay,
@@ -1714,7 +1783,7 @@ def bitrix_oauth_callback(
     body = {
         "status": "ok",
         "tenant_id": token.tenant_id,
-        "bitrix_oauth": token.to_status_dict(),
+        "bitrix_oauth": _bitrix_oauth_status(token),
     }
 
     return_url = str(state_payload.get("return_url") or "")
@@ -1741,7 +1810,7 @@ async def bitrix_install_callback(request: Request) -> dict[str, Any]:
     return {
         "status": "ok",
         "tenant_id": token.tenant_id,
-        "bitrix_oauth": token.to_status_dict(),
+        "bitrix_oauth": _bitrix_oauth_status(token),
     }
 
 
@@ -1757,13 +1826,13 @@ async def bitrix_uninstall_callback(request: Request) -> dict[str, Any]:
     repo = _bitrix_oauth_repo()
     token = repo.get_by_member_id(member_id)
     if token is None:
-        return {"status": "ok", "tenant_id": "", "bitrix_oauth": {"configured": False}}
+        return {"status": "ok", "tenant_id": "", "bitrix_oauth": _bitrix_oauth_status(None)}
     repo.update_status(token.tenant_id, "revoked")
     revoked = repo.get_by_tenant(token.tenant_id)
     return {
         "status": "ok",
         "tenant_id": token.tenant_id,
-        "bitrix_oauth": revoked.to_status_dict() if revoked else {"configured": False},
+        "bitrix_oauth": _bitrix_oauth_status(revoked),
     }
 
 
@@ -2049,7 +2118,7 @@ def get_app_state(x_tenant_id: str | None = Header(None)) -> dict[str, Any]:
         "setup": {
             "business_profile": profile.to_dict() if profile else {},
             "integrations": integrations.to_status_dict(),
-            "bitrix_oauth": bitrix_oauth.to_status_dict() if bitrix_oauth else {"configured": False},
+            "bitrix_oauth": _bitrix_oauth_status(bitrix_oauth),
         },
     }
 
@@ -2081,7 +2150,7 @@ def setup_profile(
             "setup": {
                 "business_profile": profile.to_dict(),
                 "integrations": integrations.to_status_dict(),
-                "bitrix_oauth": bitrix_oauth.to_status_dict() if bitrix_oauth else {"configured": False},
+                "bitrix_oauth": _bitrix_oauth_status(bitrix_oauth),
             },
         }
     }
@@ -2102,7 +2171,7 @@ def get_integrations(x_tenant_id: str | None = Header(None)) -> dict[str, Any]:
     return {
         "tenant_id": tid,
         "integrations": ints.to_status_dict(),
-        "bitrix_oauth": bitrix_oauth.to_status_dict() if bitrix_oauth else {"configured": False},
+        "bitrix_oauth": _bitrix_oauth_status(bitrix_oauth),
     }
 
 
@@ -2128,7 +2197,7 @@ def setup_integrations(
         "status": "ok",
         "tenant_id": tid,
         "integrations": ints.to_status_dict(),
-        "bitrix_oauth": bitrix_oauth.to_status_dict() if bitrix_oauth else {"configured": False},
+        "bitrix_oauth": _bitrix_oauth_status(bitrix_oauth),
     }
 
 
