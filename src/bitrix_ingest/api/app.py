@@ -638,13 +638,16 @@ def _safe_relative_return_url(value: str | None) -> str:
     return url
 
 
-def _create_bitrix_oauth_state(portal: str, return_url: str = "") -> str:
+def _create_bitrix_oauth_state(portal: str, return_url: str = "", tenant_id: str = "") -> str:
     payload = {
         "portal": portal,
         "return_url": return_url,
         "iat": int(time.time()),
         "nonce": secrets.token_urlsafe(16),
     }
+    if tenant_id:
+        _validate_tenant_id(tenant_id)
+        payload["tenant_id"] = tenant_id
     body = _b64_encode(json.dumps(payload, separators=(",", ":")).encode("utf-8"))
     signature = hmac.new(_auth_secret().encode("utf-8"), body.encode("ascii"), hashlib.sha256).digest()
     return f"{body}.{_b64_encode(signature)}"
@@ -777,6 +780,7 @@ def _save_bitrix_oauth_token(
     *,
     fallback_domain: str = "",
     fallback_scope: str = "",
+    tenant_id: str = "",
 ) -> BitrixOAuthToken:
     access_token = str(auth.get("access_token") or auth.get("AUTH_ID") or "").strip()
     refresh_token = str(auth.get("refresh_token") or auth.get("REFRESH_ID") or "").strip()
@@ -788,10 +792,25 @@ def _save_bitrix_oauth_token(
         )
 
     domain = _domain_from_auth(auth, fallback_domain=fallback_domain)
-    tenant_id = _tenant_id_from_bitrix_member_id(member_id)
-    _tenant_repo().save(Tenant(id=tenant_id, name=domain or tenant_id))
+    repo = _bitrix_oauth_repo()
+    existing = repo.get_by_member_id(member_id)
+    requested_tenant_id = tenant_id.strip()
+    resolved_tenant_id = (
+        requested_tenant_id
+        or (existing.tenant_id if existing else "")
+        or _tenant_id_from_bitrix_member_id(member_id)
+    )
+    _validate_tenant_id(resolved_tenant_id)
+    if requested_tenant_id or existing:
+        _tenant_repo().ensure(resolved_tenant_id)
+    else:
+        _tenant_repo().save(Tenant(id=resolved_tenant_id, name=domain or resolved_tenant_id))
+
+    if existing and existing.tenant_id != resolved_tenant_id:
+        repo.delete_by_tenant(existing.tenant_id)
+
     token = BitrixOAuthToken(
-        tenant_id=tenant_id,
+        tenant_id=resolved_tenant_id,
         bitrix_member_id=member_id,
         bitrix_domain=domain,
         client_endpoint=_client_endpoint_from_auth(auth, domain),
@@ -801,7 +820,7 @@ def _save_bitrix_oauth_token(
         scope=str(auth.get("scope") or fallback_scope or ""),
         status="active",
     )
-    _bitrix_oauth_repo().save(token)
+    repo.save(token)
     return token
 
 
@@ -1632,13 +1651,18 @@ def create_user(
 def start_bitrix_oauth(
     portal: str = Query(..., description="Bitrix24 portal domain, e.g. client.bitrix24.kz"),
     return_url: str = Query("", description="Relative frontend URL to return to after callback"),
+    authorization: str | None = Security(_authorization_header),
+    x_tenant_id: str | None = Header(None),
 ) -> RedirectResponse:
+    del authorization
+    _require_user()
     client_id = _bitrix_oauth_client_id()
     if not client_id:
         raise HTTPException(status_code=503, detail="BITRIX_OAUTH_CLIENT_ID is not configured.")
+    tenant_id = _resolve_tenant_id(x_tenant_id)
     domain = _normalize_bitrix_domain(portal)
     safe_return_url = _safe_relative_return_url(return_url)
-    state = _create_bitrix_oauth_state(domain, safe_return_url)
+    state = _create_bitrix_oauth_state(domain, safe_return_url, tenant_id=tenant_id)
     authorize_url = f"https://{domain}/oauth/authorize/?" + urlencode(
         {
             "client_id": client_id,
@@ -1685,6 +1709,7 @@ def bitrix_oauth_callback(
         token_payload,
         fallback_domain=callback_domain,
         fallback_scope=scope or "",
+        tenant_id=str(state_payload.get("tenant_id") or ""),
     )
     body = {
         "status": "ok",

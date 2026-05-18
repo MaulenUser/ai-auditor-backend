@@ -7,7 +7,9 @@ from fastapi.testclient import TestClient
 
 from bitrix_ingest.api import app as app_module
 from bitrix_ingest.domain.integrations import Integrations
-from bitrix_ingest.infrastructure.database import BitrixOAuthRepository, TenantRepository
+from bitrix_ingest.domain.tenant import Tenant
+from bitrix_ingest.domain.user import User
+from bitrix_ingest.infrastructure.database import BitrixOAuthRepository, TenantRepository, UserRepository
 from bitrix_ingest.infrastructure.http import BitrixClient, BitrixOAuthClient
 
 
@@ -16,6 +18,29 @@ def _client(tmp_path, monkeypatch, *, auth_required: bool = True) -> TestClient:
     monkeypatch.setenv("AI_AUDITOR_AUTH_REQUIRED", "true" if auth_required else "false")
     monkeypatch.setenv("AI_AUDITOR_AUTH_SECRET", "test-auth-secret")
     return TestClient(app_module.app)
+
+
+def _save_user(tmp_path, username: str, tenant_id: str, role: str = "client") -> None:
+    db_path = tmp_path / "app.db"
+    TenantRepository(db_path).save(Tenant(id=tenant_id, name=tenant_id))
+    UserRepository(db_path).save(
+        User(
+            username=username,
+            tenant_id=tenant_id,
+            role=role,
+            password_hash=app_module._hash_password("secret-password"),
+            active=True,
+        )
+    )
+
+
+def _login(client: TestClient, username: str) -> str:
+    response = client.post(
+        "/api/auth/login",
+        json={"username": username, "password": "secret-password"},
+    )
+    assert response.status_code == 200
+    return response.json()["access_token"]
 
 
 def test_bitrix_install_callback_saves_oauth_token_and_creates_tenant(tmp_path, monkeypatch):
@@ -56,6 +81,48 @@ def test_bitrix_install_callback_saves_oauth_token_and_creates_tenant(tmp_path, 
     assert TenantRepository(tmp_path / "app.db").get("member-123").name == "client.bitrix24.kz"
 
 
+def test_bitrix_install_callback_preserves_existing_tenant_binding(tmp_path, monkeypatch):
+    client = _client(tmp_path, monkeypatch, auth_required=True)
+    db_path = tmp_path / "app.db"
+    TenantRepository(db_path).save(Tenant(id="client-tenant", name="Client Tenant"))
+    repo = BitrixOAuthRepository(db_path)
+    repo.save(
+        app_module.BitrixOAuthToken(
+            tenant_id="client-tenant",
+            bitrix_member_id="member-123",
+            bitrix_domain="client.bitrix24.kz",
+            client_endpoint="https://client.bitrix24.kz/rest/",
+            access_token="old-access",
+            refresh_token="old-refresh",
+            status="active",
+        )
+    )
+
+    response = client.post(
+        "/api/bitrix/install",
+        json={
+            "auth": {
+                "access_token": "new-access",
+                "refresh_token": "new-refresh",
+                "expires_in": "3600",
+                "scope": "crm,user_basic,task",
+                "domain": "client.bitrix24.kz",
+                "client_endpoint": "https://client.bitrix24.kz/rest/",
+                "member_id": "member-123",
+            }
+        },
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["tenant_id"] == "client-tenant"
+    token = repo.get_by_tenant("client-tenant")
+    assert token is not None
+    assert token.access_token == "new-access"
+    assert token.refresh_token == "new-refresh"
+    assert repo.get_by_tenant("member-123") is None
+
+
 def test_bitrix_install_rejects_invalid_application_token(tmp_path, monkeypatch):
     client = _client(tmp_path, monkeypatch, auth_required=True)
     monkeypatch.setenv("BITRIX_APPLICATION_TOKEN", "expected-token")
@@ -80,10 +147,13 @@ def test_bitrix_install_rejects_invalid_application_token(tmp_path, monkeypatch)
 def test_bitrix_oauth_start_redirects_to_portal_with_signed_state(tmp_path, monkeypatch):
     client = _client(tmp_path, monkeypatch, auth_required=True)
     monkeypatch.setenv("BITRIX_OAUTH_CLIENT_ID", "client-id")
+    _save_user(tmp_path, "client@example.com", "client-tenant")
+    token = _login(client, "client@example.com")
 
     response = client.get(
         "/api/bitrix/oauth/start",
         params={"portal": "https://client.bitrix24.kz/", "return_url": "/app/#/settings"},
+        headers={"Authorization": f"Bearer {token}"},
         follow_redirects=False,
     )
 
@@ -99,6 +169,20 @@ def test_bitrix_oauth_start_redirects_to_portal_with_signed_state(tmp_path, monk
     state = app_module._decode_bitrix_oauth_state(query["state"][0])
     assert state["portal"] == "client.bitrix24.kz"
     assert state["return_url"] == "/app/#/settings"
+    assert state["tenant_id"] == "client-tenant"
+
+
+def test_bitrix_oauth_start_requires_login(tmp_path, monkeypatch):
+    client = _client(tmp_path, monkeypatch, auth_required=True)
+    monkeypatch.setenv("BITRIX_OAUTH_CLIENT_ID", "client-id")
+
+    response = client.get(
+        "/api/bitrix/oauth/start",
+        params={"portal": "client.bitrix24.kz"},
+        follow_redirects=False,
+    )
+
+    assert response.status_code == 401
 
 
 def test_bitrix_oauth_callback_exchanges_code_and_saves_token(tmp_path, monkeypatch):
@@ -139,6 +223,98 @@ def test_bitrix_oauth_callback_exchanges_code_and_saves_token(tmp_path, monkeypa
     assert body["tenant_id"] == "member-123"
     assert body["bitrix_oauth"]["configured"] is True
     assert BitrixOAuthRepository(tmp_path / "app.db").get_by_member_id("member-123") is not None
+
+
+def test_bitrix_oauth_callback_binds_token_to_state_tenant(tmp_path, monkeypatch):
+    client = _client(tmp_path, monkeypatch, auth_required=True)
+    monkeypatch.setenv("BITRIX_OAUTH_CLIENT_ID", "client-id")
+    monkeypatch.setenv("BITRIX_OAUTH_CLIENT_SECRET", "client-secret")
+    TenantRepository(tmp_path / "app.db").save(Tenant(id="client-tenant", name="Client Tenant"))
+    state = app_module._create_bitrix_oauth_state(
+        "client.bitrix24.kz",
+        "/app/#/settings",
+        tenant_id="client-tenant",
+    )
+
+    def fake_exchange(params):
+        return {
+            "access_token": "access-token",
+            "refresh_token": "refresh-token",
+            "expires_in": 3600,
+            "scope": "crm,user_basic,task,department",
+            "domain": "client.bitrix24.kz",
+            "client_endpoint": "https://client.bitrix24.kz/rest/",
+            "member_id": "member-123",
+        }
+
+    monkeypatch.setattr(app_module, "_request_bitrix_oauth_token", fake_exchange)
+
+    response = client.get(
+        "/api/bitrix/oauth/callback",
+        params={"code": "auth-code", "state": state, "domain": "client.bitrix24.kz"},
+        follow_redirects=False,
+    )
+
+    assert response.status_code == 307
+    body_location = response.headers["location"]
+    assert "bitrix_oauth=connected" in body_location
+    assert "tenant_id=client-tenant" in body_location
+
+    repo = BitrixOAuthRepository(tmp_path / "app.db")
+    token = repo.get_by_tenant("client-tenant")
+    assert token is not None
+    assert token.bitrix_member_id == "member-123"
+    assert token.access_token == "access-token"
+    assert repo.get_by_tenant("member-123") is None
+    assert TenantRepository(tmp_path / "app.db").get("client-tenant").name == "Client Tenant"
+
+
+def test_bitrix_oauth_callback_rebinds_existing_member_token_to_state_tenant(tmp_path, monkeypatch):
+    client = _client(tmp_path, monkeypatch, auth_required=True)
+    monkeypatch.setenv("BITRIX_OAUTH_CLIENT_ID", "client-id")
+    monkeypatch.setenv("BITRIX_OAUTH_CLIENT_SECRET", "client-secret")
+    db_path = tmp_path / "app.db"
+    TenantRepository(db_path).save(Tenant(id="client-tenant", name="Client Tenant"))
+    repo = BitrixOAuthRepository(db_path)
+    repo.save(
+        app_module.BitrixOAuthToken(
+            tenant_id="member-123",
+            bitrix_member_id="member-123",
+            bitrix_domain="client.bitrix24.kz",
+            client_endpoint="https://client.bitrix24.kz/rest/",
+            access_token="old-access",
+            refresh_token="old-refresh",
+            status="active",
+        )
+    )
+    state = app_module._create_bitrix_oauth_state("client.bitrix24.kz", tenant_id="client-tenant")
+
+    def fake_exchange(params):
+        return {
+            "access_token": "new-access",
+            "refresh_token": "new-refresh",
+            "expires_in": 3600,
+            "scope": "crm,user_basic,task,department",
+            "domain": "client.bitrix24.kz",
+            "client_endpoint": "https://client.bitrix24.kz/rest/",
+            "member_id": "member-123",
+        }
+
+    monkeypatch.setattr(app_module, "_request_bitrix_oauth_token", fake_exchange)
+
+    response = client.get(
+        "/api/bitrix/oauth/callback",
+        params={"code": "auth-code", "state": state, "domain": "client.bitrix24.kz"},
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["tenant_id"] == "client-tenant"
+    assert repo.get_by_tenant("member-123") is None
+    rebound = repo.get_by_tenant("client-tenant")
+    assert rebound is not None
+    assert rebound.bitrix_member_id == "member-123"
+    assert rebound.access_token == "new-access"
 
 
 def test_bitrix_uninstall_marks_token_revoked(tmp_path, monkeypatch):
