@@ -29,6 +29,7 @@ from ..domain.analysis_run import AnalysisRun
 from ..domain.bitrix_connect_session import BitrixConnectSession
 from ..domain.bitrix_oauth import BitrixOAuthToken
 from ..domain.business_profile import BusinessProfile
+from ..domain.client_registration import ClientRegistration
 from ..domain.integrations import Integrations
 from ..domain.tenant import Tenant
 from ..domain.user import User
@@ -37,6 +38,7 @@ from ..infrastructure.database import (
     BitrixConnectSessionRepository,
     BitrixOAuthRepository,
     BusinessProfileRepository,
+    ClientRegistrationRepository,
     IntegrationsRepository,
     SalesAnalyticsRepository,
     TenantRepository,
@@ -162,7 +164,9 @@ _SALES_ANALYTICS_JOBS_LOCK = threading.Lock()
 _SALES_AUDIT_JOBS: dict[str, dict[str, Any]] = {}
 _SALES_AUDIT_JOBS_LOCK = threading.Lock()
 _TENANT_ID_RE = re.compile(r"^[A-Za-z0-9_-]{1,64}$")
-_USERNAME_RE = re.compile(r"^[A-Za-z0-9_.@-]{3,128}$")
+_USERNAME_RE = re.compile(r"^[A-Za-z0-9_.+@-]{3,128}$")
+_EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
+_PHONE_RE = re.compile(r"^[0-9+().\-\s]{5,32}$")
 _BITRIX_DOMAIN_RE = re.compile(r"^[A-Za-z0-9.-]+(?::[0-9]{1,5})?$")
 _ROLE_VALUES = {"admin", "client"}
 _AUTH_CONTEXT: contextvars.ContextVar[User | None] = contextvars.ContextVar(
@@ -194,6 +198,10 @@ def _bitrix_oauth_repo() -> BitrixOAuthRepository:
 
 def _bitrix_connect_session_repo() -> BitrixConnectSessionRepository:
     return BitrixConnectSessionRepository(_DB_PATH)
+
+
+def _client_registration_repo() -> ClientRegistrationRepository:
+    return ClientRegistrationRepository(_DB_PATH)
 
 
 def _runs_repo() -> AnalysisRunRepository:
@@ -427,7 +435,14 @@ def _require_admin_or_dev() -> User | None:
 
 def _public_auth_path(path: str) -> bool:
     return (
-        path in {"/health", "/openapi.json", "/api/auth/login", "/api/auth/status", "/api/auth/bootstrap"}
+        path in {
+            "/health",
+            "/openapi.json",
+            "/api/auth/login",
+            "/api/auth/register",
+            "/api/auth/status",
+            "/api/auth/bootstrap",
+        }
         or path.startswith("/api/bitrix/")
         or path.startswith("/docs")
         or path.startswith("/redoc")
@@ -1729,6 +1744,13 @@ class _LoginPayload(BaseModel):
     password: str
 
 
+class _RegisterPayload(BaseModel):
+    name: str = ""
+    phone: str
+    email: str
+    password: str
+
+
 class _UserPayload(BaseModel):
     username: str
     password: str
@@ -1742,9 +1764,54 @@ def _normalize_username(username: str) -> str:
     if not _USERNAME_RE.fullmatch(value):
         raise HTTPException(
             status_code=422,
-            detail="Username must be 3-128 characters: letters, digits, dot, underscore, @, hyphen.",
+            detail="Username must be 3-128 characters: letters, digits, dot, underscore, plus, @, hyphen.",
         )
     return value
+
+
+def _normalize_registration_email(email: str) -> str:
+    value = (email or "").strip().lower()
+    if len(value) > 128 or not _EMAIL_RE.fullmatch(value):
+        raise HTTPException(status_code=422, detail="Email must be a valid email address.")
+    return _normalize_username(value)
+
+
+def _normalize_registration_name(name: str) -> str:
+    value = (name or "").strip()
+    if len(value) > 128:
+        raise HTTPException(status_code=422, detail="Name must be 128 characters or fewer.")
+    return value
+
+
+def _normalize_registration_phone(phone: str) -> str:
+    value = (phone or "").strip()
+    digit_count = sum(1 for char in value if char.isdigit())
+    if not value:
+        raise HTTPException(status_code=422, detail="Phone is required.")
+    if digit_count < 5 or not _PHONE_RE.fullmatch(value):
+        raise HTTPException(status_code=422, detail="Phone must contain 5-32 digits or common phone symbols.")
+    return value
+
+
+def _validate_registration_password(password: str) -> None:
+    if not password or not password.strip():
+        raise HTTPException(status_code=422, detail="Password cannot be empty.")
+
+
+def _tenant_id_slug(value: str) -> str:
+    slug = re.sub(r"[^a-z0-9]+", "-", value.lower()).strip("-")
+    return slug[:45].strip("-") or "client"
+
+
+def _new_registration_tenant_id(email: str) -> str:
+    source = email.split("@", 1)[0] or "client"
+    base = _tenant_id_slug(source)
+    tenants = _tenant_repo()
+    for _ in range(10):
+        tenant_id = f"{base}-{secrets.token_hex(4)}"
+        if tenants.get(tenant_id) is None:
+            return tenant_id
+    raise HTTPException(status_code=503, detail="Could not allocate tenant id.")
 
 
 def _normalize_role(role: str) -> str:
@@ -1787,6 +1854,49 @@ def login(payload: _LoginPayload) -> dict[str, Any]:
         "token_type": "bearer",
         "expires_in": _token_ttl_seconds(),
         "user": user.to_public_dict(),
+    }
+
+
+@app.post("/api/auth/register", tags=["Auth"], status_code=201)
+def register_client(payload: _RegisterPayload) -> dict[str, Any]:
+    email = _normalize_registration_email(payload.email)
+    phone = _normalize_registration_phone(payload.phone)
+    name = _normalize_registration_name(payload.name)
+    _validate_registration_password(payload.password)
+
+    users = _user_repo()
+    registrations = _client_registration_repo()
+    if users.get(email) is not None or registrations.get_by_email(email) is not None:
+        raise HTTPException(status_code=409, detail="User with this email already exists.")
+
+    tenant_id = _new_registration_tenant_id(email)
+    tenant_name = name or email
+    _tenant_repo().save(Tenant(id=tenant_id, name=tenant_name))
+
+    user = User(
+        username=email,
+        tenant_id=tenant_id,
+        role="client",
+        password_hash=_hash_password(payload.password),
+        active=True,
+    )
+    users.save(user)
+
+    registration = ClientRegistration(
+        email=email,
+        tenant_id=tenant_id,
+        phone=phone,
+        name=name,
+    )
+    registrations.save(registration)
+
+    return {
+        "status": "ok",
+        "access_token": _create_access_token(user),
+        "token_type": "bearer",
+        "expires_in": _token_ttl_seconds(),
+        "user": user.to_public_dict(),
+        "registration": registration.to_public_dict(),
     }
 
 

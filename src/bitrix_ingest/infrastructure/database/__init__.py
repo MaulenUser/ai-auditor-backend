@@ -1,5 +1,6 @@
 from .bitrix_connect_session_repository import BitrixConnectSessionRepository
 from .bitrix_oauth_repository import BitrixOAuthRepository
+from .client_registration_repository import ClientRegistrationRepository
 from .repository import BusinessProfileRepository
 from .integrations_repository import IntegrationsRepository
 from .tenant_repository import TenantRepository
@@ -11,6 +12,7 @@ __all__ = [
     "BusinessProfileRepository",
     "BitrixConnectSessionRepository",
     "BitrixOAuthRepository",
+    "ClientRegistrationRepository",
     "IntegrationsRepository",
     "TenantRepository",
     "AnalysisRunRepository",

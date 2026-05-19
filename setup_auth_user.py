@@ -17,7 +17,7 @@ from bitrix_ingest.domain.user import User  # noqa: E402
 from bitrix_ingest.infrastructure.database import TenantRepository, UserRepository  # noqa: E402
 
 
-USERNAME_RE = re.compile(r"^[A-Za-z0-9_.@-]{3,128}$")
+USERNAME_RE = re.compile(r"^[A-Za-z0-9_.+@-]{3,128}$")
 TENANT_ID_RE = re.compile(r"^[A-Za-z0-9_-]{1,64}$")
 ROLES = {"admin", "client"}
 
@@ -36,7 +36,7 @@ def hash_password(password: str) -> str:
 def normalize_username(value: str) -> str:
     username = value.strip().lower()
     if not USERNAME_RE.fullmatch(username):
-        raise SystemExit("Invalid username. Use 3-128 chars: letters, digits, dot, underscore, @, hyphen.")
+        raise SystemExit("Invalid username. Use 3-128 chars: letters, digits, dot, underscore, plus, @, hyphen.")
     return username
 
 
