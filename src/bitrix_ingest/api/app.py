@@ -25,6 +25,7 @@ from fastapi.security import APIKeyHeader
 from pydantic import BaseModel
 
 from ..domain.analysis_run import AnalysisRun
+from ..domain.bitrix_connect_session import BitrixConnectSession
 from ..domain.bitrix_oauth import BitrixOAuthToken
 from ..domain.business_profile import BusinessProfile
 from ..domain.integrations import Integrations
@@ -32,6 +33,7 @@ from ..domain.tenant import Tenant
 from ..domain.user import User
 from ..infrastructure.database import (
     AnalysisRunRepository,
+    BitrixConnectSessionRepository,
     BitrixOAuthRepository,
     BusinessProfileRepository,
     IntegrationsRepository,
@@ -183,6 +185,10 @@ def _bitrix_oauth_repo() -> BitrixOAuthRepository:
     return BitrixOAuthRepository(_DB_PATH)
 
 
+def _bitrix_connect_session_repo() -> BitrixConnectSessionRepository:
+    return BitrixConnectSessionRepository(_DB_PATH)
+
+
 def _runs_repo() -> AnalysisRunRepository:
     return AnalysisRunRepository(_DB_PATH)
 
@@ -257,6 +263,17 @@ def _bitrix_oauth_default_return_url() -> str:
     return os.environ.get("BITRIX_OAUTH_SUCCESS_RETURN_URL", "").strip()
 
 
+def _public_base_url() -> str:
+    return (
+        os.environ.get("AI_AUDITOR_PUBLIC_BASE_URL", "").strip()
+        or os.environ.get("BITRIX_OAUTH_PUBLIC_BASE_URL", "").strip()
+    ).rstrip("/")
+
+
+def _bitrix_oauth_settings_redirect() -> str:
+    return os.environ.get("BITRIX_OAUTH_SETTINGS_REDIRECT", "").strip() or "/"
+
+
 def _bitrix_oauth_state_ttl_seconds() -> int:
     raw = os.environ.get("BITRIX_OAUTH_STATE_TTL_SECONDS", "").strip()
     try:
@@ -264,6 +281,15 @@ def _bitrix_oauth_state_ttl_seconds() -> int:
     except ValueError:
         ttl = 1200
     return max(60, ttl)
+
+
+def _bitrix_connect_session_ttl_seconds() -> int:
+    raw = os.environ.get("BITRIX_CONNECT_SESSION_TTL_SECONDS", "").strip()
+    try:
+        ttl = int(raw or "86400")
+    except ValueError:
+        ttl = 86400
+    return max(300, ttl)
 
 
 def _job_stale_seconds() -> int:
@@ -747,6 +773,68 @@ def _append_query_params(url: str, params: dict[str, str]) -> str:
     query = dict(parse_qsl(split.query, keep_blank_values=True))
     query.update(params)
     return urlunsplit((split.scheme, split.netloc, split.path, urlencode(query), split.fragment))
+
+
+_BITRIX_CONNECT_CODE_ALPHABET = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ"
+
+
+def _normalize_bitrix_connect_code(value: str) -> str:
+    return re.sub(r"[^A-Za-z0-9]", "", value or "").upper()
+
+
+def _format_bitrix_connect_code(value: str) -> str:
+    normalized = _normalize_bitrix_connect_code(value)
+    return "-".join(normalized[i : i + 4] for i in range(0, len(normalized), 4))
+
+
+def _new_bitrix_connect_code() -> str:
+    repo = _bitrix_connect_session_repo()
+    for _ in range(10):
+        code = "".join(secrets.choice(_BITRIX_CONNECT_CODE_ALPHABET) for _ in range(12))
+        if repo.get_by_code(code) is None:
+            return code
+    raise HTTPException(status_code=503, detail="Could not allocate Bitrix connection code.")
+
+
+def _create_bitrix_connect_session(
+    *,
+    tenant_id: str,
+    portal: str,
+    return_url: str,
+) -> BitrixConnectSession:
+    session = BitrixConnectSession(
+        connection_code=_new_bitrix_connect_code(),
+        tenant_id=tenant_id,
+        bitrix_domain=_normalize_bitrix_domain(portal),
+        return_url=_safe_relative_return_url(return_url),
+        expires_at=int(time.time()) + _bitrix_connect_session_ttl_seconds(),
+        status="pending",
+    )
+    _bitrix_connect_session_repo().save(session)
+    return session
+
+
+def _active_bitrix_connect_session(connection_code: str) -> BitrixConnectSession | None:
+    code = _normalize_bitrix_connect_code(connection_code)
+    if not code:
+        return None
+    session = _bitrix_connect_session_repo().get_by_code(code)
+    if session is None or session.status != "pending":
+        return None
+    if session.expires_at <= int(time.time()):
+        return None
+    return session
+
+
+def _public_api_url(request: Request, path: str) -> str:
+    base = _public_base_url()
+    if base:
+        return f"{base}{path}"
+    forwarded_proto = request.headers.get("x-forwarded-proto", "").split(",", 1)[0].strip()
+    forwarded_host = request.headers.get("x-forwarded-host", "").split(",", 1)[0].strip()
+    scheme = forwarded_proto or request.url.scheme
+    host = forwarded_host or request.headers.get("host") or request.url.netloc
+    return f"{scheme}://{host}{path}"
 
 
 def _build_bitrix_oauth_authorize_url(
@@ -1755,6 +1843,114 @@ class _BitrixConnectStartPayload(BaseModel):
     return_url: str = ""
 
 
+def _extract_bitrix_settings_data(payload: dict[str, Any]) -> dict[str, str]:
+    data = payload.get("data")
+    if not isinstance(data, dict):
+        return {}
+    return {str(key): str(value) for key, value in data.items()}
+
+
+def _bitrix_settings_error(field: str, message: str) -> JSONResponse:
+    return JSONResponse(
+        status_code=400,
+        content={
+            "status": "error",
+            "errors": [{"field": field, "message": message}],
+        },
+    )
+
+
+def _bitrix_settings_form_config(
+    request: Request,
+    *,
+    code_value: str = "",
+) -> dict[str, Any]:
+    client_id = _bitrix_oauth_client_id()
+    if not client_id:
+        raise HTTPException(status_code=503, detail="BITRIX_OAUTH_CLIENT_ID is not configured.")
+    return {
+        "title": "AISales Auditor",
+        "version": "1",
+        "steps": [
+            {
+                "id": "connect",
+                "title": "Connect AISales Auditor",
+                "description": (
+                    "Paste the connection code from AISales Auditor to link this "
+                    "Bitrix24 portal to the correct tenant."
+                ),
+                "fields": [
+                    {
+                        "id": "connection-code",
+                        "name": "connection_code",
+                        "type": "input",
+                        "label": "Connection code",
+                        "placeholder": "XXXX-XXXX-XXXX",
+                        "value": code_value,
+                    }
+                ],
+            }
+        ],
+        "form": {
+            "id": "aisales-auditor-bitrix-connect",
+            "action": _public_api_url(request, "/api/bitrix/settings/save"),
+            "clientId": client_id,
+            "redirect": _bitrix_oauth_settings_redirect(),
+            "saveCaption": "Connect",
+            "cancelCaption": "Later",
+        },
+    }
+
+
+@app.post("/api/bitrix/settings", tags=["Bitrix OAuth"])
+async def bitrix_settings(request: Request) -> dict[str, Any]:
+    """Return Bitrix REST-only setup wizard config for marketplace installs."""
+    payload = await _bitrix_request_payload(request)
+    auth = _extract_bitrix_auth_payload(payload)
+    _verify_bitrix_application_token(auth)
+    data = _extract_bitrix_settings_data(payload)
+
+    # Preserve the installation token under member_id until the user links it
+    # with an AISales tenant-specific connection code.
+    try:
+        _save_bitrix_oauth_token(auth)
+    except HTTPException:
+        pass
+
+    return _bitrix_settings_form_config(
+        request,
+        code_value=_format_bitrix_connect_code(data.get("connection_code", "")),
+    )
+
+
+@app.post("/api/bitrix/settings/save", tags=["Bitrix OAuth"])
+async def bitrix_settings_save(request: Request) -> Any:
+    """Bind a Bitrix REST-only install to the tenant that created a connection code."""
+    payload = await _bitrix_request_payload(request)
+    auth = _extract_bitrix_auth_payload(payload)
+    _verify_bitrix_application_token(auth)
+    data = _extract_bitrix_settings_data(payload)
+    code = _normalize_bitrix_connect_code(data.get("connection_code", ""))
+    if not code:
+        return _bitrix_settings_error("connection_code", "Connection code is required.")
+
+    session = _active_bitrix_connect_session(code)
+    if session is None:
+        return _bitrix_settings_error("connection_code", "Connection code is invalid or expired.")
+
+    token = _save_bitrix_oauth_token(
+        auth,
+        fallback_domain=session.bitrix_domain,
+        tenant_id=session.tenant_id,
+    )
+    _bitrix_connect_session_repo().mark_used(session.connection_code)
+    return {
+        "status": "success",
+        "tenant_id": token.tenant_id,
+        "bitrix_oauth": _bitrix_oauth_status(token),
+    }
+
+
 @app.post("/api/bitrix/connect/start", tags=["Bitrix OAuth"])
 def start_bitrix_connect(
     payload: _BitrixConnectStartPayload,
@@ -1770,11 +1966,18 @@ def start_bitrix_connect(
         return_url=payload.return_url,
         tenant_id=tenant_id,
     )
+    session = _create_bitrix_connect_session(
+        tenant_id=tenant_id,
+        portal=payload.portal,
+        return_url=payload.return_url,
+    )
     bitrix_oauth = _bitrix_oauth_repo().get_by_tenant(tenant_id)
     return {
         "status": "ok",
         "tenant_id": tenant_id,
         **oauth,
+        "connection_code": _format_bitrix_connect_code(session.connection_code),
+        "connection_expires_at": session.expires_at,
         "bitrix_oauth": _bitrix_oauth_status(bitrix_oauth),
     }
 

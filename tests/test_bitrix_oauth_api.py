@@ -10,7 +10,12 @@ from bitrix_ingest.api import app as app_module
 from bitrix_ingest.domain.integrations import Integrations
 from bitrix_ingest.domain.tenant import Tenant
 from bitrix_ingest.domain.user import User
-from bitrix_ingest.infrastructure.database import BitrixOAuthRepository, TenantRepository, UserRepository
+from bitrix_ingest.infrastructure.database import (
+    BitrixConnectSessionRepository,
+    BitrixOAuthRepository,
+    TenantRepository,
+    UserRepository,
+)
 from bitrix_ingest.infrastructure.http import BitrixClient, BitrixOAuthClient
 
 REQUIRED_SCOPES = ",".join(app_module._REQUIRED_BITRIX_OAUTH_SCOPES)
@@ -206,6 +211,126 @@ def test_bitrix_connect_start_returns_authorize_url_for_frontend(tmp_path, monke
     assert state["portal"] == "client.bitrix24.kz"
     assert state["return_url"] == "/app/#/settings"
     assert state["tenant_id"] == "client-tenant"
+    assert body["connection_code"]
+    assert body["connection_expires_at"] > int(time.time())
+
+    session = BitrixConnectSessionRepository(tmp_path / "app.db").get_by_code(
+        app_module._normalize_bitrix_connect_code(body["connection_code"])
+    )
+    assert session is not None
+    assert session.tenant_id == "client-tenant"
+    assert session.bitrix_domain == "client.bitrix24.kz"
+    assert session.return_url == "/app/#/settings"
+    assert session.status == "pending"
+
+
+def test_bitrix_settings_returns_rest_only_form_config(tmp_path, monkeypatch):
+    client = _client(tmp_path, monkeypatch, auth_required=True)
+    monkeypatch.setenv("BITRIX_OAUTH_CLIENT_ID", "client-id")
+    monkeypatch.setenv("BITRIX_APPLICATION_TOKEN", "app-token")
+    monkeypatch.setenv("AI_AUDITOR_PUBLIC_BASE_URL", "https://sales-auditor.com")
+
+    response = client.post(
+        "/api/bitrix/settings",
+        data={
+            "event": "OnAppSettingsInstall",
+            "data[connection_code]": "ABCD-EFGH-2345",
+            "auth[access_token]": "access-token",
+            "auth[refresh_token]": "refresh-token",
+            "auth[expires_in]": "3600",
+            "auth[scope]": REQUIRED_SCOPES,
+            "auth[domain]": "client.bitrix24.kz",
+            "auth[client_endpoint]": "https://client.bitrix24.kz/rest/",
+            "auth[member_id]": "member-123",
+            "auth[application_token]": "app-token",
+        },
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["title"] == "AISales Auditor"
+    assert body["version"] == "1"
+    assert body["form"]["clientId"] == "client-id"
+    assert body["form"]["action"] == "https://sales-auditor.com/api/bitrix/settings/save"
+    field = body["steps"][0]["fields"][0]
+    assert field["name"] == "connection_code"
+    assert field["value"] == "ABCD-EFGH-2345"
+
+
+def test_bitrix_settings_save_binds_install_to_connection_code_tenant(tmp_path, monkeypatch):
+    client = _client(tmp_path, monkeypatch, auth_required=True)
+    monkeypatch.setenv("BITRIX_OAUTH_CLIENT_ID", "client-id")
+    monkeypatch.setenv("BITRIX_APPLICATION_TOKEN", "app-token")
+    _save_user(tmp_path, "client@example.com", "client-tenant")
+    token = _login(client, "client@example.com")
+    start = client.post(
+        "/api/bitrix/connect/start",
+        json={"portal": "client.bitrix24.kz", "return_url": "/app/#/business"},
+        headers={"Authorization": f"Bearer {token}"},
+    )
+    assert start.status_code == 200
+    connection_code = start.json()["connection_code"]
+
+    response = client.post(
+        "/api/bitrix/settings/save",
+        data={
+            "data[connection_code]": connection_code,
+            "auth[access_token]": "access-token",
+            "auth[refresh_token]": "refresh-token",
+            "auth[expires_in]": "3600",
+            "auth[scope]": REQUIRED_SCOPES,
+            "auth[domain]": "client.bitrix24.kz",
+            "auth[client_endpoint]": "https://client.bitrix24.kz/rest/",
+            "auth[member_id]": "member-123",
+            "auth[application_token]": "app-token",
+        },
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["status"] == "success"
+    assert body["tenant_id"] == "client-tenant"
+    assert body["bitrix_oauth"]["has_required_scopes"] is True
+
+    oauth = BitrixOAuthRepository(tmp_path / "app.db")
+    saved = oauth.get_by_tenant("client-tenant")
+    assert saved is not None
+    assert saved.bitrix_member_id == "member-123"
+    assert saved.access_token == "access-token"
+    assert oauth.get_by_tenant("member-123") is None
+
+    session = BitrixConnectSessionRepository(tmp_path / "app.db").get_by_code(
+        app_module._normalize_bitrix_connect_code(connection_code)
+    )
+    assert session is not None
+    assert session.status == "used"
+    assert session.used_at
+
+
+def test_bitrix_settings_save_rejects_invalid_connection_code(tmp_path, monkeypatch):
+    client = _client(tmp_path, monkeypatch, auth_required=True)
+    monkeypatch.setenv("BITRIX_APPLICATION_TOKEN", "app-token")
+
+    response = client.post(
+        "/api/bitrix/settings/save",
+        data={
+            "data[connection_code]": "wrong-code",
+            "auth[access_token]": "access-token",
+            "auth[refresh_token]": "refresh-token",
+            "auth[expires_in]": "3600",
+            "auth[scope]": REQUIRED_SCOPES,
+            "auth[domain]": "client.bitrix24.kz",
+            "auth[client_endpoint]": "https://client.bitrix24.kz/rest/",
+            "auth[member_id]": "member-123",
+            "auth[application_token]": "app-token",
+        },
+    )
+
+    assert response.status_code == 400
+    assert response.json() == {
+        "status": "error",
+        "errors": [{"field": "connection_code", "message": "Connection code is invalid or expired."}],
+    }
 
 
 def test_bitrix_oauth_start_requires_login(tmp_path, monkeypatch):
