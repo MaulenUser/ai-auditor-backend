@@ -170,6 +170,23 @@ def test_bitrix_marketplace_urls_accept_head_validation(tmp_path, monkeypatch, p
     assert response.status_code == 200
 
 
+def test_bitrix_settings_save_allows_bitrix_cors_preflight(tmp_path, monkeypatch):
+    client = _client(tmp_path, monkeypatch, auth_required=True)
+
+    response = client.options(
+        "/api/bitrix/settings/save",
+        headers={
+            "Origin": "https://terensai.bitrix24.kz",
+            "Access-Control-Request-Method": "POST",
+            "Access-Control-Request-Headers": "content-type",
+        },
+    )
+
+    assert response.status_code == 200
+    assert response.headers["access-control-allow-origin"] == "https://terensai.bitrix24.kz"
+    assert "POST" in response.headers["access-control-allow-methods"]
+
+
 def test_bitrix_oauth_start_redirects_to_portal_with_signed_state(tmp_path, monkeypatch):
     client = _client(tmp_path, monkeypatch, auth_required=True)
     monkeypatch.setenv("BITRIX_OAUTH_CLIENT_ID", "client-id")

@@ -20,6 +20,7 @@ from urllib.parse import parse_qsl, urlencode, urlparse, urlsplit, urlunsplit
 
 import requests
 from fastapi import BackgroundTasks, FastAPI, Form, Header, HTTPException, Query, Request, Security
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, RedirectResponse, Response
 from fastapi.security import APIKeyHeader
 from pydantic import BaseModel
@@ -144,6 +145,12 @@ app = FastAPI(
         "Если заголовок не передан, используется tenant `default`."
     ),
     swagger_ui_parameters={"persistAuthorization": True},
+)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origin_regex=r"^https://([A-Za-z0-9-]+\.)*bitrix24\.[A-Za-z.]+$|^https://vendors\.bitrix24\.ru$",
+    allow_methods=["GET", "POST", "HEAD", "OPTIONS"],
+    allow_headers=["*"],
 )
 
 _DB_PATH = Path(os.environ.get("BITRIX_DB_PATH", "data/app.db"))
