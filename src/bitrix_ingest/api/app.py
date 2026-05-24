@@ -20,7 +20,7 @@ from urllib.parse import parse_qsl, urlencode, urlparse, urlsplit, urlunsplit
 
 import requests
 from fastapi import BackgroundTasks, FastAPI, Form, Header, HTTPException, Query, Request, Security
-from fastapi.responses import JSONResponse, RedirectResponse
+from fastapi.responses import JSONResponse, RedirectResponse, Response
 from fastapi.security import APIKeyHeader
 from pydantic import BaseModel
 
@@ -1841,6 +1841,35 @@ def create_user(
 class _BitrixConnectStartPayload(BaseModel):
     portal: str
     return_url: str = ""
+
+
+def _bitrix_head_ok() -> Response:
+    return Response(status_code=200)
+
+
+@app.head("/api/bitrix/oauth/callback", tags=["Bitrix OAuth"])
+def bitrix_oauth_callback_head() -> Response:
+    return _bitrix_head_ok()
+
+
+@app.head("/api/bitrix/install", tags=["Bitrix OAuth"])
+def bitrix_install_head() -> Response:
+    return _bitrix_head_ok()
+
+
+@app.head("/api/bitrix/settings", tags=["Bitrix OAuth"])
+def bitrix_settings_head() -> Response:
+    return _bitrix_head_ok()
+
+
+@app.head("/api/bitrix/settings/save", tags=["Bitrix OAuth"])
+def bitrix_settings_save_head() -> Response:
+    return _bitrix_head_ok()
+
+
+@app.head("/api/bitrix/uninstall", tags=["Bitrix OAuth"])
+def bitrix_uninstall_head() -> Response:
+    return _bitrix_head_ok()
 
 
 def _extract_bitrix_settings_data(payload: dict[str, Any]) -> dict[str, str]:

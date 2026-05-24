@@ -152,6 +152,24 @@ def test_bitrix_install_rejects_invalid_application_token(tmp_path, monkeypatch)
     assert response.status_code == 403
 
 
+@pytest.mark.parametrize(
+    "path",
+    [
+        "/api/bitrix/oauth/callback",
+        "/api/bitrix/install",
+        "/api/bitrix/settings",
+        "/api/bitrix/settings/save",
+        "/api/bitrix/uninstall",
+    ],
+)
+def test_bitrix_marketplace_urls_accept_head_validation(tmp_path, monkeypatch, path):
+    client = _client(tmp_path, monkeypatch, auth_required=True)
+
+    response = client.head(path)
+
+    assert response.status_code == 200
+
+
 def test_bitrix_oauth_start_redirects_to_portal_with_signed_state(tmp_path, monkeypatch):
     client = _client(tmp_path, monkeypatch, auth_required=True)
     monkeypatch.setenv("BITRIX_OAUTH_CLIENT_ID", "client-id")
