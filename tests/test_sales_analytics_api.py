@@ -34,6 +34,8 @@ def _client(tmp_path, monkeypatch) -> TestClient:
     monkeypatch.setattr(app_module, "_sales_repo", lambda: _FakeSalesRepo())
     monkeypatch.delenv("AI_AUDITOR_AUTH_REQUIRED", raising=False)
     monkeypatch.delenv("AUTH_REQUIRED", raising=False)
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    monkeypatch.delenv("AI_AUDITOR_OPENAI_API_KEY", raising=False)
     app_module._SALES_AUDIT_JOBS.clear()
     return TestClient(app_module.app)
 
@@ -132,6 +134,38 @@ def test_sales_audit_run_wait_returns_unified_report(tmp_path, monkeypatch):
     assert payload["executive_report"]["integral_rating"]["score_10"] == 6.8
     assert calls["tenant_id"] == "default"
     assert calls["date_from"] == "2026-04-01"
+
+
+def test_sales_audit_run_uses_global_openai_key(tmp_path, monkeypatch):
+    client = _client(tmp_path, monkeypatch)
+    monkeypatch.setenv("OPENAI_API_KEY", "sk-global")
+    calls: dict[str, object] = {}
+
+    def fake_execute_sales_audit_pipeline(**kwargs):
+        calls.update(kwargs)
+        return {"report": {"integral_rating": {"score_10": 7.0}}}
+
+    monkeypatch.setattr(
+        app_module,
+        "_execute_sales_audit_pipeline",
+        fake_execute_sales_audit_pipeline,
+    )
+
+    response = client.post(
+        "/sales-audit/run",
+        data={
+            "date_from": "2026-04-01",
+            "date_to": "2026-05-03",
+            "wait": "true",
+        },
+        headers={
+            "X-Webhook-Url": "https://example.bitrix24.kz/rest/1/token/",
+            "X-Whatsapp-Webhook-Url": "https://example.bitrix24.kz/rest/1/token/",
+        },
+    )
+
+    assert response.status_code == 200
+    assert calls["openai_key"] == "sk-global"
 
 
 def test_sales_audit_history_returns_postgres_report_runs(tmp_path, monkeypatch):

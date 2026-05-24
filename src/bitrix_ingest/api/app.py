@@ -713,13 +713,34 @@ def _resolve_whatsapp_gateway(
     )
 
 
+def _global_openai_key() -> str:
+    return (
+        os.environ.get("OPENAI_API_KEY", "").strip()
+        or os.environ.get("AI_AUDITOR_OPENAI_API_KEY", "").strip()
+    )
+
+
+def _integrations_status(integrations: Integrations) -> dict[str, bool]:
+    status = integrations.to_status_dict()
+    if _global_openai_key():
+        status["openai_api_key_configured"] = True
+    return status
+
+
 def _resolve_openai_key(header_key: str | None, tenant_id: str = "default") -> str:
-    """Header takes priority; falls back to DB openai_api_key for the tenant."""
-    key = header_key or _get_integrations(tenant_id).openai_api_key
+    """Header takes priority; falls back to tenant DB key and then server env."""
+    key = (
+        (header_key or "").strip()
+        or _get_integrations(tenant_id).openai_api_key
+        or _global_openai_key()
+    )
     if not key:
         raise HTTPException(
             status_code=422,
-            detail="OpenAI API Key не настроен. Укажите X-OpenAI-Api-Key в Authorize или сохраните его на странице настроек.",
+            detail=(
+                "OpenAI API Key не настроен. Укажите X-OpenAI-Api-Key в Authorize, "
+                "сохраните его на странице настроек или задайте OPENAI_API_KEY на сервере."
+            ),
         )
     return key
 
@@ -2521,7 +2542,7 @@ def get_app_state(x_tenant_id: str | None = Header(None)) -> dict[str, Any]:
         "tenant_id": tid,
         "setup": {
             "business_profile": profile.to_dict() if profile else {},
-            "integrations": integrations.to_status_dict(),
+            "integrations": _integrations_status(integrations),
             "bitrix_oauth": _bitrix_oauth_status(bitrix_oauth),
         },
     }
@@ -2553,7 +2574,7 @@ def setup_profile(
             "tenant_id": tid,
             "setup": {
                 "business_profile": profile.to_dict(),
-                "integrations": integrations.to_status_dict(),
+                "integrations": _integrations_status(integrations),
                 "bitrix_oauth": _bitrix_oauth_status(bitrix_oauth),
             },
         }
@@ -2574,7 +2595,7 @@ def get_integrations(x_tenant_id: str | None = Header(None)) -> dict[str, Any]:
     bitrix_oauth = _bitrix_oauth_repo().get_by_tenant(tid)
     return {
         "tenant_id": tid,
-        "integrations": ints.to_status_dict(),
+        "integrations": _integrations_status(ints),
         "bitrix_oauth": _bitrix_oauth_status(bitrix_oauth),
     }
 
@@ -2600,7 +2621,7 @@ def setup_integrations(
     return {
         "status": "ok",
         "tenant_id": tid,
-        "integrations": ints.to_status_dict(),
+        "integrations": _integrations_status(ints),
         "bitrix_oauth": _bitrix_oauth_status(bitrix_oauth),
     }
 
