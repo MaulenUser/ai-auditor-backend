@@ -100,6 +100,16 @@ def test_sales_audit_run_wait_returns_unified_report(tmp_path, monkeypatch):
 
     def fake_execute_sales_audit_pipeline(**kwargs):
         calls.update(kwargs)
+        kwargs["progress_callback"](
+            {
+                "stage": "sales_quality",
+                "stage_label": "AI",
+                "current": 3,
+                "total": 10,
+                "percent": 75,
+                "message": "AI evaluates communications",
+            }
+        )
         return {
             "report": {
                 "generated_at": "2026-05-03T00:00:00+00:00",
@@ -134,6 +144,10 @@ def test_sales_audit_run_wait_returns_unified_report(tmp_path, monkeypatch):
     assert payload["executive_report"]["integral_rating"]["score_10"] == 6.8
     assert calls["tenant_id"] == "default"
     assert calls["date_from"] == "2026-04-01"
+    run = app_module._runs_repo().get(payload["job_id"])
+    assert run is not None
+    assert run.progress_stage == "completed"
+    assert run.progress_percent == 100
 
 
 def test_sales_audit_run_uses_global_openai_key(tmp_path, monkeypatch):
@@ -249,3 +263,38 @@ def test_sales_audit_job_marks_stale_persisted_run_as_error(tmp_path, monkeypatc
     assert payload["error_type"] == "StaleJobTimeout"
     assert "new report can be started" in payload["error"]
     assert app_module._runs_repo().get("stale-audit-1").status == "error"
+
+
+def test_sales_audit_job_returns_persisted_progress(tmp_path, monkeypatch):
+    client = _client(tmp_path, monkeypatch)
+
+    app_module._runs_repo().create(
+        AnalysisRun(
+            run_id="progress-audit-1",
+            tenant_id="default",
+            status="running",
+            date_from="2026-04-01",
+            date_to="2026-05-03",
+            output_dir="storage/default/progress-audit-1/sales-audit",
+        )
+    )
+    app_module._runs_repo().update_progress(
+        "progress-audit-1",
+        stage="transcription",
+        label="Transcription",
+        current=42,
+        total=100,
+        percent=51.5,
+        message="Transcribing calls: 42 of 100",
+        eta_seconds=120,
+        updated_at="2026-05-29T12:00:00+00:00",
+    )
+
+    response = client.get("/sales-audit/jobs/progress-audit-1")
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["progress_stage"] == "transcription"
+    assert payload["progress"]["current"] == 42
+    assert payload["progress"]["percent"] == 51.5
+    assert payload["progress"]["eta_seconds"] == 120

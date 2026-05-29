@@ -18,6 +18,7 @@ from ...domain.sales_quality import (
     sales_quality_schema,
 )
 from ..ports import JsonSink
+from ..progress import ProgressCallback, emit_progress
 
 logger = logging.getLogger(__name__)
 
@@ -85,6 +86,7 @@ class AnalyzeSalesQualityRequest:
     skip_existing: bool = False
     slow_response_threshold_sec: int = 900
     max_chars_per_item: int = 24000
+    progress_callback: ProgressCallback | None = None
 
 
 @dataclass(frozen=True)
@@ -195,61 +197,76 @@ class AnalyzeSalesQualityService:
 
         logger.info("Sales-quality analyzer: %d interaction(s)", len(interactions))
 
-        for item in interactions:
-            stem = self._feature_stem(item)
-            feature_path = features_dir / f"{stem}.json"
-            raw_path = raw_dir / f"{stem}.json"
-
-            if request.skip_existing and feature_path.exists() and raw_path.exists():
-                feature_files.append(feature_path)
-                logger.info("Skipped existing sales-quality feature: %s", feature_path.name)
-                continue
-
-            user_prompt = self._build_prompt(item, request.max_chars_per_item)
+        total = len(interactions)
+        emit_progress(
+            request.progress_callback,
+            current=0,
+            total=total,
+            message=f"Найдено взаимодействий для AI-оценки: {total}",
+        )
+        for index, item in enumerate(interactions, start=1):
             try:
-                response = self._gateway.complete(
-                    system_prompt=_SYSTEM_PROMPT,
-                    user_prompt=user_prompt,
-                    model=request.model,
-                    schema_name="sales_quality_audit",
-                    schema=schema,
-                )
-                parsed = json.loads(self._gateway.extract_output_text(response))
-                final_feature = self._normalize_feature(item, parsed, request)
-                self._sink.write(feature_path, final_feature)
-                self._sink.write(raw_path, response)
-                feature_files.append(feature_path)
+                stem = self._feature_stem(item)
+                feature_path = features_dir / f"{stem}.json"
+                raw_path = raw_dir / f"{stem}.json"
 
-                event = extract_usage_event(
-                    response,
-                    stage="sales_quality_analysis",
-                    entity_type=item.source_type,
-                    entity_id=item.source_id,
-                    source_file_path=str(item.source_file_path),
-                    model=request.model,
-                    extra={
-                        "manager_id": item.manager_id,
-                        "deal_id": item.deal_id,
-                        "crm_activity_id": item.crm_activity_id,
-                    },
-                )
-                if event:
-                    usage_events.append(event)
-                logger.info("Analyzed %s %s", item.source_type, item.source_id)
-            except Exception as exc:  # noqa: BLE001
-                errors.append(
-                    {
-                        "source_type": item.source_type,
-                        "source_id": item.source_id,
-                        "source_file_path": str(item.source_file_path),
-                        "error": str(exc),
-                    }
-                )
-                logger.warning(
-                    "Failed sales-quality analysis for %s %s: %s",
-                    item.source_type,
-                    item.source_id,
-                    exc,
+                if request.skip_existing and feature_path.exists() and raw_path.exists():
+                    feature_files.append(feature_path)
+                    logger.info("Skipped existing sales-quality feature: %s", feature_path.name)
+                    continue
+
+                user_prompt = self._build_prompt(item, request.max_chars_per_item)
+                try:
+                    response = self._gateway.complete(
+                        system_prompt=_SYSTEM_PROMPT,
+                        user_prompt=user_prompt,
+                        model=request.model,
+                        schema_name="sales_quality_audit",
+                        schema=schema,
+                    )
+                    parsed = json.loads(self._gateway.extract_output_text(response))
+                    final_feature = self._normalize_feature(item, parsed, request)
+                    self._sink.write(feature_path, final_feature)
+                    self._sink.write(raw_path, response)
+                    feature_files.append(feature_path)
+
+                    event = extract_usage_event(
+                        response,
+                        stage="sales_quality_analysis",
+                        entity_type=item.source_type,
+                        entity_id=item.source_id,
+                        source_file_path=str(item.source_file_path),
+                        model=request.model,
+                        extra={
+                            "manager_id": item.manager_id,
+                            "deal_id": item.deal_id,
+                            "crm_activity_id": item.crm_activity_id,
+                        },
+                    )
+                    if event:
+                        usage_events.append(event)
+                    logger.info("Analyzed %s %s", item.source_type, item.source_id)
+                except Exception as exc:  # noqa: BLE001
+                    errors.append(
+                        {
+                            "source_type": item.source_type,
+                            "source_id": item.source_id,
+                            "source_file_path": str(item.source_file_path),
+                            "error": str(exc),
+                        }
+                    )
+                    logger.warning(
+                        "Failed sales-quality analysis for %s %s: %s",
+                        item.source_type,
+                        item.source_id,
+                        exc,
+                    )
+            finally:
+                emit_progress(
+                    request.progress_callback,
+                    current=index,
+                    total=total,
+                    message=f"AI оценивает коммуникации: {index} из {total}",
                 )
 
         features = []

@@ -9,6 +9,7 @@ from typing import Any
 from ...domain.call_records import CallScanError, CallScanRow
 from ..date_range import build_closed_filter
 from ..ports import BitrixGateway, JsonSink
+from ..progress import ProgressCallback, emit_progress
 from .coercion import coerce_int, coerce_str
 
 logger = logging.getLogger(__name__)
@@ -51,6 +52,7 @@ class CallRecordsScanRequest:
     date_to: str | None = None
     responsible_id: str | None = None
     deal_ids: list[str] | None = None
+    progress_callback: ProgressCallback | None = None
 
 
 @dataclass
@@ -91,8 +93,21 @@ class CallRecordsScanService:
         self._sink.write(output_dir / "activities.source.json", activities)
 
         result = _ScanResult.empty()
-        for activity in activities:
+        total = len(activities)
+        emit_progress(
+            request.progress_callback,
+            current=0,
+            total=total,
+            message=f"Найдено звонков для проверки: {total}",
+        )
+        for index, activity in enumerate(activities, start=1):
             self._scan_activity(activity, into=result)
+            emit_progress(
+                request.progress_callback,
+                current=index,
+                total=total,
+                message=f"Проверяем записи звонков: {index} из {total}",
+            )
 
         self._write_outputs(output_dir, result)
         self._log_summary(output_dir, result)

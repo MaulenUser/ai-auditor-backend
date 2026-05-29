@@ -11,6 +11,7 @@ from typing import Any, Protocol
 from ...domain.openai_usage import extract_usage_event, summarize_usage
 from ...domain.transcripts import TranscriptError, TranscriptManifestEntry
 from ..ports import JsonSink
+from ..progress import ProgressCallback, emit_progress
 
 logger = logging.getLogger(__name__)
 
@@ -34,6 +35,7 @@ class TranscribeRecordingsRequest:
     prompt: str | None = None
     limit: int = 0
     skip_existing: bool = False
+    progress_callback: ProgressCallback | None = None
 
 
 def _safe_part(value: str) -> str:
@@ -82,77 +84,91 @@ class TranscribeRecordingsService:
         errors: list[TranscriptError] = []
         usage_events: list[dict[str, Any]] = []
 
-        for entry in entries:
+        total = len(entries)
+        emit_progress(
+            request.progress_callback,
+            current=0,
+            total=total,
+            message=f"Найдено записей для транскрибации: {total}",
+        )
+        for index, entry in enumerate(entries, start=1):
             crm_id = str(entry.get("CRM_ACTIVITY_ID") or "")
             record_id = str(entry.get("RECORD_FILE_ID") or "")
             audio_path = Path(str(entry.get("FILE_PATH") or ""))
-
-            stem = f"activity_{_safe_part(crm_id)}"
-            if record_id:
-                stem += f"__record_{_safe_part(record_id)}"
-            text_path = text_dir / f"{stem}.txt"
-            raw_path = raw_dir / f"{stem}.json"
-
-            if not audio_path.exists():
-                errors.append(TranscriptError(
-                    crm_activity_id=crm_id, record_file_id=record_id,
-                    source_file=str(audio_path), error="Audio file not found.",
-                ))
-                logger.info("Missing audio file for CRM_ACTIVITY_ID=%s", crm_id)
-                continue
-
-            if request.skip_existing and text_path.exists() and raw_path.exists():
-                manifest.append(TranscriptManifestEntry(
-                    crm_activity_id=crm_id, record_file_id=record_id,
-                    audio_file_path=str(audio_path),
-                    text_file_path=str(text_path), raw_file_path=str(raw_path),
-                    status="skipped_existing", model=request.model,
-                    language=request.language or "",
-                ))
-                logger.info("Skipped existing transcript for CRM_ACTIVITY_ID=%s", crm_id)
-                continue
-
             try:
-                response = self._gateway.transcribe(
-                    file_path=audio_path, model=request.model,
-                    language=request.language, prompt=request.prompt,
-                )
-                text = str(response.get("text") or "")
-                text_path.write_text(text, encoding="utf-8")
-                self._sink.write(raw_path, response)
+                stem = f"activity_{_safe_part(crm_id)}"
+                if record_id:
+                    stem += f"__record_{_safe_part(record_id)}"
+                text_path = text_dir / f"{stem}.txt"
+                raw_path = raw_dir / f"{stem}.json"
 
-                event = extract_usage_event(
-                    response,
-                    stage="transcription",
-                    entity_type="crm_activity",
-                    entity_id=crm_id,
-                    source_file_path=str(audio_path),
-                    model=request.model,
-                    extra={"record_file_id": record_id},
-                )
-                if event:
-                    usage_events.append(event)
+                if not audio_path.exists():
+                    errors.append(TranscriptError(
+                        crm_activity_id=crm_id, record_file_id=record_id,
+                        source_file=str(audio_path), error="Audio file not found.",
+                    ))
+                    logger.info("Missing audio file for CRM_ACTIVITY_ID=%s", crm_id)
+                    continue
 
-                manifest.append(TranscriptManifestEntry(
-                    crm_activity_id=crm_id, record_file_id=record_id,
-                    audio_file_path=str(audio_path),
-                    text_file_path=str(text_path), raw_file_path=str(raw_path),
-                    status="transcribed", model=request.model,
-                    language=request.language or "",
-                    text_length=len(text),
-                    input_tokens=event.get("input_tokens", 0) if event else 0,
-                    output_tokens=event.get("output_tokens", 0) if event else 0,
-                    total_tokens=event.get("total_tokens", 0) if event else 0,
-                    audio_tokens=event.get("audio_input_tokens", 0) if event else 0,
-                    text_tokens=event.get("text_input_tokens", 0) if event else 0,
-                ))
-                logger.info("Transcribed CRM_ACTIVITY_ID=%s", crm_id)
-            except Exception as exc:  # noqa: BLE001
-                errors.append(TranscriptError(
-                    crm_activity_id=crm_id, record_file_id=record_id,
-                    source_file=str(audio_path), error=str(exc),
-                ))
-                logger.warning("Failed transcription for CRM_ACTIVITY_ID=%s: %s", crm_id, exc)
+                if request.skip_existing and text_path.exists() and raw_path.exists():
+                    manifest.append(TranscriptManifestEntry(
+                        crm_activity_id=crm_id, record_file_id=record_id,
+                        audio_file_path=str(audio_path),
+                        text_file_path=str(text_path), raw_file_path=str(raw_path),
+                        status="skipped_existing", model=request.model,
+                        language=request.language or "",
+                    ))
+                    logger.info("Skipped existing transcript for CRM_ACTIVITY_ID=%s", crm_id)
+                    continue
+
+                try:
+                    response = self._gateway.transcribe(
+                        file_path=audio_path, model=request.model,
+                        language=request.language, prompt=request.prompt,
+                    )
+                    text = str(response.get("text") or "")
+                    text_path.write_text(text, encoding="utf-8")
+                    self._sink.write(raw_path, response)
+
+                    event = extract_usage_event(
+                        response,
+                        stage="transcription",
+                        entity_type="crm_activity",
+                        entity_id=crm_id,
+                        source_file_path=str(audio_path),
+                        model=request.model,
+                        extra={"record_file_id": record_id},
+                    )
+                    if event:
+                        usage_events.append(event)
+
+                    manifest.append(TranscriptManifestEntry(
+                        crm_activity_id=crm_id, record_file_id=record_id,
+                        audio_file_path=str(audio_path),
+                        text_file_path=str(text_path), raw_file_path=str(raw_path),
+                        status="transcribed", model=request.model,
+                        language=request.language or "",
+                        text_length=len(text),
+                        input_tokens=event.get("input_tokens", 0) if event else 0,
+                        output_tokens=event.get("output_tokens", 0) if event else 0,
+                        total_tokens=event.get("total_tokens", 0) if event else 0,
+                        audio_tokens=event.get("audio_input_tokens", 0) if event else 0,
+                        text_tokens=event.get("text_input_tokens", 0) if event else 0,
+                    ))
+                    logger.info("Transcribed CRM_ACTIVITY_ID=%s", crm_id)
+                except Exception as exc:  # noqa: BLE001
+                    errors.append(TranscriptError(
+                        crm_activity_id=crm_id, record_file_id=record_id,
+                        source_file=str(audio_path), error=str(exc),
+                    ))
+                    logger.warning("Failed transcription for CRM_ACTIVITY_ID=%s: %s", crm_id, exc)
+            finally:
+                emit_progress(
+                    request.progress_callback,
+                    current=index,
+                    total=total,
+                    message=f"Расшифровываем звонки: {index} из {total}",
+                )
 
         self._sink.write(request.output_dir / "manifest.json", [e.to_dict() for e in manifest])
         self._sink.write(request.output_dir / "errors.json", [e.to_dict() for e in errors])

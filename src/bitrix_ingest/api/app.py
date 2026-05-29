@@ -1272,10 +1272,30 @@ def _get_sales_analytics_job(job_id: str) -> dict[str, Any] | None:
 
 
 def _set_sales_audit_job(job_id: str, **updates: Any) -> None:
+    progress_payload = updates.pop("progress", None)
+    progress = _normalise_progress(progress_payload) if progress_payload is not None else None
     with _SALES_AUDIT_JOBS_LOCK:
         job = _SALES_AUDIT_JOBS.setdefault(job_id, {"job_id": job_id})
+        if progress is not None:
+            job["progress"] = progress
+            job.update(_progress_flat_fields(progress))
         job.update(updates)
         job["updated_at"] = _now_iso()
+    if progress is not None:
+        try:
+            _runs_repo().update_progress(
+                run_id=job_id,
+                stage=progress["stage"],
+                label=progress["label"],
+                current=progress["current"],
+                total=progress["total"],
+                percent=progress["percent"],
+                message=progress["message"],
+                eta_seconds=progress["eta_seconds"],
+                updated_at=progress["updated_at"],
+            )
+        except Exception:
+            logger.warning("Failed to persist sales audit run progress: %s", job_id)
     if "status" in updates:
         try:
             _runs_repo().update_status(
@@ -1306,6 +1326,116 @@ def _redact_error_message(message: object, *secrets: str | None) -> str:
         if secret:
             text = text.replace(secret, "[redacted]")
     return text
+
+
+class _SalesAuditProgressReporter:
+    def __init__(self, job_id: str) -> None:
+        self._job_id = job_id
+        self._started_at = time.monotonic()
+        self._last_percent = 0.0
+
+    def __call__(self, event: dict[str, Any]) -> None:
+        raw_percent = _coerce_float(event.get("percent"), default=self._last_percent)
+        if raw_percent >= 100:
+            percent = 100.0
+        else:
+            percent = max(self._last_percent, min(99.0, raw_percent))
+        self._last_percent = percent
+        eta_seconds = event.get("eta_seconds")
+        if eta_seconds is None:
+            eta_seconds = self._estimate_eta(percent)
+
+        label = str(event.get("stage_label") or event.get("label") or event.get("stage") or "")
+        message = str(event.get("message") or label or "Analysis is running")
+        _set_sales_audit_job(
+            self._job_id,
+            progress={
+                "stage": str(event.get("stage") or "running"),
+                "label": label,
+                "current": _coerce_int(event.get("current")),
+                "total": _coerce_int(event.get("total")),
+                "percent": round(percent, 1),
+                "message": message,
+                "eta_seconds": eta_seconds,
+                "updated_at": _now_iso(),
+            },
+        )
+
+    def complete(self) -> None:
+        self(
+            {
+                "stage": "completed",
+                "stage_label": "Отчёт готов",
+                "current": 1,
+                "total": 1,
+                "percent": 100,
+                "message": "Отчёт готов",
+                "eta_seconds": 0,
+            }
+        )
+
+    def fail(self) -> None:
+        self(
+            {
+                "stage": "error",
+                "stage_label": "Ошибка",
+                "current": 0,
+                "total": 1,
+                "percent": self._last_percent,
+                "message": "Анализ завершился ошибкой",
+            }
+        )
+
+    def _estimate_eta(self, percent: float) -> int | None:
+        if percent <= 0:
+            return None
+        if percent >= 100:
+            return 0
+        elapsed = max(0.0, time.monotonic() - self._started_at)
+        estimated_total = elapsed / (percent / 100)
+        return max(0, int(round(estimated_total - elapsed)))
+
+
+def _coerce_int(value: object, default: int = 0) -> int:
+    try:
+        return int(value if value is not None else default)
+    except (TypeError, ValueError):
+        return default
+
+
+def _coerce_float(value: object, default: float = 0.0) -> float:
+    try:
+        return float(value if value is not None else default)
+    except (TypeError, ValueError):
+        return default
+
+
+def _normalise_progress(progress: Any) -> dict[str, Any]:
+    payload = progress if isinstance(progress, dict) else {}
+    eta = payload.get("eta_seconds")
+    return {
+        "stage": str(payload.get("stage") or ""),
+        "label": str(payload.get("label") or ""),
+        "current": max(0, _coerce_int(payload.get("current"))),
+        "total": max(0, _coerce_int(payload.get("total"))),
+        "percent": max(0.0, min(100.0, _coerce_float(payload.get("percent")))),
+        "message": str(payload.get("message") or ""),
+        "eta_seconds": None if eta is None else max(0, _coerce_int(eta)),
+        "updated_at": str(payload.get("updated_at") or _now_iso()),
+    }
+
+
+def _progress_flat_fields(progress: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "progress_stage": progress["stage"],
+        "progress_label": progress["label"],
+        "progress_current": progress["current"],
+        "progress_total": progress["total"],
+        "progress_percent": progress["percent"],
+        "progress_message": progress["message"],
+        "eta_seconds": progress["eta_seconds"],
+        "progress_updated_at": progress["updated_at"],
+    }
 
 
 def _execute_executive_pipeline(
@@ -1570,6 +1700,7 @@ def _execute_sales_audit_pipeline(
     include_leads: bool,
     include_revenue: bool,
     reset_outputs: bool,
+    progress_callback: Any | None = None,
 ) -> dict[str, Any]:
     executive_dir = base_dir / "executive-report"
     sales_quality_dir = base_dir / "sales-quality"
@@ -1598,6 +1729,7 @@ def _execute_sales_audit_pipeline(
         max_reanimation_cards=max_reanimation_cards,
         include_whatsapp_audio=include_whatsapp_audio,
         reset_outputs=reset_outputs,
+        progress_callback=progress_callback,
     )
     _execute_executive_pipeline(
         tenant_id=tenant_id,
@@ -1608,6 +1740,17 @@ def _execute_sales_audit_pipeline(
         sink=FileSystemJsonWriter(),
     )
 
+    if progress_callback:
+        progress_callback(
+            {
+                "stage": "sales_analytics",
+                "stage_label": "Расчёт CRM-метрик",
+                "current": 0,
+                "total": 1,
+                "percent": 92,
+                "message": "Считаем CRM-метрики и задачи в Postgres",
+            }
+        )
     sales_report = _execute_sales_analytics_pipeline(
         tenant_id=tenant_id,
         run_id=run_id,
@@ -1622,7 +1765,29 @@ def _execute_sales_audit_pipeline(
         responsible_ids=responsible_ids,
         limit=limit,
     )
+    if progress_callback:
+        progress_callback(
+            {
+                "stage": "sales_analytics",
+                "stage_label": "Расчёт CRM-метрик",
+                "current": 1,
+                "total": 1,
+                "percent": 98,
+                "message": "CRM-метрики рассчитаны",
+            }
+        )
     executive_report = _load_json_if_exists(executive_dir / "executive-report.json") or {}
+    if progress_callback:
+        progress_callback(
+            {
+                "stage": "final_report",
+                "stage_label": "Финальная сборка",
+                "current": 0,
+                "total": 1,
+                "percent": 98,
+                "message": "Собираем финальный отчёт",
+            }
+        )
     final_report = build_sales_audit_report(
         executive_report=executive_report,
         sales_report=sales_report,
@@ -1635,6 +1800,17 @@ def _execute_sales_audit_pipeline(
         run_id=run_id,
         report=final_report,
     )
+    if progress_callback:
+        progress_callback(
+            {
+                "stage": "final_report",
+                "stage_label": "Финальная сборка",
+                "current": 1,
+                "total": 1,
+                "percent": 99,
+                "message": "Финальный отчёт сохранён",
+            }
+        )
     return {
         "status": "completed",
         "job_id": run_id,
@@ -1676,6 +1852,7 @@ def _run_sales_audit_background_job(
 ) -> None:
     del run_id
     _set_sales_audit_job(job_id, status="running", started_at=_now_iso())
+    progress = _SalesAuditProgressReporter(job_id)
     try:
         result = _execute_sales_audit_pipeline(
             tenant_id=tenant_id,
@@ -1701,7 +1878,9 @@ def _run_sales_audit_background_job(
             include_leads=include_leads,
             include_revenue=include_revenue,
             reset_outputs=reset_outputs,
+            progress_callback=progress,
         )
+        progress.complete()
         _set_sales_audit_job(
             job_id,
             status="completed",
@@ -1712,6 +1891,7 @@ def _run_sales_audit_background_job(
         )
     except Exception as exc:  # noqa: BLE001
         logger.exception("Sales audit job failed: %s", job_id)
+        progress.fail()
         _set_sales_audit_job(
             job_id,
             status="error",
@@ -2972,9 +3152,28 @@ def run_sales_audit(
     }
 
     if wait:
+        progress = _SalesAuditProgressReporter(job_id)
+        _set_sales_audit_job(
+            job_id,
+            tenant_id=tid,
+            status="running",
+            started_at=_now_iso(),
+            output_dir=str(final_dir),
+        )
         try:
-            result = _execute_sales_audit_pipeline(**common_kwargs)
-            _runs_repo().update_status(job_id, "completed", completed_at=_now_iso())
+            result = _execute_sales_audit_pipeline(
+                **common_kwargs,
+                progress_callback=progress,
+            )
+            progress.complete()
+            _set_sales_audit_job(
+                job_id,
+                status="completed",
+                completed_at=_now_iso(),
+                output_dir=str(final_dir),
+                report=result.get("report"),
+                executive_report=result.get("report"),
+            )
             return {
                 "status": "completed",
                 "job_id": job_id,
@@ -2987,8 +3186,15 @@ def run_sales_audit(
         except HTTPException:
             raise
         except Exception as exc:  # noqa: BLE001
+            progress.fail()
             error = _redact_error_message(exc, crm_webhook_url, whatsapp_webhook_url, key)
-            _runs_repo().update_status(job_id, "error", completed_at=_now_iso(), error=error)
+            _set_sales_audit_job(
+                job_id,
+                status="error",
+                completed_at=_now_iso(),
+                error=error,
+                error_type=type(exc).__name__,
+            )
             raise HTTPException(status_code=502, detail=error) from exc
 
     _set_sales_audit_job(
@@ -2997,6 +3203,16 @@ def run_sales_audit(
         status="queued",
         queued_at=_now_iso(),
         output_dir=str(final_dir),
+        progress={
+            "stage": "queued",
+            "label": "В очереди",
+            "current": 0,
+            "total": 1,
+            "percent": 0,
+            "message": "Анализ поставлен в очередь",
+            "eta_seconds": None,
+            "updated_at": _now_iso(),
+        },
         scope={
             "date_from": resolved_from,
             "date_to": resolved_to,

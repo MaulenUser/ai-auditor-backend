@@ -16,6 +16,7 @@ from ..call_records import CallRecordsScanRequest, CallRecordsScanService
 from ..date_range import build_closed_filter, within_any_record_datetime_range
 from ..executive_report import BuildExecutiveReportRequest, BuildExecutiveReportService
 from ..ports import BitrixGateway, FileDownloader, JsonSink
+from ..progress import ProgressCallback, emit_progress
 from ..recordings import DownloadRecordingsRequest, DownloadRecordingsService
 from ..sales_quality import AnalyzeSalesQualityRequest, AnalyzeSalesQualityService
 from ..transcribe import TranscribeRecordingsRequest, TranscribeRecordingsService
@@ -109,6 +110,7 @@ class RunExecutivePipelineRequest:
     include_whatsapp_audio: bool = False
     include_calls: bool = True
     reset_outputs: bool = True
+    progress_callback: ProgressCallback | None = None
 
 
 class RunExecutivePipelineService:
@@ -132,6 +134,16 @@ class RunExecutivePipelineService:
         self._sink = sink
 
     def execute(self, request: RunExecutivePipelineRequest) -> None:
+        _report_stage(
+            request.progress_callback,
+            stage="preparing",
+            label="Подготовка отчёта",
+            start=0,
+            end=4,
+            current=0,
+            total=1,
+            message="Готовим папки и параметры запуска",
+        )
         if request.reset_outputs:
             for path in (
                 request.whatsapp_dir,
@@ -142,6 +154,16 @@ class RunExecutivePipelineService:
             ):
                 _reset_dir(path)
 
+        _report_stage(
+            request.progress_callback,
+            stage="crm_scope",
+            label="Загрузка сделок",
+            start=4,
+            end=10,
+            current=0,
+            total=1,
+            message="Загружаем сделки по DATE_CREATE за выбранный период",
+        )
         scope_result = self._load_scope_deals(request)
         deals = scope_result.rows
         deal_ids = [str(deal.get("ID") or "") for deal in deals if deal.get("ID")]
@@ -152,11 +174,64 @@ class RunExecutivePipelineService:
 
         request.executive_report_dir.mkdir(parents=True, exist_ok=True)
         self._sink.write(request.executive_report_dir / "scope-deals.json", deals)
+        _report_stage(
+            request.progress_callback,
+            stage="crm_scope",
+            label="Загрузка сделок",
+            start=4,
+            end=10,
+            current=1,
+            total=1,
+            message=f"Сделки в AI-scope: {len(deal_ids)}",
+        )
 
+        _report_stage(
+            request.progress_callback,
+            stage="whatsapp",
+            label="Загрузка переписок",
+            start=10,
+            end=18,
+            current=0,
+            total=1,
+            message="Загружаем переписки по сделкам из AI-scope",
+        )
         whatsapp_summary = self._run_whatsapp_steps(request, deals) if request.include_whatsapp else {}
+        _report_stage(
+            request.progress_callback,
+            stage="whatsapp",
+            label="Загрузка переписок",
+            start=10,
+            end=18,
+            current=1,
+            total=1,
+            message=(
+                "Переписки загружены: "
+                f"{whatsapp_summary.get('rows_with_messages', 0)} с сообщениями"
+            ),
+        )
         call_summary = self._run_call_steps(request, deal_ids) if request.include_calls else {}
+        _report_stage(
+            request.progress_callback,
+            stage="sales_quality",
+            label="AI-оценка коммуникаций",
+            start=62,
+            end=88,
+            current=0,
+            total=1,
+            message="Готовим коммуникации к AI-оценке",
+        )
         sales_quality_summary = self._run_sales_quality_step(request)
 
+        _report_stage(
+            request.progress_callback,
+            stage="executive_report",
+            label="Сборка AI-отчёта",
+            start=88,
+            end=92,
+            current=0,
+            total=1,
+            message="Собираем AI-часть отчёта",
+        )
         BuildExecutiveReportService(gateway=self._crm, sink=self._sink).execute(
             BuildExecutiveReportRequest(
                 output_dir=request.executive_report_dir,
@@ -174,6 +249,16 @@ class RunExecutivePipelineService:
                 portal_base_url=request.portal_base_url,
                 max_reanimation_cards=request.max_reanimation_cards,
             )
+        )
+        _report_stage(
+            request.progress_callback,
+            stage="executive_report",
+            label="Сборка AI-отчёта",
+            start=88,
+            end=92,
+            current=1,
+            total=1,
+            message="AI-часть отчёта собрана",
         )
 
         self._sink.write(
@@ -532,8 +617,28 @@ class RunExecutivePipelineService:
         deal_ids: list[str],
     ) -> dict[str, Any]:
         if not self._file_downloader or not self._transcription:
+            _report_stage(
+                request.progress_callback,
+                stage="call_scan",
+                label="Поиск звонков",
+                start=18,
+                end=62,
+                current=1,
+                total=1,
+                message="Звонки пропущены: нет зависимостей для скачивания или транскрибации",
+            )
             return {"status": "skipped", "reason": "call_dependencies_missing"}
         if not deal_ids:
+            _report_stage(
+                request.progress_callback,
+                stage="call_scan",
+                label="Поиск звонков",
+                start=18,
+                end=62,
+                current=1,
+                total=1,
+                message="Звонки не найдены: в AI-scope нет сделок",
+            )
             return {"recording_candidates": 0, "downloaded": 0, "transcribed": 0}
 
         candidates_path = request.call_scan_dir / "recording-candidates.json"
@@ -545,10 +650,38 @@ class RunExecutivePipelineService:
                     date_from=request.date_from,
                     date_to=request.date_to,
                     deal_ids=deal_ids,
+                    progress_callback=_stage_callback(
+                        request.progress_callback,
+                        stage="call_scan",
+                        label="Поиск звонков",
+                        start=18,
+                        end=30,
+                    ),
                 )
+            )
+        else:
+            _report_stage(
+                request.progress_callback,
+                stage="call_scan",
+                label="Поиск звонков",
+                start=18,
+                end=30,
+                current=1,
+                total=1,
+                message="Используем готовый список звонков",
             )
         candidate_count = _json_list_count(candidates_path)
         if candidate_count == 0:
+            _report_stage(
+                request.progress_callback,
+                stage="download_recordings",
+                label="Скачивание записей",
+                start=30,
+                end=62,
+                current=1,
+                total=1,
+                message="Записей звонков для анализа нет",
+            )
             return {"recording_candidates": 0, "downloaded": 0, "transcribed": 0}
 
         DownloadRecordingsService(downloader=self._file_downloader, sink=self._sink).execute(
@@ -556,10 +689,27 @@ class RunExecutivePipelineService:
                 source_json_path=request.call_scan_dir / "recording-candidates.json",
                 output_dir=request.recordings_dir,
                 skip_existing=not request.reset_outputs,
+                progress_callback=_stage_callback(
+                    request.progress_callback,
+                    stage="download_recordings",
+                    label="Скачивание записей",
+                    start=30,
+                    end=38,
+                ),
             )
         )
         manifest_count = _json_list_count(request.recordings_dir / "manifest.json")
         if manifest_count == 0:
+            _report_stage(
+                request.progress_callback,
+                stage="transcription",
+                label="Транскрибация звонков",
+                start=38,
+                end=62,
+                current=1,
+                total=1,
+                message="Скачанных записей для транскрибации нет",
+            )
             return {
                 "recording_candidates": candidate_count,
                 "downloaded": 0,
@@ -576,6 +726,13 @@ class RunExecutivePipelineService:
                 prompt=request.transcription_prompt,
                 limit=0,
                 skip_existing=not request.reset_outputs,
+                progress_callback=_stage_callback(
+                    request.progress_callback,
+                    stage="transcription",
+                    label="Транскрибация звонков",
+                    start=38,
+                    end=62,
+                ),
             )
         )
         return {
@@ -604,6 +761,13 @@ class RunExecutivePipelineService:
                     skip_existing=not request.reset_outputs,
                     slow_response_threshold_sec=request.slow_response_threshold_sec,
                     max_chars_per_item=request.max_chars_per_item,
+                    progress_callback=_stage_callback(
+                        request.progress_callback,
+                        stage="sales_quality",
+                        label="AI-оценка коммуникаций",
+                        start=62,
+                        end=88,
+                    ),
                 )
             )
         except ValueError as exc:
@@ -632,6 +796,66 @@ class RunExecutivePipelineService:
         self._sink.write(output_dir / "errors.json", [])
         self._sink.write(output_dir / "usage-events.json", [])
         self._sink.write(output_dir / "usage-summary.json", {})
+
+
+def _stage_callback(
+    callback: ProgressCallback | None,
+    *,
+    stage: str,
+    label: str,
+    start: float,
+    end: float,
+) -> ProgressCallback | None:
+    if callback is None:
+        return None
+
+    def _callback(event: dict[str, Any]) -> None:
+        _report_stage(
+            callback,
+            stage=stage,
+            label=label,
+            start=start,
+            end=end,
+            current=_coerce_int(event.get("current")),
+            total=_coerce_int(event.get("total")),
+            message=str(event.get("message") or label),
+        )
+
+    return _callback
+
+
+def _report_stage(
+    callback: ProgressCallback | None,
+    *,
+    stage: str,
+    label: str,
+    start: float,
+    end: float,
+    current: int,
+    total: int,
+    message: str,
+) -> None:
+    if total > 0:
+        ratio = max(0.0, min(1.0, current / total))
+        percent = start + ((end - start) * ratio)
+    else:
+        percent = start
+    emit_progress(
+        callback,
+        stage=stage,
+        stage_label=label,
+        current=max(0, current),
+        total=max(0, total),
+        percent=round(percent, 1),
+        message=message,
+    )
+
+
+def _coerce_int(value: Any) -> int:
+    try:
+        return int(value or 0)
+    except (TypeError, ValueError):
+        return 0
 
 
 def _reset_dir(path: Path) -> None:

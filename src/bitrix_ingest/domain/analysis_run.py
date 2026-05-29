@@ -20,8 +20,26 @@ class AnalysisRun:
     )
     completed_at: str | None = None
     error: str | None = None
+    progress_stage: str | None = None
+    progress_label: str | None = None
+    progress_current: int = 0
+    progress_total: int = 0
+    progress_percent: float = 0.0
+    progress_message: str | None = None
+    eta_seconds: int | None = None
+    progress_updated_at: str | None = None
 
     def to_dict(self) -> dict[str, Any]:
+        progress = {
+            "stage": self.progress_stage,
+            "label": self.progress_label,
+            "current": self.progress_current,
+            "total": self.progress_total,
+            "percent": self.progress_percent,
+            "message": self.progress_message,
+            "eta_seconds": self.eta_seconds,
+            "updated_at": self.progress_updated_at,
+        }
         return {
             "run_id": self.run_id,
             "tenant_id": self.tenant_id,
@@ -34,4 +52,13 @@ class AnalysisRun:
             "created_at": self.created_at,
             "completed_at": self.completed_at,
             "error": self.error,
+            "progress_stage": self.progress_stage,
+            "progress_label": self.progress_label,
+            "progress_current": self.progress_current,
+            "progress_total": self.progress_total,
+            "progress_percent": self.progress_percent,
+            "progress_message": self.progress_message,
+            "eta_seconds": self.eta_seconds,
+            "progress_updated_at": self.progress_updated_at,
+            "progress": progress,
         }

@@ -12,6 +12,7 @@ from ...domain.recordings import (
     RecordingManifestEntry,
 )
 from ..ports import FileDownloader, JsonSink
+from ..progress import ProgressCallback, emit_progress
 
 logger = logging.getLogger(__name__)
 
@@ -21,6 +22,7 @@ class DownloadRecordingsRequest:
     source_json_path: Path
     output_dir: Path
     skip_existing: bool = False
+    progress_callback: ProgressCallback | None = None
 
 
 class DownloadRecordingsService:
@@ -43,8 +45,21 @@ class DownloadRecordingsService:
         manifest: list[RecordingManifestEntry] = []
         errors: list[RecordingDownloadError] = []
 
-        for candidate in candidates:
+        total = len(candidates)
+        emit_progress(
+            request.progress_callback,
+            current=0,
+            total=total,
+            message=f"Найдено записей для скачивания: {total}",
+        )
+        for index, candidate in enumerate(candidates, start=1):
             self._process(candidate, output_dir, request.skip_existing, manifest, errors)
+            emit_progress(
+                request.progress_callback,
+                current=index,
+                total=total,
+                message=f"Скачиваем записи звонков: {index} из {total}",
+            )
 
         self._sink.write(output_dir / "manifest.json", [e.to_dict() for e in manifest])
         self._sink.write(output_dir / "download-errors.json", [e.to_dict() for e in errors])
