@@ -289,3 +289,124 @@ def test_executive_pipeline_resume_reuses_existing_outputs(tmp_path, monkeypatch
     assert captured["download_skip_existing"] is True
     assert captured["transcribe_skip_existing"] is True
     assert captured["sales_quality_skip_existing"] is True
+
+
+def test_executive_pipeline_resume_skips_ready_source_stages(tmp_path, monkeypatch):
+    import bitrix_ingest.application.executive_pipeline.run_service as pipeline_module
+
+    captured: dict[str, object] = {}
+    executive_dir = tmp_path / "executive-report"
+    whatsapp_dir = tmp_path / "whatsapp"
+    calls_dir = tmp_path / "calls"
+    recordings_dir = tmp_path / "recordings"
+
+    executive_dir.mkdir(parents=True)
+    (executive_dir / "scope-deals.json").write_text(
+        json.dumps(
+            [
+                {
+                    "ID": "1",
+                    "TITLE": "Cached scope - WhatsApp",
+                    "SOURCE_ID": "WZ-1",
+                    "CATEGORY_ID": "0",
+                    "ASSIGNED_BY_ID": "28",
+                }
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+    (whatsapp_dir / "conversations_filtered").mkdir(parents=True)
+    (whatsapp_dir / "report.json").write_text(
+        json.dumps({"rows": [{"deal_id": "1", "total_messages": 2}]}),
+        encoding="utf-8",
+    )
+    (whatsapp_dir / "conversations_filtered" / "deal_1.json").write_text(
+        json.dumps({"deal_id": "1", "messages": [{"sender_role": "client", "text": "hello"}]}),
+        encoding="utf-8",
+    )
+
+    calls_dir.mkdir(parents=True)
+    (calls_dir / "recording-candidates.json").write_text(
+        json.dumps([{"CRM_ACTIVITY_ID": "1", "RECORD_FILE_ID": "2"}]),
+        encoding="utf-8",
+    )
+    (calls_dir / "activities.source.json").write_text("[]", encoding="utf-8")
+
+    def fail_if_source_stage_runs(self, request):  # pragma: no cover - assertion helper
+        raise AssertionError("source stage should be reused in resume mode")
+
+    def fake_download_execute(self, request):
+        captured["download_skip_existing"] = request.skip_existing
+        output_dir = Path(request.output_dir)
+        output_dir.mkdir(parents=True, exist_ok=True)
+        (output_dir / "manifest.json").write_text(
+            json.dumps(
+                [
+                    {
+                        "CRM_ACTIVITY_ID": "1",
+                        "RECORD_FILE_ID": "2",
+                        "FILE_PATH": str(output_dir / "call.mp3"),
+                    }
+                ]
+            ),
+            encoding="utf-8",
+        )
+
+    def fake_transcribe_execute(self, request):
+        captured["transcribe_skip_existing"] = request.skip_existing
+        output_dir = Path(request.output_dir)
+        output_dir.mkdir(parents=True, exist_ok=True)
+        (output_dir / "manifest.json").write_text("[]", encoding="utf-8")
+
+    def fake_sales_quality_execute(self, request):
+        captured["sales_quality_skip_existing"] = request.skip_existing
+        output_dir = Path(request.output_dir)
+        (output_dir / "features").mkdir(parents=True, exist_ok=True)
+        (output_dir / "raw").mkdir(parents=True, exist_ok=True)
+        (output_dir / "report.json").write_text(
+            json.dumps({"stage_funnel": [], "per_manager": [], "top_problems": []}),
+            encoding="utf-8",
+        )
+        (output_dir / "errors.json").write_text("[]", encoding="utf-8")
+
+    def fake_build_report_execute(self, request):
+        Path(request.output_dir).mkdir(parents=True, exist_ok=True)
+        (Path(request.output_dir) / "executive-report.json").write_text(
+            json.dumps({"scope": {"deals_loaded": 1}}),
+            encoding="utf-8",
+        )
+
+    monkeypatch.setattr(pipeline_module.WhatsAppExportService, "execute", fail_if_source_stage_runs)
+    monkeypatch.setattr(pipeline_module.WhatsAppTimelineExportService, "execute", fail_if_source_stage_runs)
+    monkeypatch.setattr(pipeline_module.CallRecordsScanService, "execute", fail_if_source_stage_runs)
+    monkeypatch.setattr(pipeline_module.DownloadRecordingsService, "execute", fake_download_execute)
+    monkeypatch.setattr(pipeline_module.TranscribeRecordingsService, "execute", fake_transcribe_execute)
+    monkeypatch.setattr(pipeline_module.AnalyzeSalesQualityService, "execute", fake_sales_quality_execute)
+    monkeypatch.setattr(pipeline_module.BuildExecutiveReportService, "execute", fake_build_report_execute)
+
+    service = RunExecutivePipelineService(
+        crm_gateway=DummyGateway(),
+        whatsapp_gateway=DummyGateway(),
+        responses_gateway=DummyResponsesGateway(),
+        transcription_gateway=DummyTranscriptionGateway(),
+        file_downloader=DummyDownloader(),
+        sink=FileSink(),
+    )
+
+    service.execute(
+        RunExecutivePipelineRequest(
+            sales_quality_dir=tmp_path / "sales-quality",
+            executive_report_dir=executive_dir,
+            whatsapp_dir=whatsapp_dir,
+            call_scan_dir=calls_dir,
+            recordings_dir=recordings_dir,
+            date_from="2026-04-01",
+            date_to="2026-04-30",
+            reset_outputs=False,
+        )
+    )
+
+    assert captured["download_skip_existing"] is True
+    assert captured["transcribe_skip_existing"] is True
+    assert captured["sales_quality_skip_existing"] is True

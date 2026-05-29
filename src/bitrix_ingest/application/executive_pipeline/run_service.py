@@ -181,6 +181,11 @@ class RunExecutivePipelineService:
         )
 
     def _load_scope_deals(self, request: RunExecutivePipelineRequest) -> list[dict[str, Any]]:
+        if not request.reset_outputs:
+            cached_rows = _json_dict_list(request.executive_report_dir / "scope-deals.json")
+            if cached_rows is not None:
+                return cached_rows
+
         explicit_ids = [str(v).strip() for v in (request.deal_ids or []) if str(v).strip()]
         if explicit_ids:
             rows: list[dict[str, Any]] = []
@@ -256,6 +261,11 @@ class RunExecutivePipelineService:
         request: RunExecutivePipelineRequest,
         deals: list[dict[str, Any]],
     ) -> dict[str, Any]:
+        if not request.reset_outputs:
+            cached = self._cached_whatsapp_summary(request)
+            if cached is not None:
+                return cached
+
         WhatsAppExportService(gateway=self._whatsapp, sink=self._sink).execute(
             WhatsAppExportRequest(
                 output_dir=request.whatsapp_dir,
@@ -283,6 +293,34 @@ class RunExecutivePipelineService:
             self._download_and_transcribe_whatsapp_audio(request)
             if request.include_whatsapp_audio
             else {"status": "skipped", "reason": "disabled_for_main_report"}
+        )
+        return {
+            **summary,
+            "filtered_conversations": filtered_count,
+            "audio": audio_summary,
+        }
+
+    def _cached_whatsapp_summary(
+        self,
+        request: RunExecutivePipelineRequest,
+    ) -> dict[str, Any] | None:
+        if not (request.whatsapp_dir / "report.json").exists():
+            return None
+        filtered_dir = request.whatsapp_dir / "conversations_filtered"
+        if not filtered_dir.exists():
+            conversations_dir = request.whatsapp_dir / "conversations"
+            if not conversations_dir.exists():
+                return None
+            self._filter_conversations(conversations_dir, filtered_dir)
+
+        summary = self._conversation_summary(request.whatsapp_dir)
+        filtered_count = _json_file_count(filtered_dir)
+        if summary["rows_with_messages"] > 0 and filtered_count == 0:
+            return None
+        audio_summary = (
+            self._download_and_transcribe_whatsapp_audio(request)
+            if request.include_whatsapp_audio
+            else {"status": "skipped", "reason": "resume_existing_outputs"}
         )
         return {
             **summary,
@@ -471,16 +509,18 @@ class RunExecutivePipelineService:
         if not deal_ids:
             return {"recording_candidates": 0, "downloaded": 0, "transcribed": 0}
 
-        CallRecordsScanService(gateway=self._crm, sink=self._sink).execute(
-            CallRecordsScanRequest(
-                output_dir=request.call_scan_dir,
-                limit=0,
-                date_from=request.date_from,
-                date_to=request.date_to,
-                deal_ids=deal_ids,
+        candidates_path = request.call_scan_dir / "recording-candidates.json"
+        if request.reset_outputs or not candidates_path.exists():
+            CallRecordsScanService(gateway=self._crm, sink=self._sink).execute(
+                CallRecordsScanRequest(
+                    output_dir=request.call_scan_dir,
+                    limit=0,
+                    date_from=request.date_from,
+                    date_to=request.date_to,
+                    deal_ids=deal_ids,
+                )
             )
-        )
-        candidate_count = _json_list_count(request.call_scan_dir / "recording-candidates.json")
+        candidate_count = _json_list_count(candidates_path)
         if candidate_count == 0:
             return {"recording_candidates": 0, "downloaded": 0, "transcribed": 0}
 
@@ -586,6 +626,21 @@ def _json_list_count(path: Path) -> int:
     if not isinstance(raw, list):
         raw = [raw]
     return len([item for item in raw if isinstance(item, dict)])
+
+
+def _json_dict_list(path: Path) -> list[dict[str, Any]] | None:
+    if not path.exists():
+        return None
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(raw, list):
+        return None
+    return [item for item in raw if isinstance(item, dict)]
+
+
+def _json_file_count(path: Path) -> int:
+    if not path.exists() or not path.is_dir():
+        return 0
+    return len([item for item in path.glob("*.json") if item.is_file()])
 
 
 def _extract_file_id(url: str) -> str | None:
