@@ -150,33 +150,16 @@ class ExportSalesAnalyticsService:
         stages = self._load_stages(categories)
 
         filters = self._scope_filter(request)
-        active = self._list_deals(
-            {**filters, "CLOSED": "N", "<=DATE_CREATE": period_end},
-            limit=request.limit,
-        )
-        closed = self._list_deals(
-            {**filters, "CLOSED": "Y", ">=CLOSEDATE": period_start, "<=CLOSEDATE": period_end},
-            limit=request.limit,
-        )
         created = self._list_deals(
             {**filters, ">=DATE_CREATE": period_start, "<=DATE_CREATE": period_end},
             limit=request.limit,
         )
-        modified = self._list_deals(
-            {**filters, ">=DATE_MODIFY": period_start, "<=DATE_MODIFY": period_end},
-            limit=request.limit,
-        )
-
-        merged = _merge_deals(
-            {
-                "active_as_of_to": active,
-                "closed_in_period": closed,
-                "created_in_period": created,
-                "modified_in_period": modified,
-            }
-        )
+        scoped_deals = [
+            _mark_created_period_deal(deal, period_start=period_start, period_end=period_end)
+            for deal in created
+        ]
         normalized_deals = self._normalize_deals(
-            merged,
+            scoped_deals,
             users=users,
             departments=departments,
             categories=categories,
@@ -219,11 +202,18 @@ class ExportSalesAnalyticsService:
             "date_to": request.date_to,
             "period_start": period_start,
             "period_end": period_end,
+            "deal_date_filter": "DATE_CREATE",
             "deals_unique": len(normalized_deals),
-            "active_as_of_to": len(active),
-            "closed_in_period": len(closed),
+            "active_as_of_to": sum(
+                1 for row in normalized_deals if int(row.get("active_as_of_to") or 0) == 1
+            ),
+            "closed_in_period": sum(
+                1 for row in normalized_deals if int(row.get("closed_in_period") or 0) == 1
+            ),
             "created_in_period": len(created),
-            "modified_in_period": len(modified),
+            "modified_in_period": sum(
+                1 for row in normalized_deals if int(row.get("modified_in_period") or 0) == 1
+            ),
             "users": len(users),
             "departments": len(departments),
             "categories": len(categories),
@@ -740,21 +730,20 @@ def _normalize_invoices(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return docs
 
 
-def _merge_deals(groups: dict[str, list[dict[str, Any]]]) -> list[dict[str, Any]]:
-    by_id: dict[str, dict[str, Any]] = {}
-    for flag, rows in groups.items():
-        for row in rows:
-            deal_id = str(row.get("ID") or "").strip()
-            if not deal_id:
-                continue
-            current = by_id.setdefault(deal_id, dict(row))
-            current[f"_{flag}"] = True
-            for key, value in row.items():
-                current.setdefault(key, value)
-    for row in by_id.values():
-        for flag in groups:
-            row.setdefault(f"_{flag}", False)
-    return sorted(by_id.values(), key=lambda item: _to_int(item.get("ID")) or 0)
+def _mark_created_period_deal(
+    deal: dict[str, Any],
+    *,
+    period_start: str,
+    period_end: str,
+) -> dict[str, Any]:
+    row = dict(deal)
+    row["_created_in_period"] = True
+    row["_active_as_of_to"] = not _is_closed(row)
+    row["_closed_in_period"] = (
+        _is_closed(row) and _within_period(row.get("CLOSEDATE"), period_start, period_end)
+    )
+    row["_modified_in_period"] = _within_period(row.get("DATE_MODIFY"), period_start, period_end)
+    return row
 
 
 def _merge_records_by_id(*groups: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -794,6 +783,34 @@ def _bound(value: str, *, end_of_day: bool) -> str:
         return text
     suffix = dt_time.max if end_of_day else dt_time.min
     return datetime.combine(datetime.fromisoformat(text).date(), suffix).replace(microsecond=0).isoformat()
+
+
+def _is_closed(row: dict[str, Any]) -> bool:
+    return str(row.get("CLOSED") or "").strip().upper() == "Y"
+
+
+def _within_period(value: Any, period_start: str, period_end: str) -> bool:
+    parsed = _parse_datetime(value)
+    start = _parse_datetime(period_start)
+    end = _parse_datetime(period_end)
+    if parsed is None or start is None or end is None:
+        return False
+    return start <= parsed <= end
+
+
+def _parse_datetime(value: Any) -> datetime | None:
+    text = str(value or "").strip()
+    if not text:
+        return None
+    if text.endswith("Z"):
+        text = f"{text[:-1]}+00:00"
+    try:
+        parsed = datetime.fromisoformat(text)
+    except ValueError:
+        return None
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    return parsed.astimezone(timezone.utc)
 
 
 def _to_utc_iso(value: str) -> str | None:
