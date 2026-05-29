@@ -27,6 +27,7 @@ class DummyResponsesGateway:
 
 class DummyGateway:
     def __init__(self):
+        self.list_calls = []
         self.deals = [
             {
                 "ID": "1",
@@ -40,13 +41,13 @@ class DummyGateway:
             },
             {
                 "ID": "2",
-                "TITLE": "Outside scope - WhatsApp",
+                "TITLE": "Modified in period, created before period - WhatsApp",
                 "SOURCE_ID": "WZ-1",
                 "CATEGORY_ID": "0",
                 "ASSIGNED_BY_ID": "28",
-                "DATE_CREATE": "2026-05-10T10:00:00+03:00",
-                "DATE_MODIFY": "2026-05-10T10:00:00+03:00",
-                "CLOSEDATE": "2026-05-15T10:00:00+03:00",
+                "DATE_CREATE": "2026-03-10T10:00:00+03:00",
+                "DATE_MODIFY": "2026-04-10T10:00:00+03:00",
+                "CLOSEDATE": "2026-04-15T10:00:00+03:00",
             },
         ]
 
@@ -54,6 +55,16 @@ class DummyGateway:
         raise AssertionError(f"Unexpected call: {method}")
 
     def list_all(self, method: str, select, filter=None, order=None, context="", limit=None):
+        self.list_calls.append(
+            {
+                "method": method,
+                "select": select,
+                "filter": filter or {},
+                "order": order or {},
+                "context": context,
+                "limit": limit,
+            }
+        )
         if method == "crm.deal.list":
             return self.deals
         raise AssertionError(f"Unexpected list_all: {method}")
@@ -138,8 +149,9 @@ def test_executive_pipeline_uses_one_scope_for_sources_and_report(tmp_path, monk
     monkeypatch.setattr(pipeline_module.AnalyzeSalesQualityService, "execute", fake_sales_quality_execute)
     monkeypatch.setattr(pipeline_module.BuildExecutiveReportService, "execute", fake_build_report_execute)
 
+    crm_gateway = DummyGateway()
     service = RunExecutivePipelineService(
-        crm_gateway=DummyGateway(),
+        crm_gateway=crm_gateway,
         whatsapp_gateway=DummyGateway(),
         responses_gateway=DummyResponsesGateway(),
         transcription_gateway=DummyTranscriptionGateway(),
@@ -163,6 +175,13 @@ def test_executive_pipeline_uses_one_scope_for_sources_and_report(tmp_path, monk
 
     assert captured["whatsapp_deal_ids"] == ["1"]
     assert captured["call_deal_ids"] == ["1"]
+    assert crm_gateway.list_calls[0]["filter"] == {
+        ">=DATE_CREATE": "2026-04-01T00:00:00",
+        "<=DATE_CREATE": "2026-04-30T23:59:59",
+        "CATEGORY_ID": "0",
+        "ASSIGNED_BY_ID": "28",
+    }
+    assert crm_gateway.list_calls[0]["order"] == {"DATE_CREATE": "DESC"}
     assert captured["report_date_from"] == "2026-04-01"
     assert captured["report_category_ids"] == ["0"]
     assert captured["report_responsible_ids"] == ["28"]
@@ -310,8 +329,25 @@ def test_executive_pipeline_resume_skips_ready_source_stages(tmp_path, monkeypat
                     "SOURCE_ID": "WZ-1",
                     "CATEGORY_ID": "0",
                     "ASSIGNED_BY_ID": "28",
+                    "DATE_CREATE": "2026-04-10T10:00:00+03:00",
                 }
             ]
+        ),
+        encoding="utf-8",
+    )
+    (executive_dir / "pipeline-summary.json").write_text(
+        json.dumps(
+            {
+                "scope": {
+                    "deal_date_filter": "DATE_CREATE",
+                    "date_from": "2026-04-01",
+                    "date_to": "2026-04-30",
+                    "category_ids": [],
+                    "responsible_ids": [],
+                    "deal_ids_fingerprint": "97d170e1550eee4afc0af065b78cda302a97674c",
+                    "limit": 0,
+                }
+            }
         ),
         encoding="utf-8",
     )

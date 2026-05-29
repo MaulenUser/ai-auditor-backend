@@ -1,6 +1,7 @@
 """Run the executive report pipeline with one shared CRM scope."""
 from __future__ import annotations
 
+import hashlib
 import json
 import logging
 import re
@@ -12,7 +13,7 @@ from typing import Any, Protocol
 from urllib.parse import parse_qs, urlparse
 
 from ..call_records import CallRecordsScanRequest, CallRecordsScanService
-from ..date_range import within_any_record_datetime_range
+from ..date_range import build_closed_filter, within_any_record_datetime_range
 from ..executive_report import BuildExecutiveReportRequest, BuildExecutiveReportService
 from ..ports import BitrixGateway, FileDownloader, JsonSink
 from ..recordings import DownloadRecordingsRequest, DownloadRecordingsService
@@ -22,6 +23,8 @@ from ..whatsapp import WhatsAppExportRequest, WhatsAppExportService
 from ..whatsapp_timeline import WhatsAppTimelineExportRequest, WhatsAppTimelineExportService
 
 logger = logging.getLogger(__name__)
+
+_DEAL_DATE_FILTER = "DATE_CREATE"
 
 _DEAL_SELECT = [
     "ID",
@@ -71,6 +74,12 @@ class TranscriptionGateway(Protocol):
         language: str | None,
         prompt: str | None,
     ) -> dict[str, Any]: ...
+
+
+@dataclass(frozen=True)
+class _ScopeDealsResult:
+    rows: list[dict[str, Any]]
+    reused_cache: bool
 
 
 @dataclass(frozen=True)
@@ -133,8 +142,13 @@ class RunExecutivePipelineService:
             ):
                 _reset_dir(path)
 
-        deals = self._load_scope_deals(request)
+        scope_result = self._load_scope_deals(request)
+        deals = scope_result.rows
         deal_ids = [str(deal.get("ID") or "") for deal in deals if deal.get("ID")]
+
+        if not request.reset_outputs and not scope_result.reused_cache:
+            _reset_dir(request.whatsapp_dir)
+            _reset_dir(request.call_scan_dir)
 
         request.executive_report_dir.mkdir(parents=True, exist_ok=True)
         self._sink.write(request.executive_report_dir / "scope-deals.json", deals)
@@ -167,11 +181,14 @@ class RunExecutivePipelineService:
             {
                 "generated_at": _now_iso(),
                 "scope": {
+                    "deal_date_filter": _DEAL_DATE_FILTER,
                     "date_from": request.date_from,
                     "date_to": request.date_to,
                     "category_ids": request.category_ids or [],
                     "responsible_ids": request.responsible_ids or [],
                     "deal_ids_count": len(deal_ids),
+                    "requested_deal_ids_count": len(_normalize_values(request.deal_ids or [])),
+                    "deal_ids_fingerprint": _fingerprint_values(request.deal_ids or []),
                     "limit": request.limit,
                 },
                 "whatsapp": whatsapp_summary,
@@ -180,11 +197,11 @@ class RunExecutivePipelineService:
             },
         )
 
-    def _load_scope_deals(self, request: RunExecutivePipelineRequest) -> list[dict[str, Any]]:
+    def _load_scope_deals(self, request: RunExecutivePipelineRequest) -> _ScopeDealsResult:
         if not request.reset_outputs:
             cached_rows = _json_dict_list(request.executive_report_dir / "scope-deals.json")
-            if cached_rows is not None:
-                return cached_rows
+            if cached_rows is not None and _scope_cache_matches_request(request):
+                return _ScopeDealsResult(cached_rows, reused_cache=True)
 
         explicit_ids = [str(v).strip() for v in (request.deal_ids or []) if str(v).strip()]
         if explicit_ids:
@@ -199,9 +216,16 @@ class RunExecutivePipelineService:
                         context="executive pipeline explicit deals",
                     )
                 )
-            return self._filter_scope_rows(rows, request)
+            return _ScopeDealsResult(self._filter_scope_rows(rows, request), reused_cache=False)
 
         deal_filter: dict[str, Any] = {}
+        deal_filter.update(
+            build_closed_filter(
+                _DEAL_DATE_FILTER,
+                date_from=request.date_from,
+                date_to=request.date_to,
+            )
+        )
         category_ids = [str(v).strip() for v in (request.category_ids or []) if str(v).strip()]
         if category_ids:
             deal_filter["CATEGORY_ID"] = category_ids if len(category_ids) > 1 else category_ids[0]
@@ -217,11 +241,14 @@ class RunExecutivePipelineService:
             "crm.deal.list",
             select=_DEAL_SELECT,
             filter=deal_filter,
-            order={"DATE_MODIFY": "DESC"},
+            order={_DEAL_DATE_FILTER: "DESC"},
             context="executive pipeline scope deals",
+            limit=request.limit if request.limit > 0 else None,
         )
         rows = self._filter_scope_rows(rows, request)
-        return rows[: request.limit] if request.limit > 0 else rows
+        if request.limit > 0:
+            rows = rows[: request.limit]
+        return _ScopeDealsResult(rows, reused_cache=False)
 
     def _filter_scope_rows(
         self,
@@ -235,7 +262,7 @@ class RunExecutivePipelineService:
                 for row in filtered
                 if within_any_record_datetime_range(
                     row,
-                    fields=("DATE_CREATE", "DATE_MODIFY", "CLOSEDATE"),
+                    fields=(_DEAL_DATE_FILTER,),
                     date_from=request.date_from,
                     date_to=request.date_to,
                 )
@@ -635,6 +662,41 @@ def _json_dict_list(path: Path) -> list[dict[str, Any]] | None:
     if not isinstance(raw, list):
         return None
     return [item for item in raw if isinstance(item, dict)]
+
+
+def _scope_cache_matches_request(request: RunExecutivePipelineRequest) -> bool:
+    summary_path = request.executive_report_dir / "pipeline-summary.json"
+    if not summary_path.exists():
+        return False
+    try:
+        summary = json.loads(summary_path.read_text(encoding="utf-8"))
+    except Exception:  # noqa: BLE001
+        return False
+    scope = summary.get("scope") if isinstance(summary, dict) else None
+    if not isinstance(scope, dict):
+        return False
+    if scope.get("deal_date_filter") != _DEAL_DATE_FILTER:
+        return False
+    return (
+        scope.get("date_from") == request.date_from
+        and scope.get("date_to") == request.date_to
+        and _normalize_values(scope.get("category_ids") or [])
+        == _normalize_values(request.category_ids or [])
+        and _normalize_values(scope.get("responsible_ids") or [])
+        == _normalize_values(request.responsible_ids or [])
+        and scope.get("deal_ids_fingerprint") == _fingerprint_values(request.deal_ids or [])
+        and int(scope.get("limit") or 0) == int(request.limit or 0)
+    )
+
+
+def _normalize_values(values: list[Any]) -> list[str]:
+    return sorted(str(value).strip() for value in values if str(value).strip())
+
+
+def _fingerprint_values(values: list[Any]) -> str:
+    normalized = _normalize_values(values)
+    payload = json.dumps(normalized, ensure_ascii=False, separators=(",", ":"))
+    return hashlib.sha1(payload.encode("utf-8")).hexdigest()
 
 
 def _json_file_count(path: Path) -> int:
