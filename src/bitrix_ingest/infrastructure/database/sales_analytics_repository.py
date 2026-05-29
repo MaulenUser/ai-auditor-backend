@@ -514,34 +514,50 @@ class SalesAnalyticsRepository:
 
     def _task_status(self, conn: Any, tenant_id: str, run_id: str) -> dict[str, Any]:
         p = self._p
-        params = (tenant_id, run_id)
-        base = f"""
-            FROM sales_analytics_deals d
-            LEFT JOIN sales_analytics_task_bindings b
-                ON b.tenant_id = d.tenant_id
-                AND b.run_id = d.run_id
-                AND b.entity_type = 'D'
-                AND b.entity_id = d.id
-            LEFT JOIN sales_analytics_tasks t
-                ON t.tenant_id = b.tenant_id
-                AND t.run_id = b.run_id
-                AND t.id = b.task_id
-            WHERE d.tenant_id = {p} AND d.run_id = {p} AND d.active_as_of_to = 1
-        """
-        per_deal = f"""
-            SELECT
-                d.id,
-                d.assigned_by_id,
-                d.manager_name,
-                COUNT(DISTINCT t.id) AS total_tasks,
-                COUNT(DISTINCT CASE WHEN t.is_completed = 0 THEN t.id END) AS open_tasks,
-                COUNT(DISTINCT CASE WHEN t.is_overdue = 1 THEN t.id END) AS overdue_tasks
-            {base}
-            GROUP BY d.id, d.assigned_by_id, d.manager_name
-        """
-        department = conn.execute(
+        rows = conn.execute(
             f"""
+            WITH active_deals AS (
+                SELECT id, assigned_by_id, manager_name
+                FROM sales_analytics_deals
+                WHERE tenant_id = {p}
+                    AND run_id = {p}
+                    AND active_as_of_to = 1
+            ),
+            unique_bindings AS (
+                SELECT DISTINCT entity_id, task_id
+                FROM sales_analytics_task_bindings
+                WHERE tenant_id = {p}
+                    AND run_id = {p}
+                    AND entity_type = 'D'
+            ),
+            task_counts AS (
+                SELECT
+                    b.entity_id AS deal_id,
+                    COUNT(*) AS total_tasks,
+                    SUM(CASE WHEN t.is_completed = 0 THEN 1 ELSE 0 END) AS open_tasks,
+                    SUM(CASE WHEN t.is_overdue = 1 THEN 1 ELSE 0 END) AS overdue_tasks
+                FROM unique_bindings b
+                INNER JOIN sales_analytics_tasks t
+                    ON t.tenant_id = {p}
+                    AND t.run_id = {p}
+                    AND t.id = b.task_id
+                GROUP BY b.entity_id
+            ),
+            per_deal AS (
+                SELECT
+                    d.id,
+                    d.assigned_by_id,
+                    d.manager_name,
+                    COALESCE(t.total_tasks, 0) AS total_tasks,
+                    COALESCE(t.open_tasks, 0) AS open_tasks,
+                    COALESCE(t.overdue_tasks, 0) AS overdue_tasks
+                FROM active_deals d
+                LEFT JOIN task_counts t ON t.deal_id = d.id
+            )
             SELECT
+                0 AS is_manager,
+                NULL AS manager_id,
+                '' AS manager_name,
                 COUNT(*) AS in_work_deals,
                 SUM(CASE WHEN total_tasks > 0 THEN 1 ELSE 0 END) AS with_open_tasks,
                 SUM(CASE WHEN total_tasks = 0 THEN 1 ELSE 0 END) AS without_open_tasks,
@@ -549,13 +565,10 @@ class SalesAnalyticsRepository:
                 SUM(total_tasks) AS total_linked_tasks,
                 SUM(open_tasks) AS open_linked_tasks,
                 SUM(overdue_tasks) AS overdue_linked_tasks
-            FROM ({per_deal}) q
-            """,
-            params,
-        ).fetchone()
-        managers = conn.execute(
-            f"""
+            FROM per_deal
+            UNION ALL
             SELECT
+                1 AS is_manager,
                 assigned_by_id AS manager_id,
                 manager_name,
                 COUNT(*) AS in_work_deals,
@@ -565,12 +578,14 @@ class SalesAnalyticsRepository:
                 SUM(total_tasks) AS total_linked_tasks,
                 SUM(open_tasks) AS open_linked_tasks,
                 SUM(overdue_tasks) AS overdue_linked_tasks
-            FROM ({per_deal}) q
+            FROM per_deal
             GROUP BY assigned_by_id, manager_name
-            ORDER BY in_work_deals DESC, manager_name ASC
+            ORDER BY is_manager ASC, in_work_deals DESC, manager_name ASC
             """,
-            params,
+            (tenant_id, run_id, tenant_id, run_id, tenant_id, run_id),
         ).fetchall()
+        department = next((row for row in rows if _int(row["is_manager"]) == 0), None)
+        managers = [row for row in rows if _int(row["is_manager"]) == 1]
         return {
             "source": "postgres:sales_analytics_tasks",
             "department": _normalize_task_row(department),
