@@ -488,7 +488,7 @@ class RunExecutivePipelineService:
             DownloadRecordingsRequest(
                 source_json_path=request.call_scan_dir / "recording-candidates.json",
                 output_dir=request.recordings_dir,
-                skip_existing=False,
+                skip_existing=not request.reset_outputs,
             )
         )
         manifest_count = _json_list_count(request.recordings_dir / "manifest.json")
@@ -508,7 +508,7 @@ class RunExecutivePipelineService:
                 language=request.transcription_language,
                 prompt=request.transcription_prompt,
                 limit=0,
-                skip_existing=False,
+                skip_existing=not request.reset_outputs,
             )
         )
         return {
@@ -534,7 +534,7 @@ class RunExecutivePipelineService:
                     whatsapp_conversation_dir=whatsapp_dir if whatsapp_dir.exists() else None,
                     model=request.model,
                     limit=0,
-                    skip_existing=False,
+                    skip_existing=not request.reset_outputs,
                     slow_response_threshold_sec=request.slow_response_threshold_sec,
                     max_chars_per_item=request.max_chars_per_item,
                 )
