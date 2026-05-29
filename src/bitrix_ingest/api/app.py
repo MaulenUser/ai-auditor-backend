@@ -3284,20 +3284,17 @@ def get_sales_audit_report(
 ) -> dict[str, Any]:
     """Return the final unified report JSON."""
     tid = _resolve_tenant_id(x_tenant_id)
-    _sales_repo()
+    sales_repo = _sales_repo()
     resolved_run_id = _none(run_id)
     if not resolved_run_id:
-        completed = [
-            run for run in _runs_repo().list_by_tenant(tid)
-            if run.status == "completed" and "sales-audit" in (run.output_dir or "")
-        ]
-        if not completed:
+        reports = sales_repo.list_sales_audit_reports(tenant_id=tid, limit=1)
+        if not reports:
             raise HTTPException(
                 status_code=404,
                 detail=f"No completed sales audit runs found for tenant '{tid}'.",
             )
-        resolved_run_id = completed[0].run_id
-    report = _sales_repo().get_sales_audit_report(tenant_id=tid, run_id=resolved_run_id)
+        resolved_run_id = str(reports[0].get("run_id") or "")
+    report = sales_repo.get_sales_audit_report(tenant_id=tid, run_id=resolved_run_id)
     if not report:
         raise HTTPException(status_code=404, detail=f"Sales audit report not found: {resolved_run_id}")
     return {
@@ -3330,6 +3327,23 @@ def get_sales_audit_history(
             "latest_run_id": runs[0]["id"] if runs else None,
             "source": "postgres:sales_audit_reports",
         },
+    }
+
+
+@app.post("/sales-audit/history/{run_id}/hide", tags=["Sales Audit"])
+def hide_sales_audit_history_run(
+    run_id: str,
+    x_tenant_id: str | None = Header(None),
+) -> dict[str, Any]:
+    """Hide a completed sales audit report from tenant history without deleting raw data."""
+    tid = _resolve_tenant_id(x_tenant_id)
+    if not _sales_repo().hide_sales_audit_report(tenant_id=tid, run_id=run_id):
+        raise HTTPException(status_code=404, detail=f"Sales audit report not found: {run_id}")
+    return {
+        "status": "ok",
+        "tenant_id": tid,
+        "run_id": run_id,
+        "hidden": True,
     }
 
 

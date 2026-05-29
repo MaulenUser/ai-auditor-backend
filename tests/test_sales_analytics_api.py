@@ -28,6 +28,9 @@ class _FakeSalesRepo:
     def list_sales_audit_reports(self, *, tenant_id, limit=50):
         return []
 
+    def hide_sales_audit_report(self, *, tenant_id, run_id):
+        return False
+
 
 def _client(tmp_path, monkeypatch) -> TestClient:
     monkeypatch.setattr(app_module, "_DB_PATH", tmp_path / "app.db")
@@ -233,6 +236,58 @@ def test_sales_audit_history_returns_postgres_report_runs(tmp_path, monkeypatch)
     assert payload["runs"][0]["filters"]["period_from"] == "2026-03-01"
     assert payload["runs"][0]["filters"]["responsible_ids"] == ["8"]
     assert payload["runs"][0]["metric_snapshot"]["total_deals"] == 12
+
+
+def test_sales_audit_history_hide_removes_report_from_history(tmp_path, monkeypatch):
+    client = _client(tmp_path, monkeypatch)
+
+    class _FakeHideRepo(_FakeSalesRepo):
+        def __init__(self):
+            self.hidden: set[str] = set()
+            self.rows = [
+                {
+                    "run_id": "audit-new",
+                    "updated_at": "2026-05-04T08:00:00+00:00",
+                    "summary": {"scope": {"date_from": "2026-05-01", "date_to": "2026-05-04"}},
+                },
+                {
+                    "run_id": "audit-old",
+                    "updated_at": "2026-05-03T08:00:00+00:00",
+                    "summary": {"scope": {"date_from": "2026-04-01", "date_to": "2026-04-30"}},
+                },
+            ]
+
+        def list_sales_audit_reports(self, *, tenant_id, limit=50):
+            assert tenant_id == "default"
+            return [row for row in self.rows if row["run_id"] not in self.hidden][:limit]
+
+        def hide_sales_audit_report(self, *, tenant_id, run_id):
+            assert tenant_id == "default"
+            if run_id not in {row["run_id"] for row in self.rows} or run_id in self.hidden:
+                return False
+            self.hidden.add(run_id)
+            return True
+
+    repo = _FakeHideRepo()
+    monkeypatch.setattr(app_module, "_sales_repo", lambda: repo)
+
+    response = client.post("/sales-audit/history/audit-new/hide")
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["status"] == "ok"
+    assert payload["hidden"] is True
+    history = client.get("/sales-audit/history").json()
+    assert history["latest_run_id"] == "audit-old"
+    assert [run["id"] for run in history["runs"]] == ["audit-old"]
+
+
+def test_sales_audit_history_hide_missing_report_returns_404(tmp_path, monkeypatch):
+    client = _client(tmp_path, monkeypatch)
+
+    response = client.post("/sales-audit/history/missing-audit/hide")
+
+    assert response.status_code == 404
 
 
 def test_sales_audit_job_marks_stale_persisted_run_as_error(tmp_path, monkeypatch):

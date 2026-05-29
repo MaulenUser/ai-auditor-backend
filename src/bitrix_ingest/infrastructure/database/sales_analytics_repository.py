@@ -122,6 +122,7 @@ CREATE TABLE IF NOT EXISTS sales_audit_reports (
     report_json TEXT NOT NULL,
     summary_json TEXT NOT NULL,
     updated_at TEXT NOT NULL DEFAULT (CURRENT_TIMESTAMP::text),
+    hidden_at TEXT,
     PRIMARY KEY (tenant_id, run_id)
 );
 CREATE INDEX IF NOT EXISTS idx_sales_analytics_deals_scope
@@ -133,6 +134,10 @@ CREATE INDEX IF NOT EXISTS idx_sales_analytics_leads_scope
 CREATE INDEX IF NOT EXISTS idx_sales_analytics_revenue_scope
     ON sales_analytics_revenue_documents(tenant_id, run_id, source, paid);
 """
+
+_SALES_AUDIT_REPORT_COLUMNS_POSTGRES = {
+    "hidden_at": "TEXT",
+}
 
 
 class SalesAnalyticsRepository:
@@ -148,6 +153,7 @@ class SalesAnalyticsRepository:
         with self._connect() as conn:
             for statement in [part.strip() for part in _DDL_POSTGRES.split(";") if part.strip()]:
                 conn.execute(statement)
+            self._ensure_sales_audit_report_columns(conn)
 
     def _connect(self):
         return self._db.connect()
@@ -155,6 +161,12 @@ class SalesAnalyticsRepository:
     @property
     def _p(self) -> str:
         return self._db.placeholder
+
+    def _ensure_sales_audit_report_columns(self, conn: Any) -> None:
+        for name, definition in _SALES_AUDIT_REPORT_COLUMNS_POSTGRES.items():
+            conn.execute(
+                f"ALTER TABLE sales_audit_reports ADD COLUMN IF NOT EXISTS {name} {definition}"
+            )
 
     def replace_snapshot(
         self,
@@ -413,12 +425,13 @@ class SalesAnalyticsRepository:
         with self._connect() as conn:
             conn.execute(
                 f"""
-                INSERT INTO sales_audit_reports(tenant_id, run_id, report_json, summary_json, updated_at)
-                VALUES ({p}, {p}, {p}, {p}, {self._db.now_sql})
+                INSERT INTO sales_audit_reports(tenant_id, run_id, report_json, summary_json, updated_at, hidden_at)
+                VALUES ({p}, {p}, {p}, {p}, {self._db.now_sql}, NULL)
                 ON CONFLICT(tenant_id, run_id) DO UPDATE SET
                     report_json = excluded.report_json,
                     summary_json = excluded.summary_json,
-                    updated_at = {self._db.now_sql}
+                    updated_at = {self._db.now_sql},
+                    hidden_at = NULL
                 """,
                 (
                     tenant_id,
@@ -435,7 +448,7 @@ class SalesAnalyticsRepository:
                 f"""
                 SELECT report_json
                 FROM sales_audit_reports
-                WHERE tenant_id = {p} AND run_id = {p}
+                WHERE tenant_id = {p} AND run_id = {p} AND hidden_at IS NULL
                 """,
                 (tenant_id, run_id),
             ).fetchone()
@@ -451,7 +464,7 @@ class SalesAnalyticsRepository:
                 f"""
                 SELECT run_id, summary_json, updated_at
                 FROM sales_audit_reports
-                WHERE tenant_id = {p}
+                WHERE tenant_id = {p} AND hidden_at IS NULL
                 ORDER BY updated_at DESC
                 LIMIT {p}
                 """,
@@ -469,6 +482,19 @@ class SalesAnalyticsRepository:
                 "summary": summary,
             })
         return result
+
+    def hide_sales_audit_report(self, *, tenant_id: str, run_id: str) -> bool:
+        p = self._p
+        with self._connect() as conn:
+            cursor = conn.execute(
+                f"""
+                UPDATE sales_audit_reports
+                SET hidden_at = COALESCE(hidden_at, {self._db.now_sql})
+                WHERE tenant_id = {p} AND run_id = {p} AND hidden_at IS NULL
+                """,
+                (tenant_id, run_id),
+            )
+            return bool(cursor.rowcount)
 
     def _deal_dashboard(self, conn: Any, tenant_id: str, run_id: str) -> dict[str, Any]:
         p = self._p
