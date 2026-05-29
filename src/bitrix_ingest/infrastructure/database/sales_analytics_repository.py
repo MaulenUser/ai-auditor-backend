@@ -360,7 +360,22 @@ class SalesAnalyticsRepository:
                     ),
                 )
 
+            self._analyze_snapshot_tables(conn)
+
         return self.build_report(tenant_id=tenant_id, run_id=run_id)
+
+    def _analyze_snapshot_tables(self, conn: Any) -> None:
+        if not getattr(self._db, "is_postgres", False):
+            return
+
+        for table in (
+            "sales_analytics_deals",
+            "sales_analytics_tasks",
+            "sales_analytics_task_bindings",
+            "sales_analytics_leads",
+            "sales_analytics_revenue_documents",
+        ):
+            conn.execute(f"ANALYZE {table}")
 
     def build_report(self, *, tenant_id: str, run_id: str) -> dict[str, Any]:
         with self._connect() as conn:

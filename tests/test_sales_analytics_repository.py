@@ -16,6 +16,52 @@ def _repo_for_sqlite() -> SalesAnalyticsRepository:
     return repo
 
 
+def test_analyze_snapshot_tables_runs_for_postgres_only() -> None:
+    class FakePostgresDb:
+        is_postgres = True
+
+    class FakeConn:
+        def __init__(self) -> None:
+            self.statements: list[str] = []
+
+        def execute(self, statement: str) -> None:
+            self.statements.append(statement)
+
+    repo = SalesAnalyticsRepository.__new__(SalesAnalyticsRepository)
+    repo._db = FakePostgresDb()
+    conn = FakeConn()
+
+    repo._analyze_snapshot_tables(conn)
+
+    assert conn.statements == [
+        "ANALYZE sales_analytics_deals",
+        "ANALYZE sales_analytics_tasks",
+        "ANALYZE sales_analytics_task_bindings",
+        "ANALYZE sales_analytics_leads",
+        "ANALYZE sales_analytics_revenue_documents",
+    ]
+
+
+def test_analyze_snapshot_tables_skips_non_postgres() -> None:
+    class FakeSqliteDb:
+        is_postgres = False
+
+    class FakeConn:
+        def __init__(self) -> None:
+            self.statements: list[str] = []
+
+        def execute(self, statement: str) -> None:
+            self.statements.append(statement)
+
+    repo = SalesAnalyticsRepository.__new__(SalesAnalyticsRepository)
+    repo._db = FakeSqliteDb()
+    conn = FakeConn()
+
+    repo._analyze_snapshot_tables(conn)
+
+    assert conn.statements == []
+
+
 def test_task_status_counts_active_deals_without_duplicate_task_bindings() -> None:
     conn = sqlite3.connect(":memory:")
     conn.row_factory = sqlite3.Row
