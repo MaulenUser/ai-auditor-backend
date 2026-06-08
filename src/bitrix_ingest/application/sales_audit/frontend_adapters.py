@@ -68,11 +68,18 @@ def build_frontend_sales_audit_data(
     portal_base_url: str = "",
 ) -> dict[str, Any]:
     """Build arrays consumed by the service-2.0 frontend screens."""
-    deal_index = _build_deal_index(report, scope_deals or [], portal_base_url)
+    manager_names = _report_manager_names(report)
+    deal_index = _build_deal_index(
+        report,
+        scope_deals or [],
+        portal_base_url,
+        manager_names=manager_names,
+    )
     interactions = build_interaction_index(
         features=features,
         deal_index=deal_index,
         portal_base_url=portal_base_url,
+        manager_names=manager_names,
     )
     urgent_alerts = build_urgent_alerts(
         interactions=interactions,
@@ -101,15 +108,48 @@ def build_interaction_index(
     features: list[dict[str, Any]],
     deal_index: dict[str, dict[str, Any]] | None = None,
     portal_base_url: str = "",
+    manager_names: dict[str, str] | None = None,
 ) -> list[dict[str, Any]]:
     """Flatten sales-quality features into rows for calls and WhatsApp tables."""
     deal_index = deal_index or {}
+    manager_names = manager_names or {}
     rows = [
-        _interaction_row(feature, deal_index=deal_index, portal_base_url=portal_base_url)
+        _interaction_row(
+            feature,
+            deal_index=deal_index,
+            portal_base_url=portal_base_url,
+            manager_names=manager_names,
+        )
         for feature in features
         if isinstance(feature, dict)
     ]
     return sorted(rows, key=lambda row: _timestamp(row.get("created_at")), reverse=True)
+
+
+def enrich_frontend_manager_names(report: dict[str, Any]) -> dict[str, Any]:
+    """Fill frontend manager names from report references for saved reports."""
+    if not isinstance(report, dict):
+        return report
+    manager_names = _report_manager_names(report)
+    if not manager_names:
+        return report
+
+    enriched = dict(report)
+    for key in ("interaction_index", "whatsapp_interactions", "call_interactions"):
+        if key in enriched:
+            enriched[key] = _enrich_manager_rows(enriched.get(key), manager_names)
+
+    if "urgent_alerts" in enriched:
+        enriched["urgent_alerts"] = _enrich_alert_rows(enriched.get("urgent_alerts"), manager_names)
+
+    dashboard = enriched.get("alerts_dashboard")
+    if isinstance(dashboard, dict) and "rows" in dashboard:
+        enriched["alerts_dashboard"] = {
+            **dashboard,
+            "rows": _enrich_alert_rows(dashboard.get("rows"), manager_names),
+        }
+
+    return enriched
 
 
 def build_urgent_alerts(
@@ -171,6 +211,7 @@ def _interaction_row(
     *,
     deal_index: dict[str, dict[str, Any]],
     portal_base_url: str,
+    manager_names: dict[str, str],
 ) -> dict[str, Any]:
     source = feature.get("source") or {}
     source_type = _source_type(source)
@@ -184,13 +225,20 @@ def _interaction_row(
     started_at = _clean(source.get("started_at") or feature.get("generated_at"))
     tags = [str(item) for item in feature.get("tags") or [] if str(item).strip()]
     source_file = _clean(source.get("source_file_path"))
+    manager_id = _clean(source.get("manager_id") or deal.get("manager_id"))
+    manager_name = _resolve_manager_name(
+        manager_id,
+        source.get("manager_name"),
+        deal.get("manager_name"),
+        manager_names=manager_names,
+    )
 
     return {
         "interaction_id": _interaction_id(source, source_type),
         "channel": source_type,
         "created_at": started_at,
-        "manager_id": _clean(source.get("manager_id")),
-        "manager_name": _clean(source.get("manager_name")),
+        "manager_id": manager_id,
+        "manager_name": manager_name,
         "deal_id": deal_id,
         "deal_title": deal.get("deal_title") or (f"Сделка #{deal_id}" if deal_id else ""),
         "deal_url": deal.get("deal_url") or _deal_url(deal_id, portal_base_url),
@@ -224,6 +272,8 @@ def _interaction_row(
         "contact_id": _clean(source.get("contact_id")),
         "source": {
             **source,
+            "manager_id": manager_id,
+            "manager_name": manager_name,
             "transcript_file_path": source_file if source_type == "call" else "",
             "conversation_file_path": source_file if source_type == "whatsapp" else "",
             "deal_url": deal.get("deal_url") or _deal_url(deal_id, portal_base_url),
@@ -331,10 +381,13 @@ def _build_deal_index(
     report: dict[str, Any],
     scope_deals: list[dict[str, Any]],
     portal_base_url: str,
+    *,
+    manager_names: dict[str, str] | None = None,
 ) -> dict[str, dict[str, Any]]:
     index: dict[str, dict[str, Any]] = {}
+    manager_names = manager_names or {}
     for row in scope_deals:
-        normalized = _normalize_deal(row, portal_base_url)
+        normalized = _normalize_deal(row, portal_base_url, manager_names=manager_names)
         if normalized.get("deal_id"):
             index[normalized["deal_id"]] = normalized
     report_deals = [
@@ -342,7 +395,7 @@ def _build_deal_index(
         *((report.get("task_status") or {}).get("deals") or []),
     ]
     for row in report_deals:
-        normalized = _normalize_deal(row, portal_base_url)
+        normalized = _normalize_deal(row, portal_base_url, manager_names=manager_names)
         if not normalized.get("deal_id"):
             continue
         current = index.setdefault(normalized["deal_id"], {})
@@ -352,7 +405,12 @@ def _build_deal_index(
     return index
 
 
-def _normalize_deal(row: dict[str, Any], portal_base_url: str) -> dict[str, Any]:
+def _normalize_deal(
+    row: dict[str, Any],
+    portal_base_url: str,
+    *,
+    manager_names: dict[str, str],
+) -> dict[str, Any]:
     deal_id = _clean(row.get("ID") or row.get("id") or row.get("deal_id"))
     manager_id = _clean(row.get("ASSIGNED_BY_ID") or row.get("assigned_by_id") or row.get("manager_id"))
     return {
@@ -360,7 +418,11 @@ def _normalize_deal(row: dict[str, Any], portal_base_url: str) -> dict[str, Any]
         "deal_title": _clean(row.get("TITLE") or row.get("title") or row.get("deal_title")) or (f"Сделка #{deal_id}" if deal_id else ""),
         "deal_url": _clean(row.get("deal_url") or row.get("crm_url")) or _deal_url(deal_id, portal_base_url),
         "manager_id": manager_id,
-        "manager_name": _clean(row.get("manager_name")) or _manager_label(manager_id),
+        "manager_name": _resolve_manager_name(
+            manager_id,
+            row.get("manager_name"),
+            manager_names=manager_names,
+        ),
         "stage_id": _clean(row.get("STAGE_ID") or row.get("stage_id")),
         "stage_name": _clean(row.get("stage_name") or row.get("STAGE_NAME")),
         "stage_semantic_id": _clean(row.get("STAGE_SEMANTIC_ID") or row.get("stage_semantic_id")),
@@ -462,6 +524,90 @@ def _deal_url(deal_id: str, portal_base_url: str) -> str:
 def _manager_label(manager_id: Any) -> str:
     value = _clean(manager_id)
     return f"Менеджер #{value}" if value else "Менеджер не указан"
+
+
+def _report_manager_names(report: dict[str, Any]) -> dict[str, str]:
+    refs = report.get("references") or {}
+    raw = refs.get("manager_names") or report.get("manager_names") or {}
+    if not isinstance(raw, dict):
+        return {}
+    return {
+        _clean(manager_id): _clean(name)
+        for manager_id, name in raw.items()
+        if _clean(manager_id) and _clean(name)
+    }
+
+
+def _resolve_manager_name(
+    manager_id: Any,
+    *candidates: Any,
+    manager_names: dict[str, str],
+) -> str:
+    clean_id = _clean(manager_id)
+    for candidate in candidates:
+        name = _clean(candidate)
+        if name and not _is_generated_manager_label(name, clean_id):
+            return name
+    if clean_id and manager_names.get(clean_id):
+        return manager_names[clean_id]
+    for candidate in candidates:
+        name = _clean(candidate)
+        if name:
+            return name
+    return _manager_label(clean_id)
+
+
+def _is_generated_manager_label(value: str, manager_id: str) -> bool:
+    if not manager_id:
+        return False
+    normalized = value.strip().lower().replace(" ", "")
+    compact_id = manager_id.strip().lower()
+    if normalized == compact_id:
+        return True
+    if normalized in {f"manager#{compact_id}", f"user{compact_id}", f"user#{compact_id}"}:
+        return True
+    return f"#{compact_id}" in normalized and len(normalized) <= len(compact_id) + 16
+
+
+def _enrich_manager_rows(rows: Any, manager_names: dict[str, str]) -> Any:
+    if not isinstance(rows, list):
+        return rows
+    enriched = []
+    for row in rows:
+        if not isinstance(row, dict):
+            enriched.append(row)
+            continue
+        manager_id = _clean(row.get("manager_id"))
+        manager_name = _resolve_manager_name(
+            manager_id,
+            row.get("manager_name"),
+            manager_names=manager_names,
+        )
+        next_row = {**row, "manager_name": manager_name}
+        source = row.get("source")
+        if isinstance(source, dict):
+            next_row["source"] = {**source, "manager_name": manager_name}
+        enriched.append(next_row)
+    return enriched
+
+
+def _enrich_alert_rows(rows: Any, manager_names: dict[str, str]) -> Any:
+    if not isinstance(rows, list):
+        return rows
+    enriched = []
+    for row in rows:
+        if not isinstance(row, dict):
+            enriched.append(row)
+            continue
+        manager_id = _clean(row.get("manager_id"))
+        manager_name = _resolve_manager_name(
+            manager_id,
+            row.get("manager_name"),
+            row.get("manager_label"),
+            manager_names=manager_names,
+        )
+        enriched.append({**row, "manager_name": manager_name, "manager_label": manager_name})
+    return enriched
 
 
 def _yes_no(value: Any) -> str:

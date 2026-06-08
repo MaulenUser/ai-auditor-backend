@@ -11,6 +11,7 @@ def _feature(
     source_type: str,
     source_id: str,
     deal_id: str,
+    manager_name: str = "Alice",
     first_response_time_sec: int | None = None,
     need_identified: str = "yes",
     product_presented: str = "yes",
@@ -74,7 +75,7 @@ def _feature(
             "source_file_path": f"export/{source_type}/{source_id}.txt",
             "channel": source_type,
             "manager_id": "8",
-            "manager_name": "Alice",
+            "manager_name": manager_name,
             "deal_id": deal_id,
             "crm_activity_id": source_id if source_type == "call" else "",
             "record_file_id": "rec-1" if source_type == "call" else "",
@@ -151,6 +152,33 @@ def test_frontend_adapter_builds_interaction_index_and_urgent_alerts() -> None:
         "no_need_identified",
     }
     assert alert["trigger_type"] == "response_sla"
+
+
+def test_frontend_adapter_resolves_manager_name_from_report_references() -> None:
+    data = build_frontend_sales_audit_data(
+        features=[
+            _feature(
+                source_type="whatsapp",
+                source_id="777",
+                deal_id="777",
+                manager_name="",
+            ),
+        ],
+        report={"references": {"manager_names": {"8": "Alice Manager"}}},
+        scope_deals=[
+            {
+                "ID": "777",
+                "TITLE": "РћРїС‚РѕРІР°СЏ Р·Р°СЏРІРєР°",
+                "ASSIGNED_BY_ID": "8",
+                "STAGE_SEMANTIC_ID": "P",
+            },
+        ],
+    )
+
+    row = data["whatsapp_interactions"][0]
+    assert row["manager_id"] == "8"
+    assert row["manager_name"] == "Alice Manager"
+    assert row["source"]["manager_name"] == "Alice Manager"
 
 
 def test_sales_audit_report_includes_frontend_arrays() -> None:

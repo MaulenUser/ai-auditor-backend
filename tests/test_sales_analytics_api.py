@@ -250,12 +250,18 @@ def test_sales_audit_frontend_adapter_endpoints_return_report_arrays(tmp_path, m
             assert tenant_id == "default"
             assert run_id == "audit-123"
             return {
+                "references": {"manager_names": {"8": "Alice Manager"}},
                 "interaction_index": [
-                    {"interaction_id": "wa-1", "channel": "whatsapp"},
+                    {
+                        "interaction_id": "wa-1",
+                        "channel": "whatsapp",
+                        "manager_id": "8",
+                        "manager_name": "",
+                    },
                     {"interaction_id": "call-1", "channel": "call"},
                 ],
                 "urgent_alerts": [
-                    {"deal_id": "777", "trigger_type": "response_sla"},
+                    {"deal_id": "777", "manager_id": "8", "trigger_type": "response_sla"},
                 ],
             }
 
@@ -268,11 +274,13 @@ def test_sales_audit_frontend_adapter_endpoints_return_report_arrays(tmp_path, m
     assert interactions.status_code == 200
     assert interactions.json()["total"] == 1
     assert interactions.json()["interactions"][0]["interaction_id"] == "wa-1"
+    assert interactions.json()["interactions"][0]["manager_name"] == "Alice Manager"
 
     alerts = client.get("/sales-audit/urgent-alerts")
     assert alerts.status_code == 200
     assert alerts.json()["total"] == 1
     assert alerts.json()["alerts"][0]["deal_id"] == "777"
+    assert alerts.json()["alerts"][0]["manager_label"] == "Alice Manager"
 
 
 def test_sales_audit_history_hide_removes_report_from_history(tmp_path, monkeypatch):

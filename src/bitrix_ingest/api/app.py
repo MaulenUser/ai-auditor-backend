@@ -60,7 +60,7 @@ from ..application.executive_report import BuildExecutiveReportRequest, BuildExe
 from ..application.executive_pipeline import RunExecutivePipelineRequest, RunExecutivePipelineService
 from ..application.recordings import DownloadRecordingsRequest, DownloadRecordingsService
 from ..application.sales_analytics import ExportSalesAnalyticsRequest, ExportSalesAnalyticsService
-from ..application.sales_audit import build_sales_audit_report
+from ..application.sales_audit import build_sales_audit_report, enrich_frontend_manager_names
 from ..application.sales_quality import AnalyzeSalesQualityRequest, AnalyzeSalesQualityService
 from ..application.transcribe import TranscribeRecordingsRequest, TranscribeRecordingsService
 from ..application.whatsapp import WhatsAppExportRequest, WhatsAppExportService
@@ -1592,7 +1592,7 @@ def _get_sales_audit_report_payload(tenant_id: str, run_id: str | None = None) -
     report = sales_repo.get_sales_audit_report(tenant_id=tenant_id, run_id=resolved_run_id)
     if not report:
         raise HTTPException(status_code=404, detail=f"Sales audit report not found: {resolved_run_id}")
-    return resolved_run_id, report
+    return resolved_run_id, enrich_frontend_manager_names(report)
 
 
 def _execute_sales_analytics_pipeline(
@@ -3293,6 +3293,7 @@ def get_sales_audit_job(
     if run.status == "completed":
         report = _sales_repo().get_sales_audit_report(tenant_id=tid, run_id=job_id)
         if report:
+            report = enrich_frontend_manager_names(report)
             result["report"] = report
             result["executive_report"] = report
     return result
