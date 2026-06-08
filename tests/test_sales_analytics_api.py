@@ -238,6 +238,43 @@ def test_sales_audit_history_returns_postgres_report_runs(tmp_path, monkeypatch)
     assert payload["runs"][0]["metric_snapshot"]["total_deals"] == 12
 
 
+def test_sales_audit_frontend_adapter_endpoints_return_report_arrays(tmp_path, monkeypatch):
+    client = _client(tmp_path, monkeypatch)
+
+    class _FakeFrontendRepo(_FakeSalesRepo):
+        def list_sales_audit_reports(self, *, tenant_id, limit=50):
+            assert tenant_id == "default"
+            return [{"run_id": "audit-123"}]
+
+        def get_sales_audit_report(self, *, tenant_id, run_id):
+            assert tenant_id == "default"
+            assert run_id == "audit-123"
+            return {
+                "interaction_index": [
+                    {"interaction_id": "wa-1", "channel": "whatsapp"},
+                    {"interaction_id": "call-1", "channel": "call"},
+                ],
+                "urgent_alerts": [
+                    {"deal_id": "777", "trigger_type": "response_sla"},
+                ],
+            }
+
+    monkeypatch.setattr(app_module, "_sales_repo", lambda: _FakeFrontendRepo())
+
+    interactions = client.get(
+        "/sales-audit/interactions",
+        params={"channel": "whatsapp"},
+    )
+    assert interactions.status_code == 200
+    assert interactions.json()["total"] == 1
+    assert interactions.json()["interactions"][0]["interaction_id"] == "wa-1"
+
+    alerts = client.get("/sales-audit/urgent-alerts")
+    assert alerts.status_code == 200
+    assert alerts.json()["total"] == 1
+    assert alerts.json()["alerts"][0]["deal_id"] == "777"
+
+
 def test_sales_audit_history_hide_removes_report_from_history(tmp_path, monkeypatch):
     client = _client(tmp_path, monkeypatch)
 

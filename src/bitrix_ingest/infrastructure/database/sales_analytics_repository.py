@@ -625,6 +625,48 @@ class SalesAnalyticsRepository:
             """,
             (tenant_id, run_id, tenant_id, run_id, tenant_id, run_id),
         ).fetchall()
+        deal_rows = conn.execute(
+            f"""
+            WITH active_deals AS (
+                SELECT id, assigned_by_id, manager_name
+                FROM sales_analytics_deals
+                WHERE tenant_id = {p}
+                    AND run_id = {p}
+                    AND active_as_of_to = 1
+            ),
+            unique_bindings AS (
+                SELECT DISTINCT entity_id, task_id
+                FROM sales_analytics_task_bindings
+                WHERE tenant_id = {p}
+                    AND run_id = {p}
+                    AND entity_type = 'D'
+            ),
+            task_counts AS (
+                SELECT
+                    b.entity_id AS deal_id,
+                    COUNT(*) AS total_tasks,
+                    SUM(CASE WHEN t.is_completed = 0 THEN 1 ELSE 0 END) AS open_tasks,
+                    SUM(CASE WHEN t.is_overdue = 1 THEN 1 ELSE 0 END) AS overdue_tasks
+                FROM unique_bindings b
+                INNER JOIN sales_analytics_tasks t
+                    ON t.tenant_id = {p}
+                    AND t.run_id = {p}
+                    AND t.id = b.task_id
+                GROUP BY b.entity_id
+            )
+            SELECT
+                d.id AS deal_id,
+                d.assigned_by_id AS manager_id,
+                d.manager_name,
+                COALESCE(t.total_tasks, 0) AS total_tasks,
+                COALESCE(t.open_tasks, 0) AS open_tasks,
+                COALESCE(t.overdue_tasks, 0) AS overdue_tasks
+            FROM active_deals d
+            LEFT JOIN task_counts t ON t.deal_id = d.id
+            ORDER BY overdue_tasks DESC, open_tasks ASC, d.id ASC
+            """,
+            (tenant_id, run_id, tenant_id, run_id, tenant_id, run_id),
+        ).fetchall()
         department = next((row for row in rows if _int(row["is_manager"]) == 0), None)
         managers = [row for row in rows if _int(row["is_manager"]) == 1]
         return {
@@ -638,6 +680,7 @@ class SalesAnalyticsRepository:
                 }
                 for row in managers
             ],
+            "deals": [_normalize_task_deal_row(row) for row in deal_rows],
         }
 
     def _failure_reasons(self, conn: Any, tenant_id: str, run_id: str) -> dict[str, Any]:
@@ -996,6 +1039,22 @@ def _normalize_task_row(row: Any) -> dict[str, Any]:
         "total_linked_tasks": _int(row["total_linked_tasks"] if row else 0),
         "open_linked_tasks": _int(row["open_linked_tasks"] if row else 0),
         "overdue_linked_tasks": _int(row["overdue_linked_tasks"] if row else 0),
+    }
+
+
+def _normalize_task_deal_row(row: Any) -> dict[str, Any]:
+    open_tasks = _int(row["open_tasks"] if row else 0)
+    overdue_tasks = _int(row["overdue_tasks"] if row else 0)
+    total_tasks = _int(row["total_tasks"] if row else 0)
+    return {
+        "deal_id": str(row["deal_id"] if row else ""),
+        "manager_id": str(row["manager_id"] if row else ""),
+        "manager_name": str(row["manager_name"] if row else ""),
+        "total_task_count": total_tasks,
+        "active_task_count": open_tasks,
+        "overdue_task_count": overdue_tasks,
+        "has_active_task": open_tasks > 0,
+        "has_overdue_task": overdue_tasks > 0,
     }
 
 

@@ -1578,6 +1578,23 @@ def _sales_audit_history_run(
     }
 
 
+def _get_sales_audit_report_payload(tenant_id: str, run_id: str | None = None) -> tuple[str, dict[str, Any]]:
+    sales_repo = _sales_repo()
+    resolved_run_id = _none(run_id)
+    if not resolved_run_id:
+        reports = sales_repo.list_sales_audit_reports(tenant_id=tenant_id, limit=1)
+        if not reports:
+            raise HTTPException(
+                status_code=404,
+                detail=f"No completed sales audit runs found for tenant '{tenant_id}'.",
+            )
+        resolved_run_id = str(reports[0].get("run_id") or "")
+    report = sales_repo.get_sales_audit_report(tenant_id=tenant_id, run_id=resolved_run_id)
+    if not report:
+        raise HTTPException(status_code=404, detail=f"Sales audit report not found: {resolved_run_id}")
+    return resolved_run_id, report
+
+
 def _execute_sales_analytics_pipeline(
     *,
     tenant_id: str,
@@ -1788,12 +1805,16 @@ def _execute_sales_audit_pipeline(
                 "message": "Собираем финальный отчёт",
             }
         )
+    scope_deals = _load_json_if_exists(executive_dir / "scope-deals.json")
     final_report = build_sales_audit_report(
         executive_report=executive_report,
         sales_report=sales_report,
         output_dir=final_dir,
         average_ticket_kzt=average_ticket_kzt,
         expected_conversion_pct=expected_conversion_pct,
+        sales_quality_dir=sales_quality_dir,
+        scope_deals=scope_deals if isinstance(scope_deals, list) else [],
+        portal_base_url=portal_base_url,
     )
     _sales_repo().save_sales_audit_report(
         tenant_id=tenant_id,
@@ -3284,23 +3305,55 @@ def get_sales_audit_report(
 ) -> dict[str, Any]:
     """Return the final unified report JSON."""
     tid = _resolve_tenant_id(x_tenant_id)
-    sales_repo = _sales_repo()
-    resolved_run_id = _none(run_id)
-    if not resolved_run_id:
-        reports = sales_repo.list_sales_audit_reports(tenant_id=tid, limit=1)
-        if not reports:
-            raise HTTPException(
-                status_code=404,
-                detail=f"No completed sales audit runs found for tenant '{tid}'.",
-            )
-        resolved_run_id = str(reports[0].get("run_id") or "")
-    report = sales_repo.get_sales_audit_report(tenant_id=tid, run_id=resolved_run_id)
-    if not report:
-        raise HTTPException(status_code=404, detail=f"Sales audit report not found: {resolved_run_id}")
+    resolved_run_id, report = _get_sales_audit_report_payload(tid, run_id)
     return {
         **report,
         "run_id": resolved_run_id,
         "tenant_id": tid,
+    }
+
+
+@app.get("/sales-audit/interactions", tags=["Sales Audit"])
+def get_sales_audit_interactions(
+    run_id: str = Query("", description="Analysis run ID; empty = latest completed sales audit"),
+    channel: str = Query("", description="Optional channel: whatsapp or call"),
+    x_tenant_id: str | None = Header(None),
+) -> dict[str, Any]:
+    """Return flattened interaction rows for calls and WhatsApp dashboard tables."""
+    tid = _resolve_tenant_id(x_tenant_id)
+    resolved_run_id, report = _get_sales_audit_report_payload(tid, run_id)
+    rows = report.get("interaction_index") or []
+    normalized_channel = str(channel or "").strip().lower()
+    if normalized_channel:
+        rows = [
+            row
+            for row in rows
+            if str((row or {}).get("channel") or "").lower() == normalized_channel
+        ]
+    return {
+        "tenant_id": tid,
+        "run_id": resolved_run_id,
+        "channel": normalized_channel or "all",
+        "interactions": rows,
+        "total": len(rows),
+    }
+
+
+@app.get("/sales-audit/urgent-alerts", tags=["Sales Audit"])
+def get_sales_audit_urgent_alerts(
+    run_id: str = Query("", description="Analysis run ID; empty = latest completed sales audit"),
+    x_tenant_id: str | None = Header(None),
+) -> dict[str, Any]:
+    """Return active deals that require urgent manager attention."""
+    tid = _resolve_tenant_id(x_tenant_id)
+    resolved_run_id, report = _get_sales_audit_report_payload(tid, run_id)
+    rows = report.get("urgent_alerts") or []
+    return {
+        "tenant_id": tid,
+        "run_id": resolved_run_id,
+        "alerts": rows,
+        "rows": rows,
+        "total": len(rows),
     }
 
 

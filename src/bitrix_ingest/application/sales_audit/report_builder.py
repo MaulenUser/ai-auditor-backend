@@ -6,6 +6,11 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from .frontend_adapters import (
+    build_frontend_sales_audit_data,
+    load_sales_quality_features,
+)
+
 
 def build_sales_audit_report(
     *,
@@ -14,6 +19,10 @@ def build_sales_audit_report(
     output_dir: Path | None = None,
     average_ticket_kzt: float | None = None,
     expected_conversion_pct: float | None = None,
+    sales_quality_dir: Path | None = None,
+    sales_quality_features: list[dict[str, Any]] | None = None,
+    scope_deals: list[dict[str, Any]] | None = None,
+    portal_base_url: str = "",
 ) -> dict[str, Any]:
     """Return the final report used by the dashboard.
 
@@ -64,6 +73,19 @@ def build_sales_audit_report(
             "sales_analytics_revenue_documents",
         ],
     }
+    features = (
+        list(sales_quality_features)
+        if sales_quality_features is not None
+        else load_sales_quality_features(sales_quality_dir)
+    )
+    report.update(
+        build_frontend_sales_audit_data(
+            features=features,
+            report=report,
+            scope_deals=scope_deals or [],
+            portal_base_url=portal_base_url,
+        )
+    )
 
     if output_dir is not None:
         output_dir.mkdir(parents=True, exist_ok=True)
