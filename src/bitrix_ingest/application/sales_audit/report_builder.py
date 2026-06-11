@@ -66,6 +66,7 @@ def build_sales_audit_report(
         "analytics_storage": "postgres",
         "sales_run_id": sales_report.get("run_id", ""),
         "tenant_id": sales_report.get("tenant_id", ""),
+        "portal_base_url": portal_base_url,
         "tables": [
             "sales_analytics_deals",
             "sales_analytics_tasks",

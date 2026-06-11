@@ -60,7 +60,11 @@ from ..application.executive_report import BuildExecutiveReportRequest, BuildExe
 from ..application.executive_pipeline import RunExecutivePipelineRequest, RunExecutivePipelineService
 from ..application.recordings import DownloadRecordingsRequest, DownloadRecordingsService
 from ..application.sales_analytics import ExportSalesAnalyticsRequest, ExportSalesAnalyticsService
-from ..application.sales_audit import build_sales_audit_report, enrich_frontend_manager_names
+from ..application.sales_audit import (
+    build_sales_audit_report,
+    enrich_frontend_deal_urls,
+    enrich_frontend_manager_names,
+)
 from ..application.sales_quality import AnalyzeSalesQualityRequest, AnalyzeSalesQualityService
 from ..application.transcribe import TranscribeRecordingsRequest, TranscribeRecordingsService
 from ..application.whatsapp import WhatsAppExportRequest, WhatsAppExportService
@@ -655,6 +659,39 @@ def _resolve_bitrix_gateway(
             "or configure a Bitrix webhook for this tenant."
         ),
     )
+
+
+def _portal_base_from_bitrix_url(value: str) -> str:
+    raw = (value or "").strip()
+    if not raw:
+        return ""
+    parsed = urlparse(raw if "://" in raw else f"https://{raw}")
+    domain = (parsed.netloc or parsed.path).split("/", 1)[0].strip()
+    if not domain:
+        return ""
+    return f"https://{_normalize_bitrix_domain(domain)}"
+
+
+def _resolve_portal_base_url(
+    portal_base_url: str | None,
+    tenant_id: str,
+    crm_webhook_url: str | None = None,
+) -> str:
+    """Resolve the Bitrix portal used for CRM links for the current tenant."""
+    explicit = _none(portal_base_url)
+    if explicit:
+        return _portal_base_from_bitrix_url(explicit)
+
+    oauth_token = _active_bitrix_oauth_token(tenant_id)
+    if oauth_token and oauth_token.bitrix_domain:
+        return f"https://{_normalize_bitrix_domain(oauth_token.bitrix_domain)}"
+
+    integrations = _get_integrations(tenant_id)
+    webhook_url = _none(crm_webhook_url) or integrations.bitrix_webhook_url
+    if webhook_url:
+        return _portal_base_from_bitrix_url(webhook_url)
+
+    return ""
 
 
 def _resolve_whatsapp_gateway(
@@ -1592,7 +1629,23 @@ def _get_sales_audit_report_payload(tenant_id: str, run_id: str | None = None) -
     report = sales_repo.get_sales_audit_report(tenant_id=tenant_id, run_id=resolved_run_id)
     if not report:
         raise HTTPException(status_code=404, detail=f"Sales audit report not found: {resolved_run_id}")
-    return resolved_run_id, enrich_frontend_manager_names(report)
+    return resolved_run_id, _prepare_sales_audit_report_for_frontend(tenant_id, report)
+
+
+def _prepare_sales_audit_report_for_frontend(tenant_id: str, report: dict[str, Any]) -> dict[str, Any]:
+    report = enrich_frontend_manager_names(report)
+    portal_base_url = ""
+    sources = report.get("sales_audit_sources") if isinstance(report, dict) else {}
+    if isinstance(sources, dict):
+        stored_portal = _none(sources.get("portal_base_url"))
+        if stored_portal:
+            resolved_stored_portal = _portal_base_from_bitrix_url(stored_portal)
+            stored_host = (urlparse(resolved_stored_portal).hostname or "").lower()
+            if stored_host != "sapaplast.bitrix24.kz":
+                portal_base_url = resolved_stored_portal
+    if not portal_base_url:
+        portal_base_url = _resolve_portal_base_url("", tenant_id)
+    return enrich_frontend_deal_urls(report, portal_base_url)
 
 
 def _execute_sales_analytics_pipeline(
@@ -2522,7 +2575,7 @@ def build_executive_report(
     limit: int = Form(0, description="Max deals, 0 = all"),
     average_ticket_kzt: Optional[float] = Form(None, description="Average ticket for lost revenue formula"),
     expected_conversion_pct: Optional[float] = Form(None, description="Expected conversion percent for lost revenue formula"),
-    portal_base_url: str = Form("https://sapaplast.bitrix24.kz", description="Bitrix portal URL for CRM links"),
+    portal_base_url: str = Form("", description="Bitrix portal URL for CRM links; empty = current tenant Bitrix"),
     max_reanimation_cards: int = Form(100, description="Max failed deal cards"),
     webhook_url: str | None = Security(_webhook_header),
     x_tenant_id: str | None = Header(None),
@@ -2532,6 +2585,7 @@ def build_executive_report(
     clean_categories = [item for item in (category_id or []) if _none(item)] or None
     clean_responsible = [item for item in (responsible_id or []) if _none(item)] or None
     clean_deals = [item for item in (deal_id or []) if _none(item)] or None
+    resolved_portal_base_url = _resolve_portal_base_url(portal_base_url, tid, webhook_url)
     sink, mem = _tee()
     return _run_service(
         lambda: BuildExecutiveReportService(
@@ -2556,7 +2610,7 @@ def build_executive_report(
                 limit=limit,
                 average_ticket_kzt=average_ticket_kzt,
                 expected_conversion_pct=expected_conversion_pct,
-                portal_base_url=portal_base_url,
+                portal_base_url=resolved_portal_base_url,
                 max_reanimation_cards=max_reanimation_cards,
             )
         ),
@@ -2582,7 +2636,7 @@ def run_executive_report_pipeline(
     transcription_model: str = Form("gpt-4o-transcribe", description="OpenAI transcription model"),
     average_ticket_kzt: Optional[float] = Form(None, description="Average ticket for lost revenue formula"),
     expected_conversion_pct: Optional[float] = Form(None, description="Expected conversion percent"),
-    portal_base_url: str = Form("https://sapaplast.bitrix24.kz", description="Bitrix portal URL for CRM links"),
+    portal_base_url: str = Form("", description="Bitrix portal URL for CRM links; empty = current tenant Bitrix"),
     max_reanimation_cards: int = Form(100, description="Max failed deal cards"),
     reset_outputs: bool = Form(True, description="Clear output directories before running"),
     include_whatsapp_audio: bool = Form(False, description="Download and transcribe WhatsApp audio messages"),
@@ -2600,6 +2654,7 @@ def run_executive_report_pipeline(
     clean_categories = _clean_form_list(category_id)
     clean_responsible = _clean_form_list(responsible_id)
     clean_deals = _clean_form_list(deal_id)
+    resolved_portal_base_url = _resolve_portal_base_url(portal_base_url, tid, crm_webhook_url)
 
     job_id = uuid.uuid4().hex
     base = _tenant_storage(tid, job_id)
@@ -2626,7 +2681,7 @@ def run_executive_report_pipeline(
         transcription_model=transcription_model,
         average_ticket_kzt=average_ticket_kzt,
         expected_conversion_pct=expected_conversion_pct,
-        portal_base_url=portal_base_url,
+        portal_base_url=resolved_portal_base_url,
         max_reanimation_cards=max_reanimation_cards,
         include_whatsapp_audio=include_whatsapp_audio,
         reset_outputs=reset_outputs,
@@ -2755,6 +2810,7 @@ class _BusinessProfilePayload(BaseModel):
     instagram_url: str = ""
     price_list: str = ""
     average_ticket_kzt: float | None = None
+    monthly_sales_plan_kzt: float | None = None
     advantages: str = ""
     promotions: str = ""
 
@@ -3095,7 +3151,7 @@ def run_sales_audit(
     transcription_model: str = Form("gpt-4o-transcribe", description="OpenAI transcription model"),
     average_ticket_kzt: Optional[float] = Form(None, description="Average ticket for missed revenue formula"),
     expected_conversion_pct: Optional[float] = Form(None, description="Expected conversion percent"),
-    portal_base_url: str = Form("https://sapaplast.bitrix24.kz", description="Bitrix portal URL for CRM links"),
+    portal_base_url: str = Form("", description="Bitrix portal URL for CRM links; empty = current tenant Bitrix"),
     max_reanimation_cards: int = Form(100, description="Max failed deal cards"),
     reset_outputs: bool = Form(True, description="Clear output directories before running"),
     include_whatsapp_audio: bool = Form(False, description="Download and transcribe WhatsApp audio messages"),
@@ -3128,6 +3184,7 @@ def run_sales_audit(
         if average_ticket_kzt is not None
         else (profile.average_ticket_kzt if profile else None)
     )
+    resolved_portal_base_url = _resolve_portal_base_url(portal_base_url, tid, crm_webhook_url)
 
     job_id = uuid.uuid4().hex
     base_dir = Path(output_dir) if _none(output_dir) else _tenant_storage(tid, job_id)
@@ -3163,7 +3220,7 @@ def run_sales_audit(
         "transcription_model": transcription_model,
         "average_ticket_kzt": resolved_average_ticket,
         "expected_conversion_pct": expected_conversion_pct,
-        "portal_base_url": portal_base_url,
+        "portal_base_url": resolved_portal_base_url,
         "max_reanimation_cards": max_reanimation_cards,
         "include_whatsapp_audio": include_whatsapp_audio,
         "include_tasks": include_tasks,
@@ -3293,7 +3350,7 @@ def get_sales_audit_job(
     if run.status == "completed":
         report = _sales_repo().get_sales_audit_report(tenant_id=tid, run_id=job_id)
         if report:
-            report = enrich_frontend_manager_names(report)
+            report = _prepare_sales_audit_report_for_frontend(tid, report)
             result["report"] = report
             result["executive_report"] = report
     return result

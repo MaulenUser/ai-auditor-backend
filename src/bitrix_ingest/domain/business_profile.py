@@ -10,6 +10,7 @@ class BusinessProfile:
     instagram_url: str = ""
     price_list: str = ""
     average_ticket_kzt: float | None = None
+    monthly_sales_plan_kzt: float | None = None
     advantages: str = ""
     promotions: str = ""
 
@@ -24,6 +25,7 @@ class BusinessProfile:
             instagram_url=d.get("instagram_url") or "",
             price_list=d.get("price_list") or "",
             average_ticket_kzt=d.get("average_ticket_kzt"),
+            monthly_sales_plan_kzt=d.get("monthly_sales_plan_kzt"),
             advantages=d.get("advantages") or "",
             promotions=d.get("promotions") or "",
         )

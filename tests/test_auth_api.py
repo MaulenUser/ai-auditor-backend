@@ -150,6 +150,29 @@ def test_client_token_forces_own_tenant(tmp_path, monkeypatch):
     assert forbidden.status_code == 403
 
 
+def test_setup_profile_saves_monthly_sales_plan(tmp_path, monkeypatch):
+    client = _client(tmp_path, monkeypatch)
+    _save_user(tmp_path, "client@example.com", "tenant-a")
+    token = _login(client, "client@example.com")
+
+    response = client.post(
+        "/api/setup-profile",
+        headers={"Authorization": f"Bearer {token}"},
+        json={
+            "company_name": "Sapaplast",
+            "average_ticket_kzt": 500000,
+            "monthly_sales_plan_kzt": 35000000,
+        },
+    )
+    state = client.get("/api/app-state", headers={"Authorization": f"Bearer {token}"})
+
+    assert response.status_code == 200
+    profile = response.json()["app_state"]["setup"]["business_profile"]
+    assert profile["monthly_sales_plan_kzt"] == 35000000
+    assert state.status_code == 200
+    assert state.json()["setup"]["business_profile"]["monthly_sales_plan_kzt"] == 35000000
+
+
 def test_admin_can_choose_tenant_and_manage_tenants(tmp_path, monkeypatch):
     client = _client(tmp_path, monkeypatch)
     _save_user(tmp_path, "admin@example.com", "default", role="admin")

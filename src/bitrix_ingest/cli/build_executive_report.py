@@ -54,7 +54,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--rating-formula", default="default")
     parser.add_argument(
         "--portal-base-url",
-        default="https://sapaplast.bitrix24.kz",
+        default="",
         help="Base URL for deal/contact links",
     )
     parser.add_argument("--max-reanimation-cards", type=int, default=100)

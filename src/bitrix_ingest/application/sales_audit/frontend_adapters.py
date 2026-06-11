@@ -5,8 +5,10 @@ import json
 from datetime import datetime
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 
 _SLA_RESPONSE_MINUTES = 30
+_LEGACY_DEFAULT_PORTAL_HOSTS = {"sapaplast.bitrix24.kz"}
 
 _TRIGGER_META = {
     "response_sla": {
@@ -147,6 +149,28 @@ def enrich_frontend_manager_names(report: dict[str, Any]) -> dict[str, Any]:
         enriched["alerts_dashboard"] = {
             **dashboard,
             "rows": _enrich_alert_rows(dashboard.get("rows"), manager_names),
+        }
+
+    return enriched
+
+
+def enrich_frontend_deal_urls(report: dict[str, Any], portal_base_url: str) -> dict[str, Any]:
+    """Fill frontend CRM links from the current tenant portal for saved reports."""
+    if not isinstance(report, dict):
+        return report
+    if not _clean(portal_base_url):
+        return report
+
+    enriched = dict(report)
+    for key in ("interaction_index", "whatsapp_interactions", "call_interactions", "urgent_alerts"):
+        if key in enriched:
+            enriched[key] = _enrich_deal_url_rows(enriched.get(key), portal_base_url)
+
+    dashboard = enriched.get("alerts_dashboard")
+    if isinstance(dashboard, dict) and "rows" in dashboard:
+        enriched["alerts_dashboard"] = {
+            **dashboard,
+            "rows": _enrich_deal_url_rows(dashboard.get("rows"), portal_base_url),
         }
 
     return enriched
@@ -519,6 +543,56 @@ def _deal_url(deal_id: str, portal_base_url: str) -> str:
     if not deal_id or not portal_base_url:
         return ""
     return f"{portal_base_url.rstrip('/')}/crm/deal/details/{deal_id}/"
+
+
+def _enrich_deal_url_rows(rows: Any, portal_base_url: str) -> Any:
+    if not isinstance(rows, list):
+        return rows
+    enriched = []
+    for row in rows:
+        if not isinstance(row, dict):
+            enriched.append(row)
+            continue
+        enriched.append(_enrich_deal_url_row(row, portal_base_url))
+    return enriched
+
+
+def _enrich_deal_url_row(row: dict[str, Any], portal_base_url: str) -> dict[str, Any]:
+    source = row.get("source") if isinstance(row.get("source"), dict) else {}
+    deal_id = _clean(row.get("deal_id") or source.get("deal_id"))
+    next_url = _deal_url(deal_id, portal_base_url)
+    if not next_url:
+        return row
+
+    next_row = dict(row)
+    if _should_replace_deal_url(row.get("deal_url")):
+        next_row["deal_url"] = next_url
+    if _should_replace_deal_url(row.get("crm_url")):
+        next_row["crm_url"] = next_url
+
+    if source:
+        next_source = dict(source)
+        if _should_replace_deal_url(source.get("deal_url")):
+            next_source["deal_url"] = next_url
+        next_row["source"] = next_source
+
+    return next_row
+
+
+def _should_replace_deal_url(value: Any) -> bool:
+    text = _clean(value)
+    if not text:
+        return True
+    host = _url_host(text)
+    return not host or host in _LEGACY_DEFAULT_PORTAL_HOSTS
+
+
+def _url_host(value: str) -> str:
+    raw = value.strip()
+    if not raw:
+        return ""
+    parsed = urlparse(raw if "://" in raw else f"https://{raw}")
+    return (parsed.hostname or "").lower()
 
 
 def _manager_label(manager_id: Any) -> str:

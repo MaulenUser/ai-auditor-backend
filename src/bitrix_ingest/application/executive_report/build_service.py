@@ -71,7 +71,7 @@ class BuildExecutiveReportRequest:
     average_ticket_kzt: float | None = None
     expected_conversion_pct: float | None = None
     rating_formula: str = "default"
-    portal_base_url: str = "https://sapaplast.bitrix24.kz"
+    portal_base_url: str = ""
     max_reanimation_cards: int = 100
 
 

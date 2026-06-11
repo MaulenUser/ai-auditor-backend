@@ -104,7 +104,7 @@ class RunExecutivePipelineRequest:
     max_chars_per_item: int = 24000
     average_ticket_kzt: float | None = None
     expected_conversion_pct: float | None = None
-    portal_base_url: str = "https://sapaplast.bitrix24.kz"
+    portal_base_url: str = ""
     max_reanimation_cards: int = 100
     include_whatsapp: bool = True
     include_whatsapp_audio: bool = False

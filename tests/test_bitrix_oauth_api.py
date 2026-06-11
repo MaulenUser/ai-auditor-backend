@@ -51,6 +51,73 @@ def _login(client: TestClient, username: str) -> str:
     return response.json()["access_token"]
 
 
+def test_portal_base_url_prefers_explicit_value(tmp_path, monkeypatch):
+    _client(tmp_path, monkeypatch, auth_required=False)
+
+    assert (
+        app_module._resolve_portal_base_url(
+            "https://override.bitrix24.kz/rest/1/token/",
+            "tenant-a",
+        )
+        == "https://override.bitrix24.kz"
+    )
+
+
+def test_portal_base_url_uses_oauth_domain(tmp_path, monkeypatch):
+    _client(tmp_path, monkeypatch, auth_required=False)
+    app_module._integrations_repo("member-123").save(
+        Integrations(bitrix_webhook_url="https://legacy.bitrix24.kz/rest/1/webhook/")
+    )
+    BitrixOAuthRepository(tmp_path / "app.db").save(
+        app_module.BitrixOAuthToken(
+            tenant_id="member-123",
+            bitrix_member_id="member-123",
+            bitrix_domain="client.bitrix24.kz",
+            client_endpoint="https://client.bitrix24.kz/rest/",
+            access_token="access-token",
+            refresh_token="refresh-token",
+            scope=REQUIRED_SCOPES,
+            status="active",
+        )
+    )
+
+    assert app_module._resolve_portal_base_url("", "member-123") == "https://client.bitrix24.kz"
+
+
+def test_portal_base_url_falls_back_to_request_or_stored_webhook(tmp_path, monkeypatch):
+    _client(tmp_path, monkeypatch, auth_required=False)
+    app_module._integrations_repo("legacy").save(
+        Integrations(bitrix_webhook_url="https://legacy.bitrix24.kz/rest/1/webhook/")
+    )
+
+    assert (
+        app_module._resolve_portal_base_url(
+            "",
+            "legacy",
+            "https://request.bitrix24.kz/rest/1/webhook/",
+        )
+        == "https://request.bitrix24.kz"
+    )
+    assert app_module._resolve_portal_base_url("", "legacy") == "https://legacy.bitrix24.kz"
+
+
+def test_sales_audit_frontend_report_uses_stored_portal(tmp_path, monkeypatch):
+    _client(tmp_path, monkeypatch, auth_required=False)
+    report = {
+        "sales_audit_sources": {"portal_base_url": "https://stored.bitrix24.kz"},
+        "interaction_index": [
+            {
+                "deal_id": "777",
+                "deal_url": "https://sapaplast.bitrix24.kz/crm/deal/details/777/",
+            }
+        ],
+    }
+
+    prepared = app_module._prepare_sales_audit_report_for_frontend("tenant-a", report)
+
+    assert prepared["interaction_index"][0]["deal_url"] == "https://stored.bitrix24.kz/crm/deal/details/777/"
+
+
 def test_bitrix_install_callback_saves_oauth_token_and_creates_tenant(tmp_path, monkeypatch):
     client = _client(tmp_path, monkeypatch, auth_required=True)
     monkeypatch.setenv("BITRIX_APPLICATION_TOKEN", "app-token")

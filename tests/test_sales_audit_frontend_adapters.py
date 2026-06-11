@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from bitrix_ingest.application.sales_audit.frontend_adapters import (
     build_frontend_sales_audit_data,
+    enrich_frontend_deal_urls,
 )
 from bitrix_ingest.application.sales_audit.report_builder import build_sales_audit_report
 
@@ -181,6 +182,52 @@ def test_frontend_adapter_resolves_manager_name_from_report_references() -> None
     assert row["source"]["manager_name"] == "Alice Manager"
 
 
+def test_frontend_adapter_rewrites_legacy_default_deal_urls() -> None:
+    report = {
+        "interaction_index": [
+            {
+                "deal_id": "777",
+                "deal_url": "https://sapaplast.bitrix24.kz/crm/deal/details/777/",
+                "crm_url": "https://sapaplast.bitrix24.kz/crm/deal/details/777/",
+                "source": {
+                    "deal_id": "777",
+                    "deal_url": "https://sapaplast.bitrix24.kz/crm/deal/details/777/",
+                },
+            },
+            {
+                "deal_id": "888",
+                "deal_url": "https://client.bitrix24.kz/crm/deal/details/888/",
+                "crm_url": "https://client.bitrix24.kz/crm/deal/details/888/",
+            },
+        ],
+        "whatsapp_interactions": [{"deal_id": "999"}],
+        "urgent_alerts": [
+            {
+                "deal_id": "777",
+                "deal_url": "https://sapaplast.bitrix24.kz/crm/deal/details/777/",
+            }
+        ],
+        "alerts_dashboard": {
+            "rows": [
+                {
+                    "deal_id": "777",
+                    "crm_url": "https://sapaplast.bitrix24.kz/crm/deal/details/777/",
+                }
+            ]
+        },
+    }
+
+    enriched = enrich_frontend_deal_urls(report, "https://tenant.bitrix24.kz")
+
+    assert enriched["interaction_index"][0]["deal_url"] == "https://tenant.bitrix24.kz/crm/deal/details/777/"
+    assert enriched["interaction_index"][0]["crm_url"] == "https://tenant.bitrix24.kz/crm/deal/details/777/"
+    assert enriched["interaction_index"][0]["source"]["deal_url"] == "https://tenant.bitrix24.kz/crm/deal/details/777/"
+    assert enriched["interaction_index"][1]["deal_url"] == "https://client.bitrix24.kz/crm/deal/details/888/"
+    assert enriched["whatsapp_interactions"][0]["deal_url"] == "https://tenant.bitrix24.kz/crm/deal/details/999/"
+    assert enriched["urgent_alerts"][0]["deal_url"] == "https://tenant.bitrix24.kz/crm/deal/details/777/"
+    assert enriched["alerts_dashboard"]["rows"][0]["crm_url"] == "https://tenant.bitrix24.kz/crm/deal/details/777/"
+
+
 def test_sales_audit_report_includes_frontend_arrays() -> None:
     report = build_sales_audit_report(
         executive_report={},
@@ -201,3 +248,4 @@ def test_sales_audit_report_includes_frontend_arrays() -> None:
     assert report["whatsapp_interactions"][0]["deal_id"] == "777"
     assert report["call_interactions"] == []
     assert report["alerts_dashboard"]["rows"] == report["urgent_alerts"]
+    assert report["sales_audit_sources"]["portal_base_url"] == "https://example.bitrix24.kz"
